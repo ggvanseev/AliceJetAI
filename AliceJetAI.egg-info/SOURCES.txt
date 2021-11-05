@@ -1,0 +1,5 @@
+setup.py
+AliceJetAI.egg-info/PKG-INFO
+AliceJetAI.egg-info/SOURCES.txt
+AliceJetAI.egg-info/dependency_links.txt
+AliceJetAI.egg-info/top_level.txt
