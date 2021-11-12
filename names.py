@@ -4,10 +4,15 @@ recur_dr = "sigJetRecur_dr12"
 recur_tf = "sigJetRecur_tf"
 recur_jetpt = "sigJetRecur_jetpt"
 recur_omega = "sigJetRecur_omegas"
+recur_splits = "sigJetRecur_nSD"
+recur_z = "sigJetRecur_z"
 
 # After applying a clustering algorithm
 jetpt = "sigJetPt"
 jet_eta = "sigJetEta"
+jet_phi = "sigJetPhi"
+jet_M = "sigJetM"
+jet_area = "sigJetArea"
 
 # Properties of partons from pythia
 parton_tf = "tfSplit"
@@ -41,3 +46,6 @@ ca_recur_log_1dtheta = "sigJetRecurZcutCA_logdr12"
 ca_recur_log_ztheta = "sigJetRecurZcutCA_logztheta"
 ca_recur_omega = "sigJetRecurZcutCA_omegas"
 ca_recur_zg = "sigJetRecurZcutCA_z"
+
+# TODO: also CA, but different names, discuss which ./runSoftDrop to use
+parton_match_id = "jetInitPDG"
