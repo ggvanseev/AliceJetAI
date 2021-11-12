@@ -3,6 +3,7 @@ import torch.nn as nn
 import awkward as ak
 import numpy as np
 from copy import copy
+from torch.utils.data import TensorDataset, DataLoader
 
 
 def collate_fn_pad(batch):
@@ -120,3 +121,82 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
     batches = [y for x in batches for y in x]
 
     return batches, track_jets_in_batch
+
+
+def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
+    """
+    Returns a DataLoader class to work with the large datasets in skilearn LSTM
+    """
+
+    # Check if it is the first data for the scalar, if so fit scalar to this data.
+    if fit_flag:
+        data = scaler.fit_transform(data)
+    else:
+        data = scaler.transform(data)
+
+    # Make data in tensor format
+    data = torch.Tensor(data)
+
+    # Data loader needs labels, but isn't needed for unsupervised, thus fill in data for labels to run since it won't be used.
+    data = TensorDataset(data, data)
+    # test = TensorDataset(test_features, test_targets)
+
+    return DataLoader(data, batch_size=batch_size, shuffle=False, drop_last=True)
+
+
+def get_weights(model, batch_size):
+    """
+    Returns the weight ordered as in the paper(see Tolga)
+    Using the scheme below and the knowledge that the weights in the paper (see Tolga, anomaly) correspond as the following:
+    W(x)=Wix, R(x)=Whx and b(x) = bix + bhx, where x is of {I,f,z/g,o}. Where z=g respectively.
+
+
+    LSTM.weight_ih_l[k] – the learnable input-hidden weights of the \text{k}^{th}k th
+    layer (W_ii|W_if|W_ig|W_io), of shape (4*hidden_size, input_size) for k = 0. Otherwise, the shape is (4*hidden_size, num_directions * hidden_size).
+    If proj_size > 0 was specified, the shape will be (4*hidden_size, num_directions * proj_size) for k > 0
+
+    ~LSTM.weight_hh_l[k] – the learnable hidden-hidden weights of the \text{k}^{th}k th
+     layer (W_hi|W_hf|W_hg|W_ho), of shape (4*hidden_size, hidden_size). If proj_size > 0 was specified, the shape will be (4*hidden_size, proj_size).
+
+    ~LSTM.bias_ih_l[k] – the learnable input-hidden bias of the \text{k}^{th}kthlayer (b_ii|b_if|b_ig|b_io), of shape (4*hidden_size)
+
+    ~LSTM.bias_hh_l[k] – the learnable hidden-hidden bias of the \text{k}^{th}kth
+    layer (b_hi|b_hf|b_hg|b_ho), of shape (4*hidden_size)
+    source: https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html
+
+    """
+    # Lists that make it easy to select the matching weight matrixes that are stored in one tensor/matrix by pytorch model
+    weight_type_list = ["i", "f", "g", "o"]
+    weight_type_selector = [0, 1, 2, 3, 0] * batch_size
+
+    # Coresponds to W,R and B respectively:
+    w = dict()
+    r = dict()
+    b = dict()
+
+    # Loop over the total present layers
+    for i in range(model.num_layers):
+        # loop over all weight types
+        for j in range(4):
+            w[f"{weight_type_list[j]}_{i}"] = (
+                getattr(model, f"weight_ih_l{i}")[
+                    weight_type_selector[j] : weight_type_selector[j + 1]
+                ],
+            )
+
+            r[f"{weight_type_list[j]}_{i}"] = (
+                getattr(model, f"weight_hh_l{i}")[
+                    weight_type_selector[j] : weight_type_selector[j + 1]
+                ],
+            )
+
+            b[f"{weight_type_list[j]}_{i}"] = (
+                getattr(model, f"bias_ih_l{i}")[
+                    weight_type_selector[j] : weight_type_selector[j + 1]
+                ],
+            )
+            +getattr(model, f"bias_hh_l{i}")[
+                weight_type_selector[j] : weight_type_selector[j + 1]
+            ],
+
+    return w, r, b
