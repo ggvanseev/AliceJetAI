@@ -6,8 +6,8 @@ import numpy as np
 import names as na
 
 
-def Samples(file_name: str, treeN, cut: bool = True):
-    branches = uproot.open(file_name)["jetTreeSig"].arrays()
+def load_n_filter_data(file_name: str, cut: bool = True, tree_name: str = "jetTreeSig"):
+    branches = uproot.open(file_name)[tree_name].arrays()
     jets = branches[
         [
             na.jetpt,
@@ -31,16 +31,16 @@ def Samples(file_name: str, treeN, cut: bool = True):
         (jets[na.parton_match_id] >= -6) & (jets[na.parton_match_id] <= 6)
     ]
 
-    # OPTIONAL: apply cuts, cut only on jetpt
+    # apply cuts: -2 < eta < 2 and jet_pt >= 130 GeV
     if cut:
         eta_cut = 2
         pt_cut = 130
-        g_jets_recur = g_recur_jets[
+        g_jets_recur = g_jets_recur[
             (g_jets[na.jet_eta] <= eta_cut)
             & (g_jets[na.jet_eta] >= -eta_cut)
             & (g_jets[na.jetpt] >= pt_cut)
         ]
-        q_recur_jets = q_recur_jets[
+        q_jets_recur = q_jets_recur[
             (q_jets[na.jet_eta] <= eta_cut)
             & (q_jets[na.jet_eta] >= -eta_cut)
             & (q_jets[na.jetpt] >= pt_cut)
@@ -56,22 +56,4 @@ def Samples(file_name: str, treeN, cut: bool = True):
             & (q_jets[na.jetpt] >= pt_cut)
         ]
 
-    """
-    # This is the same code but with awkward arrays 
-    jets = branches2[['sigJetPt', 'sigJetEta', 'sigJetPhi', 'sigJetM', 'sigJetArea', 'sigJetRecur_nSD', 'jetInitPDG']]
-    jetRecs = branches2[['sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z']]
-
-    gjets = jets[jets['jetInitPDG'] == 21 ]
-    qjets = jets[(jets['jetInitPDG'] >= -6) & (jets['jetInitPDG'] <= 6)]
-
-    cgjets = gjets[(gjets['sigJetEta'] <= 2) & (gjets['sigJetEta'] >= -2) & (gjets['sigJetPt'] >= 130)]
-    cqjets = qjets[(qjets['sigJetEta'] <= 2) & (qjets['sigJetEta'] >= -2) & (qjets['sigJetPt'] >= 130)]
-
-    gRecjets = jetRecs[jets['jetInitPDG'] == 21 ]
-    qRecjets = jetRecs[(jets['jetInitPDG'] >= -6) & (jets['jetInitPDG'] <= 6)]
-
-    cgRecjets = gRecjets[(gjets['sigJetEta'] <= 2) & (gjets['sigJetEta'] >= -2) & (gjets['sigJetPt'] >= 130)]
-    cqRecjets = qRecjets[(qjets['sigJetEta'] <= 2) & (qjets['sigJetEta'] >= -2) & (qjets['sigJetPt'] >= 130)]
-    """
-
-    return g_jets, q_jets, g_recur_jets, q_recur_jets
+    return g_jets, q_jets, g_jets_recur, q_jets_recur
