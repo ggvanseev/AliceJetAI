@@ -1,5 +1,5 @@
 import uproot
-import names as na
+import branch_names as na
 
 
 def load_n_filter_data(

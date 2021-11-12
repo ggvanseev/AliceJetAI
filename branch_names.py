@@ -51,3 +51,4 @@ ca_recur_zg = "sigJetRecurZcutCA_z"
 
 # TODO: also CA, but different names, discuss which ./runSoftDrop to use
 parton_match_id = "jetInitPDG"
+test = 1

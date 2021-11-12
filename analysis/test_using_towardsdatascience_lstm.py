@@ -19,120 +19,55 @@ from datetime import datetime
 
 import torch.optim as optim
 
-# Source: https://towardsdatascience.com/building-rnn-lstm-and-gru-for-time-series-using-pytorch-a46e5b094e7b
-# For steps explenation and furthure information see source
-
-
-df = pd.read_csv(r"C:\Users\gijsv\Downloads\archive\PJME_hourly.csv")
-
-df = df.set_index(["Datetime"])
-df.index = pd.to_datetime(df.index)
-if not df.index.is_monotonic:
-    df = df.sort_index()
-
-df = df.rename(columns={"PJME_MW": "value"})
-
-
-def generate_time_lags(df, n_lags):
-    df_n = df.copy()
-    for n in range(1, n_lags + 1):
-        df_n[f"lag{n}"] = df_n["value"].shift(n)
-    df_n = df_n.iloc[n_lags:]
-    return df_n
-
-
-input_dim = 100
-
-df_generated = generate_time_lags(df, input_dim)
-
-df_features = (
-    df.assign(hour=df.index.hour)
-    .assign(day=df.index.day)
-    .assign(month=df.index.month)
-    .assign(day_of_week=df.index.dayofweek)
-    .assign(week_of_year=df.index.week)
+from functions.data_saver import save_results, DataTrackerTrials
+from functions.data_manipulation import (
+    train_dev_test_split,
+    format_ak_to_list,
+    branch_filler,
 )
 
+from functions.data_loader import load_n_filter_data
 
-def onehot_encode(df, onehot_columns):
-    ct = ColumnTransformer(
-        [("onehot", OneHotEncoder(drop="first", categories="auto"), onehot_columns)],
-        remainder="passthrough",
-    )
-    return ct.fit_transform(df)
+# Variables:
+batch_size = 210
 
-
-onehot_columns = ["hour"]
-onehot_encoded = onehot_encode(df_features, onehot_columns)
+# File
+file_name = "samples\JetToyHIResultSoftDropSkinny.root"
 
 
-def generate_cyclical_features(df, col_name, period, start_num=0):
-    kwargs = {
-        f"sin_{col_name}": lambda x: np.sin(
-            2 * np.pi * (df[col_name] - start_num) / period
-        ),
-        f"cos_{col_name}": lambda x: np.cos(
-            2 * np.pi * (df[col_name] - start_num) / period
-        ),
-    }
-    return df.assign(**kwargs).drop(columns=[col_name])
+# Load and filter data for criteria eta and jetpt_cap
+_, _, g_recur_jets, _ = load_n_filter_data(file_name)
+g_recur_jets = format_ak_to_list(g_recur_jets)
 
 
-df_features = generate_cyclical_features(df_features, "hour", 24, 0)
-# df_features = generate_cyclical_features(df_features, 'day_of_week', 7, 0)
-# df_features = generate_cyclical_features(df_features, 'month', 12, 1)
-# df_features = generate_cyclical_features(df_features, 'week_of_year', 52, 0)
+# only use g_recur_jets
+train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
 
+train_data, track_jets_train_data = branch_filler(train_data, batch_size=batch_size)
+dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
 
-def feature_label_split(df, target_col):
-    y = df[[target_col]]
-    X = df.drop(columns=[target_col])
-    return X, y
-
-
-def train_val_test_split(df, target_col, test_ratio):
-    val_ratio = test_ratio / (1 - test_ratio)
-    X, y = feature_label_split(df, target_col)
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_ratio, shuffle=False
-    )
-    X_train, X_val, y_train, y_val = train_test_split(
-        X_train, y_train, test_size=val_ratio, shuffle=False
-    )
-    return X_train, X_val, X_test, y_train, y_val, y_test
-
-
-X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split(
-    df_features, "value", 0.2
-)
-
+# Only use train and dev data for now
 scaler = MinMaxScaler()
-X_train_arr = scaler.fit_transform(X_train)
-X_val_arr = scaler.transform(X_val)
-X_test_arr = scaler.transform(X_test)
-
-y_train_arr = scaler.fit_transform(y_train)
-y_val_arr = scaler.transform(y_val)
-y_test_arr = scaler.transform(y_test)
+train_arr = scaler.fit_transform(train_data)
+dev_arr = scaler.transform(dev_data)
+# test_arr = scaler.transform(test_data)
 
 
-batch_size = 64
-
-train_features = torch.Tensor(X_train_arr)
-train_targets = torch.Tensor(y_train_arr)
-val_features = torch.Tensor(X_val_arr)
-val_targets = torch.Tensor(y_val_arr)
-test_features = torch.Tensor(X_test_arr)
-test_targets = torch.Tensor(y_test_arr)
+train_features = torch.Tensor(train_data)
+train_targets = torch.Tensor(train_data)
+val_features = torch.Tensor(dev_arr)
+val_targets = torch.Tensor(dev_arr)
+# test_features = torch.Tensor(X_test_arr)
+# test_targets = torch.Tensor(y_test_arr)
 
 train = TensorDataset(train_features, train_targets)
 val = TensorDataset(val_features, val_targets)
-test = TensorDataset(test_features, test_targets)
+# test = TensorDataset(test_features, test_targets)
 
 train_loader = DataLoader(train, batch_size=batch_size, shuffle=False, drop_last=True)
 val_loader = DataLoader(val, batch_size=batch_size, shuffle=False, drop_last=True)
-test_loader = DataLoader(test, batch_size=batch_size, shuffle=False, drop_last=True)
-test_loader_one = DataLoader(test, batch_size=1, shuffle=False, drop_last=True)
+# test_loader = DataLoader(test, batch_size=batch_size, shuffle=False, drop_last=True)
+# test_loader_one = DataLoader(test, batch_size=1, shuffle=False, drop_last=True)
 
 
 class LSTMModel(nn.Module):
@@ -170,7 +105,7 @@ class LSTMModel(nn.Module):
         # Convert the final state to our desired output shape (batch_size, output_dim)
         out = self.fc(out)
 
-        return out
+        return out, hn
 
 
 class Optimization:
@@ -181,12 +116,15 @@ class Optimization:
         self.train_losses = []
         self.val_losses = []
 
-    def train_step(self, x, y):
+    def train_step(self, x, y, jet_track):
         # Sets model to train mode
         self.model.train()
 
         # Makes predictions
-        yhat = self.model(x)
+        yhat, hn = self.model(x)
+
+        # a =[hn.T[x] for x in jet_track][0][i,:].cpu().detach().numpy() selects i-th "mean pooled output"
+        # a.dot(a) = h.T * h = scalar
 
         # Computes loss
         loss = self.loss_fn(y, yhat)
@@ -201,7 +139,15 @@ class Optimization:
         # Returns the loss
         return loss.item()
 
-    def train(self, train_loader, val_loader, batch_size=64, n_epochs=50, n_features=1):
+    def train(
+        self,
+        train_loader,
+        val_loader,
+        jet_track,
+        batch_size=64,
+        n_epochs=50,
+        n_features=1,
+    ):
         model_path = (
             f'models/{self.model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
         )
@@ -212,10 +158,14 @@ class Optimization:
 
         for epoch in range(1, n_epochs + 1):
             batch_losses = []
+            # track branch number
+            i = 0
             for x_batch, y_batch in train_loader:
+                jet_track_local = jet_track[i]
+                i += 1
                 x_batch = x_batch.view([batch_size, -1, n_features]).to(device)
                 y_batch = y_batch.to(device)
-                loss = self.train_step(x_batch, y_batch)
+                loss = self.train_step(x_batch, y_batch, jet_track_local)
                 batch_losses.append(loss)
             training_loss = np.mean(batch_losses)
             self.train_losses.append(training_loss)
@@ -261,11 +211,10 @@ class Optimization:
         return predictions, values
 
 
-input_dim = len(X_train.columns)
-output_dim = 1
-hidden_dim = 64
+input_dim = len(train_data[0])
+output_dim = 3
+hidden_dim = batch_size
 layer_dim = 3
-batch_size = 64
 dropout = 0.2
 n_epochs = 4
 learning_rate = 1e-3
@@ -288,9 +237,8 @@ opt = Optimization(model=model, loss_fn=loss_fn, optimizer=optimizer)
 opt.train(
     train_loader,
     val_loader,
+    jet_track=track_jets_train_data,
     batch_size=batch_size,
     n_epochs=n_epochs,
     n_features=input_dim,
 )
-
-predictions, values = opt.evaluate(test_loader_one, batch_size=1, n_features=input_dim)
