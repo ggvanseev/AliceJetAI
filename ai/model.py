@@ -4,14 +4,17 @@ import numpy as np
 
 
 class LSTM(nn.Module):
-    def __init__(self, input_dim, hidden_dim, output_dim, n_layers, device, drop_prob=0.2):
+    def __init__(
+        self, input_dim, hidden_dim, output_dim, n_layers, device, drop_prob=0.2
+    ):
         super(LSTM, self).__init__()
         self.hidden_dim = hidden_dim
         self.n_layers = n_layers
         self.device = device
 
-        self.lstm = nn.LSTM(input_dim, hidden_dim, n_layers,
-                            batch_first=True, dropout=drop_prob)
+        self.lstm = nn.LSTM(
+            input_dim, hidden_dim, n_layers, batch_first=True, dropout=drop_prob
+        )
         self.fc = nn.Linear(hidden_dim, output_dim)  # fully connected layer
         self.relu = nn.ReLU()
 
@@ -22,21 +25,32 @@ class LSTM(nn.Module):
 
     def init_hidden(self, batch_size):
         weight = next(self.parameters()).data
-        hidden = (weight.new(self.n_layers, batch_size, self.hidden_dim).zero_().to(device),
-                  weight.new(self.n_layers, batch_size, self.hidden_dim).zero_().to(device))
+        hidden = (
+            weight.new(self.n_layers, batch_size, self.hidden_dim).zero_().to(device),
+            weight.new(self.n_layers, batch_size, self.hidden_dim).zero_().to(device),
+        )
         return hidden
 
 
 class SentimentNet(nn.Module):
-    def __init__(self, vocab_size, output_size, embedding_dim, hidden_dim, n_layers, drop_prob=0.5):
+    def __init__(
+        self,
+        vocab_size,
+        output_size,
+        embedding_dim,
+        hidden_dim,
+        n_layers,
+        drop_prob=0.5,
+    ):
         super(SentimentNet, self).__init__()
         self.output_size = output_size
         self.n_layers = n_layers
         self.hidden_dim = hidden_dim
 
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
-        self.lstm = nn.LSTM(embedding_dim, hidden_dim,
-                            n_layers, dropout=drop_prob, batch_first=True)
+        self.lstm = nn.LSTM(
+            embedding_dim, hidden_dim, n_layers, dropout=drop_prob, batch_first=True
+        )
         self.dropout = nn.Dropout(drop_prob)
         self.fc = nn.Linear(hidden_dim, output_size)
         self.sigmoid = nn.Sigmoid()
@@ -58,21 +72,26 @@ class SentimentNet(nn.Module):
 
     def init_hidden(self, batch_size):
         weight = next(self.parameters()).data
-        hidden = (weight.new(self.n_layers, batch_size, self.hidden_dim).zero_().to(device),
-                  weight.new(self.n_layers, batch_size, self.hidden_dim).zero_().to(device))
+        hidden = (
+            weight.new(self.n_layers, batch_size, self.hidden_dim).zero_().to(device),
+            weight.new(self.n_layers, batch_size, self.hidden_dim).zero_().to(device),
+        )
         return hidden
 
 
 # Optional, for later
 class GRUNet(nn.Module):
-    def __init__(self, input_dim, hidden_dim, output_dim, n_layers, device, drop_prob=0.2):
+    def __init__(
+        self, input_dim, hidden_dim, output_dim, n_layers, device, drop_prob=0.2
+    ):
         super(GRUNet, self).__init__()
         self.hidden_dim = hidden_dim
         self.n_layers = n_layers
         self.device = device
 
-        self.gru = nn.GRU(input_dim, hidden_dim, n_layers,
-                          batch_first=True, dropout=drop_prob)
+        self.gru = nn.GRU(
+            input_dim, hidden_dim, n_layers, batch_first=True, dropout=drop_prob
+        )
         self.fc = nn.Linear(hidden_dim, output_dim)
         self.relu = nn.ReLU()
 
@@ -83,6 +102,7 @@ class GRUNet(nn.Module):
 
     def init_hidden(self, batch_size):
         weight = next(self.parameters()).data
-        hidden = weight.new(self.n_layers, batch_size,
-                            self.hidden_dim).zero_().to(device)
+        hidden = (
+            weight.new(self.n_layers, batch_size, self.hidden_dim).zero_().to(device)
+        )
         return hidden
