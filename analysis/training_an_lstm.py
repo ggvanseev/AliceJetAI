@@ -40,14 +40,14 @@ space = hp.choice(
 
 # samples
 
-data_training = Samples(
+training_data = Samples(
     "./data/Training/jewel_R_pt120_zcut0p1_beta0_mult7000.root",
     "csejet",
     [1.0, 0.0],
     [0, 300000],
 )
 
-data_validation = Samples(
+validation_data = Samples(
     "./data/Validation/jewel_R_pt120_zcut0p1_beta0_mult7000.root",
     "csejet",
     [1.0, 0.0],
