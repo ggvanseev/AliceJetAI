@@ -1,15 +1,16 @@
 import uproot
-import awkward as ak
-import pandas as pd
-import numpy as np
-
 import names as na
 
 
 def load_n_filter_data(
-    file_name: str, treeName: str, cut: bool = True, eta_cut=2, pt_cut=130
+    file_name: str,
+    tree_name: str = na.tree,
+    cut: bool = True,
+    eta_cut=2,
+    pt_cut=130,
+    jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z],
 ):
-    branches = uproot.open(file_name)["jetTreeSig"].arrays()
+    branches = uproot.open(file_name)[tree_name].arrays()
     jets = branches[
         [
             na.jetpt,
@@ -21,7 +22,7 @@ def load_n_filter_data(
             na.parton_match_id,
         ]
     ]
-    jets_recur = branches[[na.recur_dr, na.recur_jetpt, na.recur_z]]
+    jets_recur = branches[jet_recur_branches]
 
     # quark and gluon jet data
     g_jets = jets[jets[na.parton_match_id] == 21]

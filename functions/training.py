@@ -1,7 +1,7 @@
 from typing import no_type_check
 
 import torch
-
+from torch.utils import data
 import torch.nn as nn
 import numpy as np
 
@@ -10,19 +10,14 @@ import awkward as ak
 import pandas as pd
 
 from functions.data_saver import save_results, save_loss_plots, DataTrackerTrials
+from functions.data_selection import collate_fn_pad, train_validation_split
 
-from hyperopt import fmin, tpe, hp, space_eval, STATUS_OK, Trials
+from hyperopt import STATUS_OK
 
 import names as na
-from ai.model import LSTM
+from ai.model import LSTM, LSTM_FC
 from functions import data_loader
 
-
-# load root dataset into a pandas dataframe
-fileName = "./samples/JetToyHIResultSoftDropSkinny.root"
-g_jets, q_jets, g_recur_jets, q_recur_jets = data_loader.load_n_filter_data(
-    fileName, na.tree
-)
 
 # weighted mse loss
 def weighted_mse_loss(input, target, weight):
@@ -148,7 +143,8 @@ def train_model_with_hyper_parameters(
     training_data: ak,
     validation_data: ak,
     data_tracker: DataTrackerTrials,
-    model=LSTM,
+    output_dim: int,
+    model=LSTM_FC,
     n_attempts: int = 3,
     flag_save_loss_plots: bool = False,
     flag_save_intermediate_results: bool = False,
@@ -207,9 +203,10 @@ def train_model_with_hyper_parameters(
         model = model(
             input_size=4,
             hidden_size=[hidden_size0, hidden_size1],
+            output_dim=output_dim,
             num_layers=num_layers,
             batch_size=num_batch,
-            device=device,
+            device=torch.device("cpu"),
         )
 
         model, step_training, loss_training = train_model(
