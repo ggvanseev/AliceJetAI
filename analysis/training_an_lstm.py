@@ -6,7 +6,7 @@ import awkward as ak
 import pandas as pd
 
 from functions.data_saver import save_results, save_loss_plots, DataTrackerTrials
-from functions.data_selection import (
+from functions.data_manipulation import (
     train_validation_split,
     format_ak_to_list,
 )

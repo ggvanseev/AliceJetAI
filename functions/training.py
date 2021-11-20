@@ -2,43 +2,16 @@ from typing import no_type_check
 
 import torch
 from torch.utils import data
-import torch.nn as nn
 import numpy as np
 
-import uproot
 import awkward as ak
-import pandas as pd
 
 from functions.data_saver import save_results, save_loss_plots, DataTrackerTrials
-from functions.data_selection import collate_fn_pad, train_validation_split
+from functions.data_manipulation import collate_fn_pad
 
 from hyperopt import STATUS_OK
 
-import names as na
-from ai.model import LSTM, LSTM_FC
-from functions import data_loader
-
-
-# weighted mse loss
-def weighted_mse_loss(input, target, weight):
-    return torch.sum(weight * (input - target) ** 2) / torch.sum(weight)
-
-
-# weighted bce loss
-def weighted_bce_loss(input, target, weight):
-    return torch.nn.functional.binary_cross_entropy(
-        input, target, weight, reduction="sum"
-    ) / torch.sum(weight)
-
-
-def get_loss_training(loss_func, out, label, weight):
-    res = nn.functional.softmax(out, dim=1)
-    if loss_func == "mse":
-        loss = weighted_mse_loss(res, label, weight)
-    elif loss_func == "bce":
-        loss = weighted_bce_loss(res, label, weight)
-
-    return loss
+from ai.model import LSTM_FC
 
 
 def train_model(
@@ -53,89 +26,16 @@ def train_model(
     """
     training of the model with a give num_epochs
     """
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-
-    # learning rate decay exponentially
-    scheduler = torch.optim.lr_scheduler.ExponentialLR(
-        optimizer, decay_factor, last_epoch=-1
-    )
-
-    # training
-    step_training = []
-    loss_training = []
-
-    # Epoch is the number of times, all training data is taken through
-    for epoch in range(num_epochs):
-
-        scheduler.step()
-
-        # enumerate over all available data
-        for step, (seq, weight, label, length) in enumerate(training_data):
-
-            # train the model for a given (data-)sequence
-            seq = seq.to(
-                device
-            )  # Make data sequence match desired device model is running on
-            out = model(seq)  # Get ouput
-            out = out.to(torch.device("cpu"))
-
-            # Get loss from training
-            loss = get_loss_training(loss_func, out, label, weight)
-
-            # Optimize training (?)
-            optimizer.zero_grad()
-            loss.backward(retain_graph=True)
-            optimizer.step()
-
-            # Store training data
-            step_training.append(step + 1)
-            loss_training.append(float(loss))
-
-            # Track progres training in terminal
-            if (step + 1) % 10 == 0:
-                print(
-                    "Eopch: [{}/{}], LR: {}, Step: {}, Loss:{:.4f}".format(
-                        epoch,
-                        num_epochs,
-                        scheduler.get_lr(),
-                        step + 1,
-                        float(loss),
-                    )
-                )
-
-    return model, step_training, loss_training
+    return None
 
 
 def validate_model(model, device, validation_data, loss_func):
-    loss_sum = 0.0
-    weight_sum = 0.0
-
+    """
+    Validate model by making ROC curve
+    """
     # Trun moddel into evaluation mode
     model.eval()
-    for step, (seq, weight, label, length) in enumerate(validation_data):
-        seq = seq.to(device)
-        # Use torch.no_grad since it is validation (?)
-        with torch.no_grad():
-            # Get output
-            out = model(seq)
-            out = out.to(torch.device("cpu"))
-
-            # Get sum of loss (note different from get loss from training)
-            res = nn.functional.softmax(out, dim=1)
-            if loss_func == "bce":
-                loss_sum += float(
-                    torch.nn.functional.binary_cross_entropy(
-                        res, label, weight, reduction="sum"
-                    )
-                )
-            elif loss_func == "mse":
-                loss_sum += float(torch.sum(weight * (res - label) ** 2))
-
-            # get sum of weight
-            weight_sum += torch.sum(weight)
-
-    # Return result of validation
-    return loss_sum / weight_sum
+    return None
 
 
 def train_model_with_hyper_parameters(
@@ -146,12 +46,32 @@ def train_model_with_hyper_parameters(
     output_dim: int,
     model=LSTM_FC,
     n_attempts: int = 3,
-    flag_save_loss_plots: bool = False,
     flag_save_intermediate_results: bool = False,
     jetpt_cut=130,
     loss_minimum=2,
     model_best=None,
 ):
+    """
+    The function is ready to train for different hyper_parameters using fmin and Train from hyperoot
+    library.For an example see training_an_lstm.py.
+    In addition it can save (figures of) intermdiate results.
+    Variables:
+    hyper_parameters: dict of hyper parameters, see needed once at begening of this function,
+    training_data: class with the training data,
+    validation_data: class with the validation data,
+    data_tracker: class of type DataTrackerTrials to track progress without returning these values.
+    This is needed due to the inner working of fmin, which only allows a specified output to come from
+    the function.
+    output_dim: int, with the dimension of the (1D) output.
+    model=LSTM_FC, model to use, standard is LSTM_FC. Note: if using a different model, make sure the
+    model has the same parameters as used in this function.
+    n_attempts: int, number of attempts on trying to train a model.
+    flag_save_intermediate_results: bool, see reference above.
+    jetpt_cut=130, minium jet energy. Note, use the same as in selection of train/validation data
+    loss_minimum=2, minum loss per training
+    model_best=None, track best model, in the beging None.
+
+    """
 
     # Get hyper parameter settings
     num_batch = int(hyper_parameters["num_batch"])
@@ -169,13 +89,10 @@ def train_model_with_hyper_parameters(
 
     # Get machine type:
     # If we have a GPU available, we'll set our device to GPU. We'll use this device variable later in our code.
-    if torch.cuda.is_available():
-        device = torch.device("cuda")
-    else:
-        device = torch.device("cpu")
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     print("Using device: ", device)
 
-    # Prepare training and valuation data for Model use
+    # Prepare training and valuation data for Model use using torch library provided DataLoader
     training_data = data.DataLoader(
         training_data,
         batch_size=num_batch,
@@ -209,6 +126,7 @@ def train_model_with_hyper_parameters(
             device=torch.device("cpu"),
         )
 
+        # Train model
         model, step_training, loss_training = train_model(
             training_data,
             model,
@@ -219,12 +137,7 @@ def train_model_with_hyper_parameters(
             loss_func,
         )
 
-    # If flag is true, save loss plots
-    if flag_save_loss_plots:
-        save_loss_plots(
-            step_training, loss_training, data_tracker.i_trial, i, loss_func
-        )
-
+    # If flag is true, save intermediate results
     if flag_save_intermediate_results:
         prefix = (
             "zcut0p1_beta0_csejet_"
@@ -244,11 +157,12 @@ def train_model_with_hyper_parameters(
     # Return model to training mode after validating
     model.train()
 
-    # Check if trial is lowest loss
+    # Check if trial is lowest loss, if so lower minum loss and update best model
     if result.item() < loss_minimum:
         loss_minimum = result.item()
         model_best = model
 
+    # Track results
     print(
         "Trial: {}, Attempt: {}, Validation Loss {}".format(
             data_tracker.i_trial, i, result.item()
@@ -259,13 +173,8 @@ def train_model_with_hyper_parameters(
     data_tracker.index_trial.append(data_tracker.i_trial)
     data_tracker.loss_trial.append(loss_minimum)
 
-    if loss_func == "bce":
-        print("Validation (BCE LOSS): %.4f" % loss_minimum)
-    elif loss_func == "mse":
-        print("Validation (MSE LOSS): %.4f" % loss_minimum)
-
     return {
-        "loss": loss_minimum,
+        "criterium of succes": loss_minimum,  # criterium which determines succes of model
         "status": STATUS_OK,
         "model": model_best,
         "loss_func": loss_func,
@@ -273,10 +182,16 @@ def train_model_with_hyper_parameters(
 
 
 def getBestModelfromTrials(trials):
+    """
+    Find best model from trials, using the hypertool training
+    """
     valid_trial_list = [
         trial for trial in trials if STATUS_OK == trial["result"]["status"]
     ]
+
+    # Replace losses, by crtiterium for future best model determination
     losses = [float(trial["result"]["loss"]) for trial in valid_trial_list]
     index_having_minumum_loss = np.argmin(losses)
     best_trial_obj = valid_trial_list[index_having_minumum_loss]
+
     return best_trial_obj["result"]["model"], best_trial_obj["result"]["loss_func"]

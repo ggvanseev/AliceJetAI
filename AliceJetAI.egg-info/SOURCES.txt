@@ -3,3 +3,8 @@ AliceJetAI.egg-info/PKG-INFO
 AliceJetAI.egg-info/SOURCES.txt
 AliceJetAI.egg-info/dependency_links.txt
 AliceJetAI.egg-info/top_level.txt
+functions/__init__.py
+functions/data_loader.py
+functions/data_saver.py
+functions/data_selection.py
+functions/training.py
