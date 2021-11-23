@@ -10,19 +10,17 @@ gluon jet data and two for their recursive counterparts.
 """
 import uproot
 import awkward as ak
-import pandas as pd
-import numpy as np
-from typing import Tuple
-
 import names as na
+from typing import Tuple
 
 
 def load_n_filter_data(
     file_name: str,
-    tree_name: str = "jetTreeSig",
+    tree_name: str = na.tree,
     cut: bool = True,
     eta_cut: float = 2.0,
     pt_cut: int = 130,
+    jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z],
 ) -> Tuple[ak.Array, ak.Array, ak.Array, ak.Array]:
     """Load in dataset from ROOT file of jet data. Subsequently, the jet data will be
     split into sets for quarks and gluons as well as sets with recursive jet data for
@@ -56,7 +54,7 @@ def load_n_filter_data(
             na.parton_match_id,
         ]
     ]
-    jets_recur = branches[[na.recur_dr, na.recur_jetpt, na.recur_z]]
+    jets_recur = branches[jet_recur_branches]
 
     # select quark and gluon jet data
     g_jets = jets[jets[na.parton_match_id] == 21]
@@ -83,26 +81,3 @@ def load_n_filter_data(
 
     return g_jets, q_jets, g_jets_recur, q_jets_recur
 
-
-def format_ak_to_list(arr: ak.Array) -> list:
-    """Function to reformat Awkward arrays g_jets_recur and q_jets_recur of
-    load_n_filter_data, which is required for a few purposes:
-        - Awkward arrays (assumably) not accepted as input for LSTM.
-        - Removal of empty event entries of the dataset.
-        - Reshape to: nr. variables x nr. splitings
-
-    Args:
-        arr (ak.Array): Input Awkward array containing recursive jet data
-
-    Returns:
-        list: Output list suitable as LSTM input, shape [dr[...], pt[...], z[...]]
-    """
-
-    # awkward.to_list() creates dictionaries, reform to list only
-    lst = [list(x.values()) for x in ak.to_list(arr)]
-    # remove empty entries and weird nestedness, e.g. dr[[...]], TODO
-    # [item for sublist in t for item in sublist]
-    lst = [y for x in lst if x != [[], [], []] for y in x]
-    # transpose remainder to get correct shape
-    lst = [list(map(list, zip(*x))) for x in lst]
-    return lst

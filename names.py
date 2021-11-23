@@ -1,3 +1,5 @@
+# tree
+tree = "jetTreeSig;1"
 # After appyling (recursive) softdrop
 recur_kts = "sigJetRecur_kts"
 recur_dr = "sigJetRecur_dr12"
