@@ -56,7 +56,7 @@ from functions.data_loader import load_n_filter_data
 
 from hyperopt import fmin, tpe, hp, space_eval, STATUS_OK, Trials
 
-import names as na
+import branch_names as na
 from ai.model import LSTM
 from functions import data_loader
 from functools import partial

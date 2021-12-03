@@ -6,7 +6,7 @@ import numpy as np
 
 import awkward as ak
 
-from functions.data_saver import save_results, save_loss_plots, DataTrackerTrials
+from functions.data_saver import save_results, DataTrackerTrials
 from functions.data_manipulation import collate_fn_pad
 
 from hyperopt import STATUS_OK

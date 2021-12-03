@@ -12,6 +12,7 @@ import uproot
 import awkward as ak
 import names as na
 from typing import Tuple
+import branch_names as na
 
 
 def load_n_filter_data(
@@ -24,7 +25,7 @@ def load_n_filter_data(
 ) -> Tuple[ak.Array, ak.Array, ak.Array, ak.Array]:
     """Load in dataset from ROOT file of jet data. Subsequently, the jet data will be
     split into sets for quarks and gluons as well as sets with recursive jet data for
-    quarks and gluons. Therefore, the provided dataset is required to contain the 
+    quarks and gluons. Therefore, the provided dataset is required to contain the
     variables: jetpt, jet_eta, jet_phi, jet_M, jet_area, recur_splits & parton_match_id.
     Exact labels are given in 'names.py'.
 
@@ -35,7 +36,7 @@ def load_n_filter_data(
         cut (bool, optional): Boolean statement whether to apply cuts. Defaults to True.
         eta_cut (float, optional): Value for eta cut. Defaults to 2.0.
         pt_cut (int, optional): Value for pt cut. Defaults to 130.
-        
+
     Returns:
         Tuple[ak.Array, ak.Array, ak.Array, ak.Array]: Tuple containing all gluon and
                 quark datasets.
@@ -80,4 +81,3 @@ def load_n_filter_data(
         ]
 
     return g_jets, q_jets, g_jets_recur, q_jets_recur
-
