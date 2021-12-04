@@ -141,7 +141,7 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
     data = TensorDataset(data, data)
     # test = TensorDataset(test_features, test_targets)
 
-    return DataLoader(data, batch_size=batch_size, shuffle=False, drop_last=True)
+    return DataLoader(data, batch_size=batch_size, shuffle=False)
 
 
 def get_weights(model, batch_size):
@@ -167,7 +167,7 @@ def get_weights(model, batch_size):
     """
     # Lists that make it easy to select the matching weight matrixes that are stored in one tensor/matrix by pytorch model
     weight_type_list = ["i", "f", "g", "o"]
-    weight_type_selector = [0, 1, 2, 3, 0] * batch_size
+    weight_type_selector = [k * batch_size for k in [0, 1, 2, 3, 0]]
 
     # Coresponds to W,R and B respectively:
     w = dict()

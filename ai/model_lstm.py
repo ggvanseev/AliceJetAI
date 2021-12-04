@@ -4,6 +4,8 @@ from datetime import datetime
 from functions.data_manipulation import get_weights
 import numpy as np
 
+from sklearn.svm import OneClassSVM
+
 
 class LSTMModel(nn.Module):
     def __init__(self, input_dim, hidden_dim, layer_dim, output_dim, dropout_prob):
@@ -46,6 +48,11 @@ class LSTMModel(nn.Module):
         return out, hn, w, r, b
 
 
+def objective_function(alphas, h_bar):
+    n_entries = len(alphas)
+    matrix = 1
+
+
 class Optimization:
     def __init__(self, model, loss_fn, optimizer):
         self.model = model
@@ -53,6 +60,9 @@ class Optimization:
         self.optimizer = optimizer
         self.train_losses = []
         self.val_losses = []
+
+        # OneClass SVM
+        self.ocsvm = OneClassSVM(kernel="linear")
 
     def train_step(self, x, y, jet_track):
         # Sets model to train mode
@@ -62,10 +72,15 @@ class Optimization:
         yhat, hn, w, r, b = self.model(x)
 
         # get mean pooled hidden states
-        h_bar = hn[:, jet_track]
+        h_bar = hn[:, jet_track].cpu().detach().numpy()
 
         # a =[hn.T[x] for x in jet_track][0][i,:].cpu().detach().numpy() selects i-th "mean pooled output"
         # a.dot(a) = h.T * h = scalar
+
+        # first need to run all samples to always have alphas match correctly. Thus fully run dataset through lstm before updating lstm parameters?
+
+        # h_bar[0] @ h_bar[0].T instead of h_bar[0].T @ h_bar[0], to get matrix representation of h_bar_i.T*h_bar_j
+        self.ocsvm.fit(h_bar[0] @ h_bar[0].T)
 
         # Computes loss
         loss = self.loss_fn(y, yhat)
@@ -108,7 +123,7 @@ class Optimization:
                 x_batch = x_batch.view([batch_size, -1, n_features]).to(device)
                 y_batch = y_batch.to(device)
                 loss = self.train_step(x_batch, y_batch, jet_track_local)
-        
+
                 batch_losses.append(loss)
             training_loss = np.mean(batch_losses)
             self.train_losses.append(training_loss)
