@@ -1,6 +1,9 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from datetime import datetime
+
+from torch.nn.modules.loss import HingeEmbeddingLoss
 from functions.data_manipulation import get_weights
 import numpy as np
 
@@ -17,6 +20,8 @@ class LSTMModel(nn.Module):
         self.lstm = nn.LSTM(
             input_dim, hidden_dim, layer_dim, batch_first=True, dropout=dropout_prob
         )
+        # TODO mean pooling layer? as in https://www.kaggle.com/vitaliykoren/lstm-with-two-dimensional-max-pooling-with-pytorch
+        self.mp = nn.AvgPool2d(4)
 
         # Fully connected layer
         self.fc = nn.Linear(hidden_dim, output_dim)
@@ -36,6 +41,12 @@ class LSTMModel(nn.Module):
         # Reshaping the outputs in the shape of (batch_size, seq_length, hidden_size)
         # so that it can fit into the fully connected layer
         out = out[:, -1, :]
+        # TODO size of out is now [210, 210]?
+
+        # TODO of mean pooling hier?
+        # out = F.avg_pool2d(out)
+        # self.mp(out)
+        # self.mp(hn)
 
         # Get parameters to update, save in dict for easy reference.
         w, r, b = get_weights(model=self.lstm, batch_size=len(x))
@@ -108,7 +119,7 @@ class Optimization:
                 x_batch = x_batch.view([batch_size, -1, n_features]).to(device)
                 y_batch = y_batch.to(device)
                 loss = self.train_step(x_batch, y_batch, jet_track_local)
-        
+
                 batch_losses.append(loss)
             training_loss = np.mean(batch_losses)
             self.train_losses.append(training_loss)
