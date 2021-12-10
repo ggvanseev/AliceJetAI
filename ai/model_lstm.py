@@ -80,7 +80,7 @@ class Optimization:
         # first need to run all samples to always have alphas match correctly. Thus fully run dataset through lstm before updating lstm parameters?
 
         # h_bar[0] @ h_bar[0].T instead of h_bar[0].T @ h_bar[0], to get matrix representation of h_bar_i.T*h_bar_j
-        self.ocsvm.fit(h_bar[0] @ h_bar[0].T)
+        self.ocsvm.fit(h_bar[0])
 
         # Computes loss
         loss = self.loss_fn(y, yhat)
@@ -117,7 +117,7 @@ class Optimization:
             # track branch number for tracking what jet_track array to use
             i = 0
             for x_batch, y_batch in train_loader:
-                jet_track_local = jet_track[i]
+                jet_track_local = jet_track[i]  # Index where jets are
                 i += 1
 
                 x_batch = x_batch.view([batch_size, -1, n_features]).to(device)
