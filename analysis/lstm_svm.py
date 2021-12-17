@@ -35,7 +35,8 @@ learning_rate = 1e-3
 weight_decay = 1e-6
 
 # File
-file_name = "samples\JetToyHIResultSoftDropSkinny.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root" # Windows?
+file_name = "samples/JetToyHIResultSoftDropSkinny.root" # Unix
 
 
 # Load and filter data for criteria eta and jetpt_cap
