@@ -1,9 +1,6 @@
 """
 Training the LSTM.
 
-Using algorithm 2 of Unsupervised Anomaly Detection With LSTM Neural Networks
-Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE
-
 -----------------------------------------------------------------------------------------
 Algorithm 2: Gradient-Based Training for the Anomaly Detection Algorithm Based on OC-SVM
 -----------------------------------------------------------------------------------------
@@ -21,11 +18,12 @@ Algorithm 2: Gradient-Based Training for the Anomaly Detection Algorithm Based o
 (33): w_{k+1} = w_k − μ ∇ wF_τ(w,ρ,θ) | w=w_k, ρ=ρ_k, θ=θ_k
 (35): ρ_{k+1} = ρ_k − μ ∂F_τ(w,ρ,θ)/(∂p)| w=w_k, ρ=ρ_k, θ=θ_k
 (37): W^{(·)}_{k+1}= (I + μ/2 B_k)^{-1} (I− μ/2 B_k) W^{(·)}_k
-      B_k = M_k(W^{(·)}_k)^T − W^{(·)}_k M_k^T and 
-      Mij =def=  ∂Fτ(w,ρ,θ) / ( ∂W^{(·)}_{ij} )
+      B_k = M_k(W^(·)_k)^T − W^(·)_k M_k^T and 
+      Mij =def=  ∂Fτ(w,ρ,θ) / ( ∂W^(·)_{ij} )
 
-Objective function of the SVM
+Objective function of the OC-SVM:
 F_τ(w , ρ, θ) =def= ||w||^2/2 + 1/(nλ) sum^n_{i=1} S_τ( β_{w ,ρ}(hbar_i) ) − ρ 
+(29): Sτ(βw,ρ(h ̄i))= τ log 1+ e^{tau,betaw,ρ( h ̄ i )
 
 Proposition 1: As τ increases, Sτ (βw,ρ (h ̄ i )) uniformly converges to G(βw,ρ(h ̄i)).
 As a consequence, our approximation Fτ(w,ρ,θ) converges to the SVM objective function

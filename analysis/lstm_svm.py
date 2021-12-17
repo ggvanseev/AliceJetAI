@@ -2,10 +2,10 @@ import pandas as pd
 import numpy as np
 
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import (
-    MinMaxScaler,
-)
-from sklearn.externals import joblib
+from sklearn.preprocessing import MinMaxScaler
+
+# from sklearn.externals import joblib
+# import joblib
 
 import time
 
@@ -84,6 +84,7 @@ opt.train(
     n_features=input_dim,
 )
 
+print(opt.model)
 
 """
 Save scalar using:

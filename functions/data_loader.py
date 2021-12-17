@@ -10,7 +10,7 @@ gluon jet data and two for their recursive counterparts.
 """
 import uproot
 import awkward as ak
-import names as na
+import branch_names as na
 from typing import Tuple
 import branch_names as na
 
