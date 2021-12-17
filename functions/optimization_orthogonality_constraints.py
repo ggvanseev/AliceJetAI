@@ -1,4 +1,4 @@
-from scipy.sparse import identity  # use sparse matrices for memory efficiency
+from scipy.sparse import identity  # use sparse matrices for memory efficiency TODO
 
 from functions.data_manipulation import get_weights
 
@@ -7,12 +7,12 @@ def derivative():
     return
 
 
-def kappa(alphas, a_idx):
+def kappa(alphas, a_idx, h_list):
     out = 0
     for idx1, i in enumerate(a_idx):
         for idx2, j in enumerate(a_idx):
-            out += alphas[j] * alphas[i] * (h_list)
-    return
+            out += 0.5 * alphas[i] * alphas[j] * (h_list[i].T @ h_list[j])
+    return out
 
 
 def optimization(model, h_list, alphas, a_idx, mu):
@@ -22,6 +22,8 @@ def optimization(model, h_list, alphas, a_idx, mu):
     # R = h.parameters
     # b = h.parameters
     W, R, b = get_weights(model, batch_size=len())
+    dh_list = np.diff(h_list)
+    dW_list = np.diff()
 
     # derivative of function e.g. F = (25) from Tolga
     G = derivative(kappa(alphas, a_idx), W)

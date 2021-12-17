@@ -232,7 +232,7 @@ def optimization(lstm_model, train_loader, alphas, a_idx, mu):
     A = G @ W.T - W @ G.T
     I = torch.eye(W.shape[0])
     # next point from Crank-Nicolson-like scheme
-    W_next = (I + mu / 2 * A) ** (-1) @ (I - mu / 2 * A) @ W
+    W_next = torch.inverse(I + mu / 2 * A) @ (I - mu / 2 * A) @ W # TODO inverse
 
     # same for R and b
     R = lstm_model.lstm.weight_hh_l0
@@ -245,7 +245,7 @@ def optimization(lstm_model, train_loader, alphas, a_idx, mu):
     #G = (kappa(alphas, a_idx, h_list) - kappa(alphas, a_idx, h_list_new) ) / dW
     A = G @ R.T - R @ G.T
     I = torch.eye(R.shape[0])
-    R_next = (I + mu / 2 * A) ** (-1) @ (I - mu / 2 * A) @ R
+    R_next = torch.inverse(I + mu / 2 * A) @ (I - mu / 2 * A) @ R
 
     # TODO: two bias values: lstm_model.lstm_bias_hh_l0 and lstm_model.lstm_bias_ih_l0
     b = lstm_model.lstm_bias_hh_l0
@@ -253,7 +253,7 @@ def optimization(lstm_model, train_loader, alphas, a_idx, mu):
     G = delta_func(lstm_model, train_loader, h_list, b, 'b', mu)
     A = G @ b.T - b @ G.T
     I = torch.eye(b.shape[0])
-    b_next = (I + mu / 2 * A) ** (-1) @ (I - mu / 2 * A) @ b
+    b_next = torch.inverse(I + mu / 2 * A) @ (I - mu / 2 * A) @ b
 
     return W_next, R_next, b_next
 
