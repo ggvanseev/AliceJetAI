@@ -82,7 +82,7 @@ from copy import copy
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Variables:
-batch_size = 210
+batch_size = 100
 
 output_dim = 1
 layer_dim = 1
@@ -151,7 +151,14 @@ def lstm_results(lstm_model, train_loader):
         lstm_model.train()
 
         # Makes predictions
-        yhat, hn, theta = lstm_model(x_batch)
+        _, hn, theta, theta_gradients_temp = lstm_model(x_batch)
+
+        if "theta_gradients" not in locals():
+            theta_gradients = theta_gradients_temp
+        else:
+            for key1, value in theta_gradients_temp.items():
+                for key2, value2 in value.items():
+                    theta_gradients[key1][key2] += value2
 
         # get mean pooled hidden states
         h_bar = hn[:, jet_track_local]
@@ -159,10 +166,6 @@ def lstm_results(lstm_model, train_loader):
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
 
-        # also append w, r and b values
-
-        # a =[hn.T[x] for x in jet_track][0][i,:].cpu().detach().numpy() selects i-th "mean pooled output"
-        # a.dot(a) = h.T * h = scalar
     return torch.vstack([h_bar[0] for h_bar in h_bar_list]), theta
 
 
@@ -312,7 +315,7 @@ def optimization(lstm, train_loader, alphas, a_idx, mu, h_list, theta):
 
 ### ALGORITHM START ###
 k = -1
-while k < 20:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
+while k < 1:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
 
     # track branch number for tracking what jet_track array to use
     k += 1
@@ -335,6 +338,8 @@ while k < 20:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < ep
         h_list=h_bar_list,
         theta=theta,
     )
+
+    print("Done")
 
     """
     # get rho?

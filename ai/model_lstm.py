@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from datetime import datetime
 
 from torch.nn.modules.loss import HingeEmbeddingLoss
-from functions.data_manipulation import get_weights
+from functions.data_manipulation import get_weights, get_gradiant_weights
 import numpy as np
 
 from sklearn.svm import OneClassSVM
@@ -50,13 +50,17 @@ class LSTMModel(nn.Module):
         # self.mp(out)
         # self.mp(hn)
 
+        # Do backward to get gradients with respect to hn (to get first part of chain rule, only take derivative of kappa later for algorithm Tolga)
+        hn.sum().backward()
+
         # Get parameters to update, save in dict for easy reference.
         theta = get_weights(model=self.lstm, batch_size=len(x))
+        theta_gradients = get_gradiant_weights(model=self.lstm, batch_size=len(x))
 
-        # Convert the final state to our desired output shape (batch_size, output_dim)
+        # Convert the final state to our desired output shape (batch_size, output_dim) # retain_graph=True
         out = self.fc(out)
 
-        return out, hn, theta
+        return out, hn, theta, theta_gradients
 
 
 def objective_function(alphas, h_bar):
