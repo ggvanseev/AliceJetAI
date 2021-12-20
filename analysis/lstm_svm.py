@@ -59,7 +59,7 @@ train_loader = lstm_data_prep(
 )
 val_loader = lstm_data_prep(data=dev_data, scaler=scaler, batch_size=batch_size)
 
-input_dim = len(train_data[0])
+input_dim = len(train_data[0])  # batch size?
 hidden_dim = batch_size
 
 model_params = {
