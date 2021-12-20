@@ -158,13 +158,20 @@ def lstm_results(lstm_model, train_loader):
         else:
             for key1, value in theta_gradients_temp.items():
                 for key2, value2 in value.items():
-                    theta_gradients[key1][key2] += value2
+                    theta_gradients[key1][key2] = theta_gradients[key1][key2] + value2
 
         # get mean pooled hidden states
         h_bar = hn[:, jet_track_local]
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
+
+    # get average contribution theta_gradients per weight
+    for key1, value in theta_gradients_temp.items():
+        for key2, value2 in value.items():
+            theta_gradients[key1][key2] = theta_gradients[key1][key2] / len(
+                train_loader
+            )
 
     return torch.vstack([h_bar[0] for h_bar in h_bar_list]), theta
 
