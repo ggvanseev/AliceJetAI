@@ -165,9 +165,8 @@ def lstm_results(lstm_model, train_loader):
     return torch.vstack([h_bar[0] for h_bar in h_bar_list])
 
 
-def lstm_results_np(lstm_model, train_loader):
-    h_bar_list = lstm_results(lstm_model, train_loader)
-    return np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+def lstm_results_np(h_list):
+    return np.array([h_bar.detach().numpy() for h_bar in h_list])
 
 
 def kappa(alphas, a_idx, h_list):
@@ -212,7 +211,7 @@ def delta_func(lstm_model, train_loader, h_list, parm, parm_name, mu):
     return ( kappa(alphas, a_idx, h_list) - kappa(alphas, a_idx, h_list_new) ) / delta
 
 
-def optimization(lstm_model, train_loader, alphas, a_idx, mu):
+def optimization(lstm_model, h_list, train_loader, alphas, a_idx, mu):
 
     # obtain W, R and b from current h
     # W = h.parameters
@@ -221,8 +220,6 @@ def optimization(lstm_model, train_loader, alphas, a_idx, mu):
     #W, R, b = get_weights(lstm_model, batch_size=len())
     #dh_list = np.diff(h_list)
     #dW_list = np.diff()
-
-    h_list = lstm_results(lstm_model, train_loader)
 
     # derivative of function e.g. F = (25) from Tolga
     W = lstm_model.lstm.weight_ih_l0
@@ -267,12 +264,13 @@ while k < 20:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < ep
 
     # W, R, b = get_weights(model=lstm_model, batch_size=batch_size)
     #h_bar_list = [[h_bar.detach().numpy()[0] for h_bar in h_bar_list]]
-    h_bar_list_numpied = lstm_results_np(lstm_model, train_loader)
+    h_list = lstm_results(lstm_model, train_loader)
+    h_bar_list_numpied = lstm_results_np(h_list)
     svm_model.fit(h_bar_list_numpied)
     alphas = np.abs(svm_model.dual_coef_)
     a_idx = svm_model.support_
 
-    W_next, R_next, b_next = optimization(lstm_model, train_loader, alphas, a_idx, learning_rate)
+    W_next, R_next, b_next = optimization(lstm_model, h_list, train_loader, alphas, a_idx, learning_rate)
     
 
     """
