@@ -245,7 +245,7 @@ def optimization(lstm_model, h_list, train_loader, alphas, a_idx, mu):
     R_next = torch.inverse(I + mu / 2 * A) @ (I - mu / 2 * A) @ R
 
     # TODO: two bias values: lstm_model.lstm_bias_hh_l0 and lstm_model.lstm_bias_ih_l0
-    b = lstm_model.lstm_bias_hh_l0
+    b = lstm_model.lstm.lstm_bias_hh_l0
     #G = np.gradient(lambda b: diff_argument(lstm_model, train_loader, alphas, a_idx, b=b), dW)
     G = delta_func(lstm_model, train_loader, h_list, b, 'b', mu)
     A = G @ b.T - b @ G.T
