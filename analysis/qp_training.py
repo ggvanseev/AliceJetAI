@@ -66,12 +66,17 @@ from functions.data_manipulation import (
     format_ak_to_list,
     branch_filler,
     lstm_data_prep,
-    get_weights,
+    get_full_pytorch_weight,
+    put_weight_in_pytorch_matrix,
 )
 from functions.data_loader import load_n_filter_data
 from functions.optimization_orthogonality_constraints import optimization
 
 from ai.model_lstm import LSTMModel
+
+from autograd import elementwise_grad as egrad
+
+from copy import copy
 
 
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
@@ -93,9 +98,7 @@ _, _, g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
 
 # only use g_recur_jets
-train_data, dev_data, test_data = train_dev_test_split(
-    g_recur_jets, split=[0.8, 0.1]
-)
+train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
 
 train_data, track_jets_train_data = branch_filler(train_data, batch_size=batch_size)
 dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
@@ -140,9 +143,7 @@ def lstm_results(lstm_model, train_loader):
         jet_track_local = track_jets_train_data[i]
         i += 1
 
-        x_batch = x_batch.view([batch_size, -1, model_params["input_dim"]]).to(
-            device
-        )
+        x_batch = x_batch.view([batch_size, -1, model_params["input_dim"]]).to(device)
         y_batch = y_batch.to(device)
 
         ### Train step
@@ -150,24 +151,24 @@ def lstm_results(lstm_model, train_loader):
         lstm_model.train()
 
         # Makes predictions
-        yhat, hn, w, r, b = lstm_model(x_batch)
+        yhat, hn, theta = lstm_model(x_batch)
 
         # get mean pooled hidden states
         h_bar = hn[:, jet_track_local]
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
-        
+
         # also append w, r and b values
 
         # a =[hn.T[x] for x in jet_track][0][i,:].cpu().detach().numpy() selects i-th "mean pooled output"
         # a.dot(a) = h.T * h = scalar
-    return torch.vstack([h_bar[0] for h_bar in h_bar_list])
+    return torch.vstack([h_bar[0] for h_bar in h_bar_list]), theta
 
 
 def lstm_results_np(lstm_model, train_loader):
-    h_bar_list = lstm_results(lstm_model, train_loader)
-    return np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+    h_bar_list, theta = lstm_results(lstm_model, train_loader)
+    return np.array([h_bar.detach().numpy() for h_bar in h_bar_list]), theta
 
 
 def kappa(alphas, a_idx, h_list):
@@ -179,9 +180,9 @@ def kappa(alphas, a_idx, h_list):
 
 
 def diff_argument(lstm_model, train_loader, alphas, a_idx, lr, W=None, R=None, b=None):
-    
-    h_list = lstm_results(lstm_model, train_loader)
-    
+
+    h_list, _ = lstm_results(lstm_model, train_loader)
+
     with torch.no_grad():
         if W:
             delta = W - lr * W
@@ -190,72 +191,123 @@ def diff_argument(lstm_model, train_loader, alphas, a_idx, lr, W=None, R=None, b
             delta = R - lr * R
             lstm_model.lstm.weight_hh_l0.copy_(delta)
         elif b:
-            lstm_model.lstm.weight_ih_l0 
-    
-    h_list_new = lstm_results(lstm_model, train_loader)
-    
-    return (kappa(alphas, a_idx, h_list) - kappa(alphas, a_idx, h_list_new) ) / delta
+            lstm_model.lstm.weight_ih_l0
+
+    h_list_new, _ = lstm_results(lstm_model, train_loader)
+
+    return (kappa(alphas, a_idx, h_list) - kappa(alphas, a_idx, h_list_new)) / delta
 
 
-def delta_func(lstm_model, train_loader, h_list, parm, parm_name, mu):
-    
-    delta = parm - mu * parm
+def delta_func(
+    lstm_model,
+    train_loader,
+    h_list,
+    weight,
+    weight_name: str,
+    mu,
+    alphas,
+    a_idx,
+    pytorch_weights,
+):
+
+    delta = mu * weight
+    new_weight = weight - delta
+
+    # Use torh.no_grad to not record changes in this section
     with torch.no_grad():
-        lstm_model_new = lstm_model
-        if parm_name == 'W':
-            lstm_model_new.lstm.weight_ih_l0.copy_(delta)
-        elif parm_name == 'R':
-            lstm_model_new.lstm.weight_hh_l0.copy_(delta)
-        elif parm_name == 'b':
-            lstm_model_new.lstm.bias_hh_l0.copy_(delta)
-    h_list_new = lstm_results(lstm_model_new, train_loader)
-    return ( kappa(alphas, a_idx, h_list) - kappa(alphas, a_idx, h_list_new) ) / delta
+
+        lstm_model_new = copy(
+            lstm_model  # Needs a copy, to avoid unexpected changes in the original model
+        )
+
+        # only updated desired weight element
+        pytorch_weights = put_weight_in_pytorch_matrix(
+            new_weight, weight_name, pytorch_weights
+        )
+
+        getattr(lstm_model_new.lstm, weight_name[5:]).copy_(pytorch_weights)
+
+    h_list_new, _ = lstm_results(lstm_model_new, train_loader)
+    return (
+        kappa(alphas, a_idx, h_list) - kappa(alphas, a_idx, h_list_new)
+    ) / delta  # Alphas, en a_idx worden niet correct geimporteerd in de functie
 
 
-def optimization(lstm_model, train_loader, alphas, a_idx, mu):
+def updating_theta(lstm_model, train_loader, h_list, theta: dict, mu, alphas, a_idx):
+
+    updated_theta = dict()
+
+    # Loop over all weight types (w,r,bi,bh)
+    for weight_type, weights in theta.items():
+
+        track_weights = dict()
+
+        # get full original weights, called pytorch_weights (following lstm structure)
+        pytorch_weights = get_full_pytorch_weight(weights)
+
+        for weight_name, weight in weights.items():
+            # follow stepts from eq. 24 in paper Tolga
+
+            pytorch_weights_layer = pytorch_weights[weight_name[-1]]
+
+            # derivative of function e.g. F = (25) from Tolga
+            g = delta_func(
+                lstm_model,
+                train_loader,
+                h_list,
+                weight,
+                weight_name,
+                mu,
+                alphas,
+                a_idx,
+                pytorch_weights_layer,
+            )
+
+            a = g @ weight.T - weight @ g.T
+            i = torch.eye(weight.shape[0])
+
+            # next point from Crank-Nicolson-like scheme
+            track_weights[weight_name] = (
+                torch.inverse(i + mu / 2 * a) @ (i - mu / 2 * a) @ weight
+            )
+
+        # store in theta
+        updated_theta[weight_type] = track_weights
+
+    return updated_theta
+
+
+def update_lstm(lstm, theta):
+    for weight_type, weights in theta.items():
+        # get full original weights, called pytorch_weights (following lstm structure)
+        pytorch_weights = get_full_pytorch_weight(weights)
+
+        weight_name = list(weights.keys())[0][5:-1]
+
+        for i in range(len(weights) // 4):
+            with torch.no_grad():
+                getattr(lstm, weight_name + str(i)).copy_(pytorch_weights)
+
+    return lstm
+
+
+def optimization(lstm, train_loader, alphas, a_idx, mu, h_list, theta):
 
     # obtain W, R and b from current h
     # W = h.parameters
     # R = h.parameters
     # b = h.parameters
-    #W, R, b = get_weights(lstm_model, batch_size=len())
-    #dh_list = np.diff(h_list)
-    #dW_list = np.diff()
+    # W, R, b = get_weights(lstm_model, batch_size=len())
+    # dh_list = np.diff(h_list)
+    # dW_list = np.diff()
 
-    h_list = lstm_results(lstm_model, train_loader)
+    # update theta
+    theta = updating_theta(lstm, train_loader, h_list, theta, mu, alphas, a_idx)
 
-    # derivative of function e.g. F = (25) from Tolga
-    W = lstm_model.lstm.weight_ih_l0
-    G = delta_func(lstm_model, train_loader, h_list, W, 'W', mu)
-    #G = np.diff(kappa(alphas, a_idx, h_list) - kappa(alphas, a_idx, h_list_new) ) / np.diff(W - mu* W)
-    #G = np.gradient(lambda W: diff_argument(lstm_model, train_loader, alphas, a_idx, W=W), dW)
-    A = G @ W.T - W @ G.T
-    I = torch.eye(W.shape[0])
-    # next point from Crank-Nicolson-like scheme
-    W_next = torch.inverse(I + mu / 2 * A) @ (I - mu / 2 * A) @ W # TODO inverse
+    # update lstm
+    lstm = update_lstm(lstm, theta)
 
-    # same for R and b
-    R = lstm_model.lstm.weight_hh_l0
-    G = delta_func(lstm_model, train_loader, h_list, R, 'R', mu)
-    #dR = R - mu * R
-    #with torch.no_grad():
-    #    lstm_model_new = lstm_model
-    #    lstm_model_new.lstm.weight_hh_l0.copy_(dR)
-    #G = np.gradient(lambda R: diff_argument(lstm_model, train_loader, alphas, a_idx, R=R), dW)
-    #G = (kappa(alphas, a_idx, h_list) - kappa(alphas, a_idx, h_list_new) ) / dW
-    A = G @ R.T - R @ G.T
-    I = torch.eye(R.shape[0])
-    R_next = torch.inverse(I + mu / 2 * A) @ (I - mu / 2 * A) @ R
-
-    # TODO: two bias values: lstm_model.lstm_bias_hh_l0 and lstm_model.lstm_bias_ih_l0
-    b = lstm_model.lstm_bias_hh_l0
-    #G = np.gradient(lambda b: diff_argument(lstm_model, train_loader, alphas, a_idx, b=b), dW)
-    G = delta_func(lstm_model, train_loader, h_list, b, 'b', mu)
-    A = G @ b.T - b @ G.T
-    I = torch.eye(b.shape[0])
-    b_next = torch.inverse(I + mu / 2 * A) @ (I - mu / 2 * A) @ b
-
-    return W_next, R_next, b_next
+    return lstm
 
 
 ### ALGORITHM START ###
@@ -266,14 +318,23 @@ while k < 20:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < ep
     k += 1
 
     # W, R, b = get_weights(model=lstm_model, batch_size=batch_size)
-    #h_bar_list = [[h_bar.detach().numpy()[0] for h_bar in h_bar_list]]
-    h_bar_list_numpied = lstm_results_np(lstm_model, train_loader)
-    svm_model.fit(h_bar_list_numpied)
+    # h_bar_list = [[h_bar.detach().numpy()[0] for h_bar in h_bar_list]]
+    h_bar_list, theta = lstm_results(lstm_model, train_loader)
+    h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+
+    svm_model.fit(h_bar_list_np)
     alphas = np.abs(svm_model.dual_coef_)
     a_idx = svm_model.support_
 
-    W_next, R_next, b_next = optimization(lstm_model, train_loader, alphas, a_idx, learning_rate)
-    
+    lstm_model = optimization(
+        lstm_model,
+        train_loader,
+        alphas,
+        a_idx,
+        learning_rate,
+        h_list=h_bar_list,
+        theta=theta,
+    )
 
     """
     # get rho?
@@ -282,4 +343,3 @@ while k < 20:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < ep
         for j in range(h_bar_list):
             rho += alpha[j] * alpha[i] * h_bar_list[j] * h_bar_list[i]
     """
-
