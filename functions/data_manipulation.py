@@ -213,6 +213,75 @@ def get_weights(model, batch_size):
     return theta
 
 
+def get_gradiant_weights(model, batch_size):
+    """
+    Returns the weight ordered as in the paper(see Tolga)
+    Using the scheme below and the knowledge that the weights in the paper (see Tolga, anomaly) correspond as the following:
+    W(x)=Wix, R(x)=Whx and b(x) = bix + bhx, where x is of {I,f,z/g,o}. Where z=g respectively.
+
+
+    LSTM.weight_ih_l[k] – the learnable input-hidden weights of the \text{k}^{th}k th
+    layer (W_ii|W_if|W_ig|W_io), of shape (4*hidden_size, input_size) for k = 0. Otherwise, the shape is (4*hidden_size, num_directions * hidden_size).
+    If proj_size > 0 was specified, the shape will be (4*hidden_size, num_directions * proj_size) for k > 0
+
+    ~LSTM.weight_hh_l[k] – the learnable hidden-hidden weights of the \text{k}^{th}k th
+     layer (W_hi|W_hf|W_hg|W_ho), of shape (4*hidden_size, hidden_size). If proj_size > 0 was specified, the shape will be (4*hidden_size, proj_size).
+
+    ~LSTM.bias_ih_l[k] – the learnable input-hidden bias of the \text{k}^{th}kthlayer (b_ii|b_if|b_ig|b_io), of shape (4*hidden_size)
+
+    ~LSTM.bias_hh_l[k] – the learnable hidden-hidden bias of the \text{k}^{th}kth
+    layer (b_hi|b_hf|b_hg|b_ho), of shape (4*hidden_size)
+    source: https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html
+
+    """
+    # Lists that make it easy to select the matching weight matrixes that are stored in one tensor/matrix by pytorch model
+    weight_type_list = ["i", "f", "g", "o"]
+    weight_type_selector = [k * batch_size for k in [0, 1, 2, 3]]
+    weight_type_selector.append(None)
+
+    # Coresponds to W,R and B respectively:
+    w = dict()
+    r = dict()
+    bi = dict()
+    bh = dict()
+
+    # Loop over the total present layers
+    for i in range(model.num_layers):
+        # loop over all weight types
+        for j in range(4):
+            # Make sure all names have the same string length between beginning and first {}
+            w[f"w__{weight_type_list[j]}_weight_ih_l{i}"] = (
+                getattr(model, f"weight_ih_l{i}")[
+                    weight_type_selector[j] : weight_type_selector[j + 1]
+                ],
+            )[
+                0
+            ]  # Add the [0], to conform to black formatting, but not store in ()
+
+            r[f"r__{weight_type_list[j]}_weight_hh_l{i}"] = (
+                getattr(model, f"weight_hh_l{i}")[
+                    weight_type_selector[j] : weight_type_selector[j + 1]
+                ],
+            )[0]
+
+            bi[f"bi_{weight_type_list[j]}_bias_ih_l{i}"] = (
+                getattr(model, f"bias_ih_l{i}")[
+                    weight_type_selector[j] : weight_type_selector[j + 1]
+                ],
+            )[0]
+
+            bh[f"bh_{weight_type_list[j]}_bias_hh_l{i}"] = (
+                getattr(model, f"bias_hh_l{i}")[
+                    weight_type_selector[j] : weight_type_selector[j + 1]
+                ],
+            )[0]
+
+    # store all weight in one dict, call theta in line with paper tolga
+    theta_gradients = dict({"w": w, "r": r, "bi": bi, "bh": bh})
+
+    return theta_gradients
+
+
 def put_weight_in_pytorch_matrix(weight, weight_name, pytorch_weights):
     """
     Function puts the (updated) weight at the correction position in the pytorch weights structure
