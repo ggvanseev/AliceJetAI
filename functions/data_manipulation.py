@@ -167,36 +167,88 @@ def get_weights(model, batch_size):
     """
     # Lists that make it easy to select the matching weight matrixes that are stored in one tensor/matrix by pytorch model
     weight_type_list = ["i", "f", "g", "o"]
-    weight_type_selector = [k * batch_size for k in [0, 1, 2, 3, 0]]
+    weight_type_selector = [k * batch_size for k in [0, 1, 2, 3]]
+    weight_type_selector.append(None)
 
     # Coresponds to W,R and B respectively:
     w = dict()
     r = dict()
-    b = dict()
+    bi = dict()
+    bh = dict()
 
     # Loop over the total present layers
     for i in range(model.num_layers):
         # loop over all weight types
         for j in range(4):
-            w[f"{weight_type_list[j]}_{i}"] = (
+            # Make sure all names have the same string length between beginning and first {}
+            w[f"w__{weight_type_list[j]}_weight_ih_l{i}"] = (
                 getattr(model, f"weight_ih_l{i}")[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
-            )
+            )[
+                0
+            ]  # Add the [0], to conform to black formatting, but not store in ()
 
-            r[f"{weight_type_list[j]}_{i}"] = (
+            r[f"r__{weight_type_list[j]}_weight_hh_l{i}"] = (
                 getattr(model, f"weight_hh_l{i}")[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
-            )
+            )[0]
 
-            b[f"{weight_type_list[j]}_{i}"] = (
+            bi[f"bi_{weight_type_list[j]}_bias_ih_l{i}"] = (
                 getattr(model, f"bias_ih_l{i}")[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
-            )
-            +getattr(model, f"bias_hh_l{i}")[
-                weight_type_selector[j] : weight_type_selector[j + 1]
-            ],
+            )[0]
 
-    return w, r, b
+            bh[f"bh_{weight_type_list[j]}_bias_hh_l{i}"] = (
+                getattr(model, f"bias_hh_l{i}")[
+                    weight_type_selector[j] : weight_type_selector[j + 1]
+                ],
+            )[0]
+
+    # store all weight in one dict, call theta in line with paper tolga
+    theta = dict({"w": w, "r": r, "bi": bi, "bh": bh})
+
+    return theta
+
+
+def put_weight_in_pytorch_matrix(weight, weight_name, pytorch_weights):
+    """
+    Function puts the (updated) weight at the correction position in the pytorch weights structure
+    """
+
+    batch_size = len(weight)
+    if weight_name[3] == "i":
+        pytorch_weights[:batch_size] = weight
+    elif weight_name[3] == "f":
+        pytorch_weights[batch_size : batch_size * 2] = weight
+    elif weight_name[3] == "g":
+        pytorch_weights[batch_size * 2 : batch_size * 3] = weight
+    else:
+        pytorch_weights[batch_size * 3 :] = weight
+
+    return pytorch_weights
+
+
+def get_full_pytorch_weight(weights):
+    """
+    # get full original weights, called pytorch_weights (following lstm structure)
+    weights: dict for specified weight group (see get_weights in functions/data_manipulation for dict type)
+    """
+    pytorch_weights = dict()
+
+    track_layer = None
+    for weight_name, weight in weights.items():
+        # check layer, and thus if new temp is needed
+        if weight_name[-1] != str(track_layer):
+            temp = torch.empty(0)
+            track_layer = weight_name[-1]
+
+        temp = torch.cat((temp, weight))  # Double () is needed
+
+        # Check if it is the final layer number
+        if len(temp) == 4 * len(weight):
+            pytorch_weights[weight_name[-1]] = temp
+
+    return pytorch_weights

@@ -51,12 +51,12 @@ class LSTMModel(nn.Module):
         # self.mp(hn)
 
         # Get parameters to update, save in dict for easy reference.
-        w, r, b = get_weights(model=self.lstm, batch_size=len(x))
+        theta = get_weights(model=self.lstm, batch_size=len(x))
 
         # Convert the final state to our desired output shape (batch_size, output_dim)
         out = self.fc(out)
 
-        return out, hn, w, r, b
+        return out, hn, theta
 
 
 def objective_function(alphas, h_bar):
@@ -80,7 +80,7 @@ class Optimization:
         self.model.train()
 
         # Makes predictions
-        yhat, hn, w, r, b = self.model(x)
+        yhat, hn, theta = self.model(x)
 
         # get mean pooled hidden states
         h_bar = hn[:, jet_track].cpu().detach().numpy()
