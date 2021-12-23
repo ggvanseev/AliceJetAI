@@ -57,7 +57,7 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
 
 
 def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
-    # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
+    # Count all values (, is indicative of a value), and divide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
 
     # Batches, is a list with all the batches
@@ -70,12 +70,12 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
         # Space count tracks if branch is filled to max
         space_count = batch_size
 
-        # make copies of the dataset to be able to remove elemnts while trying to fill branches
-        # without destroyting original dataset
+        # make copies of the dataset to be able to remove elements while trying to fill branches
+        # without destroying original dataset
         temp_dataset = copy(dataset)
         temp_dataset2 = copy(dataset)
 
-        # local trakcers of batches ad jets_in_batch
+        # local trackers of batches ad jets_in_batch
         batch = []
         jets_in_batch = []
 
@@ -125,7 +125,7 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
 
 def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
     """
-    Returns a DataLoader class to work with the large datasets in skilearn LSTM
+    Returns a DataLoader class to work with the large datasets in PyTorch LSTM
     """
 
     # Check if it is the first data for the scalar, if so fit scalar to this data.
@@ -213,7 +213,7 @@ def get_weights(model, batch_size):
     return theta
 
 
-def get_gradiant_weights(model, batch_size):
+def get_gradient_weights(model, batch_size):
     """
     Returns the weight ordered as in the paper(see Tolga)
     Using the scheme below and the knowledge that the weights in the paper (see Tolga, anomaly) correspond as the following:

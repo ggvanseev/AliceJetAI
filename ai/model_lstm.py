@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from datetime import datetime
 
 from torch.nn.modules.loss import HingeEmbeddingLoss
-from functions.data_manipulation import get_weights, get_gradiant_weights
+from functions.data_manipulation import get_weights, get_gradient_weights
 import numpy as np
 
 from sklearn.svm import OneClassSVM
@@ -55,7 +55,7 @@ class LSTMModel(nn.Module):
 
         # Get parameters to update, save in dict for easy reference.
         theta = get_weights(model=self.lstm, batch_size=len(x))
-        theta_gradients = get_gradiant_weights(model=self.lstm, batch_size=len(x))
+        theta_gradients = get_gradient_weights(model=self.lstm, batch_size=len(x))
 
         # Convert the final state to our desired output shape (batch_size, output_dim) # retain_graph=True
         out = self.fc(out)
