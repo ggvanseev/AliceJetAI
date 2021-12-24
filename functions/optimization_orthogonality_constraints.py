@@ -160,7 +160,10 @@ def delta_func(
     for idx1, i in enumerate(a_idx):
         for idx2, j in enumerate(a_idx):
             out += (
-                alphas[0, idx1] * alphas[0, idx2] * (h_list[i].T @ theta_gradients[...])
+                alphas[0, idx1]
+                * alphas[0, idx2]
+                * (h_list[i] + h_list[j])
+                @ theta_gradients
             )
     return
 
