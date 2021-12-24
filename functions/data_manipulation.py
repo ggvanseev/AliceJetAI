@@ -250,28 +250,28 @@ def get_gradient_weights(model, batch_size):
         # loop over all weight types
         for j in range(4):
             # Make sure all names have the same string length between beginning and first {}
-            w[f"w__{weight_type_list[j]}_weight_ih_l{i}"] = (
-                getattr(model, f"weight_ih_l{i}")[
+            w[f"w__{weight_type_list[j]}_weight_ih_l{i}.grad"] = (
+                getattr(model, f"weight_ih_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
             )[
                 0
             ]  # Add the [0], to conform to black formatting, but not store in ()
 
-            r[f"r__{weight_type_list[j]}_weight_hh_l{i}"] = (
-                getattr(model, f"weight_hh_l{i}")[
+            r[f"r__{weight_type_list[j]}_weight_hh_l{i}.grad"] = (
+                getattr(model, f"weight_hh_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
             )[0]
 
-            bi[f"bi_{weight_type_list[j]}_bias_ih_l{i}"] = (
-                getattr(model, f"bias_ih_l{i}")[
+            bi[f"bi_{weight_type_list[j]}_bias_ih_l{i}.grad"] = (
+                getattr(model, f"bias_ih_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
             )[0]
 
-            bh[f"bh_{weight_type_list[j]}_bias_hh_l{i}"] = (
-                getattr(model, f"bias_hh_l{i}")[
+            bh[f"bh_{weight_type_list[j]}_bias_hh_l{i}.grad"] = (
+                getattr(model, f"bias_hh_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
             )[0]

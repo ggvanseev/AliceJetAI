@@ -42,7 +42,7 @@ def lstm_results(
 
         ### Train step
         # set model to train
-        lstm_model.train()
+        lstm_model.train()  # TODO should this be off so the backward() call in the forward pass does not update the weights?
 
         # Makes predictions
         _, hn, theta, theta_gradients_temp = lstm_model(x_batch)
@@ -60,7 +60,7 @@ def lstm_results(
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
 
-    return torch.vstack([h_bar[0] for h_bar in h_bar_list]), theta
+    return torch.vstack([h_bar[0] for h_bar in h_bar_list]), theta, theta_gradients
 
 
 def kappa(alphas, a_idx, h_list):
@@ -90,7 +90,7 @@ def delta_func(
     track_jets_train_data,
     batch_size,
     h_list,
-    theta,
+    theta_gradients,
     weight,
     weight_name: str,
     mu,
@@ -99,7 +99,14 @@ def delta_func(
     pytorch_weights,
     device,
 ):
-    """Calculates the derivative of G to a specific weight or bias
+    """Calculates the derivative of G to a specific weight or bias.
+    G = dkappa / dW_ij = alpha_i * alpha_j * h_ij * dh_ij / dW_ij
+    since the derivative of x^T x = 2x
+    dh / dW can be obtained from theta_gradients
+    
+    d(h_i.T * h_j) / dh =  ((dh_i / dW) * h_j + (h_i.T dh_j/dW))
+    = (h_i + h_j) * dh/dW 
+    
 
     Args:
         lstm_model (LSTMModel): the LSTM model
@@ -119,34 +126,41 @@ def delta_func(
         (torch.Tensor): derivative of the cost function to the weight/bias 
     """
 
-    d_weight = mu * weight
-    new_weight = weight - d_weight
+    # d_weight = mu * weight
+    # new_weight = weight - d_weight
 
-    # Use torch.no_grad to not record changes in this section
-    with torch.no_grad():
+    # # Use torch.no_grad to not record changes in this section
+    # with torch.no_grad():
 
-        lstm_model_new = copy(
-            lstm_model  # Needs a copy, to avoid unexpected changes in the original model
-        )
+    #     lstm_model_new = copy(
+    #         lstm_model  # Needs a copy, to avoid unexpected changes in the original model
+    #     )
 
-        # only updated desired weight element
-        pytorch_weights = put_weight_in_pytorch_matrix(
-            new_weight, weight_name, pytorch_weights
-        )
+    #     # only updated desired weight element
+    #     pytorch_weights = put_weight_in_pytorch_matrix(
+    #         new_weight, weight_name, pytorch_weights
+    #     )
 
-        getattr(lstm_model_new.lstm, weight_name[5:]).copy_(pytorch_weights)
+    #     getattr(lstm_model_new.lstm, weight_name[5:]).copy_(pytorch_weights)
 
-    h_list_new, _ = lstm_results(
-        lstm_model_new,
-        model_params,
-        train_loader,
-        track_jets_train_data,
-        batch_size,
-        device,
-    )
-    return (kappa(alphas, a_idx, h_list_new) - kappa(alphas, a_idx, h_list)) / (
-        new_weight - weight
-    )  # Alphas, en a_idx worden niet correct geimporteerd in de functie TODO
+    # h_list_new, _ = lstm_results(
+    #     lstm_model_new,
+    #     model_params,
+    #     train_loader,
+    #     track_jets_train_data,
+    #     batch_size,
+    #     device,
+    # )
+    # return (kappa(alphas, a_idx, h_list_new) - kappa(alphas, a_idx, h_list)) / (
+    #     new_weight - weight
+    # )  # Alphas, en a_idx worden niet correct geimporteerd in de functie TODO
+    out = 0
+    for idx1, i in enumerate(a_idx):
+        for idx2, j in enumerate(a_idx):
+            out += (
+                alphas[0, idx1] * alphas[0, idx2] * (h_list[i].T @ theta_gradients[...])
+            )
+    return
 
 
 def updating_theta(
@@ -157,6 +171,7 @@ def updating_theta(
     batch_size,
     h_list,
     theta: dict,
+    theta_gradients: dict,
     mu,
     alphas,
     a_idx,
@@ -203,7 +218,7 @@ def updating_theta(
                 track_jets_train_data,
                 batch_size,
                 h_list,
-                theta,
+                theta_gradients,
                 weight,
                 weight_name,
                 mu,
@@ -261,6 +276,7 @@ def optimization(
     mu,
     h_list,
     theta,
+    theta_gradients,
     device=torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"),
 ):
     """Optimization algorithm with orthogonality constraints
@@ -289,6 +305,7 @@ def optimization(
         batch_size,
         h_list,
         theta,
+        theta_gradients,
         mu,
         alphas,
         a_idx,

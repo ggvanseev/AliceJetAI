@@ -137,7 +137,7 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 # calculate cost function kappa with alpha_0 and theta_0:
 # obtain h_bar from the lstm with theta_0, given the data
-h_bar_list, theta = lstm_results(
+h_bar_list, theta, theta_gradients = lstm_results(
     lstm_model, model_params, train_loader, track_jets_train_data, batch_size, device
 )
 h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
@@ -175,11 +175,12 @@ while k < 5:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps
         learning_rate,
         h_list=h_bar_list,
         theta=theta,
+        theta_gradients=theta_gradients,
         device=device,
     )
 
     # obtain h_bar from the lstm with theta_k+1, given the data
-    h_bar_list, theta = lstm_results(
+    h_bar_list, theta, theta_gradients = lstm_results(
         lstm_model,
         model_params,
         train_loader,
