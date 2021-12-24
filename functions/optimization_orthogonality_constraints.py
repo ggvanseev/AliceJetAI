@@ -79,7 +79,9 @@ def kappa(alphas, a_idx, h_list):
     out = 0
     for idx1, i in enumerate(a_idx):
         for idx2, j in enumerate(a_idx):
-            out += 0.5 * alphas[0, idx1] * alphas[0, idx2] * (h_list[i].T @ h_list[j])
+            out += (
+                0.5 * alphas[0, idx1] * alphas[0, idx2] * (2 * h_list[i].T @ h_list[j])
+            )
     return out
 
 
@@ -103,15 +105,15 @@ def delta_func(
     G = dkappa / dW_ij = alpha_i * alpha_j * h_ij * dh_ij / dW_ij
     since the derivative of x^T x = 2x
     dh / dW can be obtained from theta_gradients
-    
+
     d(h_i.T * h_j) / dh =  ((dh_i / dW) * h_j + (h_i.T dh_j/dW))
-    = (h_i + h_j) * dh/dW 
-    
+    = (h_i + h_j) * dh/dW
+
 
     Args:
         lstm_model (LSTMModel): the LSTM model
         train_loader (torch.utils.data.dataloader.DataLoader): object by PyTorch, stores
-                the data 
+                the data
         h_list (torch.Tensor): contains the h_bar results from the LSTM
         weight (torch.Tensor): contains weights/biases of the LSTM
         weight_name (str): description of which weight/bias is currently used
@@ -120,10 +122,10 @@ def delta_func(
                                                               with the SMO algorithm
         a_idx (numpy.ndarray): contains the indices of datapoints corresponding to the
                                                                  non-zero alpha values
-        pytorch_weights (torch.Tensor): tensor 
+        pytorch_weights (torch.Tensor): tensor
 
     Returns:
-        (torch.Tensor): derivative of the cost function to the weight/bias 
+        (torch.Tensor): derivative of the cost function to the weight/bias
     """
 
     # d_weight = mu * weight
@@ -177,13 +179,13 @@ def updating_theta(
     a_idx,
     device,
 ):
-    """Updates the weights of the LSTM contained in theta according to the optimization 
+    """Updates the weights of the LSTM contained in theta according to the optimization
     algorithm with orthogonality constraints
 
     Args:
         lstm_model (LSTMModel): the LSTM model
         train_loader (torch.utils.data.dataloader.DataLoader): object by PyTorch, stores
-                                                                                the data 
+                                                                                the data
         h_list (torch.Tensor): contains the h_bar results from the LSTM
         theta (dict): contains the weights and bias values of the LSTM
         mu (float): learning rate
@@ -284,7 +286,7 @@ def optimization(
     Args:
         lstm (LSTMModel): the LSTM model used
         train_loader (torch.utils.data.dataloader.DataLoader): object by PyTorch,
-                                                                  stores the data 
+                                                                  stores the data
         alphas (numpy.ndarray): contains non-zero alpha values obtained from the SVM
                                                               with the SMO algorithm
         a_idx (numpy.ndarray): contains the indices of datapoints corresponding to the
