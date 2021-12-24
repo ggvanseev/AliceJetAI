@@ -6,6 +6,9 @@ from functions.data_manipulation import (
     put_weight_in_pytorch_matrix,
 )
 
+import time
+import numpy as np
+
 
 def lstm_results(
     lstm_model,
@@ -59,6 +62,13 @@ def lstm_results(
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
+
+    # Get mean of theta gradients
+    for key1, value in theta_gradients_temp.items():
+        for key2, value2 in value.items():
+            theta_gradients[key1][key2] = theta_gradients[key1][key2] / len(
+                train_loader
+            )
 
     return torch.vstack([h_bar[0] for h_bar in h_bar_list]), theta, theta_gradients
 
@@ -168,13 +178,40 @@ def delta_func(
     return
 
 
+def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
+    """Calculates the derivative of G to a specific weight or bias.
+    G = dkappa / dW_ij = (dkappa * dh_ij) *(dh_ij / dW_ij)
+    Since the derivative of x^T x = 2x and
+    dh / dW can be obtained from theta_gradients
+    this is
+
+    G = dkappa / dW_ij = (dkappa * dh_ij) *(dh_ij / dW_ij) =
+    (0.5*sumi,j alpah_i*alpha_j*2*hi) * dh/dw(theta_gradients)
+    = sum_alhpa_j*alpha_i*h_i
+
+    proof: https://math.stackexchange.com/questions/1377764/derivative-of-vector-and-vector-transpose-product
+    """
+
+    # TODO: the looping takes to long (8 seconds with this small batch, maybe there is a way to speed it up)
+
+    # calculate
+    out = 0
+    # Om een of andere reden duurt dit heel lang...
+
+    alphas_j = np.sum(alphas)
+
+    d_kappa = (
+        h_bar_list[a_idx].T
+        @ (alphas_j * torch.tensor(alphas)).type(torch.FloatTensor).T
+    )
+
+    return (
+        gradient_hi.T * d_kappa.T
+    ).T  # TODO: check if this the correct way of multiplication
+
+
 def updating_theta(
-    lstm_model,
-    model_params,
-    train_loader,
-    track_jets_train_data,
-    batch_size,
-    h_list,
+    h_bar_list,
     theta: dict,
     theta_gradients: dict,
     mu,
@@ -207,31 +244,22 @@ def updating_theta(
 
         track_weights = dict()
 
-        # get full original weights, called pytorch_weights (following lstm structure)
-        pytorch_weights = get_full_pytorch_weight(weights)
+        gradient_weights = theta_gradients[weight_type]
 
         for weight_name, weight in weights.items():
             # follow steps from eq. 24 in paper Tolga
 
-            pytorch_weights_layer = pytorch_weights[weight_name[-1]]
+            gradient_weight = gradient_weights[weight_name]
+
+            t1 = time.time()
 
             # derivative of function e.g. F = (25) from Tolga
-            g = delta_func(
-                lstm_model,
-                model_params,
-                train_loader,
-                track_jets_train_data,
-                batch_size,
-                h_list,
-                theta_gradients,
-                weight,
-                weight_name,
-                mu,
-                alphas,
-                a_idx,
-                pytorch_weights_layer,
-                device,
-            )
+            g = calc_g(gradient_weight, h_bar_list, alphas, a_idx)
+
+            print(t1 - time.time())
+
+            if weight_name[0] == "b":
+                a = 1  # TODO, the g returned for the bias doesn't match in shape with what is expected, and thus can't calculate a (below)
 
             a = g @ weight.T - weight @ g.T
             i = torch.eye(weight.shape[0])
@@ -272,14 +300,10 @@ def update_lstm(lstm, theta):
 
 def optimization(
     lstm,
-    model_params,
-    train_loader,
-    track_jets_train_data,
-    batch_size,
     alphas,
     a_idx,
     mu,
-    h_list,
+    h_bar_list,
     theta,
     theta_gradients,
     device=torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"),
@@ -303,12 +327,7 @@ def optimization(
     """
     # update theta
     theta = updating_theta(
-        lstm,
-        model_params,
-        train_loader,
-        track_jets_train_data,
-        batch_size,
-        h_list,
+        h_bar_list,
         theta,
         theta_gradients,
         mu,

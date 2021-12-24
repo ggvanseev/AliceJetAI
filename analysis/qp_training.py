@@ -134,26 +134,28 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 
 ### ALGORITHM START ###
-
-# calculate cost function kappa with alpha_0 and theta_0:
-# obtain h_bar from the lstm with theta_0, given the data
-h_bar_list, theta, theta_gradients = lstm_results(
-    lstm_model, model_params, train_loader, track_jets_train_data, batch_size, device
-)
-h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
-
 """
 alphas = np.abs(svm_model.dual_coef_)
 a_idx = svm_model.support_"""
+# calculate cost function kappa with alpha_0 and theta_0:
 # TODO set alphas to 1 or 0 so cost_next - cost will be large
 cost = 1  # kappa(alphas, a_idx, h_bar_list)
 
 
 k = -1
 while k < 5:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
-
-    # track branch number for tracking what jet_track array to use
     k += 1
+
+    # obtain h_bar from the lstm with theta_0, given the data
+    h_bar_list, theta, theta_gradients = lstm_results(
+        lstm_model,
+        model_params,
+        train_loader,
+        track_jets_train_data,
+        batch_size,
+        device,
+    )
+    h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
 
     # keep previous cost result stored
     cost_prev = copy(cost)
@@ -165,15 +167,11 @@ while k < 5:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps
 
     # obtain theta_k+1 using the optimization algorithm
     lstm_model, theta_next = optimization(
-        lstm_model,
-        model_params,
-        train_loader,
-        track_jets_train_data,
-        batch_size,
-        alphas,
-        a_idx,
-        learning_rate,
-        h_list=h_bar_list,
+        lstm=lstm_model,
+        alphas=alphas,
+        a_idx=a_idx,
+        mu=learning_rate,
+        h_bar_list=h_bar_list,
         theta=theta,
         theta_gradients=theta_gradients,
         device=device,
@@ -198,4 +196,5 @@ while k < 5:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps
     if (cost - cost_prev) ** 2 < eps:
         break
 
-    print("Done")
+
+print("Done")
