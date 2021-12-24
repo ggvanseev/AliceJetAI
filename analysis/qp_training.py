@@ -40,9 +40,6 @@ Using algorithm 2 of Unsupervised Anomaly Detection With LSTM Neural Networks
 Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 """
 
-
-#### imported from analysis/test_using_towardsdatascience_lstm.py ###
-
 import pandas as pd
 import numpy as np
 
@@ -66,18 +63,19 @@ from functions.data_manipulation import (
     format_ak_to_list,
     branch_filler,
     lstm_data_prep,
-    get_full_pytorch_weight,
-    put_weight_in_pytorch_matrix,
 )
 from functions.data_loader import load_n_filter_data
-from functions.optimization_orthogonality_constraints import optimization
+from functions.optimization_orthogonality_constraints import (
+    lstm_results,
+    kappa,
+    optimization,
+)
 
 from ai.model_lstm import LSTMModel
 
-from autograd import elementwise_grad as egrad
+# from autograd import elementwise_grad as egrad
 
 from copy import copy
-
 
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
@@ -135,223 +133,69 @@ svm_model = OneClassSVM(nu=0.5, gamma=0.35, kernel="rbf")
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 
-def lstm_results(lstm_model, train_loader):
-    h_bar_list = []
-
-    i = 0
-    for x_batch, y_batch in train_loader:
-        jet_track_local = track_jets_train_data[i]
-        i += 1
-
-        x_batch = x_batch.view([batch_size, -1, model_params["input_dim"]]).to(device)
-        y_batch = y_batch.to(device)
-
-        ### Train step
-        # set model to train
-        lstm_model.train()
-
-        # Makes predictions
-        _, hn, theta, theta_gradients_temp = lstm_model(x_batch)
-
-        if "theta_gradients" not in locals():
-            theta_gradients = theta_gradients_temp
-        else:
-            for key1, value in theta_gradients_temp.items():
-                for key2, value2 in value.items():
-                    theta_gradients[key1][key2] = theta_gradients[key1][key2] + value2
-
-        # get mean pooled hidden states
-        h_bar = hn[:, jet_track_local]
-
-        # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
-        h_bar_list.append(h_bar)
-
-    # get average contribution theta_gradients per weight
-    for key1, value in theta_gradients_temp.items():
-        for key2, value2 in value.items():
-            theta_gradients[key1][key2] = theta_gradients[key1][key2] / len(
-                train_loader
-            )
-
-    return torch.vstack([h_bar[0] for h_bar in h_bar_list]), theta
-
-
-def lstm_results_np(lstm_model, train_loader):
-    h_bar_list, theta = lstm_results(lstm_model, train_loader)
-    return np.array([h_bar.detach().numpy() for h_bar in h_bar_list]), theta
-
-
-def kappa(alphas, a_idx, h_list):
-    out = 0
-    for idx1, i in enumerate(a_idx):
-        for idx2, j in enumerate(a_idx):
-            out += 0.5 * alphas[0, idx1] * alphas[0, idx2] * (h_list[i].T @ h_list[j])
-    return out
-
-
-def diff_argument(lstm_model, train_loader, alphas, a_idx, lr, W=None, R=None, b=None):
-
-    h_list, _ = lstm_results(lstm_model, train_loader)
-
-    with torch.no_grad():
-        if W:
-            delta = W - lr * W
-            lstm_model.lstm.weight_ih_l0.copy_(delta)
-        elif R:
-            delta = R - lr * R
-            lstm_model.lstm.weight_hh_l0.copy_(delta)
-        elif b:
-            lstm_model.lstm.weight_ih_l0
-
-    h_list_new, _ = lstm_results(lstm_model, train_loader)
-
-    return (kappa(alphas, a_idx, h_list) - kappa(alphas, a_idx, h_list_new)) / delta
-
-
-def delta_func(
-    lstm_model,
-    train_loader,
-    h_list,
-    weight,
-    weight_name: str,
-    mu,
-    alphas,
-    a_idx,
-    pytorch_weights,
-):
-
-    delta = mu * weight
-    new_weight = weight - delta
-
-    # Use torh.no_grad to not record changes in this section
-    with torch.no_grad():
-
-        lstm_model_new = copy(
-            lstm_model  # Needs a copy, to avoid unexpected changes in the original model
-        )
-
-        # only updated desired weight element
-        pytorch_weights = put_weight_in_pytorch_matrix(
-            new_weight, weight_name, pytorch_weights
-        )
-
-        getattr(lstm_model_new.lstm, weight_name[5:]).copy_(pytorch_weights)
-
-    h_list_new, _ = lstm_results(lstm_model_new, train_loader)
-    return (
-        kappa(alphas, a_idx, h_list) - kappa(alphas, a_idx, h_list_new)
-    ) / delta  # Alphas, en a_idx worden niet correct geimporteerd in de functie
-
-
-def updating_theta(lstm_model, train_loader, h_list, theta: dict, mu, alphas, a_idx):
-
-    updated_theta = dict()
-
-    # Loop over all weight types (w,r,bi,bh)
-    for weight_type, weights in theta.items():
-
-        track_weights = dict()
-
-        # get full original weights, called pytorch_weights (following lstm structure)
-        pytorch_weights = get_full_pytorch_weight(weights)
-
-        for weight_name, weight in weights.items():
-            # follow stepts from eq. 24 in paper Tolga
-
-            pytorch_weights_layer = pytorch_weights[weight_name[-1]]
-
-            # derivative of function e.g. F = (25) from Tolga
-            g = delta_func(
-                lstm_model,
-                train_loader,
-                h_list,
-                weight,
-                weight_name,
-                mu,
-                alphas,
-                a_idx,
-                pytorch_weights_layer,
-            )
-
-            a = g @ weight.T - weight @ g.T
-            i = torch.eye(weight.shape[0])
-
-            # next point from Crank-Nicolson-like scheme
-            track_weights[weight_name] = (
-                torch.inverse(i + mu / 2 * a) @ (i - mu / 2 * a) @ weight
-            )
-
-        # store in theta
-        updated_theta[weight_type] = track_weights
-
-    return updated_theta
-
-
-def update_lstm(lstm, theta):
-    for weight_type, weights in theta.items():
-        # get full original weights, called pytorch_weights (following lstm structure)
-        pytorch_weights = get_full_pytorch_weight(weights)
-
-        weight_name = list(weights.keys())[0][5:-1]
-
-        for i in range(len(weights) // 4):
-            with torch.no_grad():
-                getattr(lstm, weight_name + str(i)).copy_(pytorch_weights)
-
-    return lstm
-
-
-def optimization(lstm, train_loader, alphas, a_idx, mu, h_list, theta):
-
-    # obtain W, R and b from current h
-    # W = h.parameters
-    # R = h.parameters
-    # b = h.parameters
-    # W, R, b = get_weights(lstm_model, batch_size=len())
-    # dh_list = np.diff(h_list)
-    # dW_list = np.diff()
-
-    # update theta
-    theta = updating_theta(lstm, train_loader, h_list, theta, mu, alphas, a_idx)
-
-    # update lstm
-    lstm = update_lstm(lstm, theta)
-
-    return lstm
-
-
 ### ALGORITHM START ###
+
+# calculate cost function kappa with alpha_0 and theta_0:
+# obtain h_bar from the lstm with theta_0, given the data
+h_bar_list, theta, theta_gradients = lstm_results(
+    lstm_model, model_params, train_loader, track_jets_train_data, batch_size, device
+)
+h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+
+"""
+alphas = np.abs(svm_model.dual_coef_)
+a_idx = svm_model.support_"""
+# TODO set alphas to 1 or 0 so cost_next - cost will be large
+cost = 1  # kappa(alphas, a_idx, h_bar_list)
+
+
 k = -1
-while k < 1:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
+while k < 5:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
 
     # track branch number for tracking what jet_track array to use
     k += 1
 
-    # W, R, b = get_weights(model=lstm_model, batch_size=batch_size)
-    # h_bar_list = [[h_bar.detach().numpy()[0] for h_bar in h_bar_list]]
-    h_bar_list, theta = lstm_results(lstm_model, train_loader)
-    h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+    # keep previous cost result stored
+    cost_prev = copy(cost)
 
+    # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
     svm_model.fit(h_bar_list_np)
     alphas = np.abs(svm_model.dual_coef_)
     a_idx = svm_model.support_
 
-    lstm_model = optimization(
+    # obtain theta_k+1 using the optimization algorithm
+    lstm_model, theta_next = optimization(
         lstm_model,
+        model_params,
         train_loader,
+        track_jets_train_data,
+        batch_size,
         alphas,
         a_idx,
         learning_rate,
         h_list=h_bar_list,
         theta=theta,
+        theta_gradients=theta_gradients,
+        device=device,
     )
 
-    print("Done")
+    # obtain h_bar from the lstm with theta_k+1, given the data
+    h_bar_list, theta, theta_gradients = lstm_results(
+        lstm_model,
+        model_params,
+        train_loader,
+        track_jets_train_data,
+        batch_size,
+        device,
+    )
+    h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
 
-    """
-    # get rho?
-    for i in range(h_bar_list):
-        rho = 0
-        for j in range(h_bar_list):
-            rho += alpha[j] * alpha[i] * h_bar_list[j] * h_bar_list[i]
-    """
+    # obtain the new cost given theta_k+1 and alpha_k+1
+    cost = kappa(alphas, a_idx, h_bar_list)
+
+    # check condition (25)
+    print((cost - cost_prev) ** 2)
+    if (cost - cost_prev) ** 2 < eps:
+        break
+
+    print("Done")
