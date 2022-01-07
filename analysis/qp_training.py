@@ -80,13 +80,12 @@ from copy import copy
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Variables:
-batch_size = 100
-
+batch_size = 150
 output_dim = 1
 layer_dim = 1
 dropout = 0.2
-n_epochs = 4
-learning_rate = 1e-3
+epochs = 200
+learning_rate = 0.0001
 weight_decay = 1e-6
 
 eps = 1e-2  # test value for convergence
@@ -141,28 +140,30 @@ a_idx = svm_model.support_"""
 # TODO set alphas to 1 or 0 so cost_next - cost will be large
 cost = 1  # kappa(alphas, a_idx, h_bar_list)
 
+# obtain h_bar from the lstm with theta_0, given the data
+h_bar_list, theta, theta_gradients = lstm_results(
+    lstm_model,
+    model_params,
+    train_loader,
+    track_jets_train_data,
+    batch_size,
+    device,
+)
+h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+
+# Array to track cost
+track_cost_condition = np.zeros(epochs + 1)
 
 k = -1
-while k < 5:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
+while k < epochs:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
     k += 1
-
-    # obtain h_bar from the lstm with theta_0, given the data
-    h_bar_list, theta, theta_gradients = lstm_results(
-        lstm_model,
-        model_params,
-        train_loader,
-        track_jets_train_data,
-        batch_size,
-        device,
-    )
-    h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
 
     # keep previous cost result stored
     cost_prev = copy(cost)
 
     # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
     svm_model.fit(h_bar_list_np)
-    alphas = np.abs(svm_model.dual_coef_)
+    alphas = np.abs(svm_model.dual_coef_)[0]
     a_idx = svm_model.support_
 
     # obtain theta_k+1 using the optimization algorithm
@@ -190,10 +191,17 @@ while k < 5:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps
 
     # obtain the new cost given theta_k+1 and alpha_k+1
     cost = kappa(alphas, a_idx, h_bar_list)
-
     # check condition (25)
+
     print((cost - cost_prev) ** 2)
+
+    track_cost_condition[k] = (cost - cost_prev) ** 2
+
+    if k > 0:
+        print(f"Change in cost is {track_cost_condition[k-1]-track_cost_condition[k]}")
+
     if (cost - cost_prev) ** 2 < eps:
+        print("Succes")
         break
 
 

@@ -86,12 +86,26 @@ def kappa(alphas, a_idx, h_list):
     Returns:
         (torch.Tensor): kappa value resulting from equation (22) in Tolga's paper
     """
-    out = 0
-    for idx1, i in enumerate(a_idx):
-        for idx2, j in enumerate(a_idx):
-            out += (
-                0.5 * alphas[0, idx1] * alphas[0, idx2] * (2 * h_list[i].T @ h_list[j])
-            )
+    # Use torch.no_grad to not record changes in this section
+    with torch.no_grad():
+        h_matrix = (
+            h_list[a_idx] @ h_list[a_idx].T
+        )  # Matrix multiplication is time consuming, thus to do this as least as possbile do this
+        # once and create a matrix with the results
+
+        # out1 = 0
+        # for idx1, i in enumerate(a_idx):
+        #     for idx2, j in enumerate(a_idx):
+        #         out1 += 0.5 * alphas[idx1] * alphas[idx2] * (h_list[i].T @ h_list[j])
+
+        out = 0  # use for trackking summation
+        n_alphas = len(a_idx)
+
+        alphas_matrix = np.outer(alphas, alphas).T
+
+        for i in range(n_alphas):
+            out += 0.5 * n_alphas * np.dot(alphas_matrix[i], h_matrix[i])
+
     return out
 
 
@@ -165,17 +179,19 @@ def delta_func(
     # )
     # return (kappa(alphas, a_idx, h_list_new) - kappa(alphas, a_idx, h_list)) / (
     #     new_weight - weight
-    # )  # Alphas, en a_idx worden niet correct geimporteerd in de functie TODO
-    out = 0
-    for idx1, i in enumerate(a_idx):
-        for idx2, j in enumerate(a_idx):
-            out += (
-                alphas[0, idx1]
-                * alphas[0, idx2]
-                * (h_list[i] + h_list[j])
-                @ theta_gradients
-            )
-    return
+    # )
+    # Use torch.no_grad to not record changes in this section
+    with torch.no_grad():
+        out = 0
+        for idx1, i in enumerate(a_idx):
+            for idx2, j in enumerate(a_idx):
+                out += (
+                    alphas[0, idx1]
+                    * alphas[0, idx2]
+                    * (h_list[i] + h_list[j])
+                    @ theta_gradients
+                )
+    return out
 
 
 def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
@@ -201,12 +217,11 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
     alphas_j = np.sum(alphas)
 
     d_kappa = (
-        h_bar_list[a_idx].T
-        @ (alphas_j * torch.tensor(alphas)).type(torch.FloatTensor).T
+        alphas_j * torch.tensor(alphas).type(torch.FloatTensor) @ h_bar_list[a_idx]
     )
 
     return (
-        gradient_hi.T * d_kappa.T
+        d_kappa * gradient_hi.T
     ).T  # TODO: check if this the correct way of multiplication
 
 
@@ -251,15 +266,8 @@ def updating_theta(
 
             gradient_weight = gradient_weights[weight_name]
 
-            t1 = time.time()
-
             # derivative of function e.g. F = (25) from Tolga
             g = calc_g(gradient_weight, h_bar_list, alphas, a_idx)
-
-            print(t1 - time.time())
-
-            if weight_name[0] == "b":
-                a = 1  # TODO, the g returned for the bias doesn't match in shape with what is expected, and thus can't calculate a (below)
 
             a = g @ weight.T - weight @ g.T
             i = torch.eye(weight.shape[0])
@@ -289,8 +297,10 @@ def update_lstm(lstm, theta):
         # get full original weights, called pytorch_weights (following lstm structure)
         pytorch_weights = get_full_pytorch_weight(weights)
 
+        # Get weight name without layer number
         weight_name = list(weights.keys())[0][5:-1]
 
+        # Loop over all layers
         for i in range(len(weights) // 4):
             with torch.no_grad():
                 getattr(lstm.lstm, weight_name + str(i)).copy_(pytorch_weights[str(i)])

@@ -304,6 +304,7 @@ def get_full_pytorch_weight(weights):
     """
     # get full original weights, called pytorch_weights (following lstm structure)
     weights: dict for specified weight group (see get_weights in functions/data_manipulation for dict type)
+    Store the information per lstm layer, i.e. 1st layer is 0 2nd layer is 1 etc.
     """
     pytorch_weights = dict()
 
