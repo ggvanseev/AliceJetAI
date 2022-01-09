@@ -84,8 +84,8 @@ batch_size = 150
 output_dim = 1
 layer_dim = 1
 dropout = 0.2
-epochs = 200
-learning_rate = 0.0001
+epochs = 20
+learning_rate = 1
 weight_decay = 1e-6
 
 eps = 1e-2  # test value for convergence
@@ -196,6 +196,10 @@ while k < epochs:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) 
     print((cost - cost_prev) ** 2)
 
     track_cost_condition[k] = (cost - cost_prev) ** 2
+
+    if np.isnan(track_cost_condition[k]):
+        print("Broke, for given hyper parameters")
+        break
 
     if k > 0:
         print(f"Change in cost is {track_cost_condition[k-1]-track_cost_condition[k]}")
