@@ -36,7 +36,9 @@ def format_ak_to_list(arr: ak.Array) -> list:
     # awkward.to_list() creates dictionaries, reform to list only
     lst = [list(x.values()) for x in ak.to_list(arr)]
     # remove empty entries and weird nestedness, e.g. dr[[...]], TODO
-    lst = [[y[0] for y in x] for x in lst if x != [[], [], []]]
+    lst = [
+        [y[0] for y in x] for x in lst if x != [[], [], []]
+    ]  # TODO, this is not generic, only works for an input of three has to be adjusted
     # transpose remainder to get correct shape
     lst = [list(map(list, zip(*x))) for x in lst]
     return lst

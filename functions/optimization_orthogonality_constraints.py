@@ -209,11 +209,6 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
     """
 
     # TODO: the looping takes to long (8 seconds with this small batch, maybe there is a way to speed it up)
-
-    # calculate
-    out = 0
-    # Om een of andere reden duurt dit heel lang...
-
     alphas_j = np.sum(alphas)
 
     d_kappa = (

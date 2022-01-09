@@ -77,12 +77,15 @@ from ai.model_lstm import LSTMModel
 
 from copy import copy
 
+import branch_names as na
+import matplotlib.pyplot as plt
+
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Variables:
 batch_size = 150
 output_dim = 1
-layer_dim = 1
+layer_dim = 2
 dropout = 0.2
 epochs = 20
 learning_rate = 1
@@ -124,7 +127,7 @@ model_params = {
 lstm_model = LSTMModel(**model_params)
 
 # svm model
-svm_model = OneClassSVM(nu=0.5, gamma=0.35, kernel="rbf")
+svm_model = OneClassSVM(nu=0.05, gamma=0.35, kernel="rbf")
 
 # path for model - only used for saving
 # model_path = f'models/{lstm_model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
@@ -207,6 +210,51 @@ while k < epochs:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) 
     if (cost - cost_prev) ** 2 < eps:
         print("Succes")
         break
+
+# Plotting can be moved later to a seperate map (here for speed)
+for x_batch, y_batch in val_loader:
+    x_batch = x_batch
+
+x_reduced = lstm_model(
+    x_batch[:5, :]
+)  # Pretend as if first jet is 5 splits long, to check if it predicts. This will give an error (TODO)
+x_predicted = svm_model.predict(x_reduced)
+
+# define the meshgrid
+x_min, x_max = x_reduced[:, 0].min() - 5, x_reduced[:, 0].max() + 5
+y_min, y_max = x_reduced[:, 1].min() - 5, x_reduced[:, 1].max() + 5
+
+x_ = np.linspace(x_min, x_max, 500)
+y_ = np.linspace(y_min, y_max, 500)
+
+xx, yy = np.meshgrid(x_, y_)
+
+# evaluate the decision function on the meshgrid
+z = svm_model.decision_function(np.c_[xx.ravel(), yy.ravel()])
+z = z.reshape(xx.shape)
+
+# plot the decision function and the reduced data
+plt.contourf(xx, yy, z, cmap=plt.cm.PuBu)
+a = plt.contour(xx, yy, z, levels=[0], linewidths=2, colors="darkred")
+b = plt.scatter(
+    x_reduced[x_predicted == 1, 0],
+    x_reduced[x_predicted == 1, 1],
+    c="white",
+    edgecolors="k",
+)
+c = plt.scatter(
+    x_reduced[x_predicted == -1, 0],
+    x_reduced[x_predicted == -1, 1],
+    c="gold",
+    edgecolors="k",
+)
+plt.legend(
+    [a.collections[0], b, c],
+    ["learned frontier", "regular observations", "abnormal observations"],
+    bbox_to_anchor=(1.05, 1),
+)
+plt.axis("tight")
+plt.show()
 
 
 print("Done")

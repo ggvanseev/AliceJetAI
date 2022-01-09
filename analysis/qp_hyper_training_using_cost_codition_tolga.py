@@ -91,18 +91,24 @@ from functools import partial
 
 # Set hyper space and variables
 
-max_evals = 15
+max_evals = 100
 space = hp.choice(
     "hyper_parameters",
     [
         {
-            "batch_size": hp.choice("num_batch", [100]),
-            "num_epochs": hp.choice("num_epochs", [500]),
+            "batch_size": hp.choice("num_batch", [50, 100, 200]),
+            "num_epochs": hp.choice("num_epochs", [int(500)]),
             "num_layers": hp.choice("num_layers", [1]),
-            "learning_rate": hp.choice("learning_rate", [5e-5, 1e-6, 1e-7]),
+            "learning_rate": hp.choice("learning_rate", [1e-7, 1e-5, 0.1]),
             "decay_factor": hp.choice("decay_factor", [0.9]),
             "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
+            "svm_nu": hp.choice(
+                "svm_nu", [0.05, 0.01, 0.04, 0.001]
+            ),  # 0.5 was the default
+            "svm_gamma": hp.choice(
+                "svm_gamma", ["scale", "auto"]
+            ),  # , "scale", [ 0.23 was the defeault before]
         }
     ],
 )
@@ -129,6 +135,8 @@ def try_hyperparameters(hyper_parameters: dict, train_data, dev_data):
     dropout = hyper_parameters["dropout"]
     epochs = hyper_parameters["num_epochs"]
     learning_rate = hyper_parameters["learning_rate"]
+    svm_nu = hyper_parameters["svm_nu"]
+    svm_gamma = hyper_parameters["svm_gamma"]
     # weight_decay = 1e-6
     eps = 1e-2  # test value for convergence
 
@@ -163,7 +171,7 @@ def try_hyperparameters(hyper_parameters: dict, train_data, dev_data):
     lstm_model = LSTMModel(**model_params)
 
     # svm model
-    svm_model = OneClassSVM(nu=0.5, gamma=0.35, kernel="rbf")
+    svm_model = OneClassSVM(nu=svm_nu, gamma=svm_gamma, kernel="rbf")
 
     # path for model - only used for saving
     # model_path = f'models/{lstm_model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
@@ -246,8 +254,8 @@ def try_hyperparameters(hyper_parameters: dict, train_data, dev_data):
             break
 
     print(f"Done in: {time.time()-time_track}")
-    title_plot = f"plot_with_{epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate"
-    plt.figure(title_plot)
+    title_plot = f"plot_with_{epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu"
+    plt.figure(title_plot, figsize=[6 * 1.36, 6], dpi=160)
     plt.title(title_plot, y=1.08)
     plt.plot(track_cost_condition[1:])
     plt.xlabel("Epochs")
@@ -256,7 +264,7 @@ def try_hyperparameters(hyper_parameters: dict, train_data, dev_data):
 
     # To fulfill codition using fmin return similair as
 
-    return {"loss": track_cost_condition[-1], "status": STATUS_OK}
+    return {"loss": np.min(track_cost_condition), "status": STATUS_OK}
 
 
 best = fmin(
