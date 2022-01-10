@@ -36,7 +36,9 @@ def format_ak_to_list(arr: ak.Array) -> list:
     # awkward.to_list() creates dictionaries, reform to list only
     lst = [list(x.values()) for x in ak.to_list(arr)]
     # remove empty entries and weird nestedness, e.g. dr[[...]], TODO
-    lst = [[y[0] for y in x] for x in lst if x != [[], [], []]]
+    lst = [
+        [y[0] for y in x] for x in lst if x != [[], [], []]
+    ]  # TODO, this is not generic, only works for an input of three has to be adjusted
     # transpose remainder to get correct shape
     lst = [list(map(list, zip(*x))) for x in lst]
     return lst
@@ -57,7 +59,7 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
 
 
 def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
-    # Count all values (, is indicative of a value), and divide by n_features to prevent double counting splits
+    # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
 
     # Batches, is a list with all the batches
@@ -70,12 +72,12 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
         # Space count tracks if branch is filled to max
         space_count = batch_size
 
-        # make copies of the dataset to be able to remove elements while trying to fill branches
-        # without destroying original dataset
+        # make copies of the dataset to be able to remove elemnts while trying to fill branches
+        # without destroyting original dataset
         temp_dataset = copy(dataset)
         temp_dataset2 = copy(dataset)
 
-        # local trackers of batches ad jets_in_batch
+        # local trakcers of batches ad jets_in_batch
         batch = []
         jets_in_batch = []
 
@@ -125,7 +127,7 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
 
 def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
     """
-    Returns a DataLoader class to work with the large datasets in PyTorch LSTM
+    Returns a DataLoader class to work with the large datasets in skilearn LSTM
     """
 
     # Check if it is the first data for the scalar, if so fit scalar to this data.
@@ -250,7 +252,7 @@ def get_gradient_weights(model, batch_size):
         # loop over all weight types
         for j in range(4):
             # Make sure all names have the same string length between beginning and first {}
-            w[f"w__{weight_type_list[j]}_weight_ih_l{i}.grad"] = (
+            w[f"w__{weight_type_list[j]}_weight_ih_l{i}"] = (
                 getattr(model, f"weight_ih_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
@@ -258,19 +260,19 @@ def get_gradient_weights(model, batch_size):
                 0
             ]  # Add the [0], to conform to black formatting, but not store in ()
 
-            r[f"r__{weight_type_list[j]}_weight_hh_l{i}.grad"] = (
+            r[f"r__{weight_type_list[j]}_weight_hh_l{i}"] = (
                 getattr(model, f"weight_hh_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
             )[0]
 
-            bi[f"bi_{weight_type_list[j]}_bias_ih_l{i}.grad"] = (
+            bi[f"bi_{weight_type_list[j]}_bias_ih_l{i}"] = (
                 getattr(model, f"bias_ih_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
             )[0]
 
-            bh[f"bh_{weight_type_list[j]}_bias_hh_l{i}.grad"] = (
+            bh[f"bh_{weight_type_list[j]}_bias_hh_l{i}"] = (
                 getattr(model, f"bias_hh_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
@@ -304,6 +306,7 @@ def get_full_pytorch_weight(weights):
     """
     # get full original weights, called pytorch_weights (following lstm structure)
     weights: dict for specified weight group (see get_weights in functions/data_manipulation for dict type)
+    Store the information per lstm layer, i.e. 1st layer is 0 2nd layer is 1 etc.
     """
     pytorch_weights = dict()
 

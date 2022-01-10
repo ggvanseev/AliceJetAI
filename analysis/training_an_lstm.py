@@ -70,14 +70,15 @@ output_dim = 3
 # flags
 flag_save_intermediate_results = False
 flag_save_loss_plots = False
+
 # hyper tuning space
 max_evals = 1
 space = hp.choice(
     "hyper_parameters",
     [
         {
-            "num_batch": hp.choice("num_batch", [100, 1000]),
-            "num_epochs": hp.choice("num_epochs", [1, 2]),
+            "num_batch": hp.choice("num_batch", [100, 200]),
+            "num_epochs": hp.choice("num_epochs", [10, 100, 200, 300]),
             "num_layers": hp.choice("num_layers", [1]),
             "hidden_size0": hp.choice("hidden_size0", [8]),
             "hidden_size1": hp.choice("hidden_size1", [4]),

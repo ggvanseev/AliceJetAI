@@ -77,16 +77,18 @@ from ai.model_lstm import LSTMModel
 
 from copy import copy
 
+import branch_names as na
+import matplotlib.pyplot as plt
+
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Variables:
-batch_size = 100
-
+batch_size = 150
 output_dim = 1
-layer_dim = 1
+layer_dim = 2
 dropout = 0.2
-n_epochs = 4
-learning_rate = 1e-3
+epochs = 20
+learning_rate = 1
 weight_decay = 1e-6
 
 eps = 1e-2  # test value for convergence
@@ -94,6 +96,7 @@ eps = 1e-2  # test value for convergence
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
+
 
 # only use g_recur_jets
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
@@ -125,7 +128,7 @@ model_params = {
 lstm_model = LSTMModel(**model_params)
 
 # svm model
-svm_model = OneClassSVM(nu=0.5, gamma=0.35, kernel="rbf")
+svm_model = OneClassSVM(nu=0.5, gamma="scale", kernel="rbf")
 
 # path for model - only used for saving
 # model_path = f'models/{lstm_model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
@@ -134,25 +137,29 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 
 ### ALGORITHM START ###
-
-# calculate cost function kappa with alpha_0 and theta_0:
-# obtain h_bar from the lstm with theta_0, given the data
-h_bar_list, theta, theta_gradients = lstm_results(
-    lstm_model, model_params, train_loader, track_jets_train_data, batch_size, device
-)
-h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
-
 """
 alphas = np.abs(svm_model.dual_coef_)
 a_idx = svm_model.support_"""
+# calculate cost function kappa with alpha_0 and theta_0:
 # TODO set alphas to 1 or 0 so cost_next - cost will be large
 cost = 1  # kappa(alphas, a_idx, h_bar_list)
 
+# obtain h_bar from the lstm with theta_0, given the data
+h_bar_list, theta, theta_gradients = lstm_results(
+    lstm_model,
+    model_params,
+    train_loader,
+    track_jets_train_data,
+    batch_size,
+    device,
+)
+h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+
+# Array to track cost
+track_cost_condition = np.zeros(epochs + 1)
 
 k = -1
-while k < 5:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
-
-    # track branch number for tracking what jet_track array to use
+while k < epochs:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
     k += 1
 
     # keep previous cost result stored
@@ -160,20 +167,16 @@ while k < 5:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps
 
     # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
     svm_model.fit(h_bar_list_np)
-    alphas = np.abs(svm_model.dual_coef_)
+    alphas = np.abs(svm_model.dual_coef_)[0]
     a_idx = svm_model.support_
 
     # obtain theta_k+1 using the optimization algorithm
     lstm_model, theta_next = optimization(
-        lstm_model,
-        model_params,
-        train_loader,
-        track_jets_train_data,
-        batch_size,
-        alphas,
-        a_idx,
-        learning_rate,
-        h_list=h_bar_list,
+        lstm=lstm_model,
+        alphas=alphas,
+        a_idx=a_idx,
+        mu=learning_rate,
+        h_bar_list=h_bar_list,
         theta=theta,
         theta_gradients=theta_gradients,
         device=device,
@@ -192,11 +195,67 @@ while k < 5:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps
 
     # obtain the new cost given theta_k+1 and alpha_k+1
     cost = kappa(alphas, a_idx, h_bar_list)
-
     # check condition (25)
+
     print((cost - cost_prev) ** 2)
-    if (cost - cost_prev) ** 2 < eps:
+
+    track_cost_condition[k] = (cost - cost_prev) ** 2
+
+    if np.isnan(track_cost_condition[k]):
+        print("Broke, for given hyper parameters")
         break
 
-    print("Done")
+    if k > 0:
+        print(f"Change in cost is {track_cost_condition[k-1]-track_cost_condition[k]}")
 
+    if (cost - cost_prev) ** 2 < eps:
+        print("Succes")
+        break
+
+# Plotting can be moved later to a seperate map (here for speed)
+for x_batch, y_batch in val_loader:
+    x_batch = x_batch
+
+x_reduced = lstm_model(
+    x_batch[:5, :]
+)  # Pretend as if first jet is 5 splits long, to check if it predicts. This will give an error (TODO)
+x_predicted = svm_model.predict(x_reduced)
+
+# define the meshgrid
+x_min, x_max = x_reduced[:, 0].min() - 5, x_reduced[:, 0].max() + 5
+y_min, y_max = x_reduced[:, 1].min() - 5, x_reduced[:, 1].max() + 5
+
+x_ = np.linspace(x_min, x_max, 500)
+y_ = np.linspace(y_min, y_max, 500)
+
+xx, yy = np.meshgrid(x_, y_)
+
+# evaluate the decision function on the meshgrid
+z = svm_model.decision_function(np.c_[xx.ravel(), yy.ravel()])
+z = z.reshape(xx.shape)
+
+# plot the decision function and the reduced data
+plt.contourf(xx, yy, z, cmap=plt.cm.PuBu)
+a = plt.contour(xx, yy, z, levels=[0], linewidths=2, colors="darkred")
+b = plt.scatter(
+    x_reduced[x_predicted == 1, 0],
+    x_reduced[x_predicted == 1, 1],
+    c="white",
+    edgecolors="k",
+)
+c = plt.scatter(
+    x_reduced[x_predicted == -1, 0],
+    x_reduced[x_predicted == -1, 1],
+    c="gold",
+    edgecolors="k",
+)
+plt.legend(
+    [a.collections[0], b, c],
+    ["learned frontier", "regular observations", "abnormal observations"],
+    bbox_to_anchor=(1.05, 1),
+)
+plt.axis("tight")
+plt.show()
+
+
+print("Done")

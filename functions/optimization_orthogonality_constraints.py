@@ -6,6 +6,9 @@ from functions.data_manipulation import (
     put_weight_in_pytorch_matrix,
 )
 
+import time
+import numpy as np
+
 
 def lstm_results(
     lstm_model,
@@ -60,6 +63,13 @@ def lstm_results(
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
 
+    # Get mean of theta gradients
+    for key1, value in theta_gradients_temp.items():
+        for key2, value2 in value.items():
+            theta_gradients[key1][key2] = theta_gradients[key1][key2] / len(
+                train_loader
+            )
+
     return torch.vstack([h_bar[0] for h_bar in h_bar_list]), theta, theta_gradients
 
 
@@ -76,10 +86,29 @@ def kappa(alphas, a_idx, h_list):
     Returns:
         (torch.Tensor): kappa value resulting from equation (22) in Tolga's paper
     """
-    out = 0
-    for idx1, i in enumerate(a_idx):
-        for idx2, j in enumerate(a_idx):
-            out += 0.5 * alphas[0, idx1] * alphas[0, idx2] * (h_list[i].T @ h_list[j])
+    # Use torch.no_grad to not record changes in this section
+    with torch.no_grad():
+        h_matrix = (
+            h_list[a_idx] @ h_list[a_idx].T
+        )  # Matrix multiplication is time consuming, thus to do this as least as possbile do this
+        # once and create a matrix with the results
+
+        # out1 = 0
+        # for idx1, i in enumerate(a_idx):
+        #     for idx2, j in enumerate(a_idx):
+        #         out1 += (
+        #             0.5 * alphas[idx1] * alphas[idx2] * h_matrix[idx1, idx2]
+        #         )  # (h_list[i].T @ h_list[j])
+
+        out = 0  # use for trackking summation
+        n_alphas = len(a_idx)
+
+        alphas_matrix = np.outer(alphas, alphas).T
+
+        for i in range(n_alphas):
+            # Slight difference compared to taking for loops (probably due to numerical solution in numpy), but this is a systematic error that cancels out (?) when comparing two kappas.
+            out += 0.5 * np.dot(alphas_matrix[i], h_matrix[i])
+
     return out
 
 
@@ -103,15 +132,15 @@ def delta_func(
     G = dkappa / dW_ij = alpha_i * alpha_j * h_ij * dh_ij / dW_ij
     since the derivative of x^T x = 2x
     dh / dW can be obtained from theta_gradients
-    
+
     d(h_i.T * h_j) / dh =  ((dh_i / dW) * h_j + (h_i.T dh_j/dW))
-    = (h_i + h_j) * dh/dW 
-    
+    = (h_i + h_j) * dh/dW
+
 
     Args:
         lstm_model (LSTMModel): the LSTM model
         train_loader (torch.utils.data.dataloader.DataLoader): object by PyTorch, stores
-                the data 
+                the data
         h_list (torch.Tensor): contains the h_bar results from the LSTM
         weight (torch.Tensor): contains weights/biases of the LSTM
         weight_name (str): description of which weight/bias is currently used
@@ -120,10 +149,10 @@ def delta_func(
                                                               with the SMO algorithm
         a_idx (numpy.ndarray): contains the indices of datapoints corresponding to the
                                                                  non-zero alpha values
-        pytorch_weights (torch.Tensor): tensor 
+        pytorch_weights (torch.Tensor): tensor
 
     Returns:
-        (torch.Tensor): derivative of the cost function to the weight/bias 
+        (torch.Tensor): derivative of the cost function to the weight/bias
     """
 
     # d_weight = mu * weight
@@ -153,26 +182,49 @@ def delta_func(
     # )
     # return (kappa(alphas, a_idx, h_list_new) - kappa(alphas, a_idx, h_list)) / (
     #     new_weight - weight
-    # )  # Alphas, en a_idx worden niet correct geimporteerd in de functie TODO
-    out = 0
-    for idx1, i in enumerate(a_idx):
-        for idx2, j in enumerate(a_idx):
-            out += (
-                alphas[0, idx1]
-                * alphas[0, idx2]
-                * (h_list[i] + h_list[j])
-                @ theta_gradients
-            )
-    return
+    # )
+    # Use torch.no_grad to not record changes in this section
+    with torch.no_grad():
+        out = 0
+        for idx1, i in enumerate(a_idx):
+            for idx2, j in enumerate(a_idx):
+                out += (
+                    alphas[0, idx1]
+                    * alphas[0, idx2]
+                    * (h_list[i] + h_list[j])
+                    @ theta_gradients
+                )
+    return out
+
+
+def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
+    """Calculates the derivative of G to a specific weight or bias.
+    G = dkappa / dW_ij = (dkappa * dh_ij) *(dh_ij / dW_ij)
+    Since the derivative of x^T x = 2x and
+    dh / dW can be obtained from theta_gradients
+    this is
+
+    G = dkappa / dW_ij = (dkappa * dh_ij) *(dh_ij / dW_ij) =
+    (0.5*sumi,j alpah_i*alpha_j*2*hi) * dh/dw(theta_gradients)
+    = sum_alhpa_j*alpha_i*h_i
+
+    proof: https://math.stackexchange.com/questions/1377764/derivative-of-vector-and-vector-transpose-product
+    """
+
+    # TODO: the looping takes to long (8 seconds with this small batch, maybe there is a way to speed it up)
+    alphas_j = np.sum(alphas)
+
+    d_kappa = (
+        alphas_j * torch.tensor(alphas).type(torch.FloatTensor) @ h_bar_list[a_idx]
+    )
+
+    return (
+        d_kappa * gradient_hi.T
+    ).T  # TODO: check if this the correct way of multiplication
 
 
 def updating_theta(
-    lstm_model,
-    model_params,
-    train_loader,
-    track_jets_train_data,
-    batch_size,
-    h_list,
+    h_bar_list,
     theta: dict,
     theta_gradients: dict,
     mu,
@@ -180,13 +232,13 @@ def updating_theta(
     a_idx,
     device,
 ):
-    """Updates the weights of the LSTM contained in theta according to the optimization 
+    """Updates the weights of the LSTM contained in theta according to the optimization
     algorithm with orthogonality constraints
 
     Args:
         lstm_model (LSTMModel): the LSTM model
         train_loader (torch.utils.data.dataloader.DataLoader): object by PyTorch, stores
-                                                                                the data 
+                                                                                the data
         h_list (torch.Tensor): contains the h_bar results from the LSTM
         theta (dict): contains the weights and bias values of the LSTM
         mu (float): learning rate
@@ -205,31 +257,15 @@ def updating_theta(
 
         track_weights = dict()
 
-        # get full original weights, called pytorch_weights (following lstm structure)
-        pytorch_weights = get_full_pytorch_weight(weights)
+        gradient_weights = theta_gradients[weight_type]
 
         for weight_name, weight in weights.items():
             # follow steps from eq. 24 in paper Tolga
 
-            pytorch_weights_layer = pytorch_weights[weight_name[-1]]
+            gradient_weight = gradient_weights[weight_name]
 
             # derivative of function e.g. F = (25) from Tolga
-            g = delta_func(
-                lstm_model,
-                model_params,
-                train_loader,
-                track_jets_train_data,
-                batch_size,
-                h_list,
-                theta_gradients,
-                weight,
-                weight_name,
-                mu,
-                alphas,
-                a_idx,
-                pytorch_weights_layer,
-                device,
-            )
+            g = calc_g(gradient_weight, h_bar_list, alphas, a_idx)
 
             a = g @ weight.T - weight @ g.T
             i = torch.eye(weight.shape[0])
@@ -259,8 +295,10 @@ def update_lstm(lstm, theta):
         # get full original weights, called pytorch_weights (following lstm structure)
         pytorch_weights = get_full_pytorch_weight(weights)
 
+        # Get weight name without layer number
         weight_name = list(weights.keys())[0][5:-1]
 
+        # Loop over all layers
         for i in range(len(weights) // 4):
             with torch.no_grad():
                 getattr(lstm.lstm, weight_name + str(i)).copy_(pytorch_weights[str(i)])
@@ -270,14 +308,10 @@ def update_lstm(lstm, theta):
 
 def optimization(
     lstm,
-    model_params,
-    train_loader,
-    track_jets_train_data,
-    batch_size,
     alphas,
     a_idx,
     mu,
-    h_list,
+    h_bar_list,
     theta,
     theta_gradients,
     device=torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"),
@@ -287,7 +321,7 @@ def optimization(
     Args:
         lstm (LSTMModel): the LSTM model used
         train_loader (torch.utils.data.dataloader.DataLoader): object by PyTorch,
-                                                                  stores the data 
+                                                                  stores the data
         alphas (numpy.ndarray): contains non-zero alpha values obtained from the SVM
                                                               with the SMO algorithm
         a_idx (numpy.ndarray): contains the indices of datapoints corresponding to the
@@ -301,12 +335,7 @@ def optimization(
     """
     # update theta
     theta = updating_theta(
-        lstm,
-        model_params,
-        train_loader,
-        track_jets_train_data,
-        batch_size,
-        h_list,
+        h_bar_list,
         theta,
         theta_gradients,
         mu,
