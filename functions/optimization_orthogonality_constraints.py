@@ -96,7 +96,9 @@ def kappa(alphas, a_idx, h_list):
         # out1 = 0
         # for idx1, i in enumerate(a_idx):
         #     for idx2, j in enumerate(a_idx):
-        #         out1 += 0.5 * alphas[idx1] * alphas[idx2] * (h_list[i].T @ h_list[j])
+        #         out1 += (
+        #             0.5 * alphas[idx1] * alphas[idx2] * h_matrix[idx1, idx2]
+        #         )  # (h_list[i].T @ h_list[j])
 
         out = 0  # use for trackking summation
         n_alphas = len(a_idx)
@@ -104,7 +106,8 @@ def kappa(alphas, a_idx, h_list):
         alphas_matrix = np.outer(alphas, alphas).T
 
         for i in range(n_alphas):
-            out += 0.5 * n_alphas * np.dot(alphas_matrix[i], h_matrix[i])
+            # Slight difference compared to taking for loops (probably due to numerical solution in numpy), but this is a systematic error that cancels out (?) when comparing two kappas.
+            out += 0.5 * np.dot(alphas_matrix[i], h_matrix[i])
 
     return out
 
