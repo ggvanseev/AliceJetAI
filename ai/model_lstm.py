@@ -52,6 +52,7 @@ class LSTMModel(nn.Module):
 
         # Do backward to get gradients with respect to hn (to get first part of chain rule, only take derivative of kappa later for algorithm Tolga)
         hn.sum().backward()
+        # [hn track_jet_select] # call backward ojn each jet output
 
         # Get parameters to update, save in dict for easy reference.
         theta = get_weights(model=self.lstm, batch_size=len(x))
