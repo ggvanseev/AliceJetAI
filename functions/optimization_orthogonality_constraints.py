@@ -34,6 +34,7 @@ def lstm_results(
         dict: new theta containing weights and biases
     """
     h_bar_list = []
+    h_bar_gradient_list = []
 
     i = 0
     for x_batch, y_batch in train_loader:
@@ -53,8 +54,8 @@ def lstm_results(
         if "theta_gradients" not in locals():
             theta_gradients = theta_gradients_temp
         else:
-            for key1, value in theta_gradients_temp.items():
-                for key2, value2 in value.items():
+            for key1, value1 in theta_gradients_temp.items():
+                for key2, value2 in value1.items():
                     theta_gradients[key1][key2] = theta_gradients[key1][key2] + value2
 
         # get mean pooled hidden states
@@ -64,8 +65,8 @@ def lstm_results(
         h_bar_list.append(h_bar)
 
     # Get mean of theta gradients
-    for key1, value in theta_gradients_temp.items():
-        for key2, value2 in value.items():
+    for key1, value1 in theta_gradients_temp.items():
+        for key2, value2 in value1.items():
             theta_gradients[key1][key2] = theta_gradients[key1][key2] / len(
                 train_loader
             )

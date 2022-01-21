@@ -113,6 +113,26 @@ space = hp.choice(
     ],
 )
 
+# define another space just to test a single value in this algorithm TODO remove later
+space_single = hp.choice(
+    "hyper_parameters",
+    [
+        {
+            "batch_size": hp.choice("num_batch", [50]),
+            "num_epochs": hp.choice("num_epochs", [int(500)]),
+            "num_layers": hp.choice("num_layers", [1]),
+            "learning_rate": hp.choice("learning_rate", [0.1]),
+            "decay_factor": hp.choice("decay_factor", [0.9]),
+            "dropout": hp.choice("dropout", [0]),
+            "output_dim": hp.choice("output_dim", [3]),
+            "svm_nu": hp.choice("svm_nu", [0.01]),  # 0.5 was the default
+            "svm_gamma": hp.choice(
+                "svm_gamma", ["scale", "auto"]
+            ),  # , "scale", [ 0.23 was the defeault before]
+        }
+    ],
+)
+
 
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
@@ -184,7 +204,8 @@ def try_hyperparameters(hyper_parameters: dict, train_data, dev_data):
     a_idx = svm_model.support_"""
     # calculate cost function kappa with alpha_0 and theta_0:
     # TODO set alphas to 1 or 0 so cost_next - cost will be large
-    cost = 1  # kappa(alphas, a_idx, h_bar_list)
+    cost = 1e10  # kappa(alphas, a_idx, h_bar_list)
+    cost_prev = 1e9
 
     # obtain h_bar from the lstm with theta_0, given the data
     h_bar_list, theta, theta_gradients = lstm_results(
@@ -198,12 +219,17 @@ def try_hyperparameters(hyper_parameters: dict, train_data, dev_data):
     h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
 
     # Array to track cost
-    track_cost_condition = np.zeros(epochs + 1)
+    # track_cost = np.zeros(epochs + 1)
+    # track_cost_condition = np.zeros(epochs + 1)
+    track_cost = []  # TODO
+    track_cost_condition = []
 
     k = -1
     while (
-        k < epochs
-    ):  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
+        # k < epochs
+        (cost - cost_prev) ** 2
+        >= eps
+    ):
         k += 1
 
         # keep previous cost result stored
@@ -212,6 +238,7 @@ def try_hyperparameters(hyper_parameters: dict, train_data, dev_data):
         # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
         svm_model.fit(h_bar_list_np)
         alphas = np.abs(svm_model.dual_coef_)[0]
+
         a_idx = svm_model.support_
 
         # obtain theta_k+1 using the optimization algorithm
@@ -239,31 +266,40 @@ def try_hyperparameters(hyper_parameters: dict, train_data, dev_data):
 
         # obtain the new cost given theta_k+1 and alpha_k+1
         cost = kappa(alphas, a_idx, h_bar_list)
+
         # check condition (25)
-
         # print((cost - cost_prev) ** 2)
-
-        track_cost_condition[k] = (cost - cost_prev) ** 2
+        # track_cost[k] = cost
+        # track_cost_condition[k] = (cost - cost_prev) ** 2
+        track_cost.append(cost)
+        track_cost_condition.append((cost - cost_prev) ** 2)
 
         if np.isnan(track_cost_condition[k]):
             print("Broke, for given hyper parameters")
             return 1e10  # Return large number to not be selected as the best
 
         if (cost - cost_prev) ** 2 < eps:
-            print("Succes")
+            print("Succes, epoch {}".format(k), cost, cost_prev, sep="\n")
             break
 
     print(f"Done in: {time.time()-time_track}")
+
+    # plot cost condition and cost function
     title_plot = f"plot_with_{epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu"
-    plt.figure(title_plot, figsize=[6 * 1.36, 6], dpi=160)
-    plt.title(title_plot, y=1.08)
-    plt.plot(track_cost_condition[1:])
-    plt.xlabel("Epochs")
-    plt.ylabel("Cost condition")
-    plt.savefig(title_plot + ".png")
+    fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
+    fig.suptitle(title_plot, y=1.08)
+    ax1.plot(track_cost_condition[1:])
+    ax1.set_xlabel("Epochs")
+    ax1.set_ylabel("Cost Condition")
+
+    ax2 = ax1.twinx()
+    ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7)
+    ax2.set_ylabel("Cost")
+
+    fig.savefig("output/" + title_plot + ".png")
 
     # To fulfill codition using fmin return similair as
-
+    # TODO return the cost of last epoch, where the objective function has converged?
     return {"loss": np.min(track_cost_condition), "status": STATUS_OK}
 
 
@@ -273,5 +309,6 @@ best = fmin(
     ),
     space,
     algo=tpe.suggest,
-    max_evals=max_evals,
+    max_evals=30,  # max_evals, TODO
 )
+
