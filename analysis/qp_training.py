@@ -85,6 +85,7 @@ file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # Variables:
 batch_size = 150
 output_dim = 1
+hidden_dim = 2
 layer_dim = 2
 dropout = 0.2
 epochs = 20
@@ -114,7 +115,7 @@ train_loader = lstm_data_prep(
 val_loader = lstm_data_prep(data=dev_data, scaler=scaler, batch_size=batch_size)
 
 input_dim = len(train_data[0])
-hidden_dim = batch_size
+
 
 model_params = {
     "input_dim": input_dim,

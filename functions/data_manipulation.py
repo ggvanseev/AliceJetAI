@@ -146,7 +146,7 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
     return DataLoader(data, batch_size=batch_size, shuffle=False)
 
 
-def get_weights(model, batch_size):
+def get_weights(model, hidden_dim):
     """
     Returns the weight ordered as in the paper(see Tolga)
     Using the scheme below and the knowledge that the weights in the paper (see Tolga, anomaly) correspond as the following:
@@ -169,7 +169,7 @@ def get_weights(model, batch_size):
     """
     # Lists that make it easy to select the matching weight matrixes that are stored in one tensor/matrix by pytorch model
     weight_type_list = ["i", "f", "g", "o"]
-    weight_type_selector = [k * batch_size for k in [0, 1, 2, 3]]
+    weight_type_selector = [k * hidden_dim for k in [0, 1, 2, 3]]
     weight_type_selector.append(None)
 
     # Coresponds to W,R and B respectively:
@@ -215,7 +215,7 @@ def get_weights(model, batch_size):
     return theta
 
 
-def get_gradient_weights(model, batch_size):
+def get_gradient_weights(model, hidden_dim):
     """
     Returns the weight ordered as in the paper(see Tolga)
     Using the scheme below and the knowledge that the weights in the paper (see Tolga, anomaly) correspond as the following:
@@ -238,7 +238,7 @@ def get_gradient_weights(model, batch_size):
     """
     # Lists that make it easy to select the matching weight matrixes that are stored in one tensor/matrix by pytorch model
     weight_type_list = ["i", "f", "g", "o"]
-    weight_type_selector = [k * batch_size for k in [0, 1, 2, 3]]
+    weight_type_selector = [k * hidden_dim for k in [0, 1, 2, 3]]
     weight_type_selector.append(None)
 
     # Coresponds to W,R and B respectively:

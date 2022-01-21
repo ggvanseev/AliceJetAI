@@ -54,8 +54,8 @@ class LSTMModel(nn.Module):
         hn.sum().backward()
 
         # Get parameters to update, save in dict for easy reference.
-        theta = get_weights(model=self.lstm, batch_size=len(x))
-        theta_gradients = get_gradient_weights(model=self.lstm, batch_size=len(x))
+        theta = get_weights(model=self.lstm, hidden_dim=hn.shape[2])
+        theta_gradients = get_gradient_weights(model=self.lstm, hidden_dim=hn.shape[2])
 
         # Convert the final state to our desired output shape (batch_size, output_dim) # retain_graph=True
         out = self.fc(out)

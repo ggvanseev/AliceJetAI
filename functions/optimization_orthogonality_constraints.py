@@ -206,21 +206,19 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
 
     G = dkappa / dW_ij = (dkappa * dh_ij) *(dh_ij / dW_ij) =
     (0.5*sumi,j alpah_i*alpha_j*2*hi) * dh/dw(theta_gradients)
-    = sum_alhpa_j*alpha_i*h_i
+    = sum_alhpa_j*alpha_i*h_i* dh/dw(theta_gradients)
 
     proof: https://math.stackexchange.com/questions/1377764/derivative-of-vector-and-vector-transpose-product
     """
-
-    # TODO: the looping takes to long (8 seconds with this small batch, maybe there is a way to speed it up)
-    alphas_j = np.sum(alphas)
+    alphas_sum = np.sum(alphas)
 
     d_kappa = (
-        alphas_j * torch.tensor(alphas).type(torch.FloatTensor) @ h_bar_list[a_idx]
+        alphas_sum * torch.tensor(alphas).type(torch.FloatTensor) @ h_bar_list[a_idx]
     )
 
-    return (
-        d_kappa * gradient_hi.T
-    ).T  # TODO: check if this the correct way of multiplication
+    out = (d_kappa * gradient_hi.T).T
+
+    return out
 
 
 def updating_theta(
