@@ -34,6 +34,7 @@ def lstm_results(
         dict: new theta containing weights and biases
     """
     h_bar_list = []
+    h_bar_gradient_list = []
 
     i = 0
     for x_batch, y_batch in train_loader:
@@ -53,8 +54,8 @@ def lstm_results(
         if "theta_gradients" not in locals():
             theta_gradients = theta_gradients_temp
         else:
-            for key1, value in theta_gradients_temp.items():
-                for key2, value2 in value.items():
+            for key1, value1 in theta_gradients_temp.items():
+                for key2, value2 in value1.items():
                     theta_gradients[key1][key2] = theta_gradients[key1][key2] + value2
 
         # get mean pooled hidden states
@@ -64,8 +65,8 @@ def lstm_results(
         h_bar_list.append(h_bar)
 
     # Get mean of theta gradients
-    for key1, value in theta_gradients_temp.items():
-        for key2, value2 in value.items():
+    for key1, value1 in theta_gradients_temp.items():
+        for key2, value2 in value1.items():
             theta_gradients[key1][key2] = theta_gradients[key1][key2] / len(
                 train_loader
             )
@@ -212,6 +213,7 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
     """
 
     # TODO: the looping takes to long (8 seconds with this small batch, maybe there is a way to speed it up)
+
     alphas_j = np.sum(alphas)
 
     d_kappa = (
@@ -224,13 +226,7 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
 
 
 def updating_theta(
-    h_bar_list,
-    theta: dict,
-    theta_gradients: dict,
-    mu,
-    alphas,
-    a_idx,
-    device,
+    h_bar_list, theta: dict, theta_gradients: dict, mu, alphas, a_idx, device,
 ):
     """Updates the weights of the LSTM contained in theta according to the optimization
     algorithm with orthogonality constraints
@@ -335,13 +331,7 @@ def optimization(
     """
     # update theta
     theta = updating_theta(
-        h_bar_list,
-        theta,
-        theta_gradients,
-        mu,
-        alphas,
-        a_idx,
-        device,
+        h_bar_list, theta, theta_gradients, mu, alphas, a_idx, device,
     )
 
     # update lstm

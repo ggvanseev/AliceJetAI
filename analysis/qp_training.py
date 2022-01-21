@@ -85,7 +85,7 @@ file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # Variables:
 batch_size = 150
 output_dim = 1
-layer_dim = 2
+layer_dim = 1
 dropout = 0.2
 epochs = 20
 learning_rate = 1
@@ -114,7 +114,7 @@ train_loader = lstm_data_prep(
 val_loader = lstm_data_prep(data=dev_data, scaler=scaler, batch_size=batch_size)
 
 input_dim = len(train_data[0])
-hidden_dim = batch_size
+hidden_dim = 2  # batch_size # TODO
 
 model_params = {
     "input_dim": input_dim,
@@ -128,7 +128,7 @@ model_params = {
 lstm_model = LSTMModel(**model_params)
 
 # svm model
-svm_model = OneClassSVM(nu=0.5, gamma="scale", kernel="rbf")
+svm_model = OneClassSVM(nu=0.05, gamma="scale", kernel="rbf")
 
 # path for model - only used for saving
 # model_path = f'models/{lstm_model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
@@ -146,12 +146,7 @@ cost = 1  # kappa(alphas, a_idx, h_bar_list)
 
 # obtain h_bar from the lstm with theta_0, given the data
 h_bar_list, theta, theta_gradients = lstm_results(
-    lstm_model,
-    model_params,
-    train_loader,
-    track_jets_train_data,
-    batch_size,
-    device,
+    lstm_model, model_params, train_loader, track_jets_train_data, batch_size, device,
 )
 h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
 
@@ -209,43 +204,46 @@ while k < epochs:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) 
         print(f"Change in cost is {track_cost_condition[k-1]-track_cost_condition[k]}")
 
     if (cost - cost_prev) ** 2 < eps:
-        print("Succes")
+        print("Succes", "\n", cost, cost_prev)
         break
 
 # Plotting can be moved later to a seperate map (here for speed)
 for x_batch, y_batch in val_loader:
-    x_batch = x_batch
+    x_batch = x_batch.view(
+        [batch_size, -1, model_params["input_dim"]]
+    )  # TODO to device? I am assuming no since we only look at a single datapoint (jet)
 
-x_reduced = lstm_model(
+hn_reduced, hn_reduced, theta_reduced, theta_gradients_reduced = lstm_model(
     x_batch[:5, :]
 )  # Pretend as if first jet is 5 splits long, to check if it predicts. This will give an error (TODO)
-x_predicted = svm_model.predict(x_reduced)
+hn_predicted = svm_model.predict(hn_reduced[0].detach().numpy())
 
 # define the meshgrid
-x_min, x_max = x_reduced[:, 0].min() - 5, x_reduced[:, 0].max() + 5
-y_min, y_max = x_reduced[:, 1].min() - 5, x_reduced[:, 1].max() + 5
+x_min, x_max = hn_reduced[:, 0].min() - 5, hn_reduced[:, 0].max() + 5
+y_min, y_max = hn_reduced[:, 1].min() - 5, hn_reduced[:, 1].max() + 5
 
-x_ = np.linspace(x_min, x_max, 500)
-y_ = np.linspace(y_min, y_max, 500)
+x_ = np.linspace(x_min.detach().numpy(), x_max.detach().numpy(), 500)
+y_ = np.linspace(y_min.detach().numpy(), y_max.detach().numpy(), 500)
 
 xx, yy = np.meshgrid(x_, y_)
 
 # evaluate the decision function on the meshgrid
-z = svm_model.decision_function(np.c_[xx.ravel(), yy.ravel()])
+# z = svm_model.decision_function(np.c_[xx.ravel(), yy.ravel()])
+z = svm_model.decision_function(np.c_[[xx.ravel(), yy.ravel()]].T)  # TODO 150 features
 z = z.reshape(xx.shape)
 
 # plot the decision function and the reduced data
 plt.contourf(xx, yy, z, cmap=plt.cm.PuBu)
 a = plt.contour(xx, yy, z, levels=[0], linewidths=2, colors="darkred")
 b = plt.scatter(
-    x_reduced[x_predicted == 1, 0],
-    x_reduced[x_predicted == 1, 1],
+    hn_reduced[hn_predicted == 1, 0],
+    hn_reduced[hn_predicted == 1, 1],
     c="white",
     edgecolors="k",
 )
 c = plt.scatter(
-    x_reduced[x_predicted == -1, 0],
-    x_reduced[x_predicted == -1, 1],
+    hn_reduced[hn_predicted == -1, 0],
+    hn_reduced[hn_predicted == -1, 1],
     c="gold",
     edgecolors="k",
 )
