@@ -1,9 +1,16 @@
+from email.utils import localtime
 import torch
 import torch.nn as nn
 import awkward as ak
 import numpy as np
 from copy import copy
+
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.externals import joblib
+
 from torch.utils.data import TensorDataset, DataLoader
+
+from datetime import datetime
 
 
 def collate_fn_pad(batch):
@@ -57,6 +64,12 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
 
 
 def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
+    """
+    Tries to fill data into batches, drop left over data.
+    Also trackts where the jets are in the branch.
+
+    Returns dataset that fits into branches, and a list to track where the jets are in the dataset.
+    """
     # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
 
@@ -133,7 +146,6 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
         data = scaler.fit_transform(data)
     else:
         data = scaler.transform(data)
-
     # Make data in tensor format
     data = torch.Tensor(data)
 
@@ -142,6 +154,26 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
     # test = TensorDataset(test_features, test_targets)
 
     return DataLoader(data, batch_size=batch_size, shuffle=False)
+
+
+def min_max_scaler(*, data, save_flag=True):
+    """
+    Makes data to size [0,1], to be easier to interpet for lstm.
+    Also saves scalar using a timestamp
+
+    Load by using: joblilb.load()
+    source: https://stackoverflow.com/questions/41993565/save-minmaxscaler-model-in-sklearn
+    """
+    # scale data
+    scaler = MinMaxScaler()
+    data = scaler.fit_transform(data)
+
+    if save_flag:
+        # save data with timestamp to reuse later:
+        time_stamp = f'scaler_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
+        joblib.dump(scaler, scaler_filename=time_stamp)
+
+    return data
 
 
 def get_weights(model, hidden_dim):

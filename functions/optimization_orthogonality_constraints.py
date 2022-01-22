@@ -12,10 +12,9 @@ import numpy as np
 
 def lstm_results(
     lstm_model,
-    model_params,
+    input_dim,
     train_loader,
     track_jets_train_data,
-    batch_size,
     device=torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"),
 ):
     """Obtain h_bar states from the lstm with the data
@@ -41,7 +40,7 @@ def lstm_results(
         jet_track_local = track_jets_train_data[i]
         i += 1
 
-        x_batch = x_batch.view([batch_size, -1, model_params["input_dim"]]).to(device)
+        x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         y_batch = y_batch.to(device)
 
         ### Train step
@@ -49,7 +48,7 @@ def lstm_results(
         lstm_model.train()  # TODO should this be off so the backward() call in the forward pass does not update the weights?
 
         # Makes predictions
-        _, hn, theta, theta_gradients_temp = lstm_model(x_batch)
+        hn, theta, theta_gradients_temp = lstm_model(x_batch)
 
         if "theta_gradients" not in locals():
             theta_gradients = theta_gradients_temp
@@ -71,7 +70,11 @@ def lstm_results(
                 train_loader
             )
 
-    return torch.vstack([h_bar[0] for h_bar in h_bar_list]), theta, theta_gradients
+    return (
+        torch.vstack([h_bar[-1] for h_bar in h_bar_list]),
+        theta,
+        theta_gradients,
+    )  # take h_bar[-1], to take the last layer as output
 
 
 def kappa(alphas, a_idx, h_list):

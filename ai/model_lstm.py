@@ -11,6 +11,8 @@ from sklearn.svm import OneClassSVM
 
 
 class LSTMModel(nn.Module):
+    # Inspiration: https://towardsdatascience.com/building-rnn-lstm-and-gru-for-time-series-using-pytorch-a46e5b094e7b
+
     def __init__(self, input_dim, hidden_dim, layer_dim, output_dim, dropout_prob):
         super(LSTMModel, self).__init__()
 
@@ -28,7 +30,7 @@ class LSTMModel(nn.Module):
         # Fully connected layer
         self.fc = nn.Linear(hidden_dim, output_dim)
 
-    def forward(self, x):
+    def forward(self, x, backpropagation_flag=True):
         # Initializing hidden state for first input with zeros
         h0 = torch.zeros(self.layer_dim, x.size(0), self.hidden_dim).requires_grad_()
 
@@ -50,18 +52,22 @@ class LSTMModel(nn.Module):
         # self.mp(out)
         # self.mp(hn)
 
-        # Do backward to get gradients with respect to hn (to get first part of chain rule, only take derivative of kappa later for algorithm Tolga)
-        hn.sum().backward()
-        # [hn track_jet_select] # call backward ojn each jet output
+        # Check if backpropogation is required
+        if backpropagation_flag:
+            # Do backward to get gradients with respect to hn (to get first part of chain rule, only take derivative of kappa later for algorithm Tolga)
+            hn.sum().backward()
+            # [hn track_jet_select] # call backward ojn each jet output
 
-        # Get parameters to update, save in dict for easy reference.
-        theta = get_weights(model=self.lstm, hidden_dim=hn.shape[2])
-        theta_gradients = get_gradient_weights(model=self.lstm, hidden_dim=hn.shape[2])
+            # Get parameters to update, save in dict for easy reference.
+            theta = get_weights(model=self.lstm, hidden_dim=hn.shape[2])
+            theta_gradients = get_gradient_weights(
+                model=self.lstm, hidden_dim=hn.shape[2]
+            )
 
-        # Convert the final state to our desired output shape (batch_size, output_dim) # retain_graph=True
-        out = self.fc(out)
+            return hn, theta, theta_gradients
 
-        return out, hn, theta, theta_gradients
+        else:
+            return hn
 
 
 def objective_function(alphas, h_bar):
