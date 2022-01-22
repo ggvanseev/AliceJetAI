@@ -1,17 +1,7 @@
-from typing import no_type_check
-
 import torch
-from torch.utils import data
 import numpy as np
 
-import awkward as ak
-
-from functions.data_saver import save_results, DataTrackerTrials
-from functions.data_manipulation import collate_fn_pad
-
 from hyperopt import STATUS_OK
-
-from ai.model import LSTM_FC
 
 import pandas as pd
 import numpy as np
@@ -24,18 +14,14 @@ from sklearn.preprocessing import MinMaxScaler
 # import joblib
 
 import time
-from datetime import datetime
 
 import torch
-import torch.optim as optim
-import torch.nn as nn
 
-from functions.data_saver import save_results, DataTrackerTrials
+from functions.data_saver import save_results
 from functions.data_manipulation import (
     branch_filler,
     lstm_data_prep,
 )
-from functions.data_loader import load_n_filter_data
 from functions.optimization_orthogonality_constraints import (
     lstm_results,
     kappa,

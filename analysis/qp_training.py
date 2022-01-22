@@ -39,31 +39,19 @@ parameter. Using Ak, we update the chosen parameter as in (24).
 Using algorithm 2 of Unsupervised Anomaly Detection With LSTM Neural Networks
 Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 """
-
-import pandas as pd
-import numpy as np
-
 from sklearn.svm import OneClassSVM
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import MinMaxScaler
 
 # from sklearn.externals import joblib
 # import joblib
 
-import time
-from datetime import datetime
-
 import torch
-import torch.optim as optim
-import torch.nn as nn
 
-from functions.data_saver import save_results, DataTrackerTrials
 from functions.data_manipulation import (
     train_dev_test_split,
     format_ak_to_list,
     branch_filler,
     lstm_data_prep,
-    min_max_scaler,
 )
 from functions.data_loader import load_n_filter_data
 from functions.training import training_algorithm
@@ -72,9 +60,6 @@ from ai.model_lstm import LSTMModel
 
 # from autograd import elementwise_grad as egrad
 
-from copy import copy
-
-import branch_names as na
 from plotting.svm_boundary import plot_svm_boundary_2d
 from functions.validation import validation_distance_nu
 

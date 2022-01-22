@@ -1,12 +1,9 @@
 import torch
-from copy import copy
 
 from functions.data_manipulation import (
     get_full_pytorch_weight,
-    put_weight_in_pytorch_matrix,
 )
 
-import time
 import numpy as np
 
 
@@ -113,91 +110,6 @@ def kappa(alphas, a_idx, h_list):
             # Slight difference compared to taking for loops (probably due to numerical solution in numpy), but this is a systematic error that cancels out (?) when comparing two kappas.
             out += 0.5 * np.dot(alphas_matrix[i], h_matrix[i])
 
-    return out
-
-
-def delta_func(
-    lstm_model,
-    model_params,
-    train_loader,
-    track_jets_train_data,
-    batch_size,
-    h_list,
-    theta_gradients,
-    weight,
-    weight_name: str,
-    mu,
-    alphas,
-    a_idx,
-    pytorch_weights,
-    device,
-):
-    """Calculates the derivative of G to a specific weight or bias.
-    G = dkappa / dW_ij = alpha_i * alpha_j * h_ij * dh_ij / dW_ij
-    since the derivative of x^T x = 2x
-    dh / dW can be obtained from theta_gradients
-
-    d(h_i.T * h_j) / dh =  ((dh_i / dW) * h_j + (h_i.T dh_j/dW))
-    = (h_i + h_j) * dh/dW
-
-
-    Args:
-        lstm_model (LSTMModel): the LSTM model
-        train_loader (torch.utils.data.dataloader.DataLoader): object by PyTorch, stores
-                the data
-        h_list (torch.Tensor): contains the h_bar results from the LSTM
-        weight (torch.Tensor): contains weights/biases of the LSTM
-        weight_name (str): description of which weight/bias is currently used
-        mu (float): learning rate
-        alphas (numpy.ndarray): contains non-zero alpha values obtained from the SVM
-                                                              with the SMO algorithm
-        a_idx (numpy.ndarray): contains the indices of datapoints corresponding to the
-                                                                 non-zero alpha values
-        pytorch_weights (torch.Tensor): tensor
-
-    Returns:
-        (torch.Tensor): derivative of the cost function to the weight/bias
-    """
-
-    # d_weight = mu * weight
-    # new_weight = weight - d_weight
-
-    # # Use torch.no_grad to not record changes in this section
-    # with torch.no_grad():
-
-    #     lstm_model_new = copy(
-    #         lstm_model  # Needs a copy, to avoid unexpected changes in the original model
-    #     )
-
-    #     # only updated desired weight element
-    #     pytorch_weights = put_weight_in_pytorch_matrix(
-    #         new_weight, weight_name, pytorch_weights
-    #     )
-
-    #     getattr(lstm_model_new.lstm, weight_name[5:]).copy_(pytorch_weights)
-
-    # h_list_new, _ = lstm_results(
-    #     lstm_model_new,
-    #     model_params,
-    #     train_loader,
-    #     track_jets_train_data,
-    #     batch_size,
-    #     device,
-    # )
-    # return (kappa(alphas, a_idx, h_list_new) - kappa(alphas, a_idx, h_list)) / (
-    #     new_weight - weight
-    # )
-    # Use torch.no_grad to not record changes in this section
-    with torch.no_grad():
-        out = 0
-        for idx1, i in enumerate(a_idx):
-            for idx2, j in enumerate(a_idx):
-                out += (
-                    alphas[0, idx1]
-                    * alphas[0, idx2]
-                    * (h_list[i] + h_list[j])
-                    @ theta_gradients
-                )
     return out
 
 
@@ -350,34 +262,3 @@ def optimization(
     lstm = update_lstm(lstm, theta)
 
     return lstm, theta
-
-
-# def optimization(model, h_list, alphas, a_idx, mu):
-
-#     # obtain W, R and b from current h
-#     # W = h.parameters
-#     # R = h.parameters
-#     # b = h.parameters
-#     W, R, b = get_weights(model, batch_size=len())
-#     dh_list = np.diff(h_list)
-#     dW_list = np.diff()
-
-#     # derivative of function e.g. F = (25) from Tolga
-#     G = derivative(kappa(alphas, a_idx), W)
-#     A = G @ W.T - W @ G.T
-#     I = identity(W.shape[0])
-#     # next point from Crank-Nicolson-like scheme
-#     W_next = (I + mu / 2 * A) ** (-1) * (I - mu / 2) * W
-
-#     # same for R and b
-#     G = derivative(kappa(alphas, a_idx), R)
-#     A = G @ R.T - R @ G.T
-#     I = identity(R.shape[0])
-#     R_next = (I + mu / 2 * A) ** (-1) * (I - mu / 2) * R
-
-#     G = derivative(kappa(alphas, a_idx), b)
-#     A = G @ b.T - b @ G.T
-#     I = identity(b.shape[0])
-#     b_next = (I + mu / 2 * A) ** (-1) * (I - mu / 2) * W
-
-#     return W_next, R_next, b_next

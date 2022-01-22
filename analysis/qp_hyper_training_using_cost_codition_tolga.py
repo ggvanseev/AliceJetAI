@@ -39,21 +39,12 @@ parameter. Using Ak, we update the chosen parameter as in (24).
 Using algorithm 2 of Unsupervised Anomaly Detection With LSTM Neural Networks
 Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 """
-
-import pandas as pd
-import numpy as np
-
-from sklearn.svm import OneClassSVM
-
 # from sklearn.externals import joblib
 # import joblib
-
-import time
 
 from functions.data_manipulation import (
     train_dev_test_split,
     format_ak_to_list,
-    min_max_scaler,
 )
 from functions.data_loader import load_n_filter_data
 from functions.training import try_hyperparameters
@@ -94,28 +85,6 @@ space = hp.choice(
     ],
 )
 
-# define another space just to test a single value in this algorithm TODO remove later
-space_single = hp.choice(
-    "hyper_parameters",
-    [
-        {
-            "batch_size": hp.choice("num_batch", [50]),
-            "hidden_dim": hp.choice("hidden_dim", [2]),
-            "num_epochs": hp.choice("num_epochs", [int(500)]),
-            "num_layers": hp.choice("num_layers", [1]),
-            "learning_rate": hp.choice("learning_rate", [0.1]),
-            "decay_factor": hp.choice("decay_factor", [0.9]),
-            "dropout": hp.choice("dropout", [0]),
-            "output_dim": hp.choice("output_dim", [3]),
-            "svm_nu": hp.choice("svm_nu", [0.01]),  # 0.5 was the default
-            "svm_gamma": hp.choice(
-                "svm_gamma", ["scale", "auto"]
-            ),  # , "scale", [ 0.23 was the defeault before]
-        }
-    ],
-)
-
-
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Load and filter data for criteria eta and jetpt_cap
@@ -132,6 +101,7 @@ best = fmin(
         dev_data=train_data,
         val_data=dev_data,
         plot_flag=True,
+        eps=1e-10,
     ),
     space,
     algo=tpe.suggest,

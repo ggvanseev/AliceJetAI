@@ -1,31 +1,9 @@
 from email.utils import localtime
 import torch
-import torch.nn as nn
 import awkward as ak
-import numpy as np
 from copy import copy
 
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.externals import joblib
-
 from torch.utils.data import TensorDataset, DataLoader
-
-from datetime import datetime
-
-
-def collate_fn_pad(batch):
-    """
-    Padding of data
-    """
-    seq = [t[0] for t in batch]
-    weight = [t[1] for t in batch]
-    label = [t[2] for t in batch]
-    length = [len(i) for i in seq]
-
-    seq = nn.utils.rnn.pad_sequence(seq, batch_first=True)
-    weight = torch.stack(weight)
-    label = torch.stack(label)
-    return seq, weight, label, length
 
 
 def format_ak_to_list(arr: ak.Array) -> list:
@@ -154,26 +132,6 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
     # test = TensorDataset(test_features, test_targets)
 
     return DataLoader(data, batch_size=batch_size, shuffle=False)
-
-
-def min_max_scaler(*, data, save_flag=True):
-    """
-    Makes data to size [0,1], to be easier to interpet for lstm.
-    Also saves scalar using a timestamp
-
-    Load by using: joblilb.load()
-    source: https://stackoverflow.com/questions/41993565/save-minmaxscaler-model-in-sklearn
-    """
-    # scale data
-    scaler = MinMaxScaler()
-    data = scaler.fit_transform(data)
-
-    if save_flag:
-        # save data with timestamp to reuse later:
-        time_stamp = f'scaler_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
-        joblib.dump(scaler, scaler_filename=time_stamp)
-
-    return data
 
 
 def get_weights(model, hidden_dim):
