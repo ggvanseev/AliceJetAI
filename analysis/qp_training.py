@@ -82,7 +82,7 @@ from functions.validation import validation_distance_nu
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Variables:
-batch_size = 150
+batch_size = 50
 output_dim = 1
 hidden_dim = 2
 layer_dim = 2

@@ -207,16 +207,6 @@ def try_hyperparameters(
     print("Hyper Parameters")
     print(hyper_parameters)
 
-    # set model parameters
-    input_dim = len(dev_data[0])
-    model_params = {
-        "input_dim": input_dim,
-        "hidden_dim": hidden_dim,
-        "layer_dim": layer_dim,
-        "output_dim": output_dim,
-        "dropout_prob": dropout,
-    }
-
     # prepare data for usage
     dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
     val_data, track_jets_val_data = branch_filler(val_data, batch_size=batch_size)
@@ -228,6 +218,16 @@ def try_hyperparameters(
         data=dev_data, scaler=scaler, batch_size=batch_size, fit_flag=True
     )
     val_loader = lstm_data_prep(data=val_data, scaler=scaler, batch_size=batch_size)
+
+    # set model parameters
+    input_dim = len(dev_data[0])
+    model_params = {
+        "input_dim": input_dim,
+        "hidden_dim": hidden_dim,
+        "layer_dim": layer_dim,
+        "output_dim": output_dim,
+        "dropout_prob": dropout,
+    }
 
     n_attempt = 0
     while n_attempt < max_attempts:
