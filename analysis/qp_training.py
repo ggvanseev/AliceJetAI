@@ -87,8 +87,8 @@ batch_size = 150
 output_dim = 1
 layer_dim = 1
 dropout = 0.2
-epochs = 20
-learning_rate = 1
+epochs = 500
+learning_rate = 1e-5
 weight_decay = 1e-6
 
 eps = 1e-2  # test value for convergence
@@ -128,7 +128,7 @@ model_params = {
 lstm_model = LSTMModel(**model_params)
 
 # svm model
-svm_model = OneClassSVM(nu=0.05, gamma="scale", kernel="rbf")
+svm_model = OneClassSVM(nu=0.01, gamma="scale", kernel="rbf")
 
 # path for model - only used for saving
 # model_path = f'models/{lstm_model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
@@ -213,17 +213,18 @@ for x_batch, y_batch in val_loader:
         [batch_size, -1, model_params["input_dim"]]
     )  # TODO to device? I am assuming no since we only look at a single datapoint (jet)
 
-hn_reduced, hn_reduced, theta_reduced, theta_gradients_reduced = lstm_model(
-    x_batch[:5, :]
+x_reduced, hn_reduced, theta_reduced, theta_gradients_reduced = lstm_model(
+    x_batch  # [:5, :]
 )  # Pretend as if first jet is 5 splits long, to check if it predicts. This will give an error (TODO)
-hn_predicted = svm_model.predict(hn_reduced[0].detach().numpy())
+hn_reduced = hn_reduced.detach().numpy()
+hn_predicted = svm_model.predict(hn_reduced[0])
 
 # define the meshgrid
-x_min, x_max = hn_reduced[:, 0].min() - 5, hn_reduced[:, 0].max() + 5
-y_min, y_max = hn_reduced[:, 1].min() - 5, hn_reduced[:, 1].max() + 5
+x_min, x_max = hn_reduced[:, 0].min() - 1, hn_reduced[:, 0].max() + 1
+y_min, y_max = hn_reduced[:, 1].min() - 1, hn_reduced[:, 1].max() + 1
 
-x_ = np.linspace(x_min.detach().numpy(), x_max.detach().numpy(), 500)
-y_ = np.linspace(y_min.detach().numpy(), y_max.detach().numpy(), 500)
+x_ = np.linspace(x_min, x_max, 500)
+y_ = np.linspace(y_min, y_max, 500)
 
 xx, yy = np.meshgrid(x_, y_)
 
@@ -236,14 +237,14 @@ z = z.reshape(xx.shape)
 plt.contourf(xx, yy, z, cmap=plt.cm.PuBu)
 a = plt.contour(xx, yy, z, levels=[0], linewidths=2, colors="darkred")
 b = plt.scatter(
-    hn_reduced[hn_predicted == 1, 0],
-    hn_reduced[hn_predicted == 1, 1],
+    hn_reduced[0, hn_predicted == 1, 0],
+    hn_reduced[0, hn_predicted == 1, 1],
     c="white",
     edgecolors="k",
 )
 c = plt.scatter(
-    hn_reduced[hn_predicted == -1, 0],
-    hn_reduced[hn_predicted == -1, 1],
+    hn_reduced[0, hn_predicted == -1, 0],
+    hn_reduced[0, hn_predicted == -1, 1],
     c="gold",
     edgecolors="k",
 )

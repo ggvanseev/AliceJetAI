@@ -43,7 +43,6 @@ class LSTMModel(nn.Module):
         # Reshaping the outputs in the shape of (batch_size, seq_length, hidden_size)
         # so that it can fit into the fully connected layer
         out = out[:, -1, :]
-        # TODO size of out is now [210, 210]?
 
         # TODO of mean pooling hier?
         # out = F.avg_pool2d(out)
@@ -52,7 +51,7 @@ class LSTMModel(nn.Module):
 
         # Do backward to get gradients with respect to hn (to get first part of chain rule, only take derivative of kappa later for algorithm Tolga)
         hn.sum().backward()
-        # [hn track_jet_select] # call backward ojn each jet output
+        # [hn track_jet_select] # call backward on each jet output
 
         # Get parameters to update, save in dict for easy reference.
         theta = get_weights(model=self.lstm, hidden_dim=np.shape(hn)[2])

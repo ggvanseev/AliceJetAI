@@ -49,14 +49,23 @@ def lstm_results(
         lstm_model.train()  # TODO should this be off so the backward() call in the forward pass does not update the weights?
 
         # Makes predictions
-        _, hn, theta, theta_gradients_temp = lstm_model(x_batch)
+        x_batch_cut = [
+            x_batch[s1:s2]
+            for s1, s2 in zip([0] + jet_track_local[:-1], jet_track_local)
+        ]
+        hn = []
+        for jet in x_batch_cut:
+            _, hi, theta, theta_gradients_temp = lstm_model(jet)
 
-        if "theta_gradients" not in locals():
-            theta_gradients = theta_gradients_temp
-        else:
-            for key1, value1 in theta_gradients_temp.items():
-                for key2, value2 in value1.items():
-                    theta_gradients[key1][key2] = theta_gradients[key1][key2] + value2
+            if "theta_gradients" not in locals():
+                theta_gradients = theta_gradients_temp
+            else:
+                for key1, value1 in theta_gradients_temp.items():
+                    for key2, value2 in value1.items():
+                        theta_gradients[key1][key2] = (
+                            theta_gradients[key1][key2] + value2
+                        )
+            hn.append(hi)
 
         # get mean pooled hidden states
         h_bar = hn[:, jet_track_local]
