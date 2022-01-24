@@ -1,24 +1,9 @@
+from email.utils import localtime
 import torch
-import torch.nn as nn
 import awkward as ak
-import numpy as np
 from copy import copy
+
 from torch.utils.data import TensorDataset, DataLoader
-
-
-def collate_fn_pad(batch):
-    """
-    Padding of data
-    """
-    seq = [t[0] for t in batch]
-    weight = [t[1] for t in batch]
-    label = [t[2] for t in batch]
-    length = [len(i) for i in seq]
-
-    seq = nn.utils.rnn.pad_sequence(seq, batch_first=True)
-    weight = torch.stack(weight)
-    label = torch.stack(label)
-    return seq, weight, label, length
 
 
 def format_ak_to_list(arr: ak.Array) -> list:
@@ -57,6 +42,12 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
 
 
 def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
+    """
+    Tries to fill data into batches, drop left over data.
+    Also trackts where the jets are in the branch.
+
+    Returns dataset that fits into branches, and a list to track where the jets are in the dataset.
+    """
     # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
 
@@ -133,7 +124,6 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
         data = scaler.fit_transform(data)
     else:
         data = scaler.transform(data)
-
     # Make data in tensor format
     data = torch.Tensor(data)
 

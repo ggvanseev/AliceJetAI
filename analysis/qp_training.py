@@ -39,25 +39,14 @@ parameter. Using Ak, we update the chosen parameter as in (24).
 Using algorithm 2 of Unsupervised Anomaly Detection With LSTM Neural Networks
 Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 """
-
-import pandas as pd
-import numpy as np
-
 from sklearn.svm import OneClassSVM
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import MinMaxScaler
 
 # from sklearn.externals import joblib
 # import joblib
 
-import time
-from datetime import datetime
-
 import torch
-import torch.optim as optim
-import torch.nn as nn
 
-from functions.data_saver import save_results, DataTrackerTrials
 from functions.data_manipulation import (
     train_dev_test_split,
     format_ak_to_list,
@@ -65,37 +54,37 @@ from functions.data_manipulation import (
     lstm_data_prep,
 )
 from functions.data_loader import load_n_filter_data
-from functions.optimization_orthogonality_constraints import (
-    lstm_results,
-    kappa,
-    optimization,
-)
+from functions.training import training_algorithm
 
 from ai.model_lstm import LSTMModel
 
 # from autograd import elementwise_grad as egrad
 
-from copy import copy
+from plotting.svm_boundary import plot_svm_boundary_2d
+from functions.validation import validation_distance_nu
 
-import branch_names as na
-import matplotlib.pyplot as plt
 
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Variables:
-batch_size = 150
+batch_size = 50
 output_dim = 1
-layer_dim = 1
+hidden_dim = 2
+layer_dim = 2
 dropout = 0.2
-epochs = 500
-learning_rate = 1e-5
-weight_decay = 1e-6
+epochs = 200
+learning_rate = 1e-16
+weight_decay = 1e-10
+nu = 0.05
 
-eps = 1e-2  # test value for convergence
+eps = 1e-10  # test value for convergence
 
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
+
+# split data
+train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
 
 
 # only use g_recur_jets
@@ -104,6 +93,7 @@ train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8,
 train_data, track_jets_train_data = branch_filler(train_data, batch_size=batch_size)
 dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
 
+# Note this has to be saved with the model, to ensure data has the same form.
 # Only use train and dev data for now
 scaler = (
     MinMaxScaler()
@@ -111,10 +101,9 @@ scaler = (
 train_loader = lstm_data_prep(
     data=train_data, scaler=scaler, batch_size=batch_size, fit_flag=True
 )
-val_loader = lstm_data_prep(data=dev_data, scaler=scaler, batch_size=batch_size)
+dev_loader = lstm_data_prep(data=dev_data, scaler=scaler, batch_size=batch_size)
 
 input_dim = len(train_data[0])
-hidden_dim = 2  # batch_size # TODO
 
 model_params = {
     "input_dim": input_dim,
@@ -128,7 +117,7 @@ model_params = {
 lstm_model = LSTMModel(**model_params)
 
 # svm model
-svm_model = OneClassSVM(nu=0.01, gamma="scale", kernel="rbf")
+svm_model = OneClassSVM(nu=nu, gamma="scale", kernel="linear")
 
 # path for model - only used for saving
 # model_path = f'models/{lstm_model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
@@ -137,124 +126,57 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 
 ### ALGORITHM START ###
-"""
-alphas = np.abs(svm_model.dual_coef_)
-a_idx = svm_model.support_"""
-# calculate cost function kappa with alpha_0 and theta_0:
-# TODO set alphas to 1 or 0 so cost_next - cost will be large
-cost = 1  # kappa(alphas, a_idx, h_bar_list)
-
-# obtain h_bar from the lstm with theta_0, given the data
-h_bar_list, theta, theta_gradients = lstm_results(
-    lstm_model, model_params, train_loader, track_jets_train_data, batch_size, device,
+lstm_model, svm_model, track_cost, track_cost_condition = training_algorithm(
+    lstm_model,
+    svm_model,
+    dev_loader,
+    track_jets_dev_data,
+    model_params,
+    device,
+    epochs,
+    learning_rate,
+    eps,
 )
-h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
-
-# Array to track cost
-track_cost_condition = np.zeros(epochs + 1)
-
-k = -1
-while k < epochs:  # TODO, (kappa(theta_next, alpha_next) - kappa(theta, alpha) < eps)
-    k += 1
-
-    # keep previous cost result stored
-    cost_prev = copy(cost)
-
-    # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
-    svm_model.fit(h_bar_list_np)
-    alphas = np.abs(svm_model.dual_coef_)[0]
-    a_idx = svm_model.support_
-
-    # obtain theta_k+1 using the optimization algorithm
-    lstm_model, theta_next = optimization(
-        lstm=lstm_model,
-        alphas=alphas,
-        a_idx=a_idx,
-        mu=learning_rate,
-        h_bar_list=h_bar_list,
-        theta=theta,
-        theta_gradients=theta_gradients,
-        device=device,
-    )
-
-    # obtain h_bar from the lstm with theta_k+1, given the data
-    h_bar_list, theta, theta_gradients = lstm_results(
-        lstm_model,
-        model_params,
-        train_loader,
-        track_jets_train_data,
-        batch_size,
-        device,
-    )
-    h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
-
-    # obtain the new cost given theta_k+1 and alpha_k+1
-    cost = kappa(alphas, a_idx, h_bar_list)
-    # check condition (25)
-
-    print((cost - cost_prev) ** 2)
-
-    track_cost_condition[k] = (cost - cost_prev) ** 2
-
-    if np.isnan(track_cost_condition[k]):
-        print("Broke, for given hyper parameters")
-        break
-
-    if k > 0:
-        print(f"Change in cost is {track_cost_condition[k-1]-track_cost_condition[k]}")
-
-    if (cost - cost_prev) ** 2 < eps:
-        print("Succes", "\n", cost, cost_prev)
-        break
 
 # Plotting can be moved later to a seperate map (here for speed)
-for x_batch, y_batch in val_loader:
+for x_batch, y_batch in dev_loader:
     x_batch = x_batch.view(
         [batch_size, -1, model_params["input_dim"]]
     )  # TODO to device? I am assuming no since we only look at a single datapoint (jet)
 
-x_reduced, hn_reduced, theta_reduced, theta_gradients_reduced = lstm_model(
-    x_batch  # [:5, :]
+hn_reduced, theta_reduced, theta_gradients_reduced = lstm_model(
+    x_batch
 )  # Pretend as if first jet is 5 splits long, to check if it predicts. This will give an error (TODO)
-hn_reduced = hn_reduced.detach().numpy()
-hn_predicted = svm_model.predict(hn_reduced[0])
 
-# define the meshgrid
-x_min, x_max = hn_reduced[:, 0].min() - 1, hn_reduced[:, 0].max() + 1
-y_min, y_max = hn_reduced[:, 1].min() - 1, hn_reduced[:, 1].max() + 1
+# only take final part of jet, as in training
+hn_reduced = hn_reduced[:, track_jets_dev_data[-1]]
 
-x_ = np.linspace(x_min, x_max, 500)
-y_ = np.linspace(y_min, y_max, 500)
 
-xx, yy = np.meshgrid(x_, y_)
+hn_reduced = hn_reduced[-1].detach().numpy()  # only final layer
+hn_predicted = svm_model.predict(hn_reduced)
 
-# evaluate the decision function on the meshgrid
-# z = svm_model.decision_function(np.c_[xx.ravel(), yy.ravel()])
-z = svm_model.decision_function(np.c_[[xx.ravel(), yy.ravel()]].T)  # TODO 150 features
-z = z.reshape(xx.shape)
+plot_svm_boundary_2d(h_bar=hn_reduced, h_predicted=hn_predicted, svm_model=svm_model)
 
-# plot the decision function and the reduced data
-plt.contourf(xx, yy, z, cmap=plt.cm.PuBu)
-a = plt.contour(xx, yy, z, levels=[0], linewidths=2, colors="darkred")
-b = plt.scatter(
-    hn_reduced[0, hn_predicted == 1, 0],
-    hn_reduced[0, hn_predicted == 1, 1],
-    c="white",
-    edgecolors="k",
+diff_val = validation_distance_nu(
+    nu,
+    dev_loader,
+    track_jets_dev_data,
+    input_dim,
+    lstm_model,
+    svm_model,
+    device=torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"),
 )
-c = plt.scatter(
-    hn_reduced[0, hn_predicted == -1, 0],
-    hn_reduced[0, hn_predicted == -1, 1],
-    c="gold",
-    edgecolors="k",
+
+
+diff_train = validation_distance_nu(
+    nu,
+    train_loader,
+    track_jets_train_data,
+    input_dim,
+    lstm_model,
+    svm_model,
+    device=torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"),
 )
-plt.legend(
-    [a.collections[0], b, c],
-    ["learned frontier", "regular observations", "abnormal observations"],
-    bbox_to_anchor=(1.05, 1),
-)
-plt.axis("tight")
-plt.show()
 
 
 print("Done")
