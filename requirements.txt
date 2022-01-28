@@ -1,0 +1,15 @@
+autograd
+awkward
+hyperopt
+pickle
+functools
+numpy
+pandas
+openpyxl
+numba
+skicit-image
+skicit-learn
+scipy
+seaborn
+spyder
+torch

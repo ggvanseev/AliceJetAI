@@ -75,7 +75,7 @@ def training_algorithm(
     ### ALGORITHM START ###
     # Set initial cost
     # TODO set alphas to 1 or 0 so cost_next - cost will be large
-    cost = 1e10
+    cost = 1000
 
     # obtain h_bar from the lstm with theta_0, given the data
     h_bar_list, theta, theta_gradients = lstm_results(
@@ -135,8 +135,10 @@ def training_algorithm(
         track_cost_condition.append(cost_condition)
 
         # check condition algorithm 1, paper Tolga
-        if (cost - cost_prev) ** 2 < eps:
+        # TODO: figure out why most runs seems to succeed in one go, remove k>2 if solved
+        if (cost - cost_prev) ** 2 < eps and k > 5:
             print("Succes, epoch: {}".format(k), cost, cost_prev, sep="\n")
+            passed = True
             break
 
         # Check if cost function starts to explode
@@ -146,8 +148,9 @@ def training_algorithm(
 
     if (cost - cost_prev) ** 2 > eps:
         print("Failed")
+        passed = False
 
-    return lstm_model, svm_model, track_cost, track_cost_condition
+    return lstm_model, svm_model, track_cost, track_cost_condition, passed
 
 
 def try_hyperparameters(
@@ -223,7 +226,13 @@ def try_hyperparameters(
         lstm_model = LSTMModel(**model_params)
         svm_model = OneClassSVM(nu=svm_nu, gamma=svm_gamma, kernel="linear")
 
-        lstm_model, svm_model, track_cost, track_cost_condition = training_algorithm(
+        (
+            lstm_model,
+            svm_model,
+            track_cost,
+            track_cost_condition,
+            passed,
+        ) = training_algorithm(
             lstm_model,
             svm_model,
             dev_loader,
@@ -247,8 +256,13 @@ def try_hyperparameters(
             device,
         )
 
-        if distance_nu < max_distance_nu:
+        if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1] and passed:
             n_attempt = max_attempts
+        else:
+            distance_nu = (
+                10  # Add large distance to ensure wrong model doesn't end up in list
+            )
+            plot_flag = False
 
     print(f"Done in: {time.time()-time_track}")
 
@@ -265,7 +279,7 @@ def try_hyperparameters(
         ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7)
         ax2.set_ylabel("Cost")
 
-        fig.savefig("output/" + title_plot + ".png")
+        fig.savefig("output/" + title_plot + str(time.time()) + ".png")
 
     # return the model
     lstm_ocsvm = dict({"lstm:": lstm_model, "ocsvm": svm_model, "scaler": scaler})

@@ -70,12 +70,12 @@ file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 batch_size = 50
 output_dim = 1
 hidden_dim = 2
-layer_dim = 2
-dropout = 0.2
+layer_dim = 1
+dropout = 0
 epochs = 200
-learning_rate = 1e-16
+learning_rate = 1e-14
 weight_decay = 1e-10
-nu = 0.05
+nu = 0.01
 
 eps = 1e-10  # test value for convergence
 
@@ -126,7 +126,7 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 
 ### ALGORITHM START ###
-lstm_model, svm_model, track_cost, track_cost_condition = training_algorithm(
+lstm_model, svm_model, track_cost, track_cost_condition, _ = training_algorithm(
     lstm_model,
     svm_model,
     dev_loader,

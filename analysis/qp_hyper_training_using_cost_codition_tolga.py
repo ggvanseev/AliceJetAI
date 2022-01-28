@@ -62,16 +62,18 @@ from hyperopt import (
 )  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
 from functools import partial
 
+import pickle
+
 # Set hyper space and variables
 
-max_evals = 100
+max_evals = 1
 space = hp.choice(
     "hyper_parameters",
     [
         {
             "batch_size": hp.choice("num_batch", [50]),
             "hidden_dim": hp.choice("hidden_dim", [1, 2]),
-            "num_epochs": hp.choice("num_epochs", [int(500)]),
+            "num_epochs": hp.choice("num_epochs", [int(300)]),
             "num_layers": hp.choice("num_layers", [1]),
             "learning_rate": hp.choice("learning_rate", [1e-7, 1e-5, 1e-10, 1e-15]),
             "decay_factor": hp.choice("decay_factor", [0.9]),
@@ -79,8 +81,8 @@ space = hp.choice(
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.05, 0.01, 0.04]),  # 0.5 was the default
             "svm_gamma": hp.choice(
-                "svm_gamma", ["scale", "auto"]
-            ),  # , "scale", [ 0.23 was the defeault before]
+                "svm_gamma", ["scale"]  # Auto seems to give weird results
+            ),  # , "scale", , "auto"[ 0.23 was the defeault before]
         }
     ],
 )
@@ -109,3 +111,7 @@ best = fmin(
     trials=trials,
 )
 print(space_eval(space, best))
+
+pickle.dump(trials, open("/storing_results/trials_test.p", "wb"))
+
+# load trials_test = pickle.load(open("/storing_results/trials_test.p", "rb"))
