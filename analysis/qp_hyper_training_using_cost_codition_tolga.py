@@ -64,15 +64,15 @@ from functools import partial
 
 # Set hyper space and variables
 
-max_evals = 100
+max_evals = 10
 space = hp.choice(
     "hyper_parameters",
     [
         {
             "batch_size": hp.choice("num_batch", [50]),
-            "hidden_dim": hp.choice("hidden_dim", [1, 2]),
-            "num_epochs": hp.choice("num_epochs", [int(500)]),
+            "hidden_dim": hp.choice("hidden_dim", [2, 6, 18]),
             "num_layers": hp.choice("num_layers", [1]),
+            "min_epochs": hp.choice("min_epochs", [int(200)]),
             "learning_rate": hp.choice("learning_rate", [1e-7, 1e-5, 1e-10, 1e-15]),
             "decay_factor": hp.choice("decay_factor", [0.9]),
             "dropout": hp.choice("dropout", [0, 0.2, 0.4]),
@@ -101,7 +101,9 @@ best = fmin(
         dev_data=train_data,
         val_data=dev_data,
         plot_flag=True,
+        max_epochs=5000,
         eps=1e-10,
+        patience=5,
     ),
     space,
     algo=tpe.suggest,

@@ -35,6 +35,8 @@ def lstm_results(
         jet_track_local = track_jets_train_data[i]
         i += 1
 
+        # x_batch as input for lstm, pytorch says shape = [sequence_length, batch_size, n_features]
+        # x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         y_batch = y_batch.to(device)
 
@@ -70,7 +72,7 @@ def lstm_results(
         #                 )
         #     hn.append(hi)
 
-        # get mean pooled hidden states
+        # get mean/last pooled hidden states
         h_bar = hn[:, jet_track_local]
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure

@@ -9,8 +9,8 @@ def plot_svm_boundary_2d(h_bar: np, h_predicted: np, svm_model):
     """
 
     # define the meshgrid
-    x_min, x_max = h_bar[:, 0].min() - 5, h_bar[:, 0].max() + 5
-    y_min, y_max = h_bar[:, 1].min() - 5, h_bar[:, 1].max() + 5
+    x_min, x_max = h_bar[:, 0].min() - 1, h_bar[:, 0].max() + 1
+    y_min, y_max = h_bar[:, 1].min() - 1, h_bar[:, 1].max() + 1
 
     x_ = np.linspace(x_min, x_max, 500)
     y_ = np.linspace(y_min, y_max, 500)
@@ -19,9 +19,7 @@ def plot_svm_boundary_2d(h_bar: np, h_predicted: np, svm_model):
 
     # evaluate the decision function on the meshgrid
     # z = svm_model.decision_function(np.c_[xx.ravel(), yy.ravel()])
-    z = svm_model.decision_function(
-        np.c_[[xx.ravel(), yy.ravel()]].T
-    )  # TODO 150 features
+    z = svm_model.decision_function(np.c_[[xx.ravel()] * h_bar.shape[1]].T)
     z = z.reshape(xx.shape)
 
     # plot the decision function and the reduced data

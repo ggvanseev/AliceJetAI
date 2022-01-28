@@ -114,7 +114,7 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
     return batches, track_jets_in_batch
 
 
-def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
+def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
     """
     Returns a DataLoader class to work with the large datasets in skilearn LSTM
     """
@@ -131,7 +131,7 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False):
     data = TensorDataset(data, data)
     # test = TensorDataset(test_features, test_targets)
 
-    return DataLoader(data, batch_size=batch_size, shuffle=False)
+    return DataLoader(data, batch_size=batch_size, shuffle=shuffle)
 
 
 def get_weights(model, hidden_dim):

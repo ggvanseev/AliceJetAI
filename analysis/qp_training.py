@@ -67,17 +67,19 @@ from functions.validation import validation_distance_nu
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Variables:
-batch_size = 50
+batch_size = 100
 output_dim = 1
-hidden_dim = 2
-layer_dim = 2
+hidden_dim = 18
+layer_dim = 1
 dropout = 0.2
-epochs = 200
-learning_rate = 1e-16
+min_epochs = 100
+max_epochs = 5000
+learning_rate = 1e-5
 weight_decay = 1e-10
 nu = 0.05
 
-eps = 1e-10  # test value for convergence
+eps = 1e-8  # test value for convergence
+patience = 5  # value for number of epochs before stopping after seemingly convergence
 
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
@@ -85,13 +87,10 @@ g_recur_jets = format_ak_to_list(g_recur_jets)
 
 # split data
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
-
-
-# only use g_recur_jets
-train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
+batch_size = len(train_data)
 
 train_data, track_jets_train_data = branch_filler(train_data, batch_size=batch_size)
-dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
+dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=100)
 
 # Note this has to be saved with the model, to ensure data has the same form.
 # Only use train and dev data for now
@@ -101,7 +100,7 @@ scaler = (
 train_loader = lstm_data_prep(
     data=train_data, scaler=scaler, batch_size=batch_size, fit_flag=True
 )
-dev_loader = lstm_data_prep(data=dev_data, scaler=scaler, batch_size=batch_size)
+dev_loader = lstm_data_prep(data=dev_data, scaler=scaler, batch_size=100)
 
 input_dim = len(train_data[0])
 
@@ -113,11 +112,19 @@ model_params = {
     "dropout_prob": dropout,
 }
 
+training_params = {
+    "min_epochs": min_epochs,
+    "max_epochs": max_epochs,
+    "learning_rate": learning_rate,
+    "epsilon": eps,
+    "patience": patience,
+}
+
 # lstm model
 lstm_model = LSTMModel(**model_params)
 
 # svm model
-svm_model = OneClassSVM(nu=nu, gamma="scale", kernel="linear")
+svm_model = OneClassSVM(nu=nu, gamma="scale", kernel="rbf")
 
 # path for model - only used for saving
 # model_path = f'models/{lstm_model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
@@ -129,17 +136,15 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 lstm_model, svm_model, track_cost, track_cost_condition = training_algorithm(
     lstm_model,
     svm_model,
-    dev_loader,
+    train_loader,
     track_jets_dev_data,
     model_params,
+    training_params,
     device,
-    epochs,
-    learning_rate,
-    eps,
 )
 
 # Plotting can be moved later to a seperate map (here for speed)
-for x_batch, y_batch in dev_loader:
+for x_batch, y_batch in train_loader:
     x_batch = x_batch.view(
         [batch_size, -1, model_params["input_dim"]]
     )  # TODO to device? I am assuming no since we only look at a single datapoint (jet)
