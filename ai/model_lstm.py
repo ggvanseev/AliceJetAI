@@ -53,6 +53,9 @@ class LSTMModel(nn.Module):
         # We need to detach as we are doing truncated backpropagation through time (BPTT)
         # If we don't, we'll backprop all the way to the start even after going through another batch
         # Forward propagation by passing in the input, hidden state, and cell state into the model
+        # set lstm to correct device
+        self.lstm.to_device(device)
+
         out, (hn, cn) = self.lstm(x, (h0.detach(), c0.detach()))
 
         # Reshaping the outputs in the shape of (batch_size, seq_length, hidden_size)
@@ -67,6 +70,7 @@ class LSTMModel(nn.Module):
         # set hn to cpu if not already, to avoid calculation problems later on.
         if device.type != "cpu":
             hn = hn.cpu()
+            self.lstm.to_device(torch.device("cpu"))
 
         # Check if backpropogation is required
         if backpropagation_flag:
