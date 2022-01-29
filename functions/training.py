@@ -226,6 +226,9 @@ def try_hyperparameters(
         lstm_model = LSTMModel(**model_params)
         svm_model = OneClassSVM(nu=svm_nu, gamma=svm_gamma, kernel="linear")
 
+        # set model to correct device
+        lstm_model.to(device)
+
         (
             lstm_model,
             svm_model,

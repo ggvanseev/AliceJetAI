@@ -1,14 +1,14 @@
 autograd
 awkward
 hyperopt
-pickle
-functools
+# pickle
+# functools
 numpy
 pandas
 openpyxl
 numba
-skicit-image
-skicit-learn
+scikit-image
+scikit-learn
 scipy
 seaborn
 spyder
