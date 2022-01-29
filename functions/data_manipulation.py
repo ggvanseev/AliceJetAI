@@ -187,25 +187,25 @@ def get_weights(model, hidden_dim):
                 ],
             )[
                 0
-            ].cpu()  # Add the [0], to conform to black formatting, but not store in ()
+            ]  # Add the [0], to conform to black formatting, but not store in ()
 
             r[f"r__{weight_type_list[j]}_weight_hh_l{i}"] = (
                 getattr(model, f"weight_hh_l{i}")[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
-            )[0].cpu()
+            )[0]
 
             bi[f"bi_{weight_type_list[j]}_bias_ih_l{i}"] = (
                 getattr(model, f"bias_ih_l{i}")[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
-            )[0].cpu()
+            )[0]
 
             bh[f"bh_{weight_type_list[j]}_bias_hh_l{i}"] = (
                 getattr(model, f"bias_hh_l{i}")[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
-            )[0].cpu()
+            )[0]
 
     # store all weight in one dict, call theta in line with paper tolga
     theta = dict({"w": w, "r": r, "bi": bi, "bh": bh})
@@ -259,25 +259,25 @@ def get_gradient_weights(model, hidden_dim):
                 ],
             )[
                 0
-            ].cpu()  # Add the [0], to conform to black formatting, but not store in ()
+            ]  # Add the [0], to conform to black formatting, but not store in ()
 
             r[f"r__{weight_type_list[j]}_weight_hh_l{i}"] = (
                 getattr(model, f"weight_hh_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
-            )[0].cpu()
+            )[0]
 
             bi[f"bi_{weight_type_list[j]}_bias_ih_l{i}"] = (
                 getattr(model, f"bias_ih_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
-            )[0].cpu()
+            )[0]
 
             bh[f"bh_{weight_type_list[j]}_bias_hh_l{i}"] = (
                 getattr(model, f"bias_hh_l{i}").grad[
                     weight_type_selector[j] : weight_type_selector[j + 1]
                 ],
-            )[0].cpu()
+            )[0]
 
     # store all weight in one dict, call theta in line with paper tolga
     theta_gradients = dict({"w": w, "r": r, "bi": bi, "bh": bh})
