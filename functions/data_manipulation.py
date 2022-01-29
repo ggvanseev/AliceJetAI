@@ -320,7 +320,7 @@ def h_bar_list_to_numpy(h_bar_list, device):
     if device.type == "cpu":
         h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
     else:
-        h_bar_list_temp = h_bar_list.to(device=device)
+        h_bar_list_temp = h_bar_list.to(device=torch.device("cpu"))
         h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list_temp])
 
     return h_bar_list_np
