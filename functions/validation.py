@@ -41,7 +41,7 @@ def validation_distance_nu(
     # Take last layer
     h_bar_list = torch.vstack([h_bar[-1] for h_bar in h_bar_list])
 
-    h_bar_list_np = h_bar_list_to_numpy(h_bar_list)
+    h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
     # get prediction
     h_predicted = svm_model.predict(h_bar_list_np)

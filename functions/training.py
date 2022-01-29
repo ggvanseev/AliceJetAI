@@ -208,6 +208,9 @@ def try_hyperparameters(
     svm_gamma = hyper_parameters["svm_gamma"]
     hidden_dim = hyper_parameters["hidden_dim"]
 
+    # Set episilon to be 100 times smaller than the learning factor:
+    eps = learning_rate * 1e-2
+
     # Show used hyper_parameters in terminal
     print("Hyper Parameters")
     print(hyper_parameters)
