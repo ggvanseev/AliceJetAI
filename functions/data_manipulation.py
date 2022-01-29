@@ -136,8 +136,8 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
     return DataLoader(data, batch_size=batch_size, shuffle=shuffle)
 
 
-def set_all_tensors_to_cpu(main_dict):
-    for key1, sub_dict in main_dict.itmens():
+def set_all_tensors_to_cpu(main_dict: dict):
+    for key1, sub_dict in main_dict.items():
         for key2, value in sub_dict.items():
             main_dict[key1][key2] = value.cpu()
 
