@@ -136,6 +136,14 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
     return DataLoader(data, batch_size=batch_size, shuffle=shuffle)
 
 
+def set_all_tensors_to_cpu(main_dict):
+    for key1, sub_dict in main_dict.itmens():
+        for key2, value in sub_dict.items():
+            main_dict[key1][key2] = value.cpu()
+
+    return main_dict
+
+
 def get_weights(model, hidden_dim):
     """
     Returns the weight ordered as in the paper(see Tolga)
@@ -201,6 +209,9 @@ def get_weights(model, hidden_dim):
 
     # store all weight in one dict, call theta in line with paper tolga
     theta = dict({"w": w, "r": r, "bi": bi, "bh": bh})
+
+    if w["w__i_weight_ih_l0"].device.type != "cpu":
+        theta = set_all_tensors_to_cpu(theta)
 
     return theta
 
@@ -270,6 +281,9 @@ def get_gradient_weights(model, hidden_dim):
 
     # store all weight in one dict, call theta in line with paper tolga
     theta_gradients = dict({"w": w, "r": r, "bi": bi, "bh": bh})
+
+    if w["w__i_weight_ih_l0"].device.type != "cpu":
+        theta_gradients = set_all_tensors_to_cpu(theta_gradients)
 
     return theta_gradients
 
