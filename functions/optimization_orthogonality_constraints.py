@@ -42,10 +42,10 @@ def lstm_results(
 
         ### Train step
         # set model to train
-        lstm_model.train()  # TODO should this be off so the backward() call in the forward pass does not update the weights?
+        # lstm_model.train()  # TODO should this be off so the backward() call in the forward pass does not update the weights?
 
         # Makes predictions
-        hn, theta, theta_gradients_temp = lstm_model(x_batch)
+        hn, theta, theta_gradients_temp = lstm_model(x_batch, device)
 
         if "theta_gradients" not in locals():
             theta_gradients = theta_gradients_temp
@@ -156,7 +156,13 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
 
 
 def updating_theta(
-    h_bar_list, theta: dict, theta_gradients: dict, mu, alphas, a_idx, device,
+    h_bar_list,
+    theta: dict,
+    theta_gradients: dict,
+    mu,
+    alphas,
+    a_idx,
+    device,
 ):
     """Updates the weights of the LSTM contained in theta according to the optimization
     algorithm with orthogonality constraints
@@ -261,7 +267,13 @@ def optimization(
     """
     # update theta
     theta = updating_theta(
-        h_bar_list, theta, theta_gradients, mu, alphas, a_idx, device,
+        h_bar_list,
+        theta,
+        theta_gradients,
+        mu,
+        alphas,
+        a_idx,
+        device,
     )
 
     # update lstm

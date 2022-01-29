@@ -24,12 +24,31 @@ class LSTMModel(nn.Module):
         # Fully connected layer
         self.fc = nn.Linear(hidden_dim, output_dim)
 
-    def forward(self, x, backpropagation_flag=True):
+    def forward(
+        self,
+        x,
+        device=torch.device("cuda")
+        if torch.cuda.is_available()
+        else torch.device("cpu"),
+        backpropagation_flag=True,
+    ):
         # Initializing hidden state for first input with zeros
-        h0 = torch.zeros(self.layer_dim, x.size(0), self.hidden_dim, requires_grad=True)
+        h0 = torch.zeros(
+            self.layer_dim,
+            x.size(0),
+            self.hidden_dim,
+            requires_grad=True,
+            device=device,
+        )
 
         # Initializing cell state for first input with zeros
-        c0 = torch.zeros(self.layer_dim, x.size(0), self.hidden_dim, requires_grad=True)
+        c0 = torch.zeros(
+            self.layer_dim,
+            x.size(0),
+            self.hidden_dim,
+            requires_grad=True,
+            device=device,
+        )
 
         # We need to detach as we are doing truncated backpropagation through time (BPTT)
         # If we don't, we'll backprop all the way to the start even after going through another batch
