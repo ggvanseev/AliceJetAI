@@ -109,7 +109,7 @@ def kappa(alphas, a_idx, h_list):
     with torch.no_grad():
         h_matrix = (
             h_list[a_idx] @ h_list[a_idx].T
-        )  # Matrix multiplication is time consuming, thus to do this as least as possbile do this
+        ).cpu()  # Matrix multiplication is time consuming, thus to do this as least as possbile do this
         # once and create a matrix with the results
 
         # out1 = 0
