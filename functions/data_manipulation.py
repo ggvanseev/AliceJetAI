@@ -292,7 +292,7 @@ def put_weight_in_pytorch_matrix(weight, weight_name, pytorch_weights):
     return pytorch_weights
 
 
-def get_full_pytorch_weight(weights):
+def get_full_pytorch_weight(weights, device):
     """
     # get full original weights, called pytorch_weights (following lstm structure)
     weights: dict for specified weight group (see get_weights in functions/data_manipulation for dict type)
@@ -304,7 +304,7 @@ def get_full_pytorch_weight(weights):
     for weight_name, weight in weights.items():
         # check layer, and thus if new temp is needed
         if weight_name[-1] != str(track_layer):
-            temp = torch.empty(0)
+            temp = torch.empty(0, device=device)
             track_layer = weight_name[-1]
 
         temp = torch.cat((temp, weight))  # Double () is needed

@@ -204,7 +204,7 @@ def updating_theta(
             g = calc_g(gradient_weight, h_bar_list, alphas, a_idx)
 
             a = g @ weight.T - weight @ g.T
-            i = torch.eye(weight.shape[0])
+            i = torch.eye(weight.shape[0], device=device)
 
             # next point from Crank-Nicolson-like scheme
             track_weights[weight_name] = (
@@ -217,7 +217,7 @@ def updating_theta(
     return updated_theta
 
 
-def update_lstm(lstm, theta):
+def update_lstm(lstm, theta, device):
     """Function to update the weights and bias values of the LSTM
 
     Args:
@@ -229,7 +229,7 @@ def update_lstm(lstm, theta):
     """
     for weight_type, weights in theta.items():
         # get full original weights, called pytorch_weights (following lstm structure)
-        pytorch_weights = get_full_pytorch_weight(weights)
+        pytorch_weights = get_full_pytorch_weight(weights, device)
 
         # Get weight name without layer number
         weight_name = list(weights.keys())[0][5:-1]
@@ -281,6 +281,6 @@ def optimization(
     )
 
     # update lstm
-    lstm = update_lstm(lstm, theta)
+    lstm = update_lstm(lstm, theta, device)
 
     return lstm, theta
