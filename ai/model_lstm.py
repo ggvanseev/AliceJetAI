@@ -66,7 +66,7 @@ class LSTMModel(nn.Module):
 
         # set hn to cpu if not already, to avoid calculation problems later on.
         if device.type != "cpu":
-            hn.to(device=torch.device("cpu"))
+            hn = hn.cpu()
 
         # Check if backpropogation is required
         if backpropagation_flag:
