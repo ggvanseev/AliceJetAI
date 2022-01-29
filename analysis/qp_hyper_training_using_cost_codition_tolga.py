@@ -66,28 +66,28 @@ import pickle
 
 # Set hyper space and variables
 
-max_evals = 1
+max_evals = 2000
 space = hp.choice(
     "hyper_parameters",
     [
         {
-            "batch_size": hp.choice("num_batch", [50]),
+            "batch_size": hp.choice("num_batch", [50, 100, 200]),
             "hidden_dim": hp.choice("hidden_dim", [2, 6, 18]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(200)]),
             "learning_rate": hp.choice("learning_rate", [1e-7, 1e-5, 1e-10, 1e-15]),
-            "decay_factor": hp.choice("decay_factor", [0.9]),
-            "dropout": hp.choice("dropout", [0, 0.2, 0.4]),
+            "decay_factor": hp.choice("decay_factor", [0.5, 0.7, 0.8]),
+            "dropout": hp.choice("dropout", [0, 0.2, 0.4, 0.6]),
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.05, 0.01, 0.04]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
             "svm_gamma": hp.choice(
-                "svm_gamma", ["scale"]  # Auto seems to give weird results
+                "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
         }
     ],
 )
 
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
 
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
@@ -100,8 +100,8 @@ trials = Trials()
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters,
-        dev_data=train_data,
-        val_data=dev_data,
+        dev_data=dev_data,
+        val_data=test_data,
         plot_flag=True,
         max_epochs=5000,
         eps=1e-10,
