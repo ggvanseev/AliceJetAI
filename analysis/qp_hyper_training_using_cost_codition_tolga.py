@@ -112,6 +112,6 @@ best = fmin(
 )
 print(space_eval(space, best))
 
-pickle.dump(trials, open("/storing_results/trials_test.p", "wb"))
+pickle.dump(trials, open("storing_results/trials_test.p", "wb"))
 
 # load trials_test = pickle.load(open("/storing_results/trials_test.p", "rb"))
