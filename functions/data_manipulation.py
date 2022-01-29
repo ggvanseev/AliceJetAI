@@ -3,6 +3,8 @@ import torch
 import awkward as ak
 from copy import copy
 
+import numpy as np
+
 from torch.utils.data import TensorDataset, DataLoader
 
 
@@ -312,3 +314,13 @@ def get_full_pytorch_weight(weights):
             pytorch_weights[weight_name[-1]] = temp
 
     return pytorch_weights
+
+
+def h_bar_list_to_numpy(h_bar_list, device):
+    if device.type == "cpu":
+        h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+    else:
+        h_bar_list_temp = h_bar_list.to(device=device)
+        h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list_temp])
+
+    return h_bar_list_np

@@ -21,6 +21,7 @@ from functions.data_saver import save_results
 from functions.data_manipulation import (
     branch_filler,
     lstm_data_prep,
+    h_bar_list_to_numpy,
 )
 from functions.optimization_orthogonality_constraints import (
     lstm_results,
@@ -87,7 +88,7 @@ def training_algorithm(
         track_jets_dev_data,
         device,
     )
-    h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+    h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
     # list to track cost
     track_cost = []
@@ -129,7 +130,7 @@ def training_algorithm(
             track_jets_dev_data,
             device,
         )
-        h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+        h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
         # obtain the new cost and cost condition given theta_k+1 and alpha_k+1
         cost = kappa(alphas, a_idx, h_bar_list)
