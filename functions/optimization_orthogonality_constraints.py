@@ -146,9 +146,13 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
     """
     alphas_sum = np.sum(alphas)
 
-    d_kappa = (
-        alphas_sum * torch.tensor(alphas).type(torch.FloatTensor) @ h_bar_list[a_idx]
-    )
+    # check device type, and adjust alphas_tensor
+    if h_bar_list.device.type == "cpu":
+        alphas_tensor = torch.tensor(alphas).type(torch.FloatTensor)
+    else:
+        alphas_tensor = torch.tensor(alphas).type(torch.FloatTensor).cuda()
+
+    d_kappa = alphas_sum * alphas_tensor @ h_bar_list[a_idx]
 
     out = (d_kappa * gradient_hi.T).T
 

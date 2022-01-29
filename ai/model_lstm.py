@@ -65,10 +65,6 @@ class LSTMModel(nn.Module):
         # self.mp(out)
         # self.mp(hn)
 
-        # set hn to cpu if not already, to avoid calculation problems later on.
-        if device.type != "cpu":
-            hn = hn.cpu()
-
         # Check if backpropogation is required
         if backpropagation_flag:
             # Do backward to get gradients with respect to hn (to get first part of chain rule, only take derivative of kappa later for algorithm Tolga)
