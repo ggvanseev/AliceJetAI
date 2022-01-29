@@ -26,10 +26,10 @@ class LSTMModel(nn.Module):
 
     def forward(self, x, backpropagation_flag=True):
         # Initializing hidden state for first input with zeros
-        h0 = torch.zeros(self.layer_dim, x.size(0), self.hidden_dim).requires_grad_()
+        h0 = torch.zeros(self.layer_dim, x.size(0), self.hidden_dim, requires_grad=True)
 
         # Initializing cell state for first input with zeros
-        c0 = torch.zeros(self.layer_dim, x.size(0), self.hidden_dim).requires_grad_()
+        c0 = torch.zeros(self.layer_dim, x.size(0), self.hidden_dim, requires_grad=True)
 
         # We need to detach as we are doing truncated backpropagation through time (BPTT)
         # If we don't, we'll backprop all the way to the start even after going through another batch
@@ -39,7 +39,6 @@ class LSTMModel(nn.Module):
         # Reshaping the outputs in the shape of (batch_size, seq_length, hidden_size)
         # so that it can fit into the fully connected layer
         out = out[:, -1, :]
-        # TODO size of out is now [210, 210]?
 
         # TODO of mean pooling hier?
         # out = F.avg_pool2d(out)

@@ -58,13 +58,11 @@ def getBestModelfromTrials(trials):
 def training_algorithm(
     lstm_model,
     svm_model,
-    dev_loader,
+    x_loader,
     track_jets_dev_data,
     model_params,
+    training_params,
     device,
-    epochs,
-    learning_rate,
-    eps,
 ):
     """
     Trainging algorithm 1 from paper Tolga: Unsupervised Anomaly Detection With LSTM Neural Networks
@@ -75,13 +73,17 @@ def training_algorithm(
     ### ALGORITHM START ###
     # Set initial cost
     # TODO set alphas to 1 or 0 so cost_next - cost will be large
-    cost = 1000
+    cost = 1e10
+    cost_condition_passed_flag = (
+        False  # flag to check if cost condition has been satisfied
+    )
+    min_epochs_patience = training_params["min_epochs"]
 
     # obtain h_bar from the lstm with theta_0, given the data
     h_bar_list, theta, theta_gradients = lstm_results(
         lstm_model,
         model_params["input_dim"],
-        dev_loader,
+        x_loader,
         track_jets_dev_data,
         device,
     )
@@ -91,8 +93,11 @@ def training_algorithm(
     track_cost = []
     track_cost_condition = []
 
+    # loop over k (epochs) for nr. set epochs and unsatisfied cost condition
     k = -1
-    while k < epochs:
+    while (
+        k < min_epochs_patience or cost_condition_passed_flag == False
+    ) and k < training_params["max_epochs"]:
         k += 1
 
         # keep previous cost result stored
@@ -109,7 +114,7 @@ def training_algorithm(
             lstm=lstm_model,
             alphas=alphas,
             a_idx=a_idx,
-            mu=learning_rate,
+            mu=training_params["learning_rate"],
             h_bar_list=h_bar_list,
             theta=theta,
             theta_gradients=theta_gradients,
@@ -120,7 +125,7 @@ def training_algorithm(
         h_bar_list, theta, theta_gradients = lstm_results(
             lstm_model,
             model_params["input_dim"],
-            dev_loader,
+            x_loader,
             track_jets_dev_data,
             device,
         )
@@ -135,20 +140,28 @@ def training_algorithm(
         track_cost_condition.append(cost_condition)
 
         # check condition algorithm 1, paper Tolga
-        # TODO: figure out why most runs seems to succeed in one go, remove k>2 if solved
-        if (cost - cost_prev) ** 2 < eps and k > 5:
-            print("Succes, epoch: {}".format(k), cost, cost_prev, sep="\n")
-            passed = True
-            break
+        if (cost - cost_prev) ** 2 < training_params["epsilon"]:
+            # check if condition had been satisfied recently
+            if cost_condition_passed_flag == False:
+                cost_condition_passed_flag = True
+                # check if k + patience would be larger than minimum number of epochs
+                # Update min_epochs_patience to check if
+                if k + training_params["patience"] > training_params["min_epochs"]:
+                    min_epochs_patience = k + training_params["patience"]
+        else:
+            cost_condition_passed_flag = False
 
         # Check if cost function starts to explode
         if np.isnan(track_cost_condition[k]):
             print("Broke, for given hyper parameters")
             return 1e10  # Return large number to not be selected as the best
 
-    if (cost - cost_prev) ** 2 > eps:
-        print("Failed")
+    if (cost - cost_prev) ** 2 > training_params["epsilon"]:
+        print("Alogirthm failed: not done learning in max epochs.")
         passed = False
+    else:
+        print(f"Model done learning in {k} epochs.")
+        passed = True
 
     return lstm_model, svm_model, track_cost, track_cost_condition, passed
 
@@ -158,7 +171,9 @@ def try_hyperparameters(
     dev_data,
     val_data,
     plot_flag: bool = False,
+    max_epochs=5000,
     eps=1e-6,
+    patience=50,
     max_attempts=4,
     max_distance_nu=0.01,
 ):
@@ -186,7 +201,7 @@ def try_hyperparameters(
     output_dim = hyper_parameters["output_dim"]
     layer_dim = hyper_parameters["num_layers"]
     dropout = hyper_parameters["dropout"]
-    epochs = hyper_parameters["num_epochs"]
+    min_epochs = hyper_parameters["min_epochs"]
     learning_rate = hyper_parameters["learning_rate"]
     svm_nu = hyper_parameters["svm_nu"]
     svm_gamma = hyper_parameters["svm_gamma"]
@@ -218,6 +233,15 @@ def try_hyperparameters(
         "dropout_prob": dropout,
     }
 
+    # set training parameters
+    training_params = {
+        "min_epochs": min_epochs,
+        "max_epochs": max_epochs,
+        "learning_rate": learning_rate,
+        "epsilon": eps,
+        "patience": patience,
+    }
+
     n_attempt = 0
     while n_attempt < max_attempts:
         n_attempt += 1
@@ -241,10 +265,8 @@ def try_hyperparameters(
             dev_loader,
             track_jets_dev_data,
             model_params,
+            training_params,
             device,
-            epochs,
-            learning_rate,
-            eps,
         )
 
         # Check if distance to svm_nu is smaller than required
@@ -271,7 +293,7 @@ def try_hyperparameters(
 
     if plot_flag:
         # plot cost condition and cost function
-        title_plot = f"plot_with_{epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu"
+        title_plot = f"plot_with_{max_epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu"
         fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
         fig.suptitle(title_plot, y=1.08)
         ax1.plot(track_cost_condition[1:])

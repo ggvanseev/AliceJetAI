@@ -1,8 +1,6 @@
 import torch
 
-from functions.data_manipulation import (
-    get_full_pytorch_weight,
-)
+from functions.data_manipulation import get_full_pytorch_weight
 
 import numpy as np
 
@@ -37,6 +35,8 @@ def lstm_results(
         jet_track_local = track_jets_train_data[i]
         i += 1
 
+        # x_batch as input for lstm, pytorch says shape = [sequence_length, batch_size, n_features]
+        # x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         y_batch = y_batch.to(device)
 
@@ -53,8 +53,26 @@ def lstm_results(
             for key1, value1 in theta_gradients_temp.items():
                 for key2, value2 in value1.items():
                     theta_gradients[key1][key2] = theta_gradients[key1][key2] + value2
+        ### TODO Try backpropagation after each jet
+        # x_batch_cut = [
+        #     x_batch[s1:s2]
+        #     for s1, s2 in zip([0] + jet_track_local[:-1], jet_track_local)
+        # ]
+        # hn = []
+        # for jet in x_batch_cut:
+        #     hi, theta, theta_gradients_temp = lstm_model(jet)
 
-        # get mean pooled hidden states
+        #     if "theta_gradients" not in locals():
+        #         theta_gradients = theta_gradients_temp
+        #     else:
+        #         for key1, value1 in theta_gradients_temp.items():
+        #             for key2, value2 in value1.items():
+        #                 theta_gradients[key1][key2] = (
+        #                     theta_gradients[key1][key2] + value2
+        #                 )
+        #     hn.append(hi)
+
+        # get mean/last pooled hidden states
         h_bar = hn[:, jet_track_local]
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
@@ -138,13 +156,7 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
 
 
 def updating_theta(
-    h_bar_list,
-    theta: dict,
-    theta_gradients: dict,
-    mu,
-    alphas,
-    a_idx,
-    device,
+    h_bar_list, theta: dict, theta_gradients: dict, mu, alphas, a_idx, device,
 ):
     """Updates the weights of the LSTM contained in theta according to the optimization
     algorithm with orthogonality constraints
@@ -249,13 +261,7 @@ def optimization(
     """
     # update theta
     theta = updating_theta(
-        h_bar_list,
-        theta,
-        theta_gradients,
-        mu,
-        alphas,
-        a_idx,
-        device,
+        h_bar_list, theta, theta_gradients, mu, alphas, a_idx, device,
     )
 
     # update lstm
