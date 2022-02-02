@@ -70,12 +70,14 @@ max_evals = 2000
 space = hp.choice(
     "hyper_parameters",
     [
-        {
+        {  # TODO change to quniform (like lihan)
             "batch_size": hp.choice("num_batch", [50, 100, 200]),
             "hidden_dim": hp.choice("hidden_dim", [2, 6, 18]),
-            "num_layers": hp.choice("num_layers", [1]),
-            "min_epochs": hp.choice("min_epochs", [int(200)]),
-            "learning_rate": hp.choice("learning_rate", [1e-7, 1e-5, 1e-10, 1e-15]),
+            "num_layers": hp.choice("num_layers", [1, 2]),
+            "min_epochs": hp.choice("min_epochs", [int(5), int(10), int(20)]),
+            "learning_rate": hp.choice(
+                "learning_rate", [1e-3, 1e-5, 1e-7, 1e-5, 1e-10, 1e-15]
+            ),
             "decay_factor": hp.choice("decay_factor", [0.5, 0.7, 0.8]),
             "dropout": hp.choice("dropout", [0, 0.2, 0.4, 0.6]),
             "output_dim": hp.choice("output_dim", [1]),
@@ -87,7 +89,8 @@ space = hp.choice(
     ],
 )
 
-file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
@@ -102,9 +105,9 @@ best = fmin(
         try_hyperparameters,
         dev_data=dev_data,
         val_data=test_data,
-        plot_flag=True,
+        plot_flag=False,
         max_epochs=5000,
-        eps=1e-10,
+        eps=1e-8,
         patience=5,
     ),
     space,

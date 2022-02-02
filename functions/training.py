@@ -48,7 +48,7 @@ def getBestModelfromTrials(trials):
         trial for trial in trials if STATUS_OK == trial["result"]["status"]
     ]
 
-    # Replace losses, by crtiterium for future best model determination
+    # Replace losses, by crtiterium for future best model determination TODO
     losses = [float(trial["result"]["loss"]) for trial in valid_trial_list]
     index_having_minumum_loss = np.argmin(losses)
     best_trial_obj = valid_trial_list[index_having_minumum_loss]
@@ -82,11 +82,7 @@ def training_algorithm(
 
     # obtain h_bar from the lstm with theta_0, given the data
     h_bar_list, theta, theta_gradients = lstm_results(
-        lstm_model,
-        model_params["input_dim"],
-        x_loader,
-        track_jets_dev_data,
-        device,
+        lstm_model, model_params["input_dim"], x_loader, track_jets_dev_data, device,
     )
     h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
@@ -158,7 +154,7 @@ def training_algorithm(
             return 1e10  # Return large number to not be selected as the best
 
     if (cost - cost_prev) ** 2 > training_params["epsilon"]:
-        print("Alogirthm failed: not done learning in max epochs.")
+        print("Algorithm failed: not done learning in max epochs.")
         passed = False
     else:
         print(f"Model done learning in {k} epochs.")
@@ -313,4 +309,11 @@ def try_hyperparameters(
     # return the model
     lstm_ocsvm = dict({"lstm:": lstm_model, "ocsvm": svm_model, "scaler": scaler})
 
-    return {"loss": distance_nu, "status": STATUS_OK, "model": lstm_ocsvm}
+    return {
+        "loss": distance_nu,
+        "status": STATUS_OK,
+        "model": lstm_ocsvm,
+        "hyper_parameters": hyper_parameters,
+        "alphas": np.abs(svm_model.dual_coef_)[0],
+    }
+
