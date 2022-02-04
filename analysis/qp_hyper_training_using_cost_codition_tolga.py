@@ -63,16 +63,17 @@ from hyperopt import (
 from functools import partial
 
 import pickle
+import torch
 
 # Set hyper space and variables
 
-max_evals = 2000
+max_evals = 500
 space = hp.choice(
     "hyper_parameters",
     [
-        {  # TODO change to quniform (like lihan)
-            "batch_size": hp.choice("num_batch", [50, 100, 200]),
-            "hidden_dim": hp.choice("hidden_dim", [2, 6, 18]),
+        {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
+            "batch_size": hp.quniform("num_batch", 50, 200, 10),
+            "hidden_dim": hp.quniform("hidden_dim", 2, 20, 3),
             "num_layers": hp.choice("num_layers", [1, 2]),
             "min_epochs": hp.choice("min_epochs", [int(5), int(10), int(20)]),
             "learning_rate": hp.choice(
@@ -89,6 +90,7 @@ space = hp.choice(
     ],
 )
 
+# file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 
@@ -106,7 +108,7 @@ best = fmin(
         dev_data=dev_data,
         val_data=test_data,
         plot_flag=False,
-        max_epochs=5000,
+        max_epochs=50,
         eps=1e-8,
         patience=5,
     ),
