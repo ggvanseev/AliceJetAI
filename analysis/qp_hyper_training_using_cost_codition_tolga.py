@@ -66,8 +66,10 @@ import pickle
 import torch
 
 # Set hyper space and variables
-
 max_evals = 500
+max_epochs = 50
+epsilon = 1e-8
+patience = 5
 space = hp.choice(
     "hyper_parameters",
     [
@@ -91,8 +93,8 @@ space = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
@@ -108,9 +110,9 @@ best = fmin(
         dev_data=dev_data,
         val_data=test_data,
         plot_flag=False,
-        max_epochs=50,
-        eps=1e-8,
-        patience=5,
+        max_epochs=max_epochs,
+        eps=epsilon,
+        patience=patience,
     ),
     space,
     algo=tpe.suggest,
