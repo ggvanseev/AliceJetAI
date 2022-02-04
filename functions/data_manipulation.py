@@ -113,6 +113,10 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
     # batch size and shuffle=False is used)
     batches = [y for x in batches for y in x]
 
+    # TODO check if not successful
+    if not batches:
+        return -1
+
     return batches, track_jets_in_batch
 
 

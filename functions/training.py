@@ -72,6 +72,10 @@ def training_algorithm(
     # model_path = f'models/{lstm_model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
 
     ### ALGORITHM START ###
+
+    ### TRACK TIME ### TODO
+    time_at_step = time.time()
+
     # Set initial cost
     # TODO set alphas to 1 or 0 so cost_next - cost will be large
     cost = 1e10
@@ -90,12 +94,22 @@ def training_algorithm(
     track_cost = []
     track_cost_condition = []
 
+    ### TRACK TIME ### TODO
+    dt = time.time() - time_at_step
+    time_at_step = time.time()
+    print(f"Obtained first h_bars, done in: {dt}")
+
     # loop over k (epochs) for nr. set epochs and unsatisfied cost condition
     k = -1
     while (
         k < min_epochs_patience or cost_condition_passed_flag == False
     ) and k < training_params["max_epochs"]:
         k += 1
+
+        ### TRACK TIME ### TODO
+        dt = time.time() - time_at_step
+        time_at_step = time.time()
+        print(f"Start of loop, done in: {dt} \t epoch {k}")
 
         # keep previous cost result stored
         cost_prev = copy(cost)
@@ -105,6 +119,11 @@ def training_algorithm(
         alphas = np.abs(svm_model.dual_coef_)[0]
 
         a_idx = svm_model.support_
+
+        ### TRACK TIME ### TODO
+        dt = time.time() - time_at_step
+        time_at_step = time.time()
+        print(f"Obtained alphas, done in: {dt}")
 
         # obtain theta_k+1 using the optimization algorithm
         lstm_model, theta_next = optimization(
@@ -118,6 +137,11 @@ def training_algorithm(
             device=device,
         )
 
+        ### TRACK TIME ### TODO
+        dt = time.time() - time_at_step
+        time_at_step = time.time()
+        print(f"Obtained thetas, done in: {dt}")
+
         # obtain h_bar from the lstm with theta_k+1, given the data
         h_bar_list, theta, theta_gradients = lstm_results(
             lstm_model,
@@ -128,9 +152,19 @@ def training_algorithm(
         )
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
+        ### TRACK TIME ### TODO
+        dt = time.time() - time_at_step
+        time_at_step = time.time()
+        print(f"Obtained h_bar, done in: {dt}")
+
         # obtain the new cost and cost condition given theta_k+1 and alpha_k+1
         cost = kappa(alphas, a_idx, h_bar_list)
         cost_condition = (cost - cost_prev) ** 2
+
+        ### TRACK TIME ### TODO
+        dt = time.time() - time_at_step
+        time_at_step = time.time()
+        print(f"Obtained cost, done in: {dt}")
 
         # track cost and cost_condition
         track_cost.append(cost)
@@ -171,7 +205,7 @@ def try_hyperparameters(
     max_epochs=5000,
     eps=1e-6,
     patience=50,
-    max_attempts=4,
+    max_attempts=1,
     max_distance_nu=0.01,
 ):
     """
@@ -192,9 +226,10 @@ def try_hyperparameters(
 
     # use correct device:
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    print("\nUsing device: {}".format(device))
 
     # Variables:
-    batch_size = hyper_parameters["batch_size"]
+    batch_size = int(hyper_parameters["batch_size"])
     output_dim = hyper_parameters["output_dim"]
     layer_dim = hyper_parameters["num_layers"]
     dropout = hyper_parameters["dropout"]
@@ -212,8 +247,15 @@ def try_hyperparameters(
     print(hyper_parameters)
 
     # prepare data for usage
-    dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
-    val_data, track_jets_val_data = branch_filler(val_data, batch_size=batch_size)
+    # dev_data_copy = copy(dev_data)  # save this to check the error of data[] TODO
+    try:
+        dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
+        val_data, track_jets_val_data = branch_filler(val_data, batch_size=batch_size)
+    except TypeError:
+        print("Could not create jet branch with given data and parameters!")
+        return (
+            10  # for "loss", since this will be added to the 1st column of the result
+        )
 
     # Only use train and dev data for now
     # Note this has to be saved with the model, to ensure data has the same form.
@@ -227,7 +269,7 @@ def try_hyperparameters(
     input_dim = len(dev_data[0])
     model_params = {
         "input_dim": input_dim,
-        "hidden_dim": hidden_dim,
+        "hidden_dim": int(hidden_dim),
         "layer_dim": layer_dim,
         "output_dim": output_dim,
         "dropout_prob": dropout,
@@ -241,6 +283,10 @@ def try_hyperparameters(
         "epsilon": eps,
         "patience": patience,
     }
+
+    ### TRACK TIME ### TODO
+    dt = time.time() - time_track
+    print(f"Dataprep, done in: {dt}")
 
     n_attempt = 0
     while n_attempt < max_attempts:
@@ -311,6 +357,7 @@ def try_hyperparameters(
 
     return {
         "loss": distance_nu,
+        "final_cost": track_cost[-1],
         "status": STATUS_OK,
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,

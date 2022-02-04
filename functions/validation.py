@@ -49,6 +49,6 @@ def validation_distance_nu(
     # count anomalies
     n_anomaly = np.count_nonzero(h_predicted == -1)
 
-    percentage_anomaly = n_anomaly / len(h_predicted)
+    fraction_anomaly = n_anomaly / len(h_predicted)
 
-    return abs(percentage_anomaly - nu)
+    return abs(fraction_anomaly - nu)
