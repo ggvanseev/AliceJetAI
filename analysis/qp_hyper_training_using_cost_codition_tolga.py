@@ -63,10 +63,10 @@ from hyperopt import (
 from functools import partial
 
 import pickle
-import torch
+import os
 
 # Set hyper space and variables
-max_evals = 500
+max_evals = 1
 max_epochs = 50
 epsilon = 1e-8
 patience = 5
@@ -93,7 +93,7 @@ space = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 
 # Load and filter data for criteria eta and jetpt_cap
@@ -121,6 +121,13 @@ best = fmin(
 )
 print(space_eval(space, best))
 
-pickle.dump(trials, open("storing_results/trials_test.p", "wb"))
+# set out file to job_id for parallel computing
+job_id = os.getenv("PBS_JOBID")
+if job_id:
+    out_file = "storing_results/trials_test_{}.p".format(job_id)
+else:
+    out_file = "storing_results/trials_test.p"
+
+pickle.dump(trials, open(out_file, "wb"))
 
 # load trials_test = pickle.load(open("/storing_results/trials_test.p", "rb"))

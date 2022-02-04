@@ -49,7 +49,7 @@ def lstm_results(
 
         if "theta_gradients" not in locals():
             theta_gradients = theta_gradients_temp
-        else:
+        else:  # TODO array command
             for key1, value1 in theta_gradients_temp.items():
                 for key2, value2 in value1.items():
                     theta_gradients[key1][key2] = theta_gradients[key1][key2] + value2
@@ -78,7 +78,7 @@ def lstm_results(
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
 
-    # Get mean of theta gradients
+    # Get mean of theta gradients TODO array command
     for key1, value1 in theta_gradients_temp.items():
         for key2, value2 in value1.items():
             theta_gradients[key1][key2] = theta_gradients[key1][key2] / len(
@@ -160,13 +160,7 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
 
 
 def updating_theta(
-    h_bar_list,
-    theta: dict,
-    theta_gradients: dict,
-    mu,
-    alphas,
-    a_idx,
-    device,
+    h_bar_list, theta: dict, theta_gradients: dict, mu, alphas, a_idx, device,
 ):
     """Updates the weights of the LSTM contained in theta according to the optimization
     algorithm with orthogonality constraints
@@ -271,13 +265,7 @@ def optimization(
     """
     # update theta
     theta = updating_theta(
-        h_bar_list,
-        theta,
-        theta_gradients,
-        mu,
-        alphas,
-        a_idx,
-        device,
+        h_bar_list, theta, theta_gradients, mu, alphas, a_idx, device,
     )
 
     # update lstm
