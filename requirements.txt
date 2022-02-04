@@ -7,8 +7,8 @@ numpy
 pandas
 openpyxl
 numba
-scikit-image
-scikit-learn
+scikit-image==0.19.1
+scikit-learn==1.0.2
 scipy
 seaborn
 spyder
