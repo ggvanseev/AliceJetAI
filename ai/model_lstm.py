@@ -3,11 +3,22 @@ import torch.nn as nn
 
 from functions.data_manipulation import get_weights, get_gradient_weights
 
+import time
+
 
 class LSTMModel(nn.Module):
     # Inspiration: https://towardsdatascience.com/building-rnn-lstm-and-gru-for-time-series-using-pytorch-a46e5b094e7b
 
-    def __init__(self, input_dim, hidden_dim, layer_dim, output_dim, dropout_prob):
+    def __init__(
+        self,
+        input_dim,
+        hidden_dim,
+        layer_dim,
+        output_dim,
+        dropout_prob,
+        batch_size,
+        device,
+    ):
         super(LSTMModel, self).__init__()
 
         # Defining the number of layers and the nodes in each layer
@@ -24,42 +35,37 @@ class LSTMModel(nn.Module):
         # Fully connected layer
         self.fc = nn.Linear(hidden_dim, output_dim)
 
-    def forward(
-        self,
-        x,
-        device=torch.device("cuda")
-        if torch.cuda.is_available()
-        else torch.device("cpu"),
-        backpropagation_flag=True,
-    ):
+        self.device = device
+
         # Initializing hidden state for first input with zeros
-        h0 = torch.zeros(
+        self.set_h0 = torch.zeros(
             self.layer_dim,
-            x.size(0),
+            batch_size,
             self.hidden_dim,
             requires_grad=True,
             device=device,
         )
 
         # Initializing cell state for first input with zeros
-        c0 = torch.zeros(
+        self.set_c0 = torch.zeros(
             self.layer_dim,
-            x.size(0),
+            batch_size,
             self.hidden_dim,
             requires_grad=True,
             device=device,
         )
 
+    def forward(
+        self,
+        x,
+        theta=None,
+        theta_gradients=None,
+        backpropagation_flag=True,
+    ):
         # We need to detach as we are doing truncated backpropagation through time (BPTT)
         # If we don't, we'll backprop all the way to the start even after going through another batch
         # Forward propagation by passing in the input, hidden state, and cell state into the model
-
-        out, (hn, cn) = self.lstm(x, (h0.detach(), c0.detach()))
-
-        # Reshaping the outputs in the shape of (batch_size, seq_length, hidden_size)
-        # so that it can fit into the fully connected layer
-        out = out[:, -1, :]
-
+        _, (hn, cn) = self.lstm(x, (self.set_h0.detach(), self.set_c0.detach()))
         # TODO of mean pooling hier?
         # out = F.avg_pool2d(out)
         # self.mp(out)
@@ -72,9 +78,13 @@ class LSTMModel(nn.Module):
             # [hn track_jet_select] # call backward ojn each jet output
 
             # Get parameters to update, save in dict for easy reference.
-            theta = get_weights(model=self.lstm, hidden_dim=hn.shape[2])
+            if (
+                not theta
+            ):  # Use this condition to only get theta once, it doens't change.
+                theta = get_weights(model=self.lstm, hidden_dim=hn.shape[2])
+
             theta_gradients = get_gradient_weights(
-                model=self.lstm, hidden_dim=hn.shape[2]
+                model=self.lstm, hidden_dim=hn.shape[2], theta_gradients=theta_gradients
             )
 
             return hn, theta, theta_gradients

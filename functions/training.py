@@ -86,7 +86,11 @@ def training_algorithm(
 
     # obtain h_bar from the lstm with theta_0, given the data
     h_bar_list, theta, theta_gradients = lstm_results(
-        lstm_model, model_params["input_dim"], x_loader, track_jets_dev_data, device,
+        lstm_model,
+        model_params["input_dim"],
+        x_loader,
+        track_jets_dev_data,
+        device,
     )
     h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
@@ -269,10 +273,12 @@ def try_hyperparameters(
     input_dim = len(dev_data[0])
     model_params = {
         "input_dim": input_dim,
-        "hidden_dim": int(hidden_dim),
+        "hidden_dim": hidden_dim,
         "layer_dim": layer_dim,
         "output_dim": output_dim,
         "dropout_prob": dropout,
+        "batch_size": batch_size,
+        "device": device,
     }
 
     # set training parameters
@@ -363,4 +369,3 @@ def try_hyperparameters(
         "hyper_parameters": hyper_parameters,
         "alphas": np.abs(svm_model.dual_coef_)[0],
     }
-

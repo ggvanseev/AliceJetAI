@@ -1,6 +1,6 @@
 autograd
 awkward
-hyperopt
+hyperopt==0.2.7
 # pickle
 # functools
 numpy

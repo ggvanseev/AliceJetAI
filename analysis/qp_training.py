@@ -67,7 +67,7 @@ from functions.validation import validation_distance_nu
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Variables:
-batch_size = 100
+batch_size = 200
 output_dim = 1
 hidden_dim = 18
 layer_dim = 1
@@ -104,12 +104,16 @@ dev_loader = lstm_data_prep(data=dev_data, scaler=scaler, batch_size=100)
 
 input_dim = len(train_data[0])
 
+device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+
 model_params = {
     "input_dim": input_dim,
     "hidden_dim": hidden_dim,
     "layer_dim": layer_dim,
     "output_dim": output_dim,
     "dropout_prob": dropout,
+    "batch_size": batch_size,
+    "device": device,
 }
 
 training_params = {
