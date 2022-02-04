@@ -361,11 +361,16 @@ def try_hyperparameters(
     # return the model
     lstm_ocsvm = dict({"lstm:": lstm_model, "ocsvm": svm_model, "scaler": scaler})
 
+    # save plot data
+    cost_data = dict(
+        {"cost": track_cost[1:], "cost_condition": track_cost_condition[1:]}
+    )
+
     return {
         "loss": distance_nu,
         "final_cost": track_cost[-1],
         "status": STATUS_OK,
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,
-        "alphas": np.abs(svm_model.dual_coef_)[0],
+        "cost_data": cost_data,
     }
