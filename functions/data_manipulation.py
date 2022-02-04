@@ -43,7 +43,7 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
     return train_data, dev_data, test_data
 
 
-def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
+def branch_filler(dataset, batch_size, n_features=3, max_trials=1000):
     """
     Tries to fill data into batches, drop left over data.
     Also trackts where the jets are in the branch.
@@ -112,6 +112,10 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=100):
     # Remove list nesting of branches (will be restored by DataLoader from torch if same
     # batch size and shuffle=False is used)
     batches = [y for x in batches for y in x]
+
+    # TODO check if not successful
+    if not batches:
+        return -1
 
     return batches, track_jets_in_batch
 

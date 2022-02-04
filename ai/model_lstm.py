@@ -19,7 +19,7 @@ class LSTMModel(nn.Module):
             input_dim, hidden_dim, layer_dim, batch_first=True, dropout=dropout_prob
         )
         # TODO mean pooling layer? as in https://www.kaggle.com/vitaliykoren/lstm-with-two-dimensional-max-pooling-with-pytorch
-        self.mp = nn.AvgPool2d(4)
+        # self.mp = nn.AvgPool2d(4)
 
         # Fully connected layer
         self.fc = nn.Linear(hidden_dim, output_dim)
