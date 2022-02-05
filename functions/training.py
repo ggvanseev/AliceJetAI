@@ -208,7 +208,7 @@ def try_hyperparameters(
     dev_data,
     plot_flag: bool = False,
     patience=50,
-    max_attempts=1,
+    max_attempts=4,
     max_distance_nu=0.01,
 ):
     """

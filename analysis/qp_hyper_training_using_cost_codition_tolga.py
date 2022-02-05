@@ -64,24 +64,26 @@ from functools import partial
 
 import pickle
 import os
+import time
+
+import pandas as pd
+import numpy as np
 
 # Set hyper space and variables
-max_evals = 1
-max_epochs = 50
-epsilon = 1e-8
+max_evals = 55
 patience = 5
 space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.quniform("num_batch", 50, 200, 10),
+            "batch_size": hp.choice("num_batch", [50, 100, 150, 200]),
             "hidden_dim": hp.quniform("hidden_dim", 2, 20, 3),
             "num_layers": hp.choice("num_layers", [1, 2]),
             "min_epochs": hp.choice("min_epochs", [int(5), int(10), int(20)]),
             "learning_rate": hp.choice(
-                "learning_rate", [1e-3, 1e-5, 1e-7, 1e-10, 1e-15]
+                "learning_rate", [1e-3, 1e-5, 1e-6, 1e-7, 1e-8, 1e-9]
             ),
-            "decay_factor": hp.choice("decay_factor", [0.5, 0.7, 0.8]),
+            "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0, 0.2, 0.4, 0.6]),
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
@@ -96,6 +98,9 @@ space = hp.choice(
 # file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+
+# start time
+start_time = time.time()
 
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
@@ -128,4 +133,7 @@ else:
 
 pickle.dump(trials, open(out_file, "wb"))
 
+run_time = pd.DataFrame(np.array([time.time() - start_time]))
+
+run_time.to_csv("storing_results/runtime.p")
 # load trials_test = pickle.load(open("/storing_results/trials_test.p", "rb"))
