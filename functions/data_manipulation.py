@@ -51,7 +51,6 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
     return train_data, dev_data, test_data
 
 
-# @jit
 def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     """
     Tries to fill data into batches, drop left over data.
@@ -115,11 +114,13 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                 # use a normal jet finding sequence for large jets
                 if space_count > 12:
                     jet = temp_dataset[j]
-                # when approaching small jets, can be a long time, thus use arrays to find
+                # when approaching end of the list, can be a long time, thus use arrays to find
                 # next jet more easily
-                elif space_count <= len(min(temp_dataset2)):
+                elif space_count >= len(min(temp_dataset2)):
                     jet_index = np.argmax(mylen(np.array(temp_dataset2)) <= space_count)
                     jet = temp_dataset2[jet_index]
+                else:
+                    jet = temp_dataset[j]
 
                 # Add jet to batch if possible
                 if space_count >= len(jet):
@@ -129,6 +130,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                     jets_in_batch.append(
                         batch_size - space_count - 1
                     )  # Position of the last split of jet
+
                 elif space_count == 0:
                     break
 
@@ -167,7 +169,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                 # If at the end of the temp_dataset update it to try to fill in free spots
                 elif j == len_temp_dataset - 1:
                     temp_dataset = temp_dataset2.copy()
-                    j += 1
+                    break
 
         if add_branch_flag:
             batches.append([y for x in batch for y in x])  # remove list nesting

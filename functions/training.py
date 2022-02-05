@@ -260,7 +260,7 @@ def try_hyperparameters(
     #     )
 
     time_track = time.time()
-    dev_data_temp2, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
+    dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
     dt = time.time() - time_track
     print(f"Branch filler jit, done in: {dt}")
 
