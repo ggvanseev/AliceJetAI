@@ -43,13 +43,18 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
     return train_data, dev_data, test_data
 
 
-def branch_filler(dataset, batch_size, n_features=3, max_trials=1000):
+def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     """
     Tries to fill data into batches, drop left over data.
     Also trackts where the jets are in the branch.
 
     Returns dataset that fits into branches, and a list to track where the jets are in the dataset.
+
+    Don't use ordering or sorting to avoid introducing biases into the lstm, the sample has a chaotic
     """
+    # make safety copy to avoid changing results
+    dataset = copy(orignal_dataset)
+
     # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
 
@@ -58,7 +63,9 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=1000):
     # Track_jets_in_batch tracks where the last split of the jet is located in the branch
     track_jets_in_batch = []
 
-    for i in range(max_n_batches):
+    i = 0
+    while i < max_n_batches:
+        i += 1
 
         # Space count tracks if branch is filled to max
         space_count = batch_size
@@ -80,7 +87,11 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=1000):
         while space_count > 0:
 
             # loop over available jets
-            for j in range(len(temp_dataset)):
+            j = -1
+            len_temp_dataset = len(temp_dataset)
+            while j < len_temp_dataset:
+                j += 1
+
                 jet = temp_dataset[j]
 
                 # Add jet to batch if possible
@@ -92,15 +103,42 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=1000):
                         batch_size - space_count - 1
                     )  # Position of the last split of jet
 
-                # Track how many times it has looped over the datasets
-                if j == len(temp_dataset) - 1:
-                    temp_dataset = temp_dataset2
-                    trials += 1
-
-                if trials == max_trials:
-                    add_branch_flag = False
+                # Check if anything could be added at all to avoid unnecesary loop
+                # (if not this means looping doesn't add anything, because no free spots can be filled up any more
+                if space_count < len(min(temp_dataset2)) and space_count > 0:
+                    # remove first entry from dataset to see try with different initial condition for filling list
                     dataset.remove(dataset[0])
-                    space_count = 0
+
+                    # Reset to original values
+                    # Space count tracks if branch is filled to max
+                    space_count = batch_size
+
+                    # make copies of the dataset to be able to remove elemnts while trying to fill branches
+                    # without destroyting original dataset
+                    temp_dataset = copy(dataset)
+                    temp_dataset2 = copy(dataset)
+
+                    # local trakcers of batches ad jets_in_batch
+                    batch = []
+                    jets_in_batch = []
+
+                    # update trials:
+                    trials += 1
+                    print(trials)
+
+                    if (
+                        trials == max_trials
+                        or str(dataset).count(",") / n_features < batch_size
+                    ):
+                        add_branch_flag = False
+                        i = max_n_batches + 1
+
+                    j = len_temp_dataset
+
+                # If at the end of the temp_dataset update it to try to fill in free spots
+                elif j == len_temp_dataset - 1:
+                    temp_dataset = copy(temp_dataset2)
+                    j += 1
 
         if add_branch_flag:
             batches.append([y for x in batch for y in x])  # remove list nesting
@@ -116,6 +154,8 @@ def branch_filler(dataset, batch_size, n_features=3, max_trials=1000):
     # TODO check if not successful
     if not batches:
         return -1
+
+    print(len(batches))
 
     return batches, track_jets_in_batch
 
@@ -359,3 +399,33 @@ def h_bar_list_to_numpy(h_bar_list, device):
         h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list_temp])
 
     return h_bar_list_np
+
+
+def scaled_epsilon_n_max_epochs(learning_rate):
+    """
+    Returns an epsilon and max_epochs based on the learning rate.
+
+    Epsilon:
+    The learning rate determines how quickly the model learns,
+    and thus what we deem a good mach epoch. In addition the learning rate
+    determines how much the model changes per time step, and thus determines
+    the order of size of the cost_condition, determing when the model has stopped learning.
+
+    Epsilon is chosen as 1/1000 of learning rate
+
+    Max_epochs:
+    The learning rate determines how quickly the model learns,
+    and thus what we deem a good max epoch with respect to time management.
+
+    Max_epoch is chosen as the order of size, times a hundred and devided by two, ie
+    learning rate = 1e-x, then max epochs = x*100/2=x*50
+
+    Note:
+    learning rate must be of the form: 1e-x, where x is a number [0,99]
+    """
+    epsilon = learning_rate * 1e-3
+
+    order_of_magnitude = int(str(learning_rate)[-2:])
+    max_epochs = order_of_magnitude * 50
+
+    return epsilon, max_epochs

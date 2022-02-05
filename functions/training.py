@@ -22,6 +22,7 @@ from functions.data_manipulation import (
     branch_filler,
     lstm_data_prep,
     h_bar_list_to_numpy,
+    scaled_epsilon_n_max_epochs,
 )
 from functions.optimization_orthogonality_constraints import (
     lstm_results,
@@ -206,8 +207,6 @@ def try_hyperparameters(
     dev_data,
     val_data,
     plot_flag: bool = False,
-    max_epochs=5000,
-    eps=1e-6,
     patience=50,
     max_attempts=1,
     max_distance_nu=0.01,
@@ -243,8 +242,8 @@ def try_hyperparameters(
     svm_gamma = hyper_parameters["svm_gamma"]
     hidden_dim = int(hyper_parameters["hidden_dim"])
 
-    # Set episilon to be 100 times smaller than the learning factor:
-    eps = learning_rate * 1e-2
+    # Set epsilon and max_epochs
+    eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
 
     # Show used hyper_parameters in terminal
     print("Hyper Parameters")
@@ -339,13 +338,12 @@ def try_hyperparameters(
             distance_nu = (
                 10  # Add large distance to ensure wrong model doesn't end up in list
             )
-            plot_flag = False
 
     print(f"Done in: {time.time()-time_track}")
 
     if plot_flag:
         # plot cost condition and cost function
-        title_plot = f"plot_with_{max_epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu"
+        title_plot = f"plot_with_{max_epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu_{distance_nu}_distance_nu"
         fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
         fig.suptitle(title_plot, y=1.08)
         ax1.plot(track_cost_condition[1:])
@@ -373,4 +371,5 @@ def try_hyperparameters(
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,
         "cost_data": cost_data,
+        "num_batches": len(dev_loader),
     }

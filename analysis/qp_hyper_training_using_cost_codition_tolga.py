@@ -111,8 +111,6 @@ best = fmin(
         dev_data=dev_data,
         val_data=test_data,
         plot_flag=False,
-        max_epochs=max_epochs,
-        eps=epsilon,
         patience=patience,
     ),
     space,
