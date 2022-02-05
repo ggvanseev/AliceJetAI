@@ -6,7 +6,14 @@ from copy import copy
 import numpy as np
 
 from torch.utils.data import TensorDataset, DataLoader
-from numba import jit
+from numba import njit
+
+from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
+import warnings
+
+# ignore numba warnings in terms of depraciation
+warnings.simplefilter("ignore", category=NumbaDeprecationWarning)
+warnings.simplefilter("ignore", category=NumbaPendingDeprecationWarning)
 
 
 def format_ak_to_list(arr: ak.Array) -> list:
@@ -59,16 +66,19 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
     # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
+    print(max_n_batches)
 
     # Batches, is a list with all the batches
     batches = []
     # Track_jets_in_batch tracks where the last split of the jet is located in the branch
     track_jets_in_batch = []
 
+    # make helping vector:
+    mylen = np.vectorize(len)
+
     i = 1
     while i < max_n_batches:
         i += 1
-        print(i)
 
         # Space count tracks if branch is filled to max
         space_count = batch_size
@@ -102,7 +112,14 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                     space_count = 0
                     break
 
-                jet = temp_dataset[j]
+                # use a normal jet finding sequence for large jets
+                if space_count > 12:
+                    jet = temp_dataset[j]
+                # when approaching small jets, can be a long time, thus use arrays to find
+                # next jet more easily
+                elif space_count <= len(min(temp_dataset2)):
+                    jet_index = np.argmax(mylen(np.array(temp_dataset2)) <= space_count)
+                    jet = temp_dataset2[jet_index]
 
                 # Add jet to batch if possible
                 if space_count >= len(jet):
@@ -144,9 +161,8 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                         add_branch_flag = False
                         i = max_n_batches
                         space_count = 0
-                        break
 
-                    j = len_temp_dataset
+                    break
 
                 # If at the end of the temp_dataset update it to try to fill in free spots
                 elif j == len_temp_dataset - 1:
@@ -171,25 +187,24 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     return batches, track_jets_in_batch
 
 
-@jit
+@njit()
 def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100):
     """
     Tries to fill data into batches, drop left over data.
     Also trackts where the jets are in the branch.
-
     Returns dataset that fits into branches, and a list to track where the jets are in the dataset.
-
     Don't use ordering or sorting to avoid introducing biases into the lstm, the sample has a chaotic
     """
     # make safety copy to avoid changing results
-    dataset = np.array(orignal_dataset.copy())
+    dataset = orignal_dataset.copy()
 
     # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
     dataset_len = 0
     for i in range(len(dataset)):
         dataset_len += len(dataset[i])
 
-    max_n_batches = int(dataset_len / n_features / batch_size)
+    max_n_batches = int(dataset_len / batch_size)
+    print(max_n_batches)
 
     # Batches, is a list with all the batches
     batches = []
@@ -199,7 +214,6 @@ def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100)
     i = 1
     while i < max_n_batches:
         i += 1
-        print(i)
 
         # Space count tracks if branch is filled to max
         space_count = batch_size
@@ -210,8 +224,8 @@ def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100)
         temp_dataset2 = dataset.copy()
 
         # local trakcers of batches ad jets_in_batch
-        batch = []
-        jets_in_batch = []
+        batch = list()
+        jets_in_batch = list()
 
         # variables that track progress
         add_branch_flag = True
@@ -227,7 +241,7 @@ def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100)
                 j += 1
 
                 # check if temp_dataset2 still has elements
-                if temp_dataset2 == []:
+                if len(temp_dataset2) == 0:
                     add_branch_flag = False
                     i = max_n_batches
                     space_count = 0
@@ -243,8 +257,7 @@ def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100)
                     jets_in_batch.append(
                         batch_size - space_count - 1
                     )  # Position of the last split of jet
-
-                if temp_dataset2 == []:
+                elif space_count == 0:
                     break
 
                 # Check if anything could be added at all to avoid unnecesary loop
@@ -280,20 +293,16 @@ def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100)
                         add_branch_flag = False
                         i = max_n_batches
                         space_count = 0
-                        break
-
-                    j = len_temp_dataset
+                    break
 
                 # If at the end of the temp_dataset update it to try to fill in free spots
                 elif j == len_temp_dataset - 1:
                     temp_dataset = temp_dataset2.copy()
-                    j += 1
+                    break
 
         if add_branch_flag:
             batches.append([y for x in batch for y in x])  # remove list nesting
-            track_jets_in_batch.append(
-                list(dict.fromkeys(jets_in_batch))
-            )  # Only unique values (empty jet can add "end" jet)
+            track_jets_in_batch.append(jets_in_batch)
             dataset = temp_dataset2
 
     # Remove list nesting of branches (will be restored by DataLoader from torch if same

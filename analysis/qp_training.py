@@ -52,6 +52,7 @@ from functions.data_manipulation import (
     format_ak_to_list,
     branch_filler,
     lstm_data_prep,
+    branch_filler_jit,
 )
 from functions.data_loader import load_n_filter_data
 from functions.training import training_algorithm
@@ -89,7 +90,7 @@ g_recur_jets = format_ak_to_list(g_recur_jets)
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
 batch_size = len(train_data)
 
-train_data, track_jets_train_data = branch_filler(train_data, batch_size=batch_size)
+train_data, track_jets_train_data = branch_filler_jit(train_data, batch_size=batch_size)
 dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=100)
 
 # Note this has to be saved with the model, to ensure data has the same form.

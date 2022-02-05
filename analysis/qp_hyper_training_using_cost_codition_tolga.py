@@ -93,9 +93,9 @@ space = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-# file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)

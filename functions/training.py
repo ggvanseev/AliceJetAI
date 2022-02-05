@@ -258,10 +258,6 @@ def try_hyperparameters(
     #     return (
     #         10  # for "loss", since this will be added to the 1st column of the result
     #     )
-    time_track = time.time()
-    dev_data_temp1, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
-    dt = time.time() - time_track
-    print(f"Branch filler, done in: {dt}")
 
     time_track = time.time()
     dev_data_temp2, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
