@@ -67,7 +67,7 @@ import torch
 
 # Set hyper space and variables
 max_evals = 500
-max_epochs = 50
+max_epochs = 150
 epsilon = 1e-8
 patience = 5
 space = hp.choice(

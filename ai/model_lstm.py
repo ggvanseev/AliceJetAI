@@ -35,22 +35,22 @@ class LSTMModel(nn.Module):
         # Fully connected layer
         self.fc = nn.Linear(hidden_dim, output_dim)
 
-        self.device = device
+        self.set_device = device
 
         # Initializing hidden state for first input with zeros
         self.set_h0 = torch.zeros(
-            self.layer_dim,
+            layer_dim,
             batch_size,
-            self.hidden_dim,
+            hidden_dim,
             requires_grad=True,
             device=device,
         )
 
         # Initializing cell state for first input with zeros
         self.set_c0 = torch.zeros(
-            self.layer_dim,
+            layer_dim,
             batch_size,
-            self.hidden_dim,
+            hidden_dim,
             requires_grad=True,
             device=device,
         )
