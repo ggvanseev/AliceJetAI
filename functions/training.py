@@ -234,14 +234,14 @@ def try_hyperparameters(
 
     # Variables:
     batch_size = int(hyper_parameters["batch_size"])
-    output_dim = hyper_parameters["output_dim"]
-    layer_dim = hyper_parameters["num_layers"]
+    output_dim = int(hyper_parameters["output_dim"])
+    layer_dim = int(hyper_parameters["num_layers"])
     dropout = hyper_parameters["dropout"]
     min_epochs = hyper_parameters["min_epochs"]
     learning_rate = hyper_parameters["learning_rate"]
     svm_nu = hyper_parameters["svm_nu"]
     svm_gamma = hyper_parameters["svm_gamma"]
-    hidden_dim = hyper_parameters["hidden_dim"]
+    hidden_dim = int(hyper_parameters["hidden_dim"])
 
     # Set episilon to be 100 times smaller than the learning factor:
     eps = learning_rate * 1e-2
