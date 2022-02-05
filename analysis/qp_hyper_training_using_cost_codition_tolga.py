@@ -109,7 +109,6 @@ best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters,
         dev_data=dev_data,
-        val_data=test_data,
         plot_flag=False,
         patience=patience,
     ),

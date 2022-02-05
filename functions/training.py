@@ -23,6 +23,7 @@ from functions.data_manipulation import (
     lstm_data_prep,
     h_bar_list_to_numpy,
     scaled_epsilon_n_max_epochs,
+    branch_filler_jit,
 )
 from functions.optimization_orthogonality_constraints import (
     lstm_results,
@@ -205,7 +206,6 @@ def training_algorithm(
 def try_hyperparameters(
     hyper_parameters: dict,
     dev_data,
-    val_data,
     plot_flag: bool = False,
     patience=50,
     max_attempts=1,
@@ -251,14 +251,22 @@ def try_hyperparameters(
 
     # prepare data for usage
     # dev_data_copy = copy(dev_data)  # save this to check the error of data[] TODO
-    try:
-        dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
-        val_data, track_jets_val_data = branch_filler(val_data, batch_size=batch_size)
-    except TypeError:
-        print("Could not create jet branch with given data and parameters!")
-        return (
-            10  # for "loss", since this will be added to the 1st column of the result
-        )
+    # try:
+    #     dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
+    # except TypeError:
+    #     print("Could not create jet branch with given data and parameters!")
+    #     return (
+    #         10  # for "loss", since this will be added to the 1st column of the result
+    #     )
+    time_track = time.time()
+    dev_data_temp1, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
+    dt = time.time() - time_track
+    print(f"Branch filler, done in: {dt}")
+
+    time_track = time.time()
+    dev_data_temp2, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
+    dt = time.time() - time_track
+    print(f"Branch filler jit, done in: {dt}")
 
     # Only use train and dev data for now
     # Note this has to be saved with the model, to ensure data has the same form.
@@ -266,7 +274,6 @@ def try_hyperparameters(
     dev_loader = lstm_data_prep(
         data=dev_data, scaler=scaler, batch_size=batch_size, fit_flag=True
     )
-    val_loader = lstm_data_prep(data=val_data, scaler=scaler, batch_size=batch_size)
 
     # set model parameters
     input_dim = len(dev_data[0])

@@ -6,6 +6,7 @@ from copy import copy
 import numpy as np
 
 from torch.utils.data import TensorDataset, DataLoader
+from numba import jit
 
 
 def format_ak_to_list(arr: ak.Array) -> list:
@@ -43,6 +44,7 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
     return train_data, dev_data, test_data
 
 
+# @jit
 def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     """
     Tries to fill data into batches, drop left over data.
@@ -53,7 +55,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     Don't use ordering or sorting to avoid introducing biases into the lstm, the sample has a chaotic
     """
     # make safety copy to avoid changing results
-    dataset = copy(orignal_dataset)
+    dataset = orignal_dataset.copy()
 
     # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
@@ -63,17 +65,18 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     # Track_jets_in_batch tracks where the last split of the jet is located in the branch
     track_jets_in_batch = []
 
-    i = 0
+    i = 1
     while i < max_n_batches:
         i += 1
+        print(i)
 
         # Space count tracks if branch is filled to max
         space_count = batch_size
 
         # make copies of the dataset to be able to remove elemnts while trying to fill branches
         # without destroyting original dataset
-        temp_dataset = copy(dataset)
-        temp_dataset2 = copy(dataset)
+        temp_dataset = dataset.copy()
+        temp_dataset2 = dataset.copy()
 
         # local trakcers of batches ad jets_in_batch
         batch = []
@@ -92,6 +95,13 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
             while j < len_temp_dataset:
                 j += 1
 
+                # check if temp_dataset2 still has elements
+                if temp_dataset2 == []:
+                    add_branch_flag = False
+                    i = max_n_batches
+                    space_count = 0
+                    break
+
                 jet = temp_dataset[j]
 
                 # Add jet to batch if possible
@@ -102,10 +112,12 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                     jets_in_batch.append(
                         batch_size - space_count - 1
                     )  # Position of the last split of jet
+                elif space_count == 0:
+                    break
 
                 # Check if anything could be added at all to avoid unnecesary loop
                 # (if not this means looping doesn't add anything, because no free spots can be filled up any more
-                if space_count < len(min(temp_dataset2)) and space_count > 0:
+                elif space_count < len(min(temp_dataset2)) and space_count > 0:
                     # remove first entry from dataset to see try with different initial condition for filling list
                     dataset.remove(dataset[0])
 
@@ -115,8 +127,8 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
                     # make copies of the dataset to be able to remove elemnts while trying to fill branches
                     # without destroyting original dataset
-                    temp_dataset = copy(dataset)
-                    temp_dataset2 = copy(dataset)
+                    temp_dataset = dataset.copy()
+                    temp_dataset2 = dataset.copy()
 
                     # local trakcers of batches ad jets_in_batch
                     batch = []
@@ -124,20 +136,21 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
                     # update trials:
                     trials += 1
-                    print(trials)
 
                     if (
                         trials == max_trials
-                        or str(dataset).count(",") / n_features < batch_size
+                        or int(str(dataset).count(",") / n_features) < batch_size
                     ):
                         add_branch_flag = False
-                        i = max_n_batches + 1
+                        i = max_n_batches
+                        space_count = 0
+                        break
 
                     j = len_temp_dataset
 
                 # If at the end of the temp_dataset update it to try to fill in free spots
                 elif j == len_temp_dataset - 1:
-                    temp_dataset = copy(temp_dataset2)
+                    temp_dataset = temp_dataset2.copy()
                     j += 1
 
         if add_branch_flag:
@@ -155,7 +168,141 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     if not batches:
         return -1
 
-    print(len(batches))
+    return batches, track_jets_in_batch
+
+
+@jit
+def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100):
+    """
+    Tries to fill data into batches, drop left over data.
+    Also trackts where the jets are in the branch.
+
+    Returns dataset that fits into branches, and a list to track where the jets are in the dataset.
+
+    Don't use ordering or sorting to avoid introducing biases into the lstm, the sample has a chaotic
+    """
+    # make safety copy to avoid changing results
+    dataset = np.array(orignal_dataset.copy())
+
+    # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
+    dataset_len = 0
+    for i in range(len(dataset)):
+        dataset_len += len(dataset[i])
+
+    max_n_batches = int(dataset_len / n_features / batch_size)
+
+    # Batches, is a list with all the batches
+    batches = []
+    # Track_jets_in_batch tracks where the last split of the jet is located in the branch
+    track_jets_in_batch = []
+
+    i = 1
+    while i < max_n_batches:
+        i += 1
+        print(i)
+
+        # Space count tracks if branch is filled to max
+        space_count = batch_size
+
+        # make copies of the dataset to be able to remove elemnts while trying to fill branches
+        # without destroyting original dataset
+        temp_dataset = dataset.copy()
+        temp_dataset2 = dataset.copy()
+
+        # local trakcers of batches ad jets_in_batch
+        batch = []
+        jets_in_batch = []
+
+        # variables that track progress
+        add_branch_flag = True
+        trials = 0
+
+        # Check if batch is filled
+        while space_count > 0:
+
+            # loop over available jets
+            j = -1
+            len_temp_dataset = len(temp_dataset)
+            while j < len_temp_dataset:
+                j += 1
+
+                # check if temp_dataset2 still has elements
+                if temp_dataset2 == []:
+                    add_branch_flag = False
+                    i = max_n_batches
+                    space_count = 0
+                    break
+
+                jet = temp_dataset[j]
+
+                # Add jet to batch if possible
+                if space_count >= len(jet):
+                    batch.append(jet)
+                    temp_dataset2.remove(jet)
+                    space_count -= len(jet)
+                    jets_in_batch.append(
+                        batch_size - space_count - 1
+                    )  # Position of the last split of jet
+
+                if temp_dataset2 == []:
+                    break
+
+                # Check if anything could be added at all to avoid unnecesary loop
+                # (if not this means looping doesn't add anything, because no free spots can be filled up any more
+                elif space_count < len(min(temp_dataset2)) and space_count > 0:
+                    # remove first entry from dataset to see try with different initial condition for filling list
+                    dataset.remove(dataset[0])
+
+                    # Reset to original values
+                    # Space count tracks if branch is filled to max
+                    space_count = batch_size
+
+                    # make copies of the dataset to be able to remove elemnts while trying to fill branches
+                    # without destroyting original dataset
+                    temp_dataset = dataset.copy()
+                    temp_dataset2 = dataset.copy()
+
+                    # local trakcers of batches ad jets_in_batch
+                    batch = []
+                    jets_in_batch = []
+
+                    # update trials:
+                    trials += 1
+
+                    dataset_len = 0
+                    for i in range(len(dataset)):
+                        dataset_len += len(dataset[i])
+
+                    if (
+                        trials == max_trials
+                        or int(dataset_len / n_features) < batch_size
+                    ):
+                        add_branch_flag = False
+                        i = max_n_batches
+                        space_count = 0
+                        break
+
+                    j = len_temp_dataset
+
+                # If at the end of the temp_dataset update it to try to fill in free spots
+                elif j == len_temp_dataset - 1:
+                    temp_dataset = temp_dataset2.copy()
+                    j += 1
+
+        if add_branch_flag:
+            batches.append([y for x in batch for y in x])  # remove list nesting
+            track_jets_in_batch.append(
+                list(dict.fromkeys(jets_in_batch))
+            )  # Only unique values (empty jet can add "end" jet)
+            dataset = temp_dataset2
+
+    # Remove list nesting of branches (will be restored by DataLoader from torch if same
+    # batch size and shuffle=False is used)
+    batches = [y for x in batches for y in x]
+
+    # TODO check if not successful
+    if not batches:
+        return -1
 
     return batches, track_jets_in_batch
 
