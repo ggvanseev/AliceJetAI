@@ -8,12 +8,12 @@ import numpy as np
 from torch.utils.data import TensorDataset, DataLoader
 from numba import njit
 
-from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
-import warnings
+# from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
+# import warnings
 
 # ignore numba warnings in terms of depraciation
-warnings.simplefilter("ignore", category=NumbaDeprecationWarning)
-warnings.simplefilter("ignore", category=NumbaPendingDeprecationWarning)
+# warnings.simplefilter("ignore", category=NumbaDeprecationWarning)
+# warnings.simplefilter("ignore", category=NumbaPendingDeprecationWarning)
 
 
 def format_ak_to_list(arr: ak.Array) -> list:
@@ -187,7 +187,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     return batches, track_jets_in_batch
 
 
-@njit()
+# @njit()
 def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100):
     """
     Tries to fill data into batches, drop left over data.
