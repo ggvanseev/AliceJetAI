@@ -95,9 +95,9 @@ space = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 # file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
@@ -112,10 +112,7 @@ train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8,
 trials = Trials()
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
-        try_hyperparameters,
-        dev_data=dev_data,
-        plot_flag=False,
-        patience=patience,
+        try_hyperparameters, dev_data=dev_data, plot_flag=False, patience=patience,
     ),
     space,
     algo=tpe.suggest,
