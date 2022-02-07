@@ -66,7 +66,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
     # count all values (, is indicative of a value), and divide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
-    print(max_n_batches)
+    print("Max number of batches: {}".format(max_n_batches))
 
     # batches, is a list with all the batches
     batches = []
@@ -118,7 +118,9 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                 # when approaching end of the list, can be a long time, thus use arrays to find
                 # next jet more easily
                 elif space_count >= len(min(temp_dataset2)):
-                    jet_index = np.argmax(mylen(np.array(temp_dataset2)) <= space_count)
+                    jet_index = np.argmax(
+                        mylen(np.array(temp_dataset2, dtype=object)) <= space_count
+                    )
                     jet = temp_dataset2[jet_index]
                 else:
                     jet = temp_dataset[j]
@@ -207,7 +209,7 @@ def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100)
         dataset_len += len(dataset[i])
 
     max_n_batches = int(dataset_len / batch_size)
-    print(max_n_batches)
+    print("Max number of batches: ", max_n_batches)
 
     # Batches, is a list with all the batches
     batches = []
@@ -312,7 +314,7 @@ def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100)
     # batch size and shuffle=False is used)
     batches = [y for x in batches for y in x]
 
-    # TODO check if not successful
+    # check if not successful
     if not batches:
         return -1
 

@@ -88,11 +88,7 @@ def training_algorithm(
 
     # obtain h_bar from the lstm with theta_0, given the data
     h_bar_list, theta, theta_gradients = lstm_results(
-        lstm_model,
-        model_params["input_dim"],
-        x_loader,
-        track_jets_dev_data,
-        device,
+        lstm_model, model_params["input_dim"], x_loader, track_jets_dev_data, device,
     )
     h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
@@ -101,9 +97,9 @@ def training_algorithm(
     track_cost_condition = []
 
     ### TRACK TIME ### TODO
-    dt = time.time() - time_at_step
-    time_at_step = time.time()
-    print(f"Obtained first h_bars, done in: {dt}")
+    # dt = time.time() - time_at_step
+    # time_at_step = time.time()
+    # print(f"Obtained first h_bars, done in: {dt}")
 
     # loop over k (epochs) for nr. set epochs and unsatisfied cost condition
     k = -1
@@ -113,9 +109,9 @@ def training_algorithm(
         k += 1
 
         ### TRACK TIME ### TODO
-        dt = time.time() - time_at_step
-        time_at_step = time.time()
-        print(f"Start of loop, done in: {dt} \t epoch {k}")
+        # dt = time.time() - time_at_step
+        # time_at_step = time.time()
+        # print(f"Start of loop, done in: {dt} \t epoch {k}")
 
         # keep previous cost result stored
         cost_prev = copy(cost)
@@ -127,9 +123,9 @@ def training_algorithm(
         a_idx = svm_model.support_
 
         ### TRACK TIME ### TODO
-        dt = time.time() - time_at_step
-        time_at_step = time.time()
-        print(f"Obtained alphas, done in: {dt}")
+        # dt = time.time() - time_at_step
+        # time_at_step = time.time()
+        # print(f"Obtained alphas, done in: {dt}")
 
         # obtain theta_k+1 using the optimization algorithm
         lstm_model, theta_next = optimization(
@@ -144,9 +140,9 @@ def training_algorithm(
         )
 
         ### TRACK TIME ### TODO
-        dt = time.time() - time_at_step
-        time_at_step = time.time()
-        print(f"Obtained thetas, done in: {dt}")
+        # dt = time.time() - time_at_step
+        # time_at_step = time.time()
+        # print(f"Obtained thetas, done in: {dt}")
 
         # obtain h_bar from the lstm with theta_k+1, given the data
         h_bar_list, theta, theta_gradients = lstm_results(
@@ -159,18 +155,18 @@ def training_algorithm(
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
         ### TRACK TIME ### TODO
-        dt = time.time() - time_at_step
-        time_at_step = time.time()
-        print(f"Obtained h_bar, done in: {dt}")
+        # dt = time.time() - time_at_step
+        # time_at_step = time.time()
+        # print(f"Obtained h_bar, done in: {dt}")
 
         # obtain the new cost and cost condition given theta_k+1 and alpha_k+1
         cost = kappa(alphas, a_idx, h_bar_list)
         cost_condition = (cost - cost_prev) ** 2
 
         ### TRACK TIME ### TODO
-        dt = time.time() - time_at_step
-        time_at_step = time.time()
-        print(f"Obtained cost, done in: {dt}")
+        # dt = time.time() - time_at_step
+        # time_at_step = time.time()
+        # print(f"Obtained cost, done in: {dt}")
 
         # track cost and cost_condition
         track_cost.append(cost)
@@ -227,15 +223,11 @@ def try_hyperparameters(
     # Track time
     time_track = time.time()
 
-    # use correct device:
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-    print("\nUsing device: {}".format(device))
-
     # Variables:
     batch_size = int(hyper_parameters["batch_size"])
     output_dim = int(hyper_parameters["output_dim"])
     layer_dim = int(hyper_parameters["num_layers"])
-    dropout = hyper_parameters["dropout"]
+    dropout = hyper_parameters["dropout"] if layer_dim > 1 else 0  # TODO
     min_epochs = hyper_parameters["min_epochs"]
     learning_rate = hyper_parameters["learning_rate"]
     svm_nu = hyper_parameters["svm_nu"]
@@ -246,8 +238,13 @@ def try_hyperparameters(
     eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
 
     # Show used hyper_parameters in terminal
-    print("Hyper Parameters")
-    print(hyper_parameters)
+    # sauce https://stackoverflow.com/questions/44689546/how-to-print-out-a-dictionary-nicely-in-python
+    print("\nHyper Parameters:")
+    print("\n".join("  {:10}\t  {}".format(k, v) for k, v in hyper_parameters.items()))
+
+    # use correct device:
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    print("Device: {}".format(device))
 
     # prepare data for usage
     # dev_data_copy = copy(dev_data)  # save this to check the error of data[] TODO
@@ -337,12 +334,14 @@ def try_hyperparameters(
 
         if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1] and passed:
             n_attempt = max_attempts
+            train_success = True
         else:
             distance_nu = (
                 10  # Add large distance to ensure wrong model doesn't end up in list
             )
+            train_success = False
 
-    print(f"Done in: {time.time()-time_track}")
+    print(f"{'Passed' if train_success else 'Failed'} in: {time.time()-time_track}")
 
     if plot_flag:
         # plot cost condition and cost function
