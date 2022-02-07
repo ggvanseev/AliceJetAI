@@ -187,7 +187,13 @@ def training_algorithm(
         # Check if cost function starts to explode
         if np.isnan(track_cost_condition[k]):
             print("Broke, for given hyper parameters")
-            return 1e10  # Return large number to not be selected as the best
+            return (
+                lstm_model,
+                svm_model,
+                track_cost,
+                track_cost_condition,
+                False,
+            )  # immediately return passed = False
 
     if (cost - cost_prev) ** 2 > training_params["epsilon"]:
         print("Algorithm failed: not done learning in max epochs.")
@@ -321,7 +327,6 @@ def try_hyperparameters(
         )
 
         # Check if distance to svm_nu is smaller than required
-
         distance_nu = validation_distance_nu(
             svm_nu,
             dev_loader,
