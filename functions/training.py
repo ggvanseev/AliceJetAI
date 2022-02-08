@@ -326,20 +326,22 @@ def try_hyperparameters(
             device,
         )
 
-        # Check if distance to svm_nu is smaller than required
-        distance_nu = validation_distance_nu(
-            svm_nu,
-            dev_loader,
-            track_jets_dev_data,
-            input_dim,
-            lstm_model,
-            svm_model,
-            device,
-        )
+        # check if the model passed the training
+        if passed:
+            distance_nu = validation_distance_nu(
+                svm_nu,
+                dev_loader,
+                track_jets_dev_data,
+                input_dim,
+                lstm_model,
+                svm_model,
+                device,
+            )
 
-        if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1] and passed:
-            n_attempt = max_attempts
-            train_success = True
+            # Check if distance to svm_nu is smaller than required
+            if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1]:
+                n_attempt = max_attempts
+                train_success = True
         else:
             distance_nu = (
                 10  # Add large distance to ensure wrong model doesn't end up in list
