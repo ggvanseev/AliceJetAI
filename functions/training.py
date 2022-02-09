@@ -327,6 +327,10 @@ def try_hyperparameters(
         )
 
         # check if the model passed the training
+        distance_nu = (
+            10  # Add large distance to ensure wrong model doesn't end up in list
+        )
+        train_success = False
         if passed:
             distance_nu = validation_distance_nu(
                 svm_nu,
@@ -342,11 +346,6 @@ def try_hyperparameters(
             if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1]:
                 n_attempt = max_attempts
                 train_success = True
-        else:
-            distance_nu = (
-                10  # Add large distance to ensure wrong model doesn't end up in list
-            )
-            train_success = False
 
     print(f"{'Passed' if train_success else 'Failed'} in: {time.time()-time_track}")
 
