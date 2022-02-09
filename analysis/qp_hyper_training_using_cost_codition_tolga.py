@@ -94,6 +94,26 @@ space = hp.choice(
     ],
 )
 
+dummy_space = hp.choice(
+    "hyper_parameters",
+    [
+        {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
+            "batch_size": hp.choice("num_batch", [100]),
+            "hidden_dim": hp.choice("hidden_dim", [21]),
+            "num_layers": hp.choice("num_layers", [1]),
+            "min_epochs": hp.choice("min_epochs", [int(2)]),
+            "learning_rate": hp.choice("learning_rate", [1e-5]),
+            "decay_factor": hp.choice("decay_factor", [0.5]),
+            "dropout": hp.choice("dropout", [0]),
+            "output_dim": hp.choice("output_dim", [1]),
+            "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
+            "svm_gamma": hp.choice(
+                "svm_gamma", ["auto"]  # Auto seems to give weird results
+            ),  # , "scale", , "auto"[ 0.23 was the defeault before]
+        }
+    ],
+)
+
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 # file_name = "samples/JetToyHIResultSoftDropSkinny.root"
@@ -104,16 +124,18 @@ start_time = time.time()
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
+print("Loaded data")
 
 # split data
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
+print("Split data")
 
 trials = Trials()
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters, dev_data=dev_data, plot_flag=False, patience=patience,
     ),
-    space,
+    dummy_space,
     algo=tpe.suggest,
     max_evals=max_evals,
     trials=trials,
