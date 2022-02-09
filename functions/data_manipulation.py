@@ -119,7 +119,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                 # next jet more easily
                 elif space_count >= min(map(len, temp_dataset2)):
                     jet_index = np.argmax(
-                        np.array(list(map(len, temp_dataset)), dtype=object)
+                        np.array(list(map(len, temp_dataset2)), dtype=object)
                         <= space_count
                     )
                     jet = temp_dataset2[jet_index]

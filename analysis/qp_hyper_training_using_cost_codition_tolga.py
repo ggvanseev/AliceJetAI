@@ -135,7 +135,7 @@ best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters, dev_data=dev_data, plot_flag=False, patience=patience,
     ),
-    dummy_space,
+    space,
     algo=tpe.suggest,
     max_evals=max_evals,
     trials=trials,
