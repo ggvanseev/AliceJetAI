@@ -6,7 +6,8 @@ from copy import copy
 import numpy as np
 
 from torch.utils.data import TensorDataset, DataLoader
-from numba import njit
+
+# from numba import njit TODO
 
 # from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
 # import warnings
@@ -63,11 +64,11 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     # make safety copy to avoid changing results
     dataset = orignal_dataset.copy()
 
-    # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
+    # count all values (, is indicative of a value), and divide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
-    print(max_n_batches)
+    print("Max number of batches: {}".format(max_n_batches))
 
-    # Batches, is a list with all the batches
+    # batches, is a list with all the batches
     batches = []
     # Track_jets_in_batch tracks where the last split of the jet is located in the branch
     track_jets_in_batch = []
@@ -79,7 +80,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     while i < max_n_batches:
         i += 1
 
-        # Space count tracks if branch is filled to max
+        # space count tracks if branch is filled to max
         space_count = batch_size
 
         # make copies of the dataset to be able to remove elemnts while trying to fill branches
@@ -116,8 +117,11 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                     jet = temp_dataset[j]
                 # when approaching end of the list, can be a long time, thus use arrays to find
                 # next jet more easily
-                elif space_count >= len(min(temp_dataset2)):
-                    jet_index = np.argmax(mylen(np.array(temp_dataset2)) <= space_count)
+                elif space_count >= min(map(len, temp_dataset2)):
+                    jet_index = np.argmax(
+                        np.array(list(map(len, temp_dataset2)), dtype=object)
+                        <= space_count
+                    )
                     jet = temp_dataset2[jet_index]
                 else:
                     jet = temp_dataset[j]
@@ -182,7 +186,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     # batch size and shuffle=False is used)
     batches = [y for x in batches for y in x]
 
-    # TODO check if not successful
+    # check if not successful
     if not batches:
         return -1
 
@@ -206,7 +210,7 @@ def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100)
         dataset_len += len(dataset[i])
 
     max_n_batches = int(dataset_len / batch_size)
-    print(max_n_batches)
+    print("Max number of batches: ", max_n_batches)
 
     # Batches, is a list with all the batches
     batches = []
@@ -311,7 +315,7 @@ def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100)
     # batch size and shuffle=False is used)
     batches = [y for x in batches for y in x]
 
-    # TODO check if not successful
+    # check if not successful
     if not batches:
         return -1
 
