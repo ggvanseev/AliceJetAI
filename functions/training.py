@@ -173,7 +173,7 @@ def training_algorithm(
         track_cost_condition.append(cost_condition)
 
         # check condition algorithm 1, paper Tolga
-        if (cost - cost_prev) ** 2 < training_params["epsilon"]:
+        if abs((cost - cost_prev) / cost_prev) < training_params["epsilon"]:
             # check if condition had been satisfied recently
             if cost_condition_passed_flag == False:
                 cost_condition_passed_flag = True
@@ -194,7 +194,7 @@ def training_algorithm(
                 track_cost_condition,
                 False,
             )  # immediately return passed = False
-
+    print(abs((cost - cost_prev) / cost_prev))
     if abs((cost - cost_prev) / cost_prev) > training_params["epsilon"]:
         print("Algorithm failed: not done learning in max epochs.")
         passed = False
