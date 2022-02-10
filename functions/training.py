@@ -310,21 +310,26 @@ def try_hyperparameters(
         # set model to correct device
         lstm_model.to(device)
 
-        (
-            lstm_model,
-            svm_model,
-            track_cost,
-            track_cost_condition,
-            passed,
-        ) = training_algorithm(
-            lstm_model,
-            svm_model,
-            dev_loader,
-            track_jets_dev_data,
-            model_params,
-            training_params,
-            device,
-        )
+        try:
+            (
+                lstm_model,
+                svm_model,
+                track_cost,
+                track_cost_condition,
+                passed,
+            ) = training_algorithm(
+                lstm_model,
+                svm_model,
+                dev_loader,
+                track_jets_dev_data,
+                model_params,
+                training_params,
+                device,
+            )
+        except RuntimeError as e:
+            passed = False
+            logf = open("logfiles/cuda_error.log", "w")
+            logf.write(str(e))
 
         # check if the model passed the training
         distance_nu = (
@@ -375,7 +380,7 @@ def try_hyperparameters(
     return {
         "loss": distance_nu,
         "final_cost": track_cost[-1],
-        "status": STATUS_OK,
+        "status": STATUS_OK,  # update with train_success? TODO
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,
         "cost_data": cost_data,
