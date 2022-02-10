@@ -127,7 +127,7 @@ job_id = os.getenv("PBS_JOBID")
 if job_id:
     out_file = f"storing_results/trials_test_{job_id}.p"
 else:
-    out_file = f"storing_results/trials_test_{time.strftime('%x_%X')}.p"
+    out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y')}"
 
 torch.save(trials, open(out_file, "wb"))
 
