@@ -195,7 +195,7 @@ def training_algorithm(
                 False,
             )  # immediately return passed = False
 
-    if (cost - cost_prev) ** 2 > training_params["epsilon"]:
+    if abs((cost - cost_prev) / cost_prev) > training_params["epsilon"]:
         print("Algorithm failed: not done learning in max epochs.")
         passed = False
     else:
