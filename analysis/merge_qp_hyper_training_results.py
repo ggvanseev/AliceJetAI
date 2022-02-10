@@ -8,15 +8,26 @@ from hyperopt import (
 )
 import torch
 import pickle
+import io
 
-job_id1 = 9577887
-job_id2 = 9577887
+# list of ids of jobs to be merged
+job_ids = [
+    9577887,
+    9577887,
+]
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
-file1 = pickle.load(
-    open(f"storing_results/trials_test_{job_id1}.burrell.nikhef.nl.p", "rb")
-)
-file2 = pickle.load(
-    open(f"storing_results/trials_test_{job_id2}.burrell.nikhef.nl.p", "rb")
+
+class CPU_Unpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == "torch.storage" and name == "_load_from_bytes":
+            return lambda b: torch.load(io.BytesIO(b), map_location="cpu")
+        else:
+            return super().find_class(module, name)
+
+
+# contents = pickle.load(f) becomes...
+file = torch.load(
+    f"storing_results/trials_test_{9577887}.burrell.nikhef.nl.p", map_location=device,
 )

@@ -62,7 +62,7 @@ from hyperopt import (
 )  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
 from functools import partial
 
-import pickle
+import torch
 import os
 import time
 
@@ -70,7 +70,7 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 30
+max_evals = 1
 patience = 5
 space = hp.choice(
     "hyper_parameters",
@@ -95,8 +95,8 @@ space = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
@@ -125,11 +125,11 @@ print(space_eval(space, best))
 # set out file to job_id for parallel computing
 job_id = os.getenv("PBS_JOBID")
 if job_id:
-    out_file = "storing_results/trials_test_{}.p".format(job_id)
+    out_file = f"storing_results/trials_test_{job_id}.p"
 else:
-    out_file = "storing_results/trials_test.p"
+    out_file = f"storing_results/trials_test_{time.strftime('%x_%X')}.p"
 
-pickle.dump(trials, open(out_file, "wb"))
+torch.save(trials, open(out_file, "wb"))
 
 run_time = pd.DataFrame(np.array([time.time() - start_time]))
 

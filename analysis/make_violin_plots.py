@@ -1,4 +1,4 @@
-import pickle
+import torch
 from posixpath import split
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -8,7 +8,7 @@ import seaborn as sns
 test_param = "loss"
 
 # load trials results from file and
-trials = pickle.load(open("storing_results/trials_test.p", "rb"))
+trials = torch.load(open("storing_results/trials_test.p", "rb"))
 
 # build DataFrame
 df = pd.json_normalize(trials.results)
