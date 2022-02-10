@@ -70,7 +70,7 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 1
+max_evals = 15
 patience = 5
 space = hp.choice(
     "hyper_parameters",
@@ -95,8 +95,8 @@ space = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
@@ -127,7 +127,7 @@ job_id = os.getenv("PBS_JOBID")
 if job_id:
     out_file = f"storing_results/trials_test_{job_id}.p"
 else:
-    out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y')}"
+    out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y')}.p"
 
 torch.save(trials, open(out_file, "wb"))
 
