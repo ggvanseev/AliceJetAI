@@ -9,3 +9,4 @@ functions/data_manipulation.py
 functions/data_saver.py
 functions/optimization_orthogonality_constraints.py
 functions/training.py
+functions/validation.py

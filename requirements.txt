@@ -1,6 +1,6 @@
 autograd
 awkward
-hyperopt==0.2.7
+hyperopt==0.2.5
 # pickle
 # functools
 numpy
@@ -12,4 +12,5 @@ scikit-learn==1.0.2
 scipy
 seaborn
 spyder
-torch
+uproot
+# pytorch==1.10
