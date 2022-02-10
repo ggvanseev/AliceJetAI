@@ -88,7 +88,11 @@ def training_algorithm(
 
     # obtain h_bar from the lstm with theta_0, given the data
     h_bar_list, theta, theta_gradients = lstm_results(
-        lstm_model, model_params["input_dim"], x_loader, track_jets_dev_data, device,
+        lstm_model,
+        model_params["input_dim"],
+        x_loader,
+        track_jets_dev_data,
+        device,
     )
     h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
@@ -385,4 +389,183 @@ def try_hyperparameters(
         "hyper_parameters": hyper_parameters,
         "cost_data": cost_data,
         "num_batches": len(dev_loader),
+    }
+
+
+def training_with_set_parameters(
+    hyper_parameters: dict,
+    train_data,
+    val_data,
+    plot_flag: bool = False,
+    patience=50,
+    max_attempts=4,
+    max_distance_nu=0.01,
+):
+    """
+    This function searches for the correct hyperparameters.
+
+    It follows the following procedure:
+    1. Assign given variables for a run from hyper_parameters.
+    2. Prepare data with given parameters.
+    3. Try to find distance nu and errors in val_data prediction < 0.01:
+        3.1. Run algorithm 1 from paper tolga..
+        Use condition from algorithm to see if the model is still learning.
+    4. Save and plot if flags are true
+    5. Return distance nu and val_data as loss.
+
+    """
+    # Track time
+    time_track = time.time()
+
+    # Variables:
+    batch_size = int(hyper_parameters["batch_size"])
+    output_dim = int(hyper_parameters["output_dim"])
+    layer_dim = int(hyper_parameters["num_layers"])
+    dropout = hyper_parameters["dropout"] if layer_dim > 1 else 0  # TODO
+    min_epochs = hyper_parameters["min_epochs"]
+    learning_rate = hyper_parameters["learning_rate"]
+    svm_nu = hyper_parameters["svm_nu"]
+    svm_gamma = hyper_parameters["svm_gamma"]
+    hidden_dim = int(hyper_parameters["hidden_dim"])
+
+    # Set epsilon and max_epochs
+    eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
+
+    # Show used hyper_parameters in terminal
+    # sauce https://stackoverflow.com/questions/44689546/how-to-print-out-a-dictionary-nicely-in-python
+    print("\nHyper Parameters:")
+    print("\n".join("  {:10}\t  {}".format(k, v) for k, v in hyper_parameters.items()))
+
+    # use correct device:
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    print("Device: {}".format(device))
+
+    time_track = time.time()
+    train_data, track_jets_train_data = branch_filler(train_data, batch_size=batch_size)
+    val_data, track_jets_val_data = branch_filler(val_data, batch_size=batch_size)
+    dt = time.time() - time_track
+    print(f"Branch filler, done in: {dt}")
+
+    # Only use train and dev data for now
+    # Note this has to be saved with the model, to ensure data has the same form.
+    scaler = MinMaxScaler()
+    train_loader = lstm_data_prep(
+        data=train_data, scaler=scaler, batch_size=batch_size, fit_flag=True
+    )
+
+    val_loader = lstm_data_prep(
+        data=val_data, scaler=scaler, batch_size=batch_size, fit_flag=False
+    )
+
+    # set model parameters
+    input_dim = len(train_data[0])
+    model_params = {
+        "input_dim": input_dim,
+        "hidden_dim": hidden_dim,
+        "layer_dim": layer_dim,
+        "output_dim": output_dim,
+        "dropout_prob": dropout,
+        "batch_size": batch_size,
+        "device": device,
+    }
+
+    # set training parameters
+    training_params = {
+        "min_epochs": min_epochs,
+        "max_epochs": max_epochs,
+        "learning_rate": learning_rate,
+        "epsilon": eps,
+        "patience": patience,
+    }
+
+    ### TRACK TIME ### TODO
+    dt = time.time() - time_track
+    print(f"Dataprep, done in: {dt}")
+
+    n_attempt = 0
+    while n_attempt < max_attempts:
+        n_attempt += 1
+
+        # Declare models
+        lstm_model = LSTMModel(**model_params)
+        svm_model = OneClassSVM(nu=svm_nu, gamma=svm_gamma, kernel="linear")
+
+        # set model to correct device
+        lstm_model.to(device)
+
+        try:
+            (
+                lstm_model,
+                svm_model,
+                track_cost,
+                track_cost_condition,
+                passed,
+            ) = training_algorithm(
+                lstm_model,
+                svm_model,
+                train_loader,
+                track_jets_train_data,
+                model_params,
+                training_params,
+                device,
+            )
+        except RuntimeError as e:
+            passed = False
+            logf = open("logfiles/cuda_error.log", "w")
+            logf.write(str(e))
+
+        # check if the model passed the training
+        distance_nu = (
+            10  # Add large distance to ensure wrong model doesn't end up in list
+        )
+        train_success = False
+        if passed:
+            distance_nu = validation_distance_nu(
+                svm_nu,
+                val_loader,
+                track_jets_train_data,
+                input_dim,
+                lstm_model,
+                svm_model,
+                device,
+            )
+
+            # Check if distance to svm_nu is smaller than required
+            if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1]:
+                n_attempt = max_attempts
+                train_success = True
+
+    print(f"{'Passed' if train_success else 'Failed'} in: {time.time()-time_track}")
+
+    if plot_flag:
+        # plot cost condition and cost function
+        title_plot = f"plot_with_{max_epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu_{distance_nu}_distance_nu"
+        fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
+        fig.suptitle(title_plot, y=1.08)
+        ax1.plot(track_cost_condition[1:])
+        ax1.set_xlabel("Epochs")
+        ax1.set_ylabel("Cost Condition")
+
+        ax2 = ax1.twinx()
+        ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7)
+        ax2.set_ylabel("Cost")
+
+        fig.savefig("output/" + title_plot + str(time.time()) + ".png")
+
+    # return the model
+    lstm_ocsvm = dict({"lstm:": lstm_model, "ocsvm": svm_model, "scaler": scaler})
+
+    # save plot data
+    cost_data = dict(
+        {"cost": track_cost[1:], "cost_condition": track_cost_condition[1:]}
+    )
+
+    return {
+        "loss": distance_nu,
+        "final_cost": track_cost[-1],
+        "status": STATUS_OK,  # update with train_success? TODO
+        "model": lstm_ocsvm,
+        "hyper_parameters": hyper_parameters,
+        "cost_data": cost_data,
+        "num_batches": len(train_loader),
     }
