@@ -3,15 +3,25 @@ from posixpath import split
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-# select test parameter: e.g. loss or cost
-test_param = "loss"
+import os
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
     "10_02_22_first",
     "10_02_22",
 ]
+
+# select test parameter: e.g. loss or cost
+test_param = "final_cost"
+
+# store violin plots in designated directory
+out_dir = f"output/violin_plots"
+for job_id in job_ids:
+    out_dir += f"_{job_id}"
+try:
+    os.mkdir(out_dir)
+except FileExistsError:
+    pass
 
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -60,4 +70,4 @@ else:
         plt.legend()
 
         # save plot
-        plt.savefig("output/violin_plot_" + test_param + "_vs_" + parameter)
+        plt.savefig(out_dir + "/violin_plot_" + test_param + "_vs_" + parameter)
