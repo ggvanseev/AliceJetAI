@@ -65,6 +65,7 @@ from functools import partial
 import pickle
 import os
 import time
+import torch
 
 import pandas as pd
 import numpy as np
@@ -152,9 +153,10 @@ if job_id:
 else:
     out_file = "storing_results/trials_test.p"
 
-pickle.dump(trials, open(out_file, "wb"))
+torch.save(trials, open(out_file, "wb"), pickle_module=pickle)
 
 run_time = pd.DataFrame(np.array([time.time() - start_time]))
 
 run_time.to_csv("storing_results/runtime.p")
-# load trials_test = pickle.load(open("/storing_results/trials_test.p", "rb"))
+
+# load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)
