@@ -573,7 +573,9 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     determines how much the model changes per time step, and thus determines
     the order of size of the cost_condition, determing when the model has stopped learning.
 
-    Epsilon is chosen as 1/1000 of learning rate
+    In case of Tolga's cost condition: epsilon is chosen as 1/1000 of learning rate
+    In case of taking cost condition as a percentage difference of the current cost
+    with the previous cost, epsilon is chosen as 10 x learning rate
 
     Max_epochs:
     The learning rate determines how quickly the model learns,
@@ -585,9 +587,9 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     Note:
     learning rate must be of the form: 1e-x, where x is a number [0,99]
     """
-    epsilon = learning_rate * 1e-3
+    epsilon = 10 ** -(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
 
-    order_of_magnitude = int(str(learning_rate)[-2:])
+    order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
     max_epochs = order_of_magnitude * 50
 
     return epsilon, max_epochs

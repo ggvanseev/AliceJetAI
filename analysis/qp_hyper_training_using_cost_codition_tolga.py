@@ -62,13 +62,15 @@ from hyperopt import (
 )  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
 from functools import partial
 
-import pickle
+import torch
 import os
 import time
 import torch
 
 import pandas as pd
 import numpy as np
+
+import pickle
 
 # Set hyper space and variables
 max_evals = 2
@@ -90,26 +92,6 @@ space = hp.choice(
             "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
-            ),  # , "scale", , "auto"[ 0.23 was the defeault before]
-        }
-    ],
-)
-
-dummy_space = hp.choice(
-    "hyper_parameters",
-    [
-        {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.choice("num_batch", [100]),
-            "hidden_dim": hp.choice("hidden_dim", [21]),
-            "num_layers": hp.choice("num_layers", [1]),
-            "min_epochs": hp.choice("min_epochs", [int(2)]),
-            "learning_rate": hp.choice("learning_rate", [1e-5]),
-            "decay_factor": hp.choice("decay_factor", [0.5]),
-            "dropout": hp.choice("dropout", [0]),
-            "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
-            "svm_gamma": hp.choice(
-                "svm_gamma", ["auto"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
         }
     ],
@@ -149,9 +131,9 @@ print(space_eval(space, best))
 # set out file to job_id for parallel computing
 job_id = os.getenv("PBS_JOBID")
 if job_id:
-    out_file = "storing_results/trials_test_{}.p".format(job_id)
+    out_file = f"storing_results/trials_test_{job_id}.p"
 else:
-    out_file = "storing_results/trials_test.p"
+    out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y')}.p"
 
 torch.save(trials, open(out_file, "wb"), pickle_module=pickle)
 
