@@ -67,9 +67,9 @@ from functions.validation import validation_distance_nu
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # Variables:
-batch_size = 200
+batch_size = 100
 output_dim = 1
-hidden_dim = 18
+hidden_dim = 15
 layer_dim = 1
 dropout = 0.2
 min_epochs = 100
@@ -87,7 +87,6 @@ g_recur_jets = format_ak_to_list(g_recur_jets)
 
 # split data
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
-batch_size = len(train_data)
 
 train_data, track_jets_train_data = branch_filler(train_data, batch_size=batch_size)
 dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=100)

@@ -374,7 +374,7 @@ def try_hyperparameters(
         fig.savefig("output/" + title_plot + str(time.time()) + ".png")
 
     # return the model
-    lstm_ocsvm = dict({"lstm:": lstm_model, "ocsvm": svm_model, "scaler": scaler})
+    lstm_ocsvm = dict({"lstm": lstm_model, "ocsvm": svm_model, "scaler": scaler})
 
     # save plot data
     cost_data = dict(
