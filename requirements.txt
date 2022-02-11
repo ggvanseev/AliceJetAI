@@ -12,4 +12,5 @@ scikit-learn==1.0.2
 scipy
 seaborn
 spyder
-pytorch==1.10.2
+# pytorch==1.10.2
+pickleshare==0.7.4
