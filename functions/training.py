@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-from hyperopt import STATUS_OK
+from hyperopt import STATUS_OK, STATUS_FAIL
 
 import pandas as pd
 import numpy as np
@@ -194,7 +194,7 @@ def training_algorithm(
                 track_cost_condition,
                 False,
             )  # immediately return passed = False
-
+    print((cost - cost_prev) / cost_prev, training_params["epsilon"])
     if abs((cost - cost_prev) / cost_prev) > training_params["epsilon"]:
         print("Algorithm failed: not done learning in max epochs.")
         passed = False
@@ -209,9 +209,9 @@ def try_hyperparameters(
     hyper_parameters: dict,
     dev_data,
     plot_flag: bool = False,
-    patience=50,
+    patience=5,
     max_attempts=4,
-    max_distance_nu=0.01,
+    max_distance_nu=0.03,
 ):
     """
     This function searches for the correct hyperparameters.
@@ -380,7 +380,7 @@ def try_hyperparameters(
     return {
         "loss": distance_nu,
         "final_cost": track_cost[-1],
-        "status": STATUS_OK,  # update with train_success? TODO
+        "status": STATUS_OK if train_success else STATUS_FAIL,
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,
         "cost_data": cost_data,
