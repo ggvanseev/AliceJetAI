@@ -5,6 +5,7 @@ import os
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
+    "9619925.burrell.nikhef.nl",
     "9639018.burrell.nikhef.nl",
 ]
 
@@ -53,3 +54,4 @@ for job_id, trials in zip(job_ids, trials_list):
 
         fig.legend()
         fig.savefig(out_dir + "/" + title_plot + str(time.time()) + ".png")
+        plt.close(fig)  # close figure - clean memory
