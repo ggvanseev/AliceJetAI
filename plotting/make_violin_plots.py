@@ -32,8 +32,8 @@ trials_list = [
 # build DataFrame
 df = pd.concat([pd.json_normalize(trial.results) for trial in trials_list])
 df = df[df["loss"] != 10]  # filter out bad model results
-min_val = df.loss.min()
-min_df = df[df.loss == min_val].reset_index()
+min_val = df[test_param].min()
+min_df = df[df[test_param] == min_val].reset_index()
 
 # loop over each hyperparameter used in the analysis
 parameters = trials_list[0].results[0]["hyper_parameters"].keys()
@@ -64,7 +64,13 @@ else:
         _ = plt.xticks(rotation=45, ha="right")
 
         # create appropriate title and x-label
-        plt.title(parameter.replace("_", " ").title())
+        plt.title(
+            parameter.replace("_", " ").title()
+            + " vs "
+            + test_param.replace("_", " ").title()
+            + " - jobs: "
+            + ",".join(job_ids)
+        )
         plt.xlabel(parameter)
         plt.legend()
 

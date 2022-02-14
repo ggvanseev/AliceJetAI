@@ -123,7 +123,7 @@ best = fmin(
 print(space_eval(space, best))
 
 # set out file to job_id for parallel computing
-job_id = os.getenv("PBS_JOBID")
+job_id = os.getenv("PBS_JOBID").split(".")[0]
 if job_id:
     out_file = f"storing_results/trials_test_{job_id}.p"
 else:
