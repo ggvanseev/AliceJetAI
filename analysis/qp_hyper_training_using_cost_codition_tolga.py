@@ -81,7 +81,7 @@ space = hp.choice(
             "num_layers": hp.choice("num_layers", [1, 2]),
             "min_epochs": hp.choice("min_epochs", [int(5), int(10), int(20)]),
             "learning_rate": hp.choice(
-                "learning_rate", [1e-3, 1e-5, 1e-6, 1e-7, 1e-8, 1e-9]
+                "learning_rate", [1e-5, 1e-6, 1e-7, 1e-8, 1e-9, 1e-10, 1e-11]
             ),
             "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0, 0.2, 0.4, 0.6]),

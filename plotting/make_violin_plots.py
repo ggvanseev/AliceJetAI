@@ -7,8 +7,7 @@ import os
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
-    "10_02_22_first",
-    "10_02_22",
+    "9639018.burrell.nikhef.nl",
 ]
 
 # select test parameter: e.g. loss or cost
