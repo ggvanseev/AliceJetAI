@@ -70,7 +70,7 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 15
+max_evals = 1
 patience = 5
 space = hp.choice(
     "hyper_parameters",
@@ -104,7 +104,7 @@ dummy_space = hp.choice(
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(20)]),
             "learning_rate": hp.choice("learning_rate", [1e-11]),
-            #"decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
+            # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
