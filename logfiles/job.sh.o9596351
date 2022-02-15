@@ -1,0 +1,17 @@
+Loaded data
+Split data
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      
+Hyper Parameters:
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                        batch_size	  100
+  decay_factor	  0.5
+  dropout   	  0
+  hidden_dim	  21
+  learning_rate	  1e-05
+  min_epochs	  2
+  num_layers	  1
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Device: cuda
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Max number of batches: 653
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]

@@ -94,9 +94,30 @@ space = hp.choice(
     ],
 )
 
+
+dummy_space = hp.choice(
+    "hyper_parameters",
+    [
+        {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
+            "batch_size": hp.choice("num_batch", [500]),
+            "hidden_dim": hp.choice("hidden_dim", [21]),
+            "num_layers": hp.choice("num_layers", [1]),
+            "min_epochs": hp.choice("min_epochs", [int(20)]),
+            "learning_rate": hp.choice("learning_rate", [1e-11]),
+            #"decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
+            "dropout": hp.choice("dropout", [0]),
+            "output_dim": hp.choice("output_dim", [1]),
+            "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
+            "svm_gamma": hp.choice(
+                "svm_gamma", ["scale"]  # Auto seems to give weird results
+            ),  # , "scale", , "auto"[ 0.23 was the defeault before]
+        }
+    ],
+)
+
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
@@ -115,7 +136,7 @@ best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters, dev_data=dev_data, plot_flag=False, patience=patience,
     ),
-    space,
+    dummy_space,
     algo=tpe.suggest,
     max_evals=max_evals,
     trials=trials,

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 103, in <module>
+    "hidden_dim": hp.choice("hidden_dim", 21),
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/pyll_utils.py", line 18, in wrapper
+    return f(label, *args, **kwargs)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/pyll_utils.py", line 71, in hp_choice
+    ch = scope.hyperopt_param(label, scope.randint(len(options)))
+TypeError: object of type 'int' has no len()
