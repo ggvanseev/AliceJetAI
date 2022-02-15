@@ -147,9 +147,9 @@ best = fmin(
 print("\nBest evaluation:\n", space_eval(space, best))
 
 # set out file to job_id for parallel computing
-job_id = os.getenv("PBS_JOBID").split(".")[0]
+job_id = os.getenv("PBS_JOBID")
 if job_id:
-    out_file = f"storing_results/trials_test_{job_id}.p"
+    out_file = f"storing_results/trials_test_{job_id.split('.')[0]}.p"
 else:
     out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y')}.p"
 
