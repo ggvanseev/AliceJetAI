@@ -380,7 +380,7 @@ def try_hyperparameters(
     return {
         "loss": distance_nu,
         "final_cost": track_cost[-1],
-        "status": STATUS_OK if train_success else STATUS_FAIL,
+        "status": STATUS_OK,  # if train_success else STATUS_FAIL, TODO for testing save everything
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,
         "cost_data": cost_data,

@@ -1,8 +1,0 @@
-/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py:338: UserWarning: Trying to unpickle estimator OneClassSVM from version 0.24.2 when using version 1.0.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
-https://scikit-learn.org/stable/modules/model_persistence.html#security-maintainability-limitations
-  UserWarning,
-/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py:338: UserWarning: Trying to unpickle estimator MinMaxScaler from version 0.24.2 when using version 1.0.2. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
-https://scikit-learn.org/stable/modules/model_persistence.html#security-maintainability-limitations
-  UserWarning,
-plotting/make_cost_condition_plots.py:46: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
-  fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
