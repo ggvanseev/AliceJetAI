@@ -42,6 +42,7 @@ Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 # from sklearn.externals import joblib
 # import joblib
 
+from curses.ascii import SP
 from functions.data_manipulation import (
     train_dev_test_split,
     format_ak_to_list,
@@ -59,6 +60,7 @@ from hyperopt import (
     space_eval,
     STATUS_OK,
     Trials,
+    SparkTrials,
 )  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
 from functools import partial
 
@@ -70,7 +72,7 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 1
+max_evals = 8
 patience = 5
 space = hp.choice(
     "hyper_parameters",
@@ -116,8 +118,8 @@ dummy_space = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
@@ -132,6 +134,7 @@ train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8,
 print("Split data")
 
 trials = Trials()
+spark_trials = SparkTrials(parallelism=os.cpu_count())
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters, dev_data=dev_data, plot_flag=False, patience=patience,
@@ -139,9 +142,9 @@ best = fmin(
     dummy_space,
     algo=tpe.suggest,
     max_evals=max_evals,
-    trials=trials,
+    trials=spark_trials,
 )
-print(space_eval(space, best))
+print("\nBest evaluation:\n", space_eval(space, best))
 
 # set out file to job_id for parallel computing
 job_id = os.getenv("PBS_JOBID").split(".")[0]
@@ -150,7 +153,7 @@ if job_id:
 else:
     out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y')}.p"
 
-torch.save(trials, open(out_file, "wb"))
+torch.save(spark_trials, open(out_file, "wb"))
 
 run_time = pd.DataFrame(np.array([time.time() - start_time]))
 

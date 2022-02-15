@@ -5,6 +5,7 @@ awkward
 # functools
 numpy
 pandas
+pyspark==3.2.1 #conda install -c conda-forge pyspark
 openpyxl
 numba
 scikit-image==0.19.1
