@@ -7,7 +7,8 @@ import os
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
-    "9639018.burrell.nikhef.nl",
+    "15_02_22",
+    "17_02_22",
 ]
 
 # select test parameter: e.g. loss or cost
@@ -24,19 +25,24 @@ except FileExistsError:
 
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-trials_list = [
+trials_test_list = [
     torch.load(f"storing_results/trials_test_{job_id}.p", map_location=device)
     for job_id in job_ids
 ]
 
+# reform to complete list of trials
+trials_list = [trial for trials in [trials["_trials"] for trials in trials_test_list] for trial in trials]
+
 # build DataFrame
-df = pd.concat([pd.json_normalize(trial.results) for trial in trials_list])
+df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list])
 df = df[df["loss"] != 10]  # filter out bad model results
+
+# get minima
 min_val = df[test_param].min()
 min_df = df[df[test_param] == min_val].reset_index()
 
 # loop over each hyperparameter used in the analysis
-parameters = trials_list[0].results[0]["hyper_parameters"].keys()
+parameters = trials_list[0]["result"]["hyper_parameters"].keys()
 if df.empty:
     print("No good models obtained from the results")
 else:

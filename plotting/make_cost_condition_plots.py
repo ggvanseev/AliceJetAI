@@ -5,18 +5,17 @@ import os
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
-    "9619925.burrell.nikhef.nl",
-    "9639018.burrell.nikhef.nl",
+    "17_02_22",
 ]
 
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-trials_list = [
+trials_test_list = [
     torch.load(f"storing_results/trials_test_{job_id}.p", map_location=device)
     for job_id in job_ids
 ]
 
-for job_id, trials in zip(job_ids, trials_list):
+for job_id, trials in zip(job_ids, trials_test_list):
 
     out_dir = f"output/cost_condition_{job_id}"
 
@@ -25,7 +24,7 @@ for job_id, trials in zip(job_ids, trials_list):
     except FileExistsError:
         pass
 
-    for trial in trials:
+    for trial in trials["_trials"]:
 
         # obtain results from the trial
         result = trial["result"]

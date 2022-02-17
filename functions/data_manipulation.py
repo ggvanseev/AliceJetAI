@@ -66,7 +66,6 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
     # count all values (, is indicative of a value), and divide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
-    print("Max number of batches: {}".format(max_n_batches))
 
     # batches, is a list with all the batches
     batches = []
@@ -190,7 +189,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     if not batches:
         return -1
 
-    return batches, track_jets_in_batch
+    return batches, track_jets_in_batch, max_n_batches
 
 
 # @njit()
@@ -587,9 +586,9 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     Note:
     learning rate must be of the form: 1e-x, where x is a number [0,99]
     """
-    epsilon = 10 ** -(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
+    epsilon = 10 ** -(2 / 3 * int(format(learning_rate, ".1E")[-2:]) -1)
 
     order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
-    max_epochs = order_of_magnitude * 50
+    max_epochs = order_of_magnitude * 100
 
     return epsilon, max_epochs

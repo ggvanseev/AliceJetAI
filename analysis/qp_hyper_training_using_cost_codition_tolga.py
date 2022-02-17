@@ -78,14 +78,12 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.choice("num_batch", [50, 100, 150, 200]),
+            "batch_size": hp.quniform("num_batch", 100, 300, 10),
             "hidden_dim": hp.quniform("hidden_dim", 2, 20, 3),
             "num_layers": hp.choice("num_layers", [1, 2]),
             "min_epochs": hp.choice("min_epochs", [int(5), int(10), int(20)]),
-            "learning_rate": hp.choice(
-                "learning_rate", [1e-5, 1e-6, 1e-7, 1e-8, 1e-9, 1e-10, 1e-11]
-            ),
-            "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -9, -4, 1),
+            #"decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice("dropout", [0, 0.2, 0.4, 0.6]),
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
@@ -133,18 +131,23 @@ print("Loaded data")
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
 print("Split data")
 
-trials = Trials()
-spark_trials = SparkTrials(parallelism=os.cpu_count())
+# hyper tuning and evaluation
+trials = Trials() # NOTE keep for debugging since can't do with spark trials
+cores = os.cpu_count()
+print(f"Hypertuning on {cores} cores:\n")
+spark_trials = SparkTrials(parallelism=cores) # run as many trials parallel as the nr of cores available
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters, dev_data=dev_data, plot_flag=False, patience=patience,
     ),
     space,
     algo=tpe.suggest,
-    max_evals=max_evals,
+    max_evals=max_evals,    
     trials=spark_trials,
 )
-print("\nBest evaluation:\n", space_eval(space, best))
+print(f"\nBest Hyper Parameters:")
+best_hyper_params = "\n".join("  {:10}\t  {}".format(k, v) for k, v in space_eval(space, best).items())
+print(f"{best_hyper_params}\nwith loss: {min(spark_trials.losses())}") 
 
 # set out file to job_id for parallel computing
 job_id = os.getenv("PBS_JOBID")
@@ -152,10 +155,15 @@ if job_id:
     out_file = f"storing_results/trials_test_{job_id.split('.')[0]}.p"
 else:
     out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y')}.p"
+    
+# saving spark_trials as dictionaries
+# source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
+pickling_trials = dict()
+for k, v in spark_trials.__dict__.items():
+    if not k in ['_spark_context', '_spark']:
+        pickling_trials[k] = v
+torch.save(pickling_trials, open(out_file, "wb"))
 
-torch.save(spark_trials, open(out_file, "wb"))
-
+# store runtime
 run_time = pd.DataFrame(np.array([time.time() - start_time]))
-
 run_time.to_csv("storing_results/runtime.p")
-# load trials_test = pickle.load(open("/storing_results/trials_test.p", "rb"))
