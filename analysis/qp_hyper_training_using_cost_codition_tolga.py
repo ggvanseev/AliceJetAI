@@ -72,7 +72,7 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 64
+max_evals = 12
 patience = 5
 space = hp.choice(
     "hyper_parameters",
@@ -116,8 +116,8 @@ dummy_space = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
@@ -135,7 +135,7 @@ print("Split data")
 trials = Trials() # NOTE keep for debugging since can't do with spark trials
 cores = os.cpu_count()
 print(f"Hypertuning on {cores} cores:\n")
-spark_trials = SparkTrials(parallelism=cores) # run as many trials parallel as the nr of cores available
+spark_trials = SparkTrials(parallelism=6) # run as many trials parallel as the nr of cores available
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters, dev_data=dev_data, plot_flag=False, patience=patience,
