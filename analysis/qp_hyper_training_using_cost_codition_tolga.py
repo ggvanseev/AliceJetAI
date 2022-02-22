@@ -72,7 +72,7 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 12
+max_evals = 2
 patience = 5
 space = hp.choice(
     "hyper_parameters",
@@ -94,16 +94,16 @@ space = hp.choice(
     ],
 )
 
-
-dummy_space = hp.choice(
+# dummy space TODO delete later
+space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.choice("num_batch", [500]),
+            "batch_size": hp.choice("num_batch", [50]),
             "hidden_dim": hp.choice("hidden_dim", [21]),
             "num_layers": hp.choice("num_layers", [1]),
-            "min_epochs": hp.choice("min_epochs", [int(20)]),
-            "learning_rate": hp.choice("learning_rate", [1e-11]),
+            "min_epochs": hp.choice("min_epochs", [int(50)]),
+            "learning_rate": hp.choice("learning_rate", [1e-5]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
@@ -116,8 +116,8 @@ dummy_space = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
@@ -125,16 +125,16 @@ start_time = time.time()
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
-print("Loaded data")
+print("Loading data complete")
 
 # split data
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
-print("Split data")
+print("Splitting data complete")
 
 # hyper tuning and evaluation
 trials = Trials() # NOTE keep for debugging since can't do with spark trials
 cores = os.cpu_count()
-print(f"Hypertuning on {cores} cores:\n")
+print(f"Hypertuning {max_evals} evaluations, on {cores} cores:\n")
 spark_trials = SparkTrials(parallelism=6) # run as many trials parallel as the nr of cores available
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
@@ -145,6 +145,7 @@ best = fmin(
     max_evals=max_evals,    
     trials=spark_trials,
 )
+print(f"\nHypertuning completed on dataset:\n{file_name}")
 print(f"\nBest Hyper Parameters:")
 best_hyper_params = "\n".join("  {:10}\t  {}".format(k, v) for k, v in space_eval(space, best).items())
 print(f"{best_hyper_params}\nwith loss: {min(spark_trials.losses())}") 
@@ -154,7 +155,7 @@ job_id = os.getenv("PBS_JOBID")
 if job_id:
     out_file = f"storing_results/trials_test_{job_id.split('.')[0]}.p"
 else:
-    out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y')}.p"
+    out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y_%H%M')}.p"
     
 # saving spark_trials as dictionaries
 # source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials

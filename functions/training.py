@@ -8,7 +8,7 @@ import numpy as np
 
 from sklearn.svm import OneClassSVM
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 
 # from sklearn.externals import joblib
 # import joblib
@@ -272,9 +272,9 @@ def try_hyperparameters(
     dt = time.time() - time_track
     print_out += f"\nBranch filler jit, done in: {dt}"
 
-    # Only use train and dev data for now
+    # Only use train and dev data for now TODO
     # Note this has to be saved with the model, to ensure data has the same form.
-    scaler = MinMaxScaler()
+    scaler = MinMaxScaler() # StandardScaler()
     dev_loader = lstm_data_prep(
         data=dev_data, scaler=scaler, batch_size=batch_size, fit_flag=True
     )
