@@ -99,7 +99,7 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.choice("num_batch", [50]),
+            "batch_size": hp.choice("num_batch", [500]),
             "hidden_dim": hp.choice("hidden_dim", [21]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(50)]),

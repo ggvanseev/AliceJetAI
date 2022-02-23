@@ -274,8 +274,8 @@ def try_hyperparameters(
 
     # Only use train and dev data for now TODO
     # Note this has to be saved with the model, to ensure data has the same form.
-    # scaler = MinMaxScaler()
-    scaler = StandardScaler()
+    scaler = MinMaxScaler()
+    # scaler = StandardScaler()
     dev_loader = lstm_data_prep(
         data=dev_data, scaler=scaler, batch_size=batch_size, fit_flag=True
     )
