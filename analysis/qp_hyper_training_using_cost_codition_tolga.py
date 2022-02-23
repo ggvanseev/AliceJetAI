@@ -78,11 +78,11 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.quniform("num_batch", 100, 300, 10),
+            "batch_size": hp.quniform("num_batch", 300, 1000, 100),
             "hidden_dim": hp.quniform("hidden_dim", 2, 20, 3),
             "num_layers": hp.choice("num_layers", [1, 2]),
             "min_epochs": hp.choice("min_epochs", [int(5), int(10), int(20)]),
-            "learning_rate": 10 ** hp.quniform("learning_rate", -9, -4, 1),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -14, -10, 1),
             #"decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice("dropout", [0, 0.2, 0.4, 0.6]),
             "output_dim": hp.choice("output_dim", [1]),
@@ -90,6 +90,7 @@ space = hp.choice(
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
+            "scaler_id": hp.choice("scaler_id", ["minmax", "std"]), # MinMaxScaler or StandardScaler
         }
     ],
 )
@@ -103,7 +104,7 @@ space = hp.choice(
             "hidden_dim": hp.choice("hidden_dim", [21]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(50)]),
-            "learning_rate": hp.choice("learning_rate", [1e-11]),
+            "learning_rate": hp.choice("learning_rate", [1e-12]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
@@ -111,6 +112,7 @@ space = hp.choice(
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
+            "scaler_id": hp.choice("scaler_id", ["std"]), # minmax or std
         }
     ],
 )
