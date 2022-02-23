@@ -72,7 +72,7 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 2
+max_evals = 1
 patience = 5
 space = hp.choice(
     "hyper_parameters",
@@ -103,7 +103,7 @@ space = hp.choice(
             "hidden_dim": hp.choice("hidden_dim", [21]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(50)]),
-            "learning_rate": hp.choice("learning_rate", [1e-5]),
+            "learning_rate": hp.choice("learning_rate", [1e-15]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
@@ -140,7 +140,7 @@ best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters, dev_data=dev_data, plot_flag=False, patience=patience,
     ),
-    space,
+    dummy_space,
     algo=tpe.suggest,
     max_evals=max_evals,    
     trials=spark_trials,

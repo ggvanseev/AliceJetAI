@@ -5,7 +5,16 @@ import os
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
-    "22_02_22_2211",
+    "9707221",
+    "9707222",
+    "9707223",
+    "9707224",
+    "9707225",
+    "9707226",
+    "9707227",
+    "9707228",
+    "9707229",
+    "9707230",
 ]
 
 # load trials results from file and

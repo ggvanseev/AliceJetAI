@@ -1,0 +1,12 @@
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+22/02/22 22:44:33 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Loading data complete
+Splitting data complete
+Hypertuning 1 evaluations, on 6 cores:
+
+Traceback (most recent call last):
+  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 143, in <module>
+    dummy_space,
+NameError: name 'dummy_space' is not defined
