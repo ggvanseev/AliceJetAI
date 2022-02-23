@@ -72,7 +72,7 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 1
+max_evals = 30
 patience = 5
 space = hp.choice(
     "hyper_parameters",
@@ -81,8 +81,8 @@ space = hp.choice(
             "batch_size": hp.quniform("num_batch", 300, 1000, 100),
             "hidden_dim": hp.quniform("hidden_dim", 2, 20, 3),
             "num_layers": hp.choice("num_layers", [1, 2]),
-            "min_epochs": hp.choice("min_epochs", [int(5), int(10), int(20)]),
-            "learning_rate": 10 ** hp.quniform("learning_rate", -14, -10, 1),
+            "min_epochs": hp.choice("min_epochs", [int(25), int(30), int(40), int(50)]),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -12, -10, 0.5),
             #"decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice("dropout", [0, 0.2, 0.4, 0.6]),
             "output_dim": hp.choice("output_dim", [1]),
@@ -96,7 +96,7 @@ space = hp.choice(
 )
 
 # dummy space TODO delete later
-space = hp.choice(
+dummy_space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
@@ -136,8 +136,8 @@ print("Splitting data complete")
 # hyper tuning and evaluation
 trials = Trials() # NOTE keep for debugging since can't do with spark trials
 cores = os.cpu_count()
+spark_trials = SparkTrials(parallelism=cores) # run as many trials parallel as the nr of cores available
 print(f"Hypertuning {max_evals} evaluations, on {cores} cores:\n")
-spark_trials = SparkTrials(parallelism=6) # run as many trials parallel as the nr of cores available
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters, dev_data=dev_data, plot_flag=False, patience=patience,

@@ -240,6 +240,7 @@ def try_hyperparameters(
     svm_nu = hyper_parameters["svm_nu"]
     svm_gamma = hyper_parameters["svm_gamma"]
     hidden_dim = int(hyper_parameters["hidden_dim"])
+    scaler_id = hyper_parameters["scaler_id"]
 
     # Set epsilon and max_epochs
     eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
@@ -274,8 +275,10 @@ def try_hyperparameters(
 
     # Only use train and dev data for now TODO
     # Note this has to be saved with the model, to ensure data has the same form.
-    #scaler = MinMaxScaler()
-    scaler = StandardScaler()
+    if scaler_id == "minmax":
+        scaler = MinMaxScaler()
+    elif scaler_id == "std":
+        scaler = StandardScaler()
     dev_loader = lstm_data_prep(
         data=dev_data, scaler=scaler, batch_size=batch_size, fit_flag=True
     )
