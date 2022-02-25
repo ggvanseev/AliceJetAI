@@ -60,7 +60,7 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 2
+max_evals = 1
 patience = 5
 
 
