@@ -72,7 +72,7 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 30
+max_evals = 8
 patience = 5
 space = hp.choice(
     "hyper_parameters",
@@ -96,17 +96,17 @@ space = hp.choice(
 )
 
 # dummy space TODO delete later
-dummy_space = hp.choice(
+space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.choice("num_batch", [500]),
+            "batch_size": hp.choice("num_batch", [50]),
             "hidden_dim": hp.choice("hidden_dim", [21]),
             "num_layers": hp.choice("num_layers", [1]),
-            "min_epochs": hp.choice("min_epochs", [int(50)]),
-            "learning_rate": hp.choice("learning_rate", [1e-12]),
+            "min_epochs": hp.choice("min_epochs", [int(25)]),
+            "learning_rate": hp.choice("learning_rate", [1e-5]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
-            "dropout": hp.choice("dropout", [0]),
+            "dropout": hp.choice("dropout", [0, 0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0]),
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
             "svm_gamma": hp.choice(
@@ -118,8 +118,8 @@ dummy_space = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
@@ -148,9 +148,10 @@ best = fmin(
     trials=spark_trials,
 )
 print(f"\nHypertuning completed on dataset:\n{file_name}")
-print(f"\nBest Hyper Parameters:")
-best_hyper_params = "\n".join("  {:10}\t  {}".format(k, v) for k, v in space_eval(space, best).items())
-print(f"{best_hyper_params}\nwith loss: {min(spark_trials.losses())}") 
+# TODO fmin seems to simply choose the first model with the lowest loss -> see notes
+# print(f"\nBest Hyper Parameters:")
+# best_hyper_params = "\n".join("  {:10}\t  {}".format(k, v) for k, v in space_eval(space, best).items())
+# print(f"{best_hyper_params}\nwith loss: {min(spark_trials.losses())}") 
 
 # set out file to job_id for parallel computing
 job_id = os.getenv("PBS_JOBID")
@@ -166,6 +167,28 @@ for k, v in spark_trials.__dict__.items():
     if not k in ['_spark_context', '_spark']:
         pickling_trials[k] = v
 torch.save(pickling_trials, open(out_file, "wb"))
+
+# TODO next part is copied from make_violin_plots, could be made into a .py in functions
+# make list of trials
+trials_list = [trial for trial in pickling_trials["_trials"]]
+
+# build DataFrame
+df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list])
+df = df[df["loss"] != 10]  # filter out bad model results
+
+# get minima
+min_val = df["loss"].min()
+min_df = df[df["loss"] == min_val].reset_index()
+
+# print best model(s) hyperparameters:
+print("\nBest Hyper Parameters:")
+hyper_parameters_df = min_df.loc[:, min_df.columns.str.startswith('hyper_parameters')]
+for index, row in hyper_parameters_df.iterrows():
+    print(f"\nModel {index}:")
+    for key in hyper_parameters_df.keys():
+        print("  {:10}\t  {}".format(key.split('.')[1], row[key]))
+    print(f"with loss: \t\t{min_df['loss'].iloc[index]}") 
+    print(f"with final cost:\t{min_df['final_cost'].iloc[index]}")   
 
 # store runtime
 run_time = pd.DataFrame(np.array([time.time() - start_time]))
