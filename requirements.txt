@@ -13,5 +13,5 @@ scikit-learn==1.0.2
 scipy
 seaborn
 spyder
-pytorch==1.10.2
+torch==1.10.2
 uproot
