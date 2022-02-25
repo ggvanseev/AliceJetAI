@@ -23,7 +23,7 @@ from functions.data_manipulation import (
     lstm_data_prep,
     h_bar_list_to_numpy,
     scaled_epsilon_n_max_epochs,
-    branch_filler_jit,
+    format_ak_to_list,
 )
 from functions.optimization_orthogonality_constraints import (
     lstm_results,
@@ -66,7 +66,7 @@ def training_algorithm(
     model_params,
     training_params,
     device,
-    print_out=""
+    print_out="",
 ):
     """
     Trainging algorithm 1 from paper Tolga: Unsupervised Anomaly Detection With LSTM Neural Networks
@@ -245,17 +245,20 @@ def try_hyperparameters(
     svm_gamma = hyper_parameters["svm_gamma"]
     hidden_dim = int(hyper_parameters["hidden_dim"])
     scaler_id = hyper_parameters["scaler_id"]
+    input_variables = list(hyper_parameters["variables"])
 
     # Set epsilon and max_epochs
     eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
-    
+
     # output string for printing in terminal:
     print_out = ""
 
     # Show used hyper_parameters in terminal
     # sauce https://stackoverflow.com/questions/44689546/how-to-print-out-a-dictionary-nicely-in-python
     print_out += "\n\nHyper Parameters:\n"
-    print_out += "\n".join("  {:10}\t  {}".format(k, v) for k, v in hyper_parameters.items())
+    print_out += "\n".join(
+        "  {:10}\t  {}".format(k, v) for k, v in hyper_parameters.items()
+    )
 
     # use correct device:
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -272,7 +275,27 @@ def try_hyperparameters(
     #     )
 
     time_track = time.time()
-    dev_data, track_jets_dev_data, max_n_batches = branch_filler(dev_data, batch_size=batch_size)
+
+    # select only desired input variables
+    dev_data = dev_data[input_variables]
+
+    dev_data = format_ak_to_list(dev_data)
+    try:
+        dev_data, track_jets_dev_data, max_n_batches = branch_filler(
+            dev_data, batch_size=batch_size, n_features=len(input_variables)
+        )
+    except:
+        print("Branch filler failed")
+        return {
+            "loss": 10,
+            "final_cost": 10,
+            "status": STATUS_FAIL,
+            "model": 10,
+            "hyper_parameters": hyper_parameters,
+            "cost_data": 10,
+            "num_batches": batch_size,
+        }
+
     print_out += f"\nMax number of batches: {max_n_batches}"
     dt = time.time() - time_track
     print_out += f"\nBranch filler jit, done in: {dt}"
@@ -368,10 +391,11 @@ def try_hyperparameters(
                 train_success = True
 
     # training time and print statement
-    dt = time.time()-time_track
-    time_str = time.strftime('%H:%M:%S', time.gmtime(dt)) if dt > 60 else f"{dt:.2f} s"
+    dt = time.time() - time_track
+    time_str = time.strftime("%H:%M:%S", time.gmtime(dt)) if dt > 60 else f"{dt:.2f} s"
     print_out += f"\n{'Passed' if train_success else 'Failed'} in: {time_str}"
-    if train_success: print_out += f"\twith loss: {distance_nu:.4E}"
+    if train_success:
+        print_out += f"\twith loss: {distance_nu:.4E}"
 
     if plot_flag:
         # plot cost condition and cost function
@@ -398,11 +422,11 @@ def try_hyperparameters(
 
     # print output string
     print(print_out)
-    
+
     return {
         "loss": distance_nu,
         "final_cost": track_cost[-1],
-        "status": STATUS_OK if train_success else STATUS_FAIL, 
+        "status": STATUS_OK if train_success else STATUS_FAIL,
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,
         "cost_data": cost_data,
