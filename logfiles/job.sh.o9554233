@@ -1,0 +1,115 @@
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     
+Using device: cuda
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Hyper Parameters
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     {'batch_size': 100.0, 'decay_factor': 0.7, 'dropout': 0, 'hidden_dim': 18.0, 'learning_rate': 0.001, 'min_epochs': 20, 'num_layers': 1, 'output_dim': 1, 'svm_gamma': 'auto', 'svm_nu': 0.05}
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Dataprep, done in: 0.04901409149169922
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Obtained first h_bars, done in: 0.007748842239379883
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.0002243518829345703 	 epoch 0
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0005772113800048828
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.010538101196289062
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006163835525512695
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.00044155120849609375
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.00016045570373535156 	 epoch 1
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.00041222572326660156
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009574174880981445
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006311178207397461
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004246234893798828
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.00015807151794433594 	 epoch 2
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0004086494445800781
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009536504745483398
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006225109100341797
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004265308380126953
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.00015807151794433594 	 epoch 3
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0004010200500488281
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.00955343246459961
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006468296051025391
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.00042819976806640625
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.0001575946807861328 	 epoch 4
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0004277229309082031
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.00972127914428711
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.0064449310302734375
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.00048613548278808594
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.00016546249389648438 	 epoch 5
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.00045013427734375
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009889841079711914
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006455183029174805
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.00043487548828125
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.0001652240753173828 	 epoch 6
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.00041937828063964844
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009642362594604492
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006523609161376953
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.00044083595275878906
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.00017881393432617188 	 epoch 7
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.00041294097900390625
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009721040725708008
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006394624710083008
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004570484161376953
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.00015735626220703125 	 epoch 8
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0004057884216308594
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009648799896240234
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006538867950439453
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004334449768066406
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.0001571178436279297 	 epoch 9
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0004322528839111328
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.00975656509399414
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006579875946044922
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004210472106933594
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.00018072128295898438 	 epoch 10
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.00045228004455566406
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009938716888427734
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006635427474975586
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.00041365623474121094
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.0001575946807861328 	 epoch 11
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.00044798851013183594
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009641647338867188
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006287097930908203
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004093647003173828
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.000156402587890625 	 epoch 12
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0003991127014160156
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.00962972640991211
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.00629734992980957
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.00041604042053222656
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.0001571178436279297 	 epoch 13
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0004010200500488281
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009525060653686523
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006253480911254883
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004153251647949219
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.00015783309936523438 	 epoch 14
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0003993511199951172
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.00952768325805664
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006266593933105469
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.00040531158447265625
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.0001571178436279297 	 epoch 15
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0004107952117919922
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009586811065673828
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.0065381526947021484
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004074573516845703
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.00016498565673828125 	 epoch 16
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0004024505615234375
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009636640548706055
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006271839141845703
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004086494445800781
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.0001583099365234375 	 epoch 17
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.00040721893310546875
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.00957489013671875
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006318807601928711
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004096031188964844
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.0001583099365234375 	 epoch 18
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.00040841102600097656
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009598255157470703
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006350278854370117
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004069805145263672
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.00015783309936523438 	 epoch 19
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0004107952117919922
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009609222412109375
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.006359577178955078
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.00041103363037109375
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Start of loop, done in: 0.0001575946807861328 	 epoch 20
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained alphas, done in: 0.0004074573516845703
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained thetas, done in: 0.009511947631835938
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained h_bar, done in: 0.0063097476959228516
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Obtained cost, done in: 0.0004305839538574219
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Model done learning in 20 epochs.
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]                                                     Done in: 3.368973970413208
+  0%|          | 0/1 [00:03<?, ?trial/s, best loss=?]100%|██████████| 1/1 [00:03<00:00,  3.37s/trial, best loss: 0.0012820512820512775]100%|██████████| 1/1 [00:03<00:00,  3.37s/trial, best loss: 0.0012820512820512775]
+{'batch_size': 100.0, 'decay_factor': 0.7, 'dropout': 0, 'hidden_dim': 18.0, 'learning_rate': 0.001, 'min_epochs': 20, 'num_layers': 1, 'output_dim': 1, 'svm_gamma': 'auto', 'svm_nu': 0.05}

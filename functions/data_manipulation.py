@@ -66,7 +66,6 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
     # count all values (, is indicative of a value), and divide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
-    print("Max number of batches: {}".format(max_n_batches))
 
     # batches, is a list with all the batches
     batches = []
@@ -190,7 +189,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     if not batches:
         return -1
 
-    return batches, track_jets_in_batch
+    return batches, track_jets_in_batch, max_n_batches
 
 
 # @njit()
@@ -575,7 +574,7 @@ def scaled_epsilon_n_max_epochs(learning_rate):
 
     In case of Tolga's cost condition: epsilon is chosen as 1/1000 of learning rate
     In case of taking cost condition as a percentage difference of the current cost
-    with the previous cost, epsilon is chosen as 10 x learning rate
+    with the previous cost, epsilon is chosen as 10 x learning rate TODO debatable
 
     Max_epochs:
     The learning rate determines how quickly the model learns,
@@ -587,9 +586,11 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     Note:
     learning rate must be of the form: 1e-x, where x is a number [0,99]
     """
-    epsilon = 10 ** -(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
+    epsilon = 10 ** -3 #-(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
 
     order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
-    max_epochs = order_of_magnitude * 50
+    
+    more_epochs = 100 * (order_of_magnitude - 10 ) if order_of_magnitude > 10 else 0
+    max_epochs = 200 + more_epochs #order_of_magnitude * 50
 
     return epsilon, max_epochs

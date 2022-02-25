@@ -40,7 +40,7 @@ Using algorithm 2 of Unsupervised Anomaly Detection With LSTM Neural Networks
 Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 """
 from sklearn.svm import OneClassSVM
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 # from sklearn.externals import joblib
 # import joblib
@@ -63,23 +63,25 @@ from ai.model_lstm import LSTMModel
 from plotting.svm_boundary import plot_svm_boundary_2d
 from functions.validation import validation_distance_nu
 
-
+# file_name(s) - comment/uncomment when switching between local/Nikhef
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
-# Variables:
-batch_size = 100
+### Hyper parameters: ###
+batch_size = 700
 output_dim = 1
-hidden_dim = 15
+hidden_dim = 3
 layer_dim = 1
 dropout = 0.2
 min_epochs = 20
-max_epochs = 100
-learning_rate = 1e-5
-weight_decay = 1e-10
-nu = 0.01
-
-eps = 1e-8  # test value for convergence
+max_epochs = 400
+learning_rate = 1e-11
+# weight_decay = 1e-10  TODO
+nu = 0.05
+eps = 1e-3  # test value for convergence
 patience = 5  # value for number of epochs before stopping after seemingly convergence
+scaler_id = "std"
+
 
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
@@ -92,10 +94,12 @@ train_data, track_jets_train_data = branch_filler(train_data, batch_size=batch_s
 dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=100)
 
 # Note this has to be saved with the model, to ensure data has the same form.
-# Only use train and dev data for now
-scaler = (
-    MinMaxScaler()
-)  # Note this has to be saved with the model, to ensure data has the same form.
+# Only use train and dev data for now TODO
+# Note this has to be saved with the model, to ensure data has the same form.
+if scaler_id == "minmax":
+    scaler = MinMaxScaler()
+elif scaler_id == "std":
+    scaler = StandardScaler()
 train_loader = lstm_data_prep(
     data=train_data, scaler=scaler, batch_size=batch_size, fit_flag=True
 )
@@ -131,8 +135,6 @@ svm_model = OneClassSVM(nu=nu, gamma="scale", kernel="rbf")
 
 # path for model - only used for saving
 # model_path = f'models/{lstm_model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
-
-device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
 
 ### ALGORITHM START ###

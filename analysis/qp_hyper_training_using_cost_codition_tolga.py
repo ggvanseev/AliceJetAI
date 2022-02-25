@@ -42,6 +42,7 @@ Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 # from sklearn.externals import joblib
 # import joblib
 
+from curses.ascii import SP
 from functions.data_manipulation import (
     train_dev_test_split,
     format_ak_to_list,
@@ -59,6 +60,7 @@ from hyperopt import (
     space_eval,
     STATUS_OK,
     Trials,
+    SparkTrials,
 )  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
 from functools import partial
 
@@ -73,26 +75,51 @@ import numpy as np
 import pickle
 
 # Set hyper space and variables
-max_evals = 2
+max_evals = 8
 patience = 5
 space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.choice("num_batch", [50, 100, 150, 200]),
+            "batch_size": hp.quniform("num_batch", 300, 1000, 100),
             "hidden_dim": hp.quniform("hidden_dim", 2, 20, 3),
             "num_layers": hp.choice("num_layers", [1, 2]),
-            "min_epochs": hp.choice("min_epochs", [int(5), int(10), int(20)]),
-            "learning_rate": hp.choice(
-                "learning_rate", [1e-3, 1e-5, 1e-6, 1e-7, 1e-8, 1e-9]
-            ),
-            "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
+            "min_epochs": hp.choice("min_epochs", [int(25), int(30), int(40), int(50)]),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -12, -10, 0.5),
+            # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice("dropout", [0, 0.2, 0.4, 0.6]),
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
+            "scaler_id": hp.choice(
+                "scaler_id", ["minmax", "std"]
+            ),  # MinMaxScaler or StandardScaler
+        }
+    ],
+)
+
+# dummy space TODO delete later
+space = hp.choice(
+    "hyper_parameters",
+    [
+        {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
+            "batch_size": hp.choice("num_batch", [50]),
+            "hidden_dim": hp.choice("hidden_dim", [21]),
+            "num_layers": hp.choice("num_layers", [1]),
+            "min_epochs": hp.choice("min_epochs", [int(25)]),
+            "learning_rate": hp.choice("learning_rate", [1e-5]),
+            # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
+            "dropout": hp.choice(
+                "dropout", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+            ),
+            "output_dim": hp.choice("output_dim", [1]),
+            "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
+            "svm_gamma": hp.choice(
+                "svm_gamma", ["scale"]  # Auto seems to give weird results
+            ),  # , "scale", , "auto"[ 0.23 was the defeault before]
+            "scaler_id": hp.choice("scaler_id", ["std"]),  # minmax or std
         }
     ],
 )
@@ -107,13 +134,19 @@ start_time = time.time()
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
-print("Loaded data")
+print("Loading data complete")
 
 # split data
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
-print("Split data")
+print("Splitting data complete")
 
-trials = Trials()
+# hyper tuning and evaluation
+trials = Trials()  # NOTE keep for debugging since can't do with spark trials
+cores = os.cpu_count()
+spark_trials = SparkTrials(
+    parallelism=cores
+)  # run as many trials parallel as the nr of cores available
+print(f"Hypertuning {max_evals} evaluations, on {cores} cores:\n")
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters,
@@ -124,21 +157,53 @@ best = fmin(
     space,
     algo=tpe.suggest,
     max_evals=max_evals,
-    trials=trials,
+    trials=spark_trials,
 )
-print(space_eval(space, best))
+print(f"\nHypertuning completed on dataset:\n{file_name}")
+# TODO fmin seems to simply choose the first model with the lowest loss -> see notes
+# print(f"\nBest Hyper Parameters:")
+# best_hyper_params = "\n".join("  {:10}\t  {}".format(k, v) for k, v in space_eval(space, best).items())
+# print(f"{best_hyper_params}\nwith loss: {min(spark_trials.losses())}")
 
 # set out file to job_id for parallel computing
 job_id = os.getenv("PBS_JOBID")
 if job_id:
-    out_file = f"storing_results/trials_test_{job_id}.p"
+    out_file = f"storing_results/trials_test_{job_id.split('.')[0]}.p"
 else:
-    out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y')}.p"
+    out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y_%H%M')}.p"
 
-torch.save(trials, open(out_file, "wb"), pickle_module=pickle)
+# saving spark_trials as dictionaries
+# source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
+pickling_trials = dict()
+for k, v in spark_trials.__dict__.items():
+    if not k in ["_spark_context", "_spark"]:
+        pickling_trials[k] = v
+torch.save(pickling_trials, open(out_file, "wb"))
 
+# TODO next part is copied from make_violin_plots, could be made into a .py in functions
+# make list of trials
+trials_list = [trial for trial in pickling_trials["_trials"]]
+
+# build DataFrame
+df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list])
+df = df[df["loss"] != 10]  # filter out bad model results
+
+# get minima
+min_val = df["loss"].min()
+min_df = df[df["loss"] == min_val].reset_index()
+
+# print best model(s) hyperparameters:
+print("\nBest Hyper Parameters:")
+hyper_parameters_df = min_df.loc[:, min_df.columns.str.startswith("hyper_parameters")]
+for index, row in hyper_parameters_df.iterrows():
+    print(f"\nModel {index}:")
+    for key in hyper_parameters_df.keys():
+        print("  {:10}\t  {}".format(key.split(".")[1], row[key]))
+    print(f"with loss: \t\t{min_df['loss'].iloc[index]}")
+    print(f"with final cost:\t{min_df['final_cost'].iloc[index]}")
+
+# store runtime
 run_time = pd.DataFrame(np.array([time.time() - start_time]))
-
 run_time.to_csv("storing_results/runtime.p")
 
 # load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)

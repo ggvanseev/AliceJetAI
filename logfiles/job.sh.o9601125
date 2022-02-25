@@ -1,0 +1,321 @@
+Loaded data
+Split data
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      
+Hyper Parameters:
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                        batch_size	  50
+  decay_factor	  0.5
+  dropout   	  0.6
+  hidden_dim	  12.0
+  learning_rate	  1e-07
+  min_epochs	  20
+  num_layers	  2
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Device: cuda
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Max number of batches: 1306
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Branch filler jit, done in: 28.72955298423767
+  0%|          | 0/55 [00:28<?, ?trial/s, best loss=?]                                                      Dataprep, done in: 28.87924337387085
+  0%|          | 0/55 [00:28<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
+  0%|          | 0/55 [14:54<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
+  0%|          | 0/55 [29:27<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
+  0%|          | 0/55 [44:06<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
+  0%|          | 0/55 [58:50<?, ?trial/s, best loss=?]                                                      Failed in: 3530.973571538925
+  0%|          | 0/55 [58:50<?, ?trial/s, best loss=?]  2%|1         | 1/55 [58:50<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                       
+Hyper Parameters:
+  2%|1         | 1/55 [58:50<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                         batch_size	  50
+  decay_factor	  0.5
+  dropout   	  0.6
+  hidden_dim	  12.0
+  learning_rate	  0.001
+  min_epochs	  5
+  num_layers	  1
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  2%|1         | 1/55 [58:50<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                       Device: cuda
+  2%|1         | 1/55 [58:50<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                       Max number of batches: 1306
+  2%|1         | 1/55 [58:51<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                       Branch filler jit, done in: 28.382948875427246
+  2%|1         | 1/55 [59:19<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                       Dataprep, done in: 28.53253746032715
+  2%|1         | 1/55 [59:19<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                       Broke, for given hyper parameters
+  2%|1         | 1/55 [1:00:43<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  2%|1         | 1/55 [1:01:45<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  2%|1         | 1/55 [1:02:39<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  2%|1         | 1/55 [1:03:31<52:57:53, 3530.99s/trial, best loss: 10.0]                                                                         Failed in: 280.85083746910095
+  2%|1         | 1/55 [1:03:31<52:57:53, 3530.99s/trial, best loss: 10.0]  4%|3         | 2/55 [1:03:31<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                         
+Hyper Parameters:
+  4%|3         | 2/55 [1:03:31<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                           batch_size	  150
+  decay_factor	  0.4
+  dropout   	  0
+  hidden_dim	  9.0
+  learning_rate	  1e-07
+  min_epochs	  10
+  num_layers	  1
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  4%|3         | 2/55 [1:03:31<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                         Device: cuda
+  4%|3         | 2/55 [1:03:31<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                         Max number of batches: 435
+  4%|3         | 2/55 [1:03:32<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                         Branch filler jit, done in: 2.8233535289764404
+  4%|3         | 2/55 [1:03:34<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                         Dataprep, done in: 2.9770736694335938
+  4%|3         | 2/55 [1:03:34<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  4%|3         | 2/55 [1:10:40<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  4%|3         | 2/55 [1:17:48<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  4%|3         | 2/55 [1:24:57<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  4%|3         | 2/55 [1:32:05<23:50:14, 1619.15s/trial, best loss: 10.0]                                                                         Failed in: 1713.4470188617706
+  4%|3         | 2/55 [1:32:05<23:50:14, 1619.15s/trial, best loss: 10.0]  5%|5         | 3/55 [1:32:05<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                         
+Hyper Parameters:
+  5%|5         | 3/55 [1:32:05<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                           batch_size	  100
+  decay_factor	  0.5
+  dropout   	  0.6
+  hidden_dim	  15.0
+  learning_rate	  1e-05
+  min_epochs	  10
+  num_layers	  1
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  5%|5         | 3/55 [1:32:05<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                         Device: cuda
+  5%|5         | 3/55 [1:32:05<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                         Max number of batches: 653
+  5%|5         | 3/55 [1:32:05<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                         Branch filler jit, done in: 10.705082416534424
+  5%|5         | 3/55 [1:32:16<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                         Dataprep, done in: 10.856893539428711
+  5%|5         | 3/55 [1:32:16<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  5%|5         | 3/55 [1:37:14<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  5%|5         | 3/55 [1:43:14<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  5%|5         | 3/55 [1:49:16<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  5%|5         | 3/55 [1:55:19<24:00:34, 1662.21s/trial, best loss: 10.0]                                                                         Failed in: 1393.8644814491272
+  5%|5         | 3/55 [1:55:19<24:00:34, 1662.21s/trial, best loss: 10.0]  7%|7         | 4/55 [1:55:19<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                         
+Hyper Parameters:
+  7%|7         | 4/55 [1:55:19<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                           batch_size	  150
+  decay_factor	  0.4
+  dropout   	  0.6
+  hidden_dim	  3.0
+  learning_rate	  1e-06
+  min_epochs	  10
+  num_layers	  2
+  output_dim	  1
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+  7%|7         | 4/55 [1:55:19<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                         Device: cuda
+  7%|7         | 4/55 [1:55:19<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                         Max number of batches: 435
+  7%|7         | 4/55 [1:55:19<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                         Branch filler jit, done in: 2.8196749687194824
+  7%|7         | 4/55 [1:55:21<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                         Dataprep, done in: 2.972769260406494
+  7%|7         | 4/55 [1:55:22<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  7%|7         | 4/55 [2:02:19<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  7%|7         | 4/55 [2:09:15<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  7%|7         | 4/55 [2:16:12<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  7%|7         | 4/55 [2:23:08<22:02:49, 1556.27s/trial, best loss: 10.0]                                                                         Failed in: 1669.684440612793
+  7%|7         | 4/55 [2:23:08<22:02:49, 1556.27s/trial, best loss: 10.0]  9%|9         | 5/55 [2:23:08<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                         
+Hyper Parameters:
+  9%|9         | 5/55 [2:23:08<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                           batch_size	  150
+  decay_factor	  0.8
+  dropout   	  0
+  hidden_dim	  15.0
+  learning_rate	  0.001
+  min_epochs	  5
+  num_layers	  1
+  output_dim	  1
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+  9%|9         | 5/55 [2:23:08<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                         Device: cuda
+  9%|9         | 5/55 [2:23:08<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                         Max number of batches: 435
+  9%|9         | 5/55 [2:23:09<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                         Branch filler jit, done in: 2.81607723236084
+  9%|9         | 5/55 [2:23:11<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                         Dataprep, done in: 2.969362258911133
+  9%|9         | 5/55 [2:23:11<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  9%|9         | 5/55 [2:23:40<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  9%|9         | 5/55 [2:24:06<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  9%|9         | 5/55 [2:24:42<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  9%|9         | 5/55 [2:25:12<22:10:58, 1597.17s/trial, best loss: 10.0]                                                                         Failed in: 123.52414894104004
+  9%|9         | 5/55 [2:25:12<22:10:58, 1597.17s/trial, best loss: 10.0] 11%|#         | 6/55 [2:25:12<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                         
+Hyper Parameters:
+ 11%|#         | 6/55 [2:25:12<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                           batch_size	  200
+  decay_factor	  0.9
+  dropout   	  0
+  hidden_dim	  15.0
+  learning_rate	  1e-05
+  min_epochs	  10
+  num_layers	  1
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+ 11%|#         | 6/55 [2:25:12<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                         Device: cuda
+ 11%|#         | 6/55 [2:25:12<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                         Max number of batches: 326
+ 11%|#         | 6/55 [2:25:12<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                         Branch filler jit, done in: 1.7250912189483643
+ 11%|#         | 6/55 [2:25:14<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                         Dataprep, done in: 1.8773460388183594
+ 11%|#         | 6/55 [2:25:14<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+ 11%|#         | 6/55 [2:29:52<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+ 11%|#         | 6/55 [2:33:50<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 11%|#         | 6/55 [2:38:46<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 11%|#         | 6/55 [2:43:42<14:55:10, 1096.13s/trial, best loss: 10.0]                                                                         Failed in: 1109.92795753479
+ 11%|#         | 6/55 [2:43:42<14:55:10, 1096.13s/trial, best loss: 10.0] 13%|#2        | 7/55 [2:43:42<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                         
+Hyper Parameters:
+ 13%|#2        | 7/55 [2:43:42<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                           batch_size	  200
+  decay_factor	  0.8
+  dropout   	  0.2
+  hidden_dim	  12.0
+  learning_rate	  1e-06
+  min_epochs	  20
+  num_layers	  1
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+ 13%|#2        | 7/55 [2:43:42<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                         Device: cuda
+ 13%|#2        | 7/55 [2:43:42<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                         Max number of batches: 326
+ 13%|#2        | 7/55 [2:43:42<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                         Branch filler jit, done in: 1.7264926433563232
+ 13%|#2        | 7/55 [2:43:44<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                         Dataprep, done in: 1.878948450088501
+ 13%|#2        | 7/55 [2:43:44<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 13%|#2        | 7/55 [2:49:33<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 13%|#2        | 7/55 [2:55:26<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 13%|#2        | 7/55 [3:01:18<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 13%|#2        | 7/55 [3:07:04<14:40:31, 1100.65s/trial, best loss: 10.0]                                                                         Failed in: 1401.9765412807465
+ 13%|#2        | 7/55 [3:07:04<14:40:31, 1100.65s/trial, best loss: 10.0] 15%|#4        | 8/55 [3:07:04<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                         
+Hyper Parameters:
+ 15%|#4        | 8/55 [3:07:04<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                           batch_size	  200
+  decay_factor	  0.1
+  dropout   	  0.4
+  hidden_dim	  18.0
+  learning_rate	  1e-08
+  min_epochs	  10
+  num_layers	  1
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+ 15%|#4        | 8/55 [3:07:04<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                         Device: cuda
+ 15%|#4        | 8/55 [3:07:04<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                         Max number of batches: 326
+ 15%|#4        | 8/55 [3:07:04<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                         Branch filler jit, done in: 1.7306432723999023
+ 15%|#4        | 8/55 [3:07:06<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                         Dataprep, done in: 1.8836052417755127
+ 15%|#4        | 8/55 [3:07:06<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 15%|#4        | 8/55 [3:15:04<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 15%|#4        | 8/55 [3:23:06<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 15%|#4        | 8/55 [3:31:09<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 15%|#4        | 8/55 [3:39:15<15:37:19, 1196.58s/trial, best loss: 10.0]                                                                         Failed in: 1930.8335041999817
+ 15%|#4        | 8/55 [3:39:15<15:37:19, 1196.58s/trial, best loss: 10.0] 16%|#6        | 9/55 [3:39:15<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                         
+Hyper Parameters:
+ 16%|#6        | 9/55 [3:39:15<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                           batch_size	  100
+  decay_factor	  0.8
+  dropout   	  0.6
+  hidden_dim	  6.0
+  learning_rate	  1e-09
+  min_epochs	  5
+  num_layers	  2
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+ 16%|#6        | 9/55 [3:39:15<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                         Device: cuda
+ 16%|#6        | 9/55 [3:39:15<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                         Max number of batches: 653
+ 16%|#6        | 9/55 [3:39:15<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                         Branch filler jit, done in: 10.753694295883179
+ 16%|#6        | 9/55 [3:39:25<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                         Dataprep, done in: 10.906006574630737
+ 16%|#6        | 9/55 [3:39:26<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 16%|#6        | 9/55 [3:51:57<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 16%|#6        | 9/55 [4:04:29<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 16%|#6        | 9/55 [4:17:03<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+ 16%|#6        | 9/55 [4:29:33<18:13:21, 1426.12s/trial, best loss: 10.0]                                                                         Failed in: 3018.6055347919464
+ 16%|#6        | 9/55 [4:29:33<18:13:21, 1426.12s/trial, best loss: 10.0] 18%|#8        | 10/55 [4:29:33<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                          
+Hyper Parameters:
+ 18%|#8        | 10/55 [4:29:33<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                            batch_size	  200
+  decay_factor	  0.5
+  dropout   	  0.2
+  hidden_dim	  21.0
+  learning_rate	  1e-07
+  min_epochs	  5
+  num_layers	  2
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+ 18%|#8        | 10/55 [4:29:33<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                          Device: cuda
+ 18%|#8        | 10/55 [4:29:33<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                          Max number of batches: 326
+ 18%|#8        | 10/55 [4:29:33<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                          Branch filler jit, done in: 1.734640121459961
+ 18%|#8        | 10/55 [4:29:35<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                          Dataprep, done in: 1.8869612216949463
+ 18%|#8        | 10/55 [4:29:35<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 18%|#8        | 10/55 [4:37:24<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 18%|#8        | 10/55 [4:45:12<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 18%|#8        | 10/55 [4:53:00<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 18%|#8        | 10/55 [5:00:49<23:58:18, 1917.76s/trial, best loss: 10.0]                                                                          Failed in: 1875.3470244407654
+ 18%|#8        | 10/55 [5:00:49<23:58:18, 1917.76s/trial, best loss: 10.0] 20%|##        | 11/55 [5:00:49<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                          
+Hyper Parameters:
+ 20%|##        | 11/55 [5:00:49<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                            batch_size	  200
+  decay_factor	  0.9
+  dropout   	  0.6
+  hidden_dim	  12.0
+  learning_rate	  1e-08
+  min_epochs	  20
+  num_layers	  1
+  output_dim	  1
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+ 20%|##        | 11/55 [5:00:49<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                          Device: cuda
+ 20%|##        | 11/55 [5:00:49<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                          Max number of batches: 326
+ 20%|##        | 11/55 [5:00:49<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                          Branch filler jit, done in: 1.7213134765625
+ 20%|##        | 11/55 [5:00:50<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                          Dataprep, done in: 1.8734567165374756
+ 20%|##        | 11/55 [5:00:51<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 20%|##        | 11/55 [5:08:43<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 20%|##        | 11/55 [5:16:34<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 20%|##        | 11/55 [5:24:35<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 20%|##        | 11/55 [5:32:28<23:16:50, 1904.78s/trial, best loss: 10.0]                                                                          Failed in: 1899.1026754379272
+ 20%|##        | 11/55 [5:32:28<23:16:50, 1904.78s/trial, best loss: 10.0] 22%|##1       | 12/55 [5:32:28<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                          
+Hyper Parameters:
+ 22%|##1       | 12/55 [5:32:28<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                            batch_size	  100
+  decay_factor	  0.4
+  dropout   	  0
+  hidden_dim	  6.0
+  learning_rate	  1e-09
+  min_epochs	  5
+  num_layers	  1
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+ 22%|##1       | 12/55 [5:32:28<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                          Device: cuda
+ 22%|##1       | 12/55 [5:32:28<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                          Max number of batches: 653
+ 22%|##1       | 12/55 [5:32:28<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                          Branch filler jit, done in: 10.669967889785767
+ 22%|##1       | 12/55 [5:32:38<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                          Dataprep, done in: 10.823050260543823
+ 22%|##1       | 12/55 [5:32:39<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 22%|##1       | 12/55 [5:43:16<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 22%|##1       | 12/55 [5:54:02<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 22%|##1       | 12/55 [6:04:44<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 22%|##1       | 12/55 [6:15:14<22:43:51, 1903.05s/trial, best loss: 10.0]                                                                          Failed in: 2566.491851091385
+ 22%|##1       | 12/55 [6:15:14<22:43:51, 1903.05s/trial, best loss: 10.0] 24%|##3       | 13/55 [6:15:14<24:32:49, 2104.04s/trial, best loss: 10.0]                                                                          
+Hyper Parameters:
+ 24%|##3       | 13/55 [6:15:14<24:32:49, 2104.04s/trial, best loss: 10.0]                                                                            batch_size	  200
+  decay_factor	  0.1
+  dropout   	  0.6
+  hidden_dim	  18.0
+  learning_rate	  1e-05
+  min_epochs	  10
+  num_layers	  2
+  output_dim	  1
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+ 24%|##3       | 13/55 [6:15:14<24:32:49, 2104.04s/trial, best loss: 10.0]                                                                          Device: cuda
+ 24%|##3       | 13/55 [6:15:14<24:32:49, 2104.04s/trial, best loss: 10.0]                                                                          Max number of batches: 326
+ 24%|##3       | 13/55 [6:15:14<24:32:49, 2104.04s/trial, best loss: 10.0]                                                                          Branch filler jit, done in: 1.7219715118408203
+ 24%|##3       | 13/55 [6:15:16<24:32:49, 2104.04s/trial, best loss: 10.0]                                                                          Dataprep, done in: 1.875291347503662
+ 24%|##3       | 13/55 [6:15:16<24:32:49, 2104.04s/trial, best loss: 10.0]                                                                          Algorithm failed: not done learning in max epochs.
+ 24%|##3       | 13/55 [6:20:50<24:32:49, 2104.04s/trial, best loss: 10.0]                                                                          Broke, for given hyper parameters
+ 24%|##3       | 13/55 [6:23:14<24:32:49, 2104.04s/trial, best loss: 10.0]job exception: inverse_cuda: (Batch element 0): The diagonal element 17 is zero, the inversion could not be completed because the input matrix is singular.
+ 24%|##3       | 13/55 [6:27:44<20:52:43, 1789.61s/trial, best loss: 10.0]
+Traceback (most recent call last):
+  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 141, in <module>
+    trials=trials,
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 555, in fmin
+    trials_save_file=trials_save_file,
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 688, in fmin
+    trials_save_file=trials_save_file,
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 586, in fmin
+    rval.exhaust()
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 364, in exhaust
+    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 300, in run
+    self.serial_evaluate()
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 178, in serial_evaluate
+    result = self.domain.evaluate(spec, ctrl)
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 326, in try_hyperparameters
+    device,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 139, in training_algorithm
+    device=device,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 281, in optimization
+    device,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 212, in updating_theta
+    torch.inverse(i + mu / 2 * a) @ (i - mu / 2 * a) @ weight
+RuntimeError: inverse_cuda: (Batch element 0): The diagonal element 17 is zero, the inversion could not be completed because the input matrix is singular.

@@ -5,17 +5,19 @@ import os
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
-    "10_02_22_first",
+    "9720493",
+    "9727357",
+    "9727358",
 ]
 
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-trials_list = [
+trials_test_list = [
     torch.load(f"storing_results/trials_test_{job_id}.p", map_location=device)
     for job_id in job_ids
 ]
 
-for job_id, trials in zip(job_ids, trials_list):
+for job_id, trials in zip(job_ids, trials_test_list):
 
     out_dir = f"output/cost_condition_{job_id}"
 
@@ -24,7 +26,7 @@ for job_id, trials in zip(job_ids, trials_list):
     except FileExistsError:
         pass
 
-    for trial in trials:
+    for trial in trials["_trials"]:
 
         # obtain results from the trial
         result = trial["result"]
@@ -33,7 +35,7 @@ for job_id, trials in zip(job_ids, trials_list):
         h_parm = result["hyper_parameters"]
         title_plot = f""
         for key in h_parm:
-            title_plot += f"{h_parm[key]}_{key}"
+            title_plot += f"{h_parm[key]}_{key}_"
 
         # extract cost data from the results
         cost_data = result["cost_data"]
@@ -43,12 +45,14 @@ for job_id, trials in zip(job_ids, trials_list):
         # plot cost condition and cost function
         fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
         fig.suptitle(title_plot, y=1.08)
-        ax1.plot(track_cost_condition[1:])
+        ax1.plot(track_cost_condition[1:], label="Cost Condition")
         ax1.set_xlabel("Epochs")
         ax1.set_ylabel("Cost Condition")
 
         ax2 = ax1.twinx()
-        ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7)
+        ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7, label="Cost")
         ax2.set_ylabel("Cost")
 
+        fig.legend()
         fig.savefig(out_dir + "/" + title_plot + str(time.time()) + ".png")
+        plt.close(fig)  # close figure - clean memory

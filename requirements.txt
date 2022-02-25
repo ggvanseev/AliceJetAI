@@ -1,10 +1,11 @@
 autograd
 awkward
-hyperopt==0.2.5
+hyperopt==0.2.7 # if this does not work, try https://stackoverflow.com/questions/29286624/how-to-install-pypi-packages-using-anaconda-conda-command
 # pickle
 # functools
 numpy
 pandas
+pyspark==3.2.1 #f does not work, try:$ conda install -c conda-forge pyspark
 openpyxl
 numba
 scikit-image==0.19.1
@@ -12,5 +13,5 @@ scikit-learn==1.0.2
 scipy
 seaborn
 spyder
-# pytorch==1.10.2
-pickleshare==0.7.4
+pytorch==1.10.2
+uproot

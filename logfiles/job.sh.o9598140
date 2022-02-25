@@ -1,0 +1,19 @@
+Loaded data
+Split data
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      
+Hyper Parameters:
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                        batch_size	  50
+  decay_factor	  0.4
+  dropout   	  0.6
+  hidden_dim	  6.0
+  learning_rate	  1e-09
+  min_epochs	  20
+  num_layers	  2
+  output_dim	  1
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Device: cuda
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Max number of batches: 1306
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Branch filler jit, done in: 29.479807138442993
+  0%|          | 0/55 [00:29<?, ?trial/s, best loss=?]                                                      Dataprep, done in: 29.63533878326416
+  0%|          | 0/55 [00:29<?, ?trial/s, best loss=?]

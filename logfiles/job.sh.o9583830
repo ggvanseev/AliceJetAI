@@ -1,0 +1,89 @@
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      
+Hyper Parameters:
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                        batch_size	  200
+  decay_factor	  0.8
+  dropout   	  0.2
+  hidden_dim	  18.0
+  learning_rate	  1e-06
+  min_epochs	  5
+  num_layers	  2
+  output_dim	  1
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Device: cuda
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Max number of batches: 326
+  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Branch filler jit, done in: 13.206050395965576
+  0%|          | 0/55 [00:13<?, ?trial/s, best loss=?]                                                      Dataprep, done in: 13.358996152877808
+  0%|          | 0/55 [00:13<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
+  0%|          | 0/55 [06:17<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
+  0%|          | 0/55 [12:26<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
+  0%|          | 0/55 [18:36<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
+  0%|          | 0/55 [24:48<?, ?trial/s, best loss=?]                                                      Failed in: 1488.2274672985077
+  0%|          | 0/55 [24:48<?, ?trial/s, best loss=?]  2%|1         | 1/55 [24:48<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                       
+Hyper Parameters:
+  2%|1         | 1/55 [24:48<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                         batch_size	  100
+  decay_factor	  0.4
+  dropout   	  0.4
+  hidden_dim	  15.0
+  learning_rate	  1e-09
+  min_epochs	  5
+  num_layers	  2
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  2%|1         | 1/55 [24:48<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                       Device: cuda
+  2%|1         | 1/55 [24:48<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                       Max number of batches: 653
+  2%|1         | 1/55 [24:48<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                       Branch filler jit, done in: 35.6092255115509
+  2%|1         | 1/55 [25:23<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                       Dataprep, done in: 35.758339405059814
+  2%|1         | 1/55 [25:24<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                       Algorithm failed: not done learning in max epochs.
+  2%|1         | 1/55 [37:33<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                       Algorithm failed: not done learning in max epochs.
+  2%|1         | 1/55 [49:47<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                       Algorithm failed: not done learning in max epochs.
+  2%|1         | 1/55 [1:02:01<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                         Algorithm failed: not done learning in max epochs.
+  2%|1         | 1/55 [1:14:17<22:19:24, 1488.24s/trial, best loss: 10.0]                                                                         Failed in: 2969.445766687393
+  2%|1         | 1/55 [1:14:17<22:19:24, 1488.24s/trial, best loss: 10.0]  4%|3         | 2/55 [1:14:17<34:44:15, 2359.54s/trial, best loss: 10.0]                                                                         
+Hyper Parameters:
+  4%|3         | 2/55 [1:14:17<34:44:15, 2359.54s/trial, best loss: 10.0]                                                                           batch_size	  100
+  decay_factor	  0.5
+  dropout   	  0
+  hidden_dim	  21.0
+  learning_rate	  1e-05
+  min_epochs	  5
+  num_layers	  2
+  output_dim	  1
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  4%|3         | 2/55 [1:14:17<34:44:15, 2359.54s/trial, best loss: 10.0]                                                                         Device: cuda
+  4%|3         | 2/55 [1:14:17<34:44:15, 2359.54s/trial, best loss: 10.0]                                                                         Max number of batches: 653
+  4%|3         | 2/55 [1:14:17<34:44:15, 2359.54s/trial, best loss: 10.0]                                                                         Branch filler jit, done in: 35.5955536365509
+  4%|3         | 2/55 [1:14:53<34:44:15, 2359.54s/trial, best loss: 10.0]                                                                         Dataprep, done in: 35.75435471534729
+  4%|3         | 2/55 [1:14:53<34:44:15, 2359.54s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  4%|3         | 2/55 [1:19:41<34:44:15, 2359.54s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  4%|3         | 2/55 [1:23:51<34:44:15, 2359.54s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
+  4%|3         | 2/55 [1:27:57<34:44:15, 2359.54s/trial, best loss: 10.0]job exception: inverse_cuda: (Batch element 0): The diagonal element 21 is zero, the inversion could not be completed because the input matrix is singular.
+  4%|3         | 2/55 [1:34:03<41:32:26, 2821.63s/trial, best loss: 10.0]
+Traceback (most recent call last):
+  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 119, in <module>
+    trials=trials,
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 555, in fmin
+    trials_save_file=trials_save_file,
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 688, in fmin
+    trials_save_file=trials_save_file,
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 586, in fmin
+    rval.exhaust()
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 364, in exhaust
+    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 300, in run
+    self.serial_evaluate()
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 178, in serial_evaluate
+    result = self.domain.evaluate(spec, ctrl)
+  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 326, in try_hyperparameters
+    device,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 139, in training_algorithm
+    device=device,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 281, in optimization
+    device,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 212, in updating_theta
+    torch.inverse(i + mu / 2 * a) @ (i - mu / 2 * a) @ weight
+RuntimeError: inverse_cuda: (Batch element 0): The diagonal element 21 is zero, the inversion could not be completed because the input matrix is singular.
