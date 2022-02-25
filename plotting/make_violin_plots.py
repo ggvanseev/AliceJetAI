@@ -13,7 +13,7 @@ job_ids = [
 ]
 
 # select test parameter: e.g. "loss" or "final_cost"
-test_param = "final_cost"
+test_param = "loss"
 
 # store violin plots in designated directory
 out_dir = f"output/violin_plots"
@@ -86,6 +86,7 @@ else:
             + ",".join(job_ids)
         )
         plt.xlabel(parameter)
+        plt.yscale("log")
         plt.legend()
 
         # save plot

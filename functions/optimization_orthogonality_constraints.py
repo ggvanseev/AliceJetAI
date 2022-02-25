@@ -137,7 +137,7 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
     G = dkappa / dW_ij = (dkappa * dh_ij) *(dh_ij / dW_ij)
     Since the derivative of x^T x = 2x and
     dh / dW can be obtained from theta_gradients
-    this is
+    this is:
 
     G = dkappa / dW_ij = (dkappa * dh_ij) *(dh_ij / dW_ij) =
     (0.5*sumi,j alpah_i*alpha_j*2*hi) * dh/dw(theta_gradients)

@@ -126,7 +126,7 @@ space = hp.choice(
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
 
 # start time
 start_time = time.time()
@@ -135,6 +135,7 @@ start_time = time.time()
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
 print("Loading data complete")
+print(f"number of jets: {len(g_recur_jets)}")
 
 # split data
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
@@ -157,7 +158,7 @@ best = fmin(
     space,
     algo=tpe.suggest,
     max_evals=max_evals,
-    trials=spark_trials,
+    trials=trials,
 )
 print(f"\nHypertuning completed on dataset:\n{file_name}")
 # TODO fmin seems to simply choose the first model with the lowest loss -> see notes
