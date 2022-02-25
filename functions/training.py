@@ -524,6 +524,7 @@ def training_with_set_parameters(
                 track_cost,
                 track_cost_condition,
                 passed,
+                print_out,
             ) = training_algorithm(
                 lstm_model,
                 svm_model,
@@ -533,6 +534,7 @@ def training_with_set_parameters(
                 training_params,
                 device,
             )
+            print(print_out)
         except RuntimeError as e:
             passed = False
             logf = open("logfiles/cuda_error.log", "w")
