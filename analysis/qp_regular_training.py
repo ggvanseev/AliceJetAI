@@ -71,15 +71,14 @@ hyper_parameters["output_dim"] = 1
 hyper_parameters["num_layers"] = 1
 hyper_parameters["dropout"] = 0
 hyper_parameters["min_epochs"] = 25
-hyper_parameters["learning_rate"] = 1e-13
+hyper_parameters["learning_rate"] = 1e-12
 hyper_parameters["svm_nu"] = 0.05
 hyper_parameters["svm_gamma"] = "auto"
-hyper_parameters["scaler_id"] = "std"
+hyper_parameters["scaler_id"] = "minmax"
 hyper_parameters["hidden_dim"] = 9
 
 # storing dict:
 trials = dict()
-
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
@@ -92,6 +91,7 @@ start_time = time.time()
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
 print("Loaded data")
+print(f"number of jets: {len(g_recur_jets)}")
 
 # split data
 train_data, dev_data, val_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])

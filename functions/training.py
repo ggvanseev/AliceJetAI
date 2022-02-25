@@ -445,6 +445,7 @@ def training_with_set_parameters(
     svm_nu = hyper_parameters["svm_nu"]
     svm_gamma = hyper_parameters["svm_gamma"]
     hidden_dim = int(hyper_parameters["hidden_dim"])
+    scaler_id = hyper_parameters["scaler_id"]
 
     # Set epsilon and max_epochs
     eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
@@ -459,14 +460,19 @@ def training_with_set_parameters(
     print("Device: {}".format(device))
 
     time_track = time.time()
-    train_data, track_jets_train_data = branch_filler(train_data, batch_size=batch_size)
-    val_data, track_jets_val_data = branch_filler(val_data, batch_size=batch_size)
+    train_data, track_jets_train_data, max_n_train_batches = branch_filler(train_data, batch_size=batch_size)
+    print(f"\nMax number of batches: {max_n_train_batches}")
+    val_data, track_jets_val_data, max_n_val_batches = branch_filler(val_data, batch_size=batch_size)
+    print(f"\nMax number of batches: {max_n_val_batches}")
     dt = time.time() - time_track
     print(f"Branch filler, done in: {dt}")
 
     # Only use train and dev data for now
     # Note this has to be saved with the model, to ensure data has the same form.
-    scaler = MinMaxScaler()
+    if scaler_id == "minmax":
+        scaler = MinMaxScaler()
+    elif scaler_id == "std":
+        scaler = StandardScaler()
     train_loader = lstm_data_prep(
         data=train_data, scaler=scaler, batch_size=batch_size, fit_flag=True
     )
