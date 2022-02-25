@@ -41,8 +41,6 @@ Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 """
 # from sklearn.externals import joblib
 # import joblib
-
-from curses.ascii import SP
 from functions.data_manipulation import (
     train_dev_test_split,
     format_ak_to_list,
@@ -72,7 +70,7 @@ import torch
 import pandas as pd
 import numpy as np
 
-import pickle
+import branch_names as na
 
 # Set hyper space and variables
 max_evals = 8
@@ -82,14 +80,20 @@ space = hp.choice(
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
             "batch_size": hp.quniform("num_batch", 300, 1000, 100),
-            "hidden_dim": hp.quniform("hidden_dim", 2, 20, 3),
-            "num_layers": hp.choice("num_layers", [1, 2]),
-            "min_epochs": hp.choice("min_epochs", [int(25), int(30), int(40), int(50)]),
+            "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20, 50, 100, 200]),
+            "num_layers": hp.choice(
+                "num_layers", [1]
+            ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
+            "min_epochs": hp.choice(
+                "min_epochs", [int(30)]
+            ),  # lijkt niet heel veel te doen
             "learning_rate": 10 ** hp.quniform("learning_rate", -12, -10, 0.5),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
-            "dropout": hp.choice("dropout", [0, 0.2, 0.4, 0.6]),
+            "dropout": hp.choice(
+                "dropout", [0]
+            ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.05, 0.001]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
@@ -101,7 +105,7 @@ space = hp.choice(
 )
 
 # dummy space TODO delete later
-space = hp.choice(
+space_check = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
