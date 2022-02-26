@@ -1,3 +1,4 @@
+import awkward as ak
 import torch
 import numpy as np
 
@@ -5,6 +6,7 @@ from functions.data_manipulation import (
     lstm_data_prep,
     branch_filler,
     h_bar_list_to_numpy,
+    format_ak_to_list,
 )
 
 
@@ -25,13 +27,21 @@ class LSTM_OCSVM_CLASSIFIER:
         self.device = device
         self.scaler = scaler
 
-    def anomaly_classifaction(self, data):
+    def anomaly_classifaction(
+        self, data: ak, zeros_test_flag=False, nines_test_flag=False
+    ):
         """
-        Classifies anomalies
+        Classifies anomalies, with the possibility of setting a test
         data: data set to be classified
         returns: classifaction, percentage anomaly
 
         """
+        if zeros_test_flag:
+            data = (np.zeros([500, int(self.batch_size / 100), len(data)])).tolist()
+        elif nines_test_flag:
+            data = (np.zeros([500, int(self.batch_size / 100), len(data)]) + 9).tolist()
+        else:
+            data = format_ak_to_list(data)
 
         data, track_jets_data, _ = branch_filler(data, batch_size=self.batch_size)
 
@@ -72,3 +82,68 @@ class LSTM_OCSVM_CLASSIFIER:
         fraction_anomaly = n_anomaly / len(classifaction)
 
         return classifaction, fraction_anomaly
+
+
+class CLASSIFICATION_CHECK:
+    def __init__(self) -> None:
+        pass
+
+    def classifaction_all_nines_test(self, trials):
+        anomaly_tracker = np.zeros(len(trials))
+        for i in range(len(trials)):
+            # select model
+            model = trials[i]["result"]["model"]
+
+            lstm_model = model["lstm"]  # note in some old files it is lstm:
+            ocsvm_model = model["ocsvm"]
+            scaler = model["scaler"]
+
+            # get hyper parameters
+            batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
+            input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
+
+            classifier = LSTM_OCSVM_CLASSIFIER(
+                oc_svm=ocsvm_model,
+                lstm=lstm_model,
+                batch_size=batch_size,
+                scaler=scaler,
+            )
+
+            _, anomaly_tracker[i] = classifier.anomaly_classifaction(
+                data=input_variables, zeros_test_flag=False, nines_test_flag=True
+            )
+
+            if anomaly_tracker[i] == 0:
+                anomaly_tracker[i] = "nan"
+
+        return np.argwhere(np.isnan(anomaly_tracker)).T[0]
+
+    def classifaction_all_zeros_test(self, trials):
+        anomaly_tracker = np.zeros(len(trials))
+        for i in range(len(trials)):
+            # select model
+            model = trials[i]["result"]["model"]
+
+            lstm_model = model["lstm"]  # note in some old files it is lstm:
+            ocsvm_model = model["ocsvm"]
+            scaler = model["scaler"]
+
+            # get hyper parameters
+            batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
+            input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
+
+            classifier = LSTM_OCSVM_CLASSIFIER(
+                oc_svm=ocsvm_model,
+                lstm=lstm_model,
+                batch_size=batch_size,
+                scaler=scaler,
+            )
+
+            _, anomaly_tracker[i] = classifier.anomaly_classifaction(
+                data=input_variables, zeros_test_flag=True, nines_test_flag=False
+            )
+
+            if anomaly_tracker[i] == 0:
+                anomaly_tracker[i] = "nan"
+
+        return np.argwhere(np.isnan(anomaly_tracker)).T[0]

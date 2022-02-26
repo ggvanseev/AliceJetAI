@@ -31,6 +31,8 @@ from functions.optimization_orthogonality_constraints import (
     optimization,
 )
 
+from plotting.general import plot_cost_vs_cost_condition
+
 from functions.validation import validation_distance_nu
 
 from ai.model_lstm import LSTMModel
@@ -400,17 +402,12 @@ def try_hyperparameters(
     if plot_flag:
         # plot cost condition and cost function
         title_plot = f"plot_with_{max_epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu_{distance_nu}_distance_nu"
-        fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
-        fig.suptitle(title_plot, y=1.08)
-        ax1.plot(track_cost_condition[1:])
-        ax1.set_xlabel("Epochs")
-        ax1.set_ylabel("Cost Condition")
-
-        ax2 = ax1.twinx()
-        ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7)
-        ax2.set_ylabel("Cost")
-
-        fig.savefig("output/" + title_plot + str(time.time()) + ".png")
+        plot_cost_vs_cost_condition(
+            track_cost=track_cost,
+            track_cost_condition=track_cost_condition,
+            title_plot=title_plot,
+            save_flag=True,
+        )
 
     # return the model
     lstm_ocsvm = dict({"lstm": lstm_model, "ocsvm": svm_model, "scaler": scaler})

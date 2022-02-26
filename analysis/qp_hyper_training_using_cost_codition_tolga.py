@@ -73,9 +73,9 @@ import numpy as np
 import branch_names as na
 
 # Set hyper space and variables
-max_evals = 120
+max_evals = 2
 patience = 5
-debug_flag = False
+debug_flag = True
 space = hp.choice(
     "hyper_parameters",
     [
@@ -123,15 +123,11 @@ space_debug = hp.choice(
             "hidden_dim": hp.choice("hidden_dim", [21]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(25)]),
-            "learning_rate": hp.choice("learning_rate", [1e-5]),
+            "learning_rate": hp.choice("learning_rate", [1e-12]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
-            "dropout": hp.choice(
-                "dropout", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-            ),
+            "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice(
-                "svm_nu", [0.05, 0.01, 0.001, 0.0001]
-            ),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.01]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
@@ -140,9 +136,9 @@ space_debug = hp.choice(
                 "variables",
                 [
                     [na.recur_dr, na.recur_jetpt, na.recur_z],
-                    [na.recur_dr, na.recur_jetpt],
-                    [na.recur_dr, na.recur_z],
-                    [na.recur_jetpt, na.recur_z],
+                    # [na.recur_dr, na.recur_jetpt],
+                    # [na.recur_dr, na.recur_z],
+                    # [na.recur_jetpt, na.recur_z],
                 ],
             ),
         }
@@ -151,7 +147,8 @@ space_debug = hp.choice(
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
 
 # start time
 start_time = time.time()
@@ -174,7 +171,7 @@ if debug_flag:
             plot_flag=False,
             patience=patience,
         ),
-        space,
+        space_debug,
         algo=tpe.suggest,
         max_evals=max_evals,
         trials=trials,
@@ -247,3 +244,5 @@ else:
     run_time.to_csv("storing_results/runtime.p")
 
     # load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)
+
+a = 1

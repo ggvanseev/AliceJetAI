@@ -586,11 +586,13 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     Note:
     learning rate must be of the form: 1e-x, where x is a number [0,99]
     """
-    epsilon = 10 ** -3 #-(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
+    epsilon = (
+        learning_rate * 1e-3
+    )  # 10 ** -3 #-(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
 
     order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
-    
-    more_epochs = 100 * (order_of_magnitude - 10 ) if order_of_magnitude > 10 else 0
-    max_epochs = 200 + more_epochs #order_of_magnitude * 50
+
+    more_epochs = 100 * (order_of_magnitude - 10) if order_of_magnitude > 10 else 0
+    max_epochs = 200 + more_epochs  # order_of_magnitude * 50
 
     return epsilon, max_epochs
