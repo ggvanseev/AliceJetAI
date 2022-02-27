@@ -12,6 +12,7 @@ def plot_cost_vs_cost_condition(track_cost, track_cost_condition,title_plot, sho
     ax2 = ax1.twinx()
     ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7)
     ax2.set_ylabel("Cost")
+    plt.legend()
 
     if save_flag:
         fig.savefig("output/" + title_plot + str(time.time()) + ".png")
