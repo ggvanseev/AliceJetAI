@@ -88,7 +88,7 @@ class CLASSIFICATION_CHECK:
     def __init__(self) -> None:
         pass
 
-    def classifaction_all_nines_test(self, trials):
+    def classifaction_test(self, trials, zeros_flag, nines_test_flag):
         anomaly_tracker = np.zeros(len(trials))
         for i in range(len(trials)):
             # select model
@@ -110,40 +110,18 @@ class CLASSIFICATION_CHECK:
             )
 
             _, anomaly_tracker[i] = classifier.anomaly_classifaction(
-                data=input_variables, zeros_test_flag=False, nines_test_flag=True
+                data=input_variables,
+                zeros_test_flag=zeros_flag,
+                nines_test_flag=nines_test_flag,
             )
 
             if anomaly_tracker[i] == 0:
                 anomaly_tracker[i] = "nan"
 
         return np.argwhere(np.isnan(anomaly_tracker)).T[0]
+
+    def classifaction_all_nines_test(self, trials):
+        return self.classifaction_test(trials, zeros_flag=False, nines_test_flag=True)
 
     def classifaction_all_zeros_test(self, trials):
-        anomaly_tracker = np.zeros(len(trials))
-        for i in range(len(trials)):
-            # select model
-            model = trials[i]["result"]["model"]
-
-            lstm_model = model["lstm"]  # note in some old files it is lstm:
-            ocsvm_model = model["ocsvm"]
-            scaler = model["scaler"]
-
-            # get hyper parameters
-            batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
-            input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
-
-            classifier = LSTM_OCSVM_CLASSIFIER(
-                oc_svm=ocsvm_model,
-                lstm=lstm_model,
-                batch_size=batch_size,
-                scaler=scaler,
-            )
-
-            _, anomaly_tracker[i] = classifier.anomaly_classifaction(
-                data=input_variables, zeros_test_flag=True, nines_test_flag=False
-            )
-
-            if anomaly_tracker[i] == 0:
-                anomaly_tracker[i] = "nan"
-
-        return np.argwhere(np.isnan(anomaly_tracker)).T[0]
+        return self.classifaction_test(trials, zeros_flag=True, nines_test_flag=False)

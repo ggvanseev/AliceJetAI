@@ -43,7 +43,7 @@ for i in range(len(trials)):
         trials[i]["result"]["loss"] == 10
         or trials[i]["result"]["hyper_parameters"]["num_layers"] == 2
         # or trials[i]["result"]["hyper_parameters"]["scaler_id"] == "minmax"
-        or i in indices_zero_per_anomaly_nine_flag
+        # or i in indices_zero_per_anomaly_nine_flag
     ):
         track_unwanted = track_unwanted + [i]
 
