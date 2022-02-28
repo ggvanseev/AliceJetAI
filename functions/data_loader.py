@@ -19,8 +19,10 @@ def load_n_filter_data(
     file_name: str,
     tree_name: str = na.tree,
     cut: bool = True,
-    eta_cut: float = 2.0,
-    pt_cut: int = 130,
+    kt_cut: bool = True,
+    eta_max: float = 2.0,
+    pt_min: int = 130,
+    kt_min: float = 1.0,
     jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z],
 ) -> Tuple[ak.Array, ak.Array, ak.Array, ak.Array]:
     """Load in dataset from ROOT file of jet data. Subsequently, the jet data will be
@@ -34,7 +36,8 @@ def load_n_filter_data(
         tree_name (str, optional): Name of the TTree object of the ROOT file. Defaults
                 to "jetTreeSig".
         cut (bool, optional): Boolean statement whether to apply cuts. Defaults to True.
-        eta_cut (float, optional): Value for eta cut. Defaults to 2.0.
+        eta_max (float, optional): Value for eta cut. Defaults to 2.0.
+        kt_cut (float, optional): Value for kt cut. Defaults to 1.0 GeV.
         pt_cut (int, optional): Value for pt cut. Defaults to 130.
 
     Returns:
@@ -68,16 +71,21 @@ def load_n_filter_data(
     # apply cuts, default: -2 < eta < 2 and jet_pt > 130 GeV
     if cut:
         g_jets_recur = g_jets_recur[
-            (abs(g_jets[na.jet_eta]) < eta_cut) & (g_jets[na.jetpt] > pt_cut)
+            (abs(g_jets[na.jet_eta]) < eta_max) & (g_jets[na.jetpt] > pt_min)
         ]
         q_jets_recur = q_jets_recur[
-            (abs(q_jets[na.jet_eta]) < eta_cut) & (q_jets[na.jetpt] > pt_cut)
+            (abs(q_jets[na.jet_eta]) < eta_max) & (q_jets[na.jetpt] > pt_min)
         ]
         g_jets = g_jets[
-            (abs(g_jets[na.jet_eta]) < eta_cut) & (g_jets[na.jetpt] > pt_cut)
+            (abs(g_jets[na.jet_eta]) < eta_max) & (g_jets[na.jetpt] > pt_min)
         ]
         q_jets = q_jets[
-            (abs(q_jets[na.jet_eta]) < eta_cut) & (q_jets[na.jetpt] > pt_cut)
+            (abs(q_jets[na.jet_eta]) < eta_max) & (q_jets[na.jetpt] > pt_min)
         ]
+        
+    # apply kt_cut of kt > 1.0 GeV
+    if kt_min:
+        g_jets_recur = g_jets_recur[g_jets_recur.sigJetRecur_jetpt * g_jets_recur.sigJetRecur_dr12 * g_jets_recur.sigJetRecur_z > kt_min]
+        q_jets_recur = q_jets_recur[q_jets_recur.sigJetRecur_jetpt * q_jets_recur.sigJetRecur_dr12 * q_jets_recur.sigJetRecur_z > kt_min]
 
     return g_jets, q_jets, g_jets_recur, q_jets_recur

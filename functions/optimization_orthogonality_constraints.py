@@ -204,6 +204,9 @@ def updating_theta(
             # derivative of function e.g. F = (25) from Tolga
             g = calc_g(gradient_weight, h_bar_list, alphas, a_idx)
 
+            # Deviation from Tolga, normalize to number of h_bar_list TODO
+            # g = g / (len(h_bar_list) * 1e-3)
+
             a = g @ weight.T - weight @ g.T
             i = torch.eye(weight.shape[0], device=device)
 

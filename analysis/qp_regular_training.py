@@ -55,6 +55,7 @@ from functions.training import training_with_set_parameters
 import pickle
 import os
 import time
+import torch
 
 import pandas as pd
 import numpy as np
@@ -120,7 +121,7 @@ if job_id:
 else:
     out_file = f"storing_results/trials_train_{time.strftime('%d_%m_%y_%H%M')}.p"
 
-pickle.dump(trials, open(out_file, "wb"))
+torch.save(trials, open(out_file, "wb"))
 
 run_time = pd.DataFrame(np.array([time.time() - start_time]))
 
