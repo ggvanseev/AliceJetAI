@@ -73,9 +73,9 @@ import numpy as np
 import branch_names as na
 
 # Set hyper space and variables
-max_evals = 2
+max_evals = 30
 patience = 5
-debug_flag = True
+debug_flag = False
 gpu_flag = False
 space = hp.choice(
     "hyper_parameters",
@@ -147,8 +147,8 @@ space_debug = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
