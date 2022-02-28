@@ -73,9 +73,10 @@ import numpy as np
 import branch_names as na
 
 # Set hyper space and variables
-max_evals = 120
+max_evals = 2
 patience = 5
-debug_flag = False
+debug_flag = True
+gpu_flag = False
 space = hp.choice(
     "hyper_parameters",
     [
@@ -119,19 +120,15 @@ space_debug = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.choice("num_batch", [50]),
+            "batch_size": hp.choice("num_batch", [100]),
             "hidden_dim": hp.choice("hidden_dim", [21]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(25)]),
-            "learning_rate": hp.choice("learning_rate", [1e-5]),
+            "learning_rate": hp.choice("learning_rate", [1e-8]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
-            "dropout": hp.choice(
-                "dropout", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
-            ),
+            "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice(
-                "svm_nu", [0.05, 0.01, 0.001, 0.0001]
-            ),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
@@ -140,9 +137,9 @@ space_debug = hp.choice(
                 "variables",
                 [
                     [na.recur_dr, na.recur_jetpt, na.recur_z],
-                    [na.recur_dr, na.recur_jetpt],
-                    [na.recur_dr, na.recur_z],
-                    [na.recur_jetpt, na.recur_z],
+                    # [na.recur_dr, na.recur_jetpt],
+                    # [na.recur_dr, na.recur_z],
+                    # [na.recur_jetpt, na.recur_z],
                 ],
             ),
         }
@@ -175,11 +172,71 @@ if debug_flag:
             plot_flag=False,
             patience=patience,
         ),
+        space_debug,
+        algo=tpe.suggest,
+        max_evals=max_evals,
+        trials=trials,
+    )
+elif gpu_flag:
+    trials = Trials()  # NOTE keep for debugging since can't do with spark trials
+    best = fmin(
+        partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
+            try_hyperparameters,
+            dev_data=dev_data,
+            plot_flag=False,
+            patience=patience,
+        ),
         space,
         algo=tpe.suggest,
         max_evals=max_evals,
         trials=trials,
     )
+    print(f"\nHypertuning completed on dataset:\n{file_name}")
+    # TODO fmin seems to simply choose the first model with the lowest loss -> see notes
+    # print(f"\nBest Hyper Parameters:")
+    # best_hyper_params = "\n".join("  {:10}\t  {}".format(k, v) for k, v in space_eval(space, best).items())
+    # print(f"{best_hyper_params}\nwith loss: {min(spark_trials.losses())}")
+
+    # set out file to job_id for parallel computing
+    job_id = os.getenv("PBS_JOBID")
+    if job_id:
+        out_file = f"storing_results/trials_test_{job_id.split('.')[0]}.p"
+    else:
+        out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y_%H%M')}.p"
+
+    # saving spark_trials as dictionaries
+    # source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
+
+    torch.save(trials, open(out_file, "wb"))
+
+    # TODO next part is copied from make_violin_plots, could be made into a .py in functions
+    # make list of trials
+    trials_list = [trial for trial in trials["_trials"]]
+
+    # build DataFrame
+    df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list])
+    df = df[df["loss"] != 10]  # filter out bad model results
+
+    # get minima
+    min_val = df["loss"].min()
+    min_df = df[df["loss"] == min_val].reset_index()
+
+    # print best model(s) hyperparameters:
+    print("\nBest Hyper Parameters:")
+    hyper_parameters_df = min_df.loc[
+        :, min_df.columns.str.startswith("hyper_parameters")
+    ]
+    for index, row in hyper_parameters_df.iterrows():
+        print(f"\nModel {index}:")
+        for key in hyper_parameters_df.keys():
+            print("  {:10}\t  {}".format(key.split(".")[1], row[key]))
+        print(f"with loss: \t\t{min_df['loss'].iloc[index]}")
+        print(f"with final cost:\t{min_df['final_cost'].iloc[index]}")
+
+    # store runtime
+    run_time = pd.DataFrame(np.array([time.time() - start_time]))
+    run_time.to_csv("storing_results/runtime.p")
+
 else:
     cores = os.cpu_count()
     spark_trials = SparkTrials(
@@ -248,3 +305,5 @@ else:
     run_time.to_csv("storing_results/runtime.p")
 
     # load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)
+
+a = 1
