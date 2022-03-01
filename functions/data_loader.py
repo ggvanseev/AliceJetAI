@@ -13,6 +13,7 @@ import awkward as ak
 import branch_names as na
 from typing import Tuple
 import branch_names as na
+import numpy as np
 
 
 def load_n_filter_data(
@@ -82,10 +83,29 @@ def load_n_filter_data(
         q_jets = q_jets[
             (abs(q_jets[na.jet_eta]) < eta_max) & (q_jets[na.jetpt] > pt_min)
         ]
+    
+    # print number of jets
+    #print()
         
     # apply kt_cut of kt > 1.0 GeV
-    if kt_min:
-        g_jets_recur = g_jets_recur[g_jets_recur.sigJetRecur_jetpt * g_jets_recur.sigJetRecur_dr12 * g_jets_recur.sigJetRecur_z > kt_min]
-        q_jets_recur = q_jets_recur[q_jets_recur.sigJetRecur_jetpt * q_jets_recur.sigJetRecur_dr12 * q_jets_recur.sigJetRecur_z > kt_min]
+    if kt_cut:
+        # check kt values
+        g_jets_kt = g_jets_recur.sigJetRecur_jetpt * g_jets_recur.sigJetRecur_dr12 * g_jets_recur.sigJetRecur_z
+        q_jets_kt = q_jets_recur.sigJetRecur_jetpt * q_jets_recur.sigJetRecur_dr12 * q_jets_recur.sigJetRecur_z
+        
+        # cut kts
+        g_jets_recur = g_jets_recur[g_jets_kt > kt_min]
+        q_jets_recur = q_jets_recur[q_jets_kt > kt_min]
+        
+        # hist gluons
+        g_kts_flat = ak.flatten(ak.flatten(g_jets_kt)).to_list()
+        g_kts_hist = np.histogram(g_kts_flat, bins=range(round(max(g_kts_flat))))
+        print(f"kt cut cuts out {g_kts_hist[0][0] / sum(g_kts_hist[0]):.1%} of gluon splittings")
+        
+        # hist quarks
+        q_kts_flat = ak.flatten(ak.flatten(q_jets_kt)).to_list()
+        q_kts_hist = np.histogram(q_kts_flat, bins=range(round(max(q_kts_flat))))
+        print(f"kt cut cuts out {q_kts_hist[0][0] / sum(q_kts_hist[0]):.1%} of quark splittings")
+        
 
     return g_jets, q_jets, g_jets_recur, q_jets_recur

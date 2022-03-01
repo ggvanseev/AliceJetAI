@@ -75,7 +75,7 @@ import branch_names as na
 # Set hyper space and variables
 max_evals = 30
 patience = 5
-debug_flag = False
+debug_flag = True
 gpu_flag = False
 space = hp.choice(
     "hyper_parameters",
@@ -147,8 +147,8 @@ space_debug = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
@@ -156,8 +156,6 @@ start_time = time.time()
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
 print("Loading data complete")
-print(f"number of jets: {len(g_recur_jets)}")
-
 # split data
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
 print("Splitting data complete")
