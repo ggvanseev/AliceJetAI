@@ -67,15 +67,15 @@ def load_n_filter_data(
     # which in turn means that we can at most obtain 1 quark or gluon jet per event.
     print(f"Number of jets in dataset:\t\t{np.count_nonzero(jets[na.jetpt])}")
     print(f"Number of gluon jets in dataset:\t{np.count_nonzero(jets[na.parton_match_id] == 21)}")
-    print(f"Number of quark jets in dataset:\t{np.count_nonzero(abs(jets[na.parton_match_id] < 7))}")
+    print(f"Number of quark jets in dataset:\t{np.count_nonzero(abs(jets[na.parton_match_id]) < 7)}")
 
     # select quark and gluon jet data
     g_jets = jets[jets[na.parton_match_id] == 21]
-    q_jets = jets[abs(jets[na.parton_match_id] < 7)]
+    q_jets = jets[abs(jets[na.parton_match_id]) < 7]
 
     # select recursive quark and gluon jet data
     g_jets_recur = jets_recur[jets[na.parton_match_id] == 21]
-    q_jets_recur = jets_recur[abs(jets[na.parton_match_id] < 7)]
+    q_jets_recur = jets_recur[abs(jets[na.parton_match_id]) < 7]
 
     # apply cuts: -2 < eta < 2 and jet_pt > 130 GeV
     if cut:
