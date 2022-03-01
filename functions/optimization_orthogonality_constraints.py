@@ -12,7 +12,7 @@ def lstm_results(
     train_loader,
     track_jets_train_data,
     device=torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"),
-    pooling="mean",
+    pooling="last",
 ):
     """Obtain h_bar states from the lstm with the data
 
@@ -64,7 +64,6 @@ def lstm_results(
             for i, jet_track in enumerate(jet_track_local):
                 h_bar[:, i] = torch.mean(hn[:, jet_track_prev:jet_track],dim=1)
                 jet_track_prev = jet_track
-                
                 
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure

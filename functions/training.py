@@ -69,6 +69,7 @@ def training_algorithm(
     training_params,
     device,
     print_out="",
+    pooling="last",
 ):
     """
     Trainging algorithm 1 from paper Tolga: Unsupervised Anomaly Detection With LSTM Neural Networks
@@ -96,6 +97,7 @@ def training_algorithm(
         x_loader,
         track_jets_dev_data,
         device,
+        pooling,
     )
     h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
@@ -158,6 +160,7 @@ def training_algorithm(
             x_loader,
             track_jets_dev_data,
             device,
+            pooling,
         )
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
@@ -248,6 +251,7 @@ def try_hyperparameters(
     hidden_dim = int(hyper_parameters["hidden_dim"])
     scaler_id = hyper_parameters["scaler_id"]
     input_variables = list(hyper_parameters["variables"])
+    pooling = hyper_parameters["pooling"]
 
     # Set epsilon and max_epochs
     eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
@@ -365,6 +369,7 @@ def try_hyperparameters(
                 training_params,
                 device,
                 print_out,
+                pooling,
             )
         except RuntimeError as e:
             passed = False
@@ -467,6 +472,7 @@ def training_with_set_parameters(
     svm_gamma = hyper_parameters["svm_gamma"]
     hidden_dim = int(hyper_parameters["hidden_dim"])
     scaler_id = hyper_parameters["scaler_id"]
+    pooling = hyper_parameters["pooling"]
 
     # Set epsilon and max_epochs
     eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
@@ -554,6 +560,7 @@ def training_with_set_parameters(
                 model_params,
                 training_params,
                 device,
+                pooling,
             )
             print(print_out)
         except RuntimeError as e:

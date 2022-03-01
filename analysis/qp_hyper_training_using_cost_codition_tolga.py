@@ -73,10 +73,11 @@ import numpy as np
 import branch_names as na
 
 # Set hyper space and variables
-max_evals = 30
+max_evals = 160
 patience = 5
 debug_flag = True
 gpu_flag = False
+kt_cut = True
 space = hp.choice(
     "hyper_parameters",
     [
@@ -111,6 +112,7 @@ space = hp.choice(
                     [na.recur_jetpt, na.recur_z],
                 ],
             ),
+            "pooling": hp.choice("pooling", ["last", "mean"]),
         }
     ],
 )
@@ -120,11 +122,11 @@ space_debug = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.choice("num_batch", [100]),
+            "batch_size": hp.choice("num_batch", [30]),
             "hidden_dim": hp.choice("hidden_dim", [21]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(25)]),
-            "learning_rate": hp.choice("learning_rate", [1e-8]),
+            "learning_rate": hp.choice("learning_rate", [1e-5]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
@@ -142,19 +144,20 @@ space_debug = hp.choice(
                     # [na.recur_jetpt, na.recur_z],
                 ],
             ),
+            "pooling": hp.choice("pooling", ["mean"]),
         }
     ],
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
 
 # Load and filter data for criteria eta and jetpt_cap
-_, _, g_recur_jets, _ = load_n_filter_data(file_name)
+_, _, g_recur_jets, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
 print("Loading data complete")
 # split data
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])

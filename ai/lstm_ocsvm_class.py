@@ -93,7 +93,11 @@ class CLASSIFICATION_CHECK:
         for i in range(len(trials)):
             # select model
             model = trials[i]["result"]["model"]
-
+            
+            # TODO check for bad models
+            if model == 10:
+                continue
+            
             lstm_model = model["lstm"]  # note in some old files it is lstm:
             ocsvm_model = model["ocsvm"]
             scaler = model["scaler"]

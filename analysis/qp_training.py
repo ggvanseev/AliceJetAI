@@ -81,7 +81,7 @@ nu = 0.05
 eps = 1e-3  # test value for convergence
 patience = 5  # value for number of epochs before stopping after seemingly convergence
 scaler_id = "std"
-
+pooling = "last"
 
 # Load and filter data for criteria eta and jetpt_cap
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
@@ -146,6 +146,7 @@ lstm_model, svm_model, track_cost, track_cost_condition, _ = training_algorithm(
     model_params,
     training_params,
     device,
+    pooling,
 )
 
 # Plotting can be moved later to a seperate map (here for speed)

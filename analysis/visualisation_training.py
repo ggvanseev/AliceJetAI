@@ -14,11 +14,11 @@ from functions.data_loader import load_n_filter_data
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 
-job_id = 9737618
+job_id = 9756505
 
 
 # Load and filter data for criteria eta and jetpt_cap
-_, _, _, q_recur_jets = load_n_filter_data(file_name)
+_, _, q_recur_jets, _ = load_n_filter_data(file_name, kt_cut=False)
 
 # q_recur_jets = (np.zeros([500, 10, 3])).tolist()
 
