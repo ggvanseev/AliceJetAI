@@ -75,9 +75,9 @@ import branch_names as na
 # Set hyper space and variables
 max_evals = 160
 patience = 5
-debug_flag = True
+debug_flag = False
 gpu_flag = False
-kt_cut = True
+kt_cut = False
 space = hp.choice(
     "hyper_parameters",
     [
