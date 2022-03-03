@@ -38,11 +38,7 @@ def lstm_results(
 
     i = 0
     for x_batch, y_batch in train_loader:
-        try:
-            jet_track_local = track_jets_train_data[i]
-        except IndexError:
-            print("jet_track_local = track_jets_train_data[i]\nIndexError: list index out of range")
-            break
+        jet_track_local = track_jets_train_data[i]
         i += 1
 
         # x_batch as input for lstm, pytorch says shape = [sequence_length, batch_size, n_features]
@@ -65,8 +61,8 @@ def lstm_results(
         elif pooling == "mean":
             h_bar = torch.zeros([1, len(jet_track_local), hn.shape[-1]])
             jet_track_prev = 0
-            for i, jet_track in enumerate(jet_track_local):
-                h_bar[:, i] = torch.mean(hn[:, jet_track_prev:jet_track],dim=1)
+            for j, jet_track in enumerate(jet_track_local):
+                h_bar[:, j] = torch.mean(hn[:, jet_track_prev:jet_track],dim=1)
                 jet_track_prev = jet_track
                 
 
