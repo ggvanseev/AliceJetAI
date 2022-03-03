@@ -38,7 +38,11 @@ def lstm_results(
 
     i = 0
     for x_batch, y_batch in train_loader:
-        jet_track_local = track_jets_train_data[i]
+        try:
+            jet_track_local = track_jets_train_data[i]
+        except IndexError:
+            print("jet_track_local = track_jets_train_data[i]\nIndexError: list index out of range")
+            break
         i += 1
 
         # x_batch as input for lstm, pytorch says shape = [sequence_length, batch_size, n_features]
