@@ -61,8 +61,8 @@ def lstm_results(
         elif pooling == "mean":
             h_bar = torch.zeros([1, len(jet_track_local), hn.shape[-1]])
             jet_track_prev = 0
-            for i, jet_track in enumerate(jet_track_local):
-                h_bar[:, i] = torch.mean(hn[:, jet_track_prev:jet_track],dim=1)
+            for j, jet_track in enumerate(jet_track_local):
+                h_bar[:, j] = torch.mean(hn[:, jet_track_prev:jet_track],dim=1)
                 jet_track_prev = jet_track
                 
 
