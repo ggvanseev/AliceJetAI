@@ -18,7 +18,7 @@ job_id = 9737618
 
 
 # Load and filter data for criteria eta and jetpt_cap
-_, _, _, q_recur_jets = load_n_filter_data(file_name)
+_, _, g_recur_jets, q_recur_jets = load_n_filter_data(file_name)
 
 # q_recur_jets = (np.zeros([500, 10, 3])).tolist()
 

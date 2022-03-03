@@ -121,6 +121,9 @@ class CLASSIFICATION_CHECK:
         return np.argwhere(np.isnan(anomaly_tracker)).T[0]
 
     def classifaction_all_nines_test(self, trials):
+        """
+        Dummy jets with value nine, to exclude ai-models than don't look at the content of the jets.
+        """
         return self.classifaction_test(trials, zeros_flag=False, nines_test_flag=True)
 
     def classifaction_all_zeros_test(self, trials):
