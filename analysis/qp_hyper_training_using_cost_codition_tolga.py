@@ -230,7 +230,7 @@ elif gpu_flag:
     for index, row in hyper_parameters_df.iterrows():
         print(f"\nModel {index}:")
         for key in hyper_parameters_df.keys():
-            print("  {:10}\t  {}".format(key.split(".")[1], row[key]))
+            print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
         print(f"with loss: \t\t{min_df['loss'].iloc[index]}")
         print(f"with final cost:\t{min_df['final_cost'].iloc[index]}")
 
@@ -297,7 +297,7 @@ else:
     for index, row in hyper_parameters_df.iterrows():
         print(f"\nModel {index}:")
         for key in hyper_parameters_df.keys():
-            print("  {:10}\t  {}".format(key.split(".")[1], row[key]))
+            print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
         print(f"with loss: \t\t{min_df['loss'].iloc[index]}")
         print(f"with final cost:\t{min_df['final_cost'].iloc[index]}")
 
