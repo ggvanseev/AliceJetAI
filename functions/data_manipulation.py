@@ -1,4 +1,5 @@
 from email.utils import localtime
+from logging import raiseExceptions
 import torch
 import awkward as ak
 from copy import copy
@@ -7,7 +8,10 @@ import numpy as np
 
 from torch.utils.data import TensorDataset, DataLoader
 
+from itertools import compress
+
 # from numba import njit TODO
+from numba import jit
 
 # from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
 # import warnings
@@ -596,3 +600,39 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     max_epochs = 200 + more_epochs  # order_of_magnitude * 50
 
     return epsilon, max_epochs
+
+
+def seperate_anomalies_from_regular(anomaly_track,jets_index, data: list):
+    """
+    Note data must be the filtered data returning with the same length as the anomaly_track list
+    return dict, if passed
+    """
+    # select correct order of jets to match with anomalies
+    data = [data[i] for i in jets_index]
+
+
+    if len(anomaly_track) != len(data):
+        return "Failed"
+
+    anomalies = list(compress(data, anomaly_track == -1))
+    non_anomalies = list(compress(data, anomaly_track == 1))
+
+    return {0: anomalies, 1: non_anomalies}
+
+
+def find_matching_jet_index(jets_list, original_data):
+    """
+    Finds the matching jet index position, note: after format_ak_to_list,
+    thus empty jets are already out!
+    """
+    index_jets = list()
+
+    for i in range(len(original_data)):
+        entry_original = original_data[i]
+        for jet in jets_list:
+            if len(jet) == len(entry_original):
+                # if (jet == entry_original).all():
+                if jet == entry_original:
+                    index_jets.append(i)
+
+    return index_jets

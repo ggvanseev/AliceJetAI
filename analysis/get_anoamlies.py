@@ -14,7 +14,7 @@ from functions.data_loader import load_n_filter_data
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 
-job_id = 9737618
+job_id = 9727358
 
 
 # Load and filter data for criteria eta and jetpt_cap
@@ -32,9 +32,9 @@ trials = trials_test_list["_trials"]
 
 # from run excluded files:
 classifaction_check = CLASSIFICATION_CHECK()
-indices_zero_per_anomaly_nine_flag = classifaction_check.classifaction_all_nines_test(
-    trials=trials
-)
+# indices_zero_per_anomaly_nine_flag = classifaction_check.classifaction_all_nines_test(
+#     trials=trials
+# )
 
 # remove unwanted results:
 track_unwanted = list()
@@ -50,24 +50,30 @@ for i in range(len(trials)):
 trials = [i for j, i in enumerate(trials) if j not in track_unwanted]
 
 anomaly_tracker = np.zeros(len(trials))
+classifaction_tracker = dict()
+jets_index_tracker = dict()
 for i in range(len(trials)):
     # select model
     model = trials[i]["result"]["model"]
 
-    lstm_model = model["lstm"]  # note in some old files it is lstm:
+    lstm_model = model["lstm:"]  # note in some old files it is lstm:
     ocsvm_model = model["ocsvm"]
     scaler = model["scaler"]
 
     # get hyper parameters
     batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
-    input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
+    # input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
 
     classifier = LSTM_OCSVM_CLASSIFIER(
         oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler
     )
 
-    classifaction, anomaly_tracker[i] = classifier.anomaly_classifaction(
-        data=q_recur_jets[input_variables]
+    (
+        classifaction_tracker[i],
+        anomaly_tracker[i],
+        jets_index_tracker[i],
+    ) = classifier.anomaly_classifaction(
+        data=q_recur_jets  # [input_variables]
     )
 
     print(
@@ -77,5 +83,14 @@ for i in range(len(trials)):
 print(
     f"Average percentage anomalys: {np.round(np.nanmean(anomaly_tracker)*100,2)} +\- {np.round(np.nanstd(anomaly_tracker)*100,2)}%"
 )
+
+# store results
+storing = {
+    "jets_index": jets_index_tracker,
+    "percentage_anomalies": anomaly_tracker,
+    "classifaction_annomaly": classifaction_tracker,
+    "file": file_name,
+}
+pickle.dump(storing, open(f"storing_results/anomaly_classification_{job_id}.pkl", "wb"))
 
 a = 1
