@@ -82,8 +82,8 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.quniform("num_batch", 30, 50, 10),
-            "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20]),#, 50, 100, 200]),
+            "batch_size": hp.quniform("num_batch", 300, 1000, 100),
+            "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20, 50]),# 100, 200]),
             "num_layers": hp.choice(
                 "num_layers", [1]
             ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
@@ -96,7 +96,7 @@ space = hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.05, 0.001]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.05]),# 0.001]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
@@ -112,7 +112,7 @@ space = hp.choice(
                     #[na.recur_jetpt, na.recur_z],
                 ],
             ),
-            "pooling": hp.choice("pooling",["last", "mean"]),
+            "pooling": hp.choice("pooling",["last"]),#, "mean"]),
         }
     ],
 )
@@ -239,7 +239,7 @@ elif gpu_flag:
     run_time.to_csv("storing_results/runtime.p")
 
 else:
-    cores = os.cpu_count()
+    cores = 6 # os.cpu_count()
     spark_trials = SparkTrials(
         parallelism=cores
     )  # run as many trials parallel as the nr of cores available
