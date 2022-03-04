@@ -73,24 +73,24 @@ import numpy as np
 import branch_names as na
 
 # Set hyper space and variables
-max_evals = 30
+max_evals = 4
 patience = 5
 debug_flag = False
 gpu_flag = False
-kt_cut = False
+kt_cut = True
 space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.quniform("num_batch", 300, 1000, 100),
-            "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20, 50, 100, 200]),
+            "batch_size": hp.quniform("num_batch", 30, 50, 10),
+            "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20]),#, 50, 100, 200]),
             "num_layers": hp.choice(
                 "num_layers", [1]
             ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
             "min_epochs": hp.choice(
                 "min_epochs", [int(30)]
             ),  # lijkt niet heel veel te doen
-            "learning_rate": 10 ** hp.quniform("learning_rate", -12, -10, 0.5),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 0.5),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice(
                 "dropout", [0]
@@ -150,8 +150,8 @@ space_debug = hp.choice(
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()

@@ -92,7 +92,6 @@ start_time = time.time()
 _, _, g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
 print("Loaded data")
-print(f"number of jets: {len(g_recur_jets)}")
 
 # split data
 train_data, dev_data, val_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
