@@ -1,0 +1,2028 @@
+Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+22/03/04 15:53:49 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Number of jets in dataset:		2121894
+Number of gluon jets in dataset:	330915
+Number of quark jets in dataset:	287288
+Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
+	gluon jets left after cuts:	150107
+	quark jets left after cuts:	147878 
+Loading data complete
+Splitting data complete
+Hypertuning 60 evaluations, on 6 cores:
+
+  0%|          | 0/60 [00:00<?, ?trial/s, best loss=?][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                  (0 + 1) / 1][Stage 1:>                  (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  900.0
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 72
+Branch filler jit, done in: 7.289466381072998
+Dataprep, done in: 7.382077932357788
+frac diff: -0.0009535322514681247,  eps: 0.001 
+Model done learning in 302 epochs.
+frac diff: -0.0009192408330686495,  eps: 0.001 
+Model done learning in 349 epochs.
+frac diff: -0.0009326447345658184,  eps: 0.001 
+Model done learning in 378 epochs.
+frac diff: -0.000936338614407109,  eps: 0.001 
+Model done learning in 314 epochs.
+Failed in: 00:28:42
+[Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1]                                                                                [Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1]  2%|▏         | 1/60 [28:50<28:21:55, 1730.77s/trial, best loss: 0.6870884813137902][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  900.0
+  dropout   	  0
+  hidden_dim	  200
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 72
+Branch filler jit, done in: 7.143292427062988
+Dataprep, done in: 7.233554124832153
+frac diff: -9.88453925383547e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: 2.5924719114731132e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -6.185231579769465e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -8.820341142146618e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Failed in: 00:04:05
+[Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1]                                                                                  3%|▎         | 2/60 [33:00<13:50:38, 859.29s/trial, best loss: 0.18478773693500114][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  900.0
+  dropout   	  0
+  hidden_dim	  9
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 72
+Branch filler jit, done in: 7.204123497009277
+Dataprep, done in: 7.296820163726807
+frac diff: 5.76084328218531e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: 3.159496170689292e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 55.35 s	with loss: 4.6282E-04
+                                                                                  5%|▌         | 3/60 [33:59<7:49:11, 493.89s/trial, best loss: 0.0004628194305885964][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  400.0
+  dropout   	  0
+  hidden_dim	  200
+  learning_rate	  3.1622776601683794e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 163
+Branch filler jit, done in: 7.30620265007019
+Dataprep, done in: 7.399813890457153
+frac diff: -0.0008424266723423174,  eps: 0.001 
+Model done learning in 110 epochs.
+frac diff: -0.0008713111224040167,  eps: 0.001 
+Model done learning in 123 epochs.
+frac diff: -0.00088200427959894,  eps: 0.001 
+Model done learning in 117 epochs.
+frac diff: -0.0008518592774857911,  eps: 0.001 
+Model done learning in 120 epochs.
+Failed in: 00:33:55
+                                                                                [Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1]  7%|▋         | 4/60 [1:07:58<17:10:18, 1103.90s/trial, best loss: 0.0004628194305885964][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  300.0
+  dropout   	  0
+  hidden_dim	  50
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 218
+Branch filler jit, done in: 7.38881516456604
+Dataprep, done in: 7.483198404312134
+frac diff: -0.0009419487764059093,  eps: 0.001 
+Model done learning in 235 epochs.
+frac diff: -0.0007788082463967902,  eps: 0.001 
+Model done learning in 141 epochs.
+frac diff: -0.0008601624327204552,  eps: 0.001 
+Model done learning in 183 epochs.
+frac diff: -0.0008831471973733781,  eps: 0.001 
+Model done learning in 201 epochs.
+Failed in: 00:20:05
+                                                                                  8%|▊         | 5/60 [1:28:07<17:26:43, 1141.87s/trial, best loss: 0.0004628194305885964][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 5 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  400.0
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 163
+Branch filler jit, done in: 7.314779281616211
+Dataprep, done in: 7.408786773681641
+frac diff: -0.0008205403912126276,  eps: 0.001 
+Model done learning in 213 epochs.
+frac diff: -0.0009017708537006173,  eps: 0.001 
+Model done learning in 192 epochs.
+frac diff: -0.00012256441263679393,  eps: 0.001 
+Model done learning in 77 epochs.
+frac diff: -0.0008815066538295563,  eps: 0.001 
+Model done learning in 225 epochs.
+Failed in: 00:16:23
+                                                                                 10%|█         | 6/60 [1:44:46<16:23:58, 1093.30s/trial, best loss: 0.0004628194305885964][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  600.0
+  dropout   	  0
+  hidden_dim	  9
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 109
+Branch filler jit, done in: 7.197353839874268
+Dataprep, done in: 7.291316509246826
+frac diff: -0.003782631000925644,  eps: 0.001 
+Algorithm failed: not done learning in max epochs.
+frac diff: 0.0005565557616088513,  eps: 0.001 
+Model done learning in 217 epochs.
+frac diff: -0.024345660392211258,  eps: 0.001 
+Algorithm failed: not done learning in max epochs.
+frac diff: -0.1375693005675706,  eps: 0.001 
+Algorithm failed: not done learning in max epochs.
+Failed in: 00:24:53
+                                                                                [Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1] 12%|█▏        | 7/60 [2:09:43<18:02:28, 1225.44s/trial, best loss: 0.0004628194305885964][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  300.0
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  1e-10
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 218
+Branch filler jit, done in: 7.363107204437256
+Dataprep, done in: 7.454895496368408
+frac diff: -0.1835322935696128,  eps: 0.001 
+Algorithm failed: not done learning in max epochs.
+frac diff: -0.11083957747622716,  eps: 0.001 
+Algorithm failed: not done learning in max epochs.
+frac diff: -0.025949014308266044,  eps: 0.001 
+Algorithm failed: not done learning in max epochs.
+frac diff: 0.048136403066452386,  eps: 0.001 
+Algorithm failed: not done learning in max epochs.
+Failed in: 00:18:29
+                                                                                [Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1] 13%|█▎        | 8/60 [2:28:16<17:11:03, 1189.68s/trial, best loss: 0.0004628194305885964][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  900.0
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 72
+Branch filler jit, done in: 7.113100290298462
+Dataprep, done in: 7.20564341545105
+frac diff: 1.8680336961633198e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: 2.92555551430122e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -5.402247088869842e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -2.498079622149839e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 00:01:57	with loss: 2.4094E-02
+                                                                                [Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1] 15%|█▌        | 9/60 [2:30:19<12:07:33, 855.95s/trial, best loss: 0.0004628194305885964] Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 10 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 11 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  900.0
+  dropout   	  0
+  hidden_dim	  100
+  learning_rate	  3.1622776601683794e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 72
+Branch filler jit, done in: 7.104006767272949
+Dataprep, done in: 7.1965954303741455
+frac diff: -0.0008689968979405142,  eps: 0.001 
+Model done learning in 122 epochs.
+frac diff: -0.0008642597320112447,  eps: 0.001 
+Model done learning in 122 epochs.
+frac diff: -0.0008879282695477213,  eps: 0.001 
+Model done learning in 133 epochs.
+frac diff: -0.0008838342798816156,  eps: 0.001 
+Model done learning in 114 epochs.
+Failed in: 00:15:58
+                                                                                 17%|█▋        | 10/60 [2:46:44<12:26:29, 895.79s/trial, best loss: 0.0004628194305885964][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  900.0
+  dropout   	  0
+  hidden_dim	  9
+  learning_rate	  3.1622776601683794e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 72
+Branch filler jit, done in: 7.115438461303711
+Dataprep, done in: 7.20584511756897
+frac diff: -0.0006355601439528091,  eps: 0.001 
+Model done learning in 100 epochs.
+frac diff: -0.0007128454908977795,  eps: 0.001 
+Model done learning in 73 epochs.
+frac diff: -0.000604529439999993,  eps: 0.001 
+Model done learning in 54 epochs.
+frac diff: -0.0008751739801726979,  eps: 0.001 
+Model done learning in 136 epochs.
+Failed in: 00:07:35
+                                                                                 18%|█▊        | 11/60 [2:54:23<10:22:30, 762.25s/trial, best loss: 0.0004628194305885964][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 14 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  600.0
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  3.1622776601683794e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 109
+Branch filler jit, done in: 7.547833204269409
+Dataprep, done in: 7.6447083950042725
+frac diff: -0.0007535530901160625,  eps: 0.001 
+Model done learning in 103 epochs.
+frac diff: -0.0006726716030419347,  eps: 0.001 
+Model done learning in 83 epochs.
+frac diff: -0.0007926566300377088,  eps: 0.001 
+Model done learning in 124 epochs.
+frac diff: -0.0007509517920928837,  eps: 0.001 
+Model done learning in 92 epochs.
+Failed in: 00:09:07
+                                                                                 20%|██        | 12/60 [3:03:47<9:21:26, 701.81s/trial, best loss: 0.0004628194305885964] [Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  600.0
+  dropout   	  0
+  hidden_dim	  100
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 109
+Branch filler jit, done in: 7.193338871002197
+Dataprep, done in: 7.287210702896118
+frac diff: 2.6944245098717344e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -2.813730605716564e-07,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -2.0072939317008485e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -0.0003138845706775132,  eps: 0.001 
+Model done learning in 30 epochs.
+Failed in: 00:02:43
+                                                                                [Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1] 22%|██▏       | 13/60 [3:06:35<7:03:07, 540.15s/trial, best loss: 0.0004628194305885964][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  700.0
+  dropout   	  0
+  hidden_dim	  200
+  learning_rate	  3.1622776601683794e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 93
+Branch filler jit, done in: 7.160596609115601
+Dataprep, done in: 7.254047155380249
+frac diff: 2.3624571973327414e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -3.67792743273631e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -7.167762410350443e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 00:03:07	with loss: 1.3694E-02
+                                                                                [Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1] 23%|██▎       | 14/60 [3:09:46<5:33:18, 434.75s/trial, best loss: 0.0004628194305885964][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  900.0
+  dropout   	  0
+  hidden_dim	  100
+  learning_rate	  1e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 72
+Branch filler jit, done in: 7.10373067855835
+Dataprep, done in: 7.196425914764404
+frac diff: -0.0006222499603177969,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -0.0007856392494516439,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -0.0005436486410809279,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -0.0005001183959465407,  eps: 0.001 
+Model done learning in 30 epochs.
+Failed in: 00:04:13
+                                                                                [Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1] 25%|██▌       | 15/60 [3:14:03<4:45:56, 381.25s/trial, best loss: 0.0004628194305885964][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  300.0
+  dropout   	  0
+  hidden_dim	  12
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 218
+Branch filler jit, done in: 7.384383916854858
+Dataprep, done in: 7.477588891983032
+frac diff: -8.872348816407254e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -3.319315772198672e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 00:01:07	with loss: 2.0863E-05
+                                                                                [Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1] 27%|██▋       | 16/60 [3:15:14<3:31:07, 287.89s/trial, best loss: 2.0863146795209756e-05][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  400.0
+  dropout   	  0
+  hidden_dim	  12
+  learning_rate	  3.1622776601683794e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 163
+Branch filler jit, done in: 7.3079917430877686
+Dataprep, done in: 7.401767015457153
+frac diff: -0.0007928368821415844,  eps: 0.001 
+Model done learning in 165 epochs.
+frac diff: -0.005344921818954407,  eps: 0.001 
+Algorithm failed: not done learning in max epochs.
+frac diff: -0.0007723080247235962,  eps: 0.001 
+Model done learning in 300 epochs.
+frac diff: -0.002435809609938488,  eps: 0.001 
+Algorithm failed: not done learning in max epochs.
+Failed in: 00:23:56
+                                                                                [Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1] 28%|██▊       | 17/60 [3:39:15<7:34:42, 634.47s/trial, best loss: 2.0863146795209756e-05][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  900.0
+  dropout   	  0
+  hidden_dim	  200
+  learning_rate	  1e-10
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 72
+Branch filler jit, done in: 7.107223272323608
+Dataprep, done in: 7.199981212615967
+frac diff: -0.0007928290831905182,  eps: 0.001 
+Model done learning in 81 epochs.
+frac diff: -0.0007992587216226753,  eps: 0.001 
+Model done learning in 92 epochs.
+frac diff: -0.0008382576414240938,  eps: 0.001 
+Model done learning in 92 epochs.
+frac diff: -0.0008188669308421255,  eps: 0.001 
+Model done learning in 85 epochs.
+Failed in: 00:24:41
+[Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1]                                                                                 30%|███       | 18/60 [4:04:00<10:23:08, 890.20s/trial, best loss: 2.0863146795209756e-05][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  900.0
+  dropout   	  0
+  hidden_dim	  200
+  learning_rate	  3.1622776601683794e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 72
+Branch filler jit, done in: 7.083880424499512
+Dataprep, done in: 7.17655873298645
+frac diff: -0.00010473911924124432,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: 0.00023943862105509154,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: 1.0244675569284244e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -9.002498993830691e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Failed in: 00:04:06
+                                                                                [Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1] 32%|███▏      | 19/60 [4:08:12<7:57:10, 698.30s/trial, best loss: 2.0863146795209756e-05] [Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1][Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1][Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1][Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  800.0
+  dropout   	  0
+  hidden_dim	  200
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 81
+Branch filler jit, done in: 7.147880792617798
+Dataprep, done in: 7.238373279571533
+frac diff: -5.001938807930343e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -2.3940784283182122e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -1.7903972351060895e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -3.2964114829913863e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Failed in: 00:04:03
+                                                                                [Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1] 33%|███▎      | 20/60 [4:12:20<6:15:27, 563.18s/trial, best loss: 2.0863146795209756e-05]
+
+Hyper Parameters:
+  batch_size	  700.0
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  1e-10
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 93
+Branch filler jit, done in: 7.164626121520996
+Dataprep, done in: 7.258226633071899
+frac diff: 6.317668541732948e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 32.36 s	with loss: 2.1307E-02
+                                                                                [Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1] 35%|███▌      | 21/60 [4:12:56<4:23:13, 404.95s/trial, best loss: 2.0863146795209756e-05]
+
+Hyper Parameters:
+  batch_size	  700.0
+  dropout   	  0
+  hidden_dim	  9
+  learning_rate	  1e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 93
+Branch filler jit, done in: 7.189448356628418
+Dataprep, done in: 7.283381700515747
+frac diff: -3.066852748146886e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: 0.00045600152576136797,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 56.41 s	with loss: 1.4912E-02
+                                                                                 37%|███▋      | 22/60 [4:13:55<3:10:43, 301.15s/trial, best loss: 2.0863146795209756e-05][Stage 26:>   (0 + 1) / 1][Stage 27:>   (0 + 0) / 1][Stage 28:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 26 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1][Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  1000.0
+  dropout   	  0
+  hidden_dim	  12
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 65
+Branch filler jit, done in: 7.405917167663574
+Dataprep, done in: 7.496585845947266
+frac diff: -3.0163367555707256e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -1.0351351236052448e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -3.591228287734138e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 00:01:26	with loss: 2.0451E-02
+                                                                                [Stage 28:>   (0 + 1) / 1][Stage 29:>   (0 + 0) / 1][Stage 30:>   (0 + 0) / 1] 38%|███▊      | 23/60 [4:15:37<2:28:52, 241.43s/trial, best loss: 2.0863146795209756e-05]
+
+Hyper Parameters:
+  batch_size	  800.0
+  dropout   	  0
+  hidden_dim	  12
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 81
+Branch filler jit, done in: 7.157814025878906
+Dataprep, done in: 7.248290300369263
+frac diff: -6.332037667111394e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 33.54 s	with loss: 1.4705E-02
+                                                                                 40%|████      | 24/60 [4:16:14<1:48:03, 180.10s/trial, best loss: 2.0863146795209756e-05][Stage 29:>   (0 + 1) / 1][Stage 30:>   (0 + 0) / 1][Stage 31:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  1000.0
+  dropout   	  0
+  hidden_dim	  9
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 65
+Branch filler jit, done in: 7.098210096359253
+Dataprep, done in: 7.1887781620025635
+frac diff: -3.9038140484779976e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -4.38276031978387e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 54.76 s	with loss: 7.5804E-03
+                                                                                 42%|████▏     | 25/60 [4:17:12<1:23:42, 143.49s/trial, best loss: 2.0863146795209756e-05][Stage 30:>   (0 + 1) / 1][Stage 31:>   (0 + 0) / 1][Stage 32:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 30 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 31:>   (0 + 1) / 1][Stage 32:>   (0 + 0) / 1][Stage 33:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  800.0
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 81
+Branch filler jit, done in: 7.3418519496917725
+Dataprep, done in: 7.432265996932983
+frac diff: -8.920400257740413e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 31.69 s	with loss: 2.3389E-04
+                                                                                [Stage 32:>   (0 + 1) / 1][Stage 33:>   (0 + 0) / 1][Stage 34:>   (0 + 0) / 1] 43%|████▎     | 26/60 [4:17:59<1:04:55, 114.56s/trial, best loss: 2.0863146795209756e-05]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 32 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 33:>   (0 + 1) / 1][Stage 34:>   (0 + 0) / 1][Stage 35:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 33 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 34:>   (0 + 1) / 1][Stage 35:>   (0 + 0) / 1][Stage 36:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  1000.0
+  dropout   	  0
+  hidden_dim	  9
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 65
+Branch filler jit, done in: 7.10615611076355
+Dataprep, done in: 7.196685075759888
+frac diff: -8.22852006199732e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 30.97 s	with loss: 5.4034E-04
+                                                                                [Stage 35:>   (0 + 1) / 1][Stage 36:>   (0 + 0) / 1][Stage 37:>   (0 + 0) / 1] 45%|████▌     | 27/60 [4:18:56<53:31, 97.32s/trial, best loss: 2.0863146795209756e-05]   
+
+Hyper Parameters:
+  batch_size	  800.0
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 81
+Branch filler jit, done in: 7.152591943740845
+Dataprep, done in: 7.242985248565674
+frac diff: -1.7481663127463156e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 31.48 s	with loss: 7.7017E-04
+                                                                                 47%|████▋     | 28/60 [4:19:30<41:46, 78.34s/trial, best loss: 2.0863146795209756e-05][Stage 36:>   (0 + 1) / 1][Stage 37:>   (0 + 0) / 1][Stage 38:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  400.0
+  dropout   	  0
+  hidden_dim	  12
+  learning_rate	  1e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 163
+Branch filler jit, done in: 7.627255439758301
+Dataprep, done in: 7.723060369491577
+frac diff: -2.8265333560712514e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 36.79 s	with loss: 6.0391E-03
+                                                                                [Stage 37:>   (0 + 1) / 1][Stage 38:>   (0 + 0) / 1][Stage 39:>   (0 + 0) / 1] 48%|████▊     | 29/60 [4:20:12<34:41, 67.15s/trial, best loss: 2.0863146795209756e-05]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 37 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 38:>   (0 + 1) / 1][Stage 39:>   (0 + 0) / 1][Stage 40:>   (0 + 0) / 1][Stage 38:>   (0 + 1) / 1][Stage 39:>   (0 + 0) / 1][Stage 40:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  800.0
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 81
+Branch filler jit, done in: 7.473994970321655
+Dataprep, done in: 7.56869912147522
+frac diff: -2.6864192840344562e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -2.2563076956231646e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -4.165380755727248e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -7.512414501246542e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Failed in: 00:01:45
+                                                                                 50%|█████     | 30/60 [4:22:11<41:22, 82.75s/trial, best loss: 2.0863146795209756e-05][Stage 39:>   (0 + 1) / 1][Stage 40:>   (0 + 0) / 1][Stage 41:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 39 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 40:>   (0 + 1) / 1][Stage 41:>   (0 + 0) / 1][Stage 42:>   (0 + 0) / 1][Stage 40:>   (0 + 1) / 1][Stage 41:>   (0 + 0) / 1][Stage 42:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  700.0
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  1e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 93
+Branch filler jit, done in: 8.227723121643066
+Dataprep, done in: 8.32912302017212
+frac diff: -3.643403564246375e-08,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -1.507132742607209e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 59.33 s	with loss: 8.6410E-05
+                                                                                 52%|█████▏    | 31/60 [4:23:25<38:44, 80.16s/trial, best loss: 2.0863146795209756e-05][Stage 41:>   (0 + 1) / 1][Stage 42:>   (0 + 0) / 1][Stage 43:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 41 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  800.0
+  dropout   	  0
+  hidden_dim	  50
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 81
+Branch filler jit, done in: 7.119312047958374
+Dataprep, done in: 7.2096662521362305
+frac diff: -2.2076159074998134e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -2.4732367317053513e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -4.598912133226235e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -5.3309265940443775e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Failed in: 00:02:04
+                                                                                 53%|█████▎    | 32/60 [4:25:45<45:48, 98.17s/trial, best loss: 2.0863146795209756e-05][Stage 43:>   (0 + 1) / 1][Stage 44:>   (0 + 0) / 1][Stage 45:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  300.0
+  dropout   	  0
+  hidden_dim	  12
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 218
+Branch filler jit, done in: 7.403686761856079
+Dataprep, done in: 7.4953835010528564
+frac diff: -1.760116142936548e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 37.33 s	with loss: 1.3235E-02
+                                                                                 55%|█████▌    | 33/60 [4:26:26<36:27, 81.04s/trial, best loss: 2.0863146795209756e-05][Stage 44:>   (0 + 1) / 1][Stage 45:>   (0 + 0) / 1][Stage 46:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 44 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 45:>   (0 + 1) / 1][Stage 46:>   (0 + 0) / 1][Stage 47:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  600.0
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  3.1622776601683794e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 109
+Branch filler jit, done in: 7.335126638412476
+Dataprep, done in: 7.426837205886841
+frac diff: -2.897486209316005e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 32.73 s	with loss: 1.1950E-03
+                                                                                [Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1] 57%|█████▋    | 34/60 [4:27:14<30:50, 71.16s/trial, best loss: 2.0863146795209756e-05]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 46 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 47:>   (0 + 1) / 1][Stage 48:>   (0 + 0) / 1][Stage 49:>   (0 + 0) / 1][Stage 47:>   (0 + 1) / 1][Stage 48:>   (0 + 0) / 1][Stage 49:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  700.0
+  dropout   	  0
+  hidden_dim	  50
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 93
+Branch filler jit, done in: 7.138799428939819
+Dataprep, done in: 7.229781866073608
+frac diff: -7.40134824513726e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -6.013062943176454e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -9.374057657683566e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 00:01:36	with loss: 2.2906E-02
+                                                                                [Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1] 58%|█████▊    | 35/60 [4:29:06<34:46, 83.46s/trial, best loss: 2.0863146795209756e-05]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 48 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 49:>   (0 + 1) / 1][Stage 50:>   (0 + 0) / 1][Stage 51:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 49 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 50:>   (0 + 1) / 1][Stage 51:>   (0 + 0) / 1][Stage 52:>   (0 + 0) / 1][Stage 50:>   (0 + 1) / 1][Stage 51:>   (0 + 0) / 1][Stage 52:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  600.0
+  dropout   	  0
+  hidden_dim	  12
+  learning_rate	  1e-10
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 109
+Branch filler jit, done in: 7.530237436294556
+Dataprep, done in: 7.626332998275757
+frac diff: -0.0003313725034864882,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -4.394402212237738e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+frac diff: -9.238240077839917e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 00:01:30	with loss: 1.3464E-03
+                                                                                 60%|██████    | 36/60 [4:31:02<37:18, 93.27s/trial, best loss: 2.0863146795209756e-05][Stage 51:>   (0 + 1) / 1][Stage 52:>   (0 + 0) / 1][Stage 53:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 51 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  300.0
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  1e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 218
+Branch filler jit, done in: 7.407896518707275
+Dataprep, done in: 7.499734878540039
+frac diff: -2.0943636435179303e-06,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 37.97 s	with loss: 9.1680E-03
+                                                                                 62%|██████▏   | 37/60 [4:31:56<31:08, 81.22s/trial, best loss: 2.0863146795209756e-05][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 53 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1][Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  400.0
+  dropout   	  0
+  hidden_dim	  100
+  learning_rate	  1e-12
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.05
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 163
+Branch filler jit, done in: 7.284817218780518
+Dataprep, done in: 7.37639594078064
+frac diff: -0.0007031933773617027,  eps: 0.001 
+Model done learning in 146 epochs.
+frac diff: -0.0007334300747207091,  eps: 0.001 
+Model done learning in 138 epochs.
+frac diff: -0.0006741952203408485,  eps: 0.001 
+Model done learning in 146 epochs.
+frac diff: -0.0007233814169077296,  eps: 0.001 
+Model done learning in 137 epochs.
+Failed in: 00:19:26
+                                                                                 63%|██████▎   | 38/60 [4:51:37<2:30:46, 411.21s/trial, best loss: 2.0863146795209756e-05][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 55 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 56:>   (0 + 1) / 1][Stage 57:>   (0 + 0) / 1][Stage 58:>   (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 56 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 57:>   (0 + 1) / 1][Stage 58:>   (0 + 0) / 1][Stage 59:>   (0 + 0) / 1]
+
+Hyper Parameters:
+  batch_size	  700.0
+  dropout   	  0
+  hidden_dim	  12
+  learning_rate	  1e-11
+  min_epochs	  30
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.001
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Device: cpu
+Max number of batches: 93
+Branch filler jit, done in: 7.177693128585815
+Dataprep, done in: 7.268816709518433
+frac diff: -1.7147312979121556e-05,  eps: 0.001 
+Model done learning in 30 epochs.
+Passed in: 34.02 s	with loss: 1.5368E-02
+                                                                                 65%|██████▌   | 39/60 [4:52:37<1:47:03, 305.87s/trial, best loss: 2.0863146795209756e-05][Stage 58:>                 (0 + 1) / 1][Stage 59:>                 (0 + 0) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 58 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+[Stage 59:>                                                         (0 + 1) / 1]Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+                                                                                trial task 59 failed, exception is Input contains NaN, infinity or a value too large for dtype('float64')..
+ Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
+    params, ctrl=None, attach_attachments=False
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
+    rval = self.fn(pyll_rval)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
+    pooling,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 129, in training_algorithm
+    svm_model.fit(h_bar_list_np)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_classes.py", line 1626, in fit
+    super().fit(X, np.ones(_num_samples(X)), sample_weight=sample_weight)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/svm/_base.py", line 196, in fit
+    accept_large_sparse=False,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/base.py", line 581, in _validate_data
+    X, y = check_X_y(X, y, **check_params)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 976, in check_X_y
+    estimator=estimator,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 800, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/sklearn/utils/validation.py", line 116, in _assert_all_finite
+    type_err, msg_dtype if msg_dtype is not None else X.dtype
+ValueError: Input contains NaN, infinity or a value too large for dtype('float64').
+
+ 65%|██████▌   | 39/60 [4:53:01<2:37:46, 450.80s/trial, best loss: 2.0863146795209756e-05]Total Trials: 60: 39 succeeded, 21 failed, 0 cancelled.
+
+
+Hypertuning completed on dataset:
+/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root
+
+Best Hyper Parameters:
+
+Model 0:
+  batch_size  	  300.0
+  dropout     	  0
+  hidden_dim  	  12
+  learning_rate	  1e-11
+  min_epochs  	  30
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  mean
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.001
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss: 		2.0863146795209756e-05
+with final cost:	2.9283292385787374

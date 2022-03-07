@@ -77,7 +77,7 @@ max_evals = 60
 patience = 5
 debug_flag = False
 gpu_flag = False
-kt_cut = False
+kt_cut = True
 space = hp.choice(
     "hyper_parameters",
     [
@@ -112,7 +112,7 @@ space = hp.choice(
                     #[na.recur_jetpt, na.recur_z],
                 ],
             ),
-            "pooling": hp.choice("pooling",["mean"]), # "last" , "mean"
+            "pooling": hp.choice("pooling",["last"]), # "last" , "mean"
         }
     ],
 )
