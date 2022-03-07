@@ -32,7 +32,7 @@ def format_ak_to_list(arr: ak.Array) -> list:
     # awkward.to_list() creates dictionaries, reform to list only
     lst = [list(x.values()) for x in ak.to_list(arr)]
     # remove empty entries and weird nestedness, e.g. dr[[...]]
-    lst = [[y[0] for y in x] for x in lst if x[0] != []]
+    lst = [[y[0] for y in x] for x in lst if x and any(x) and any(x[0])]
     # transpose remainder to get correct shape
     lst = [list(map(list, zip(*x))) for x in lst]
     return lst
@@ -128,7 +128,10 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                 # Add jet to batch if possible
                 if space_count >= len(jet):
                     batch.append(jet)
-                    temp_dataset2.remove(jet)
+                    try:
+                        temp_dataset2.remove(jet)
+                    except ValueError:
+                        print("branch_filler: ValueError 'list.remove(x): x not in list'\nattempted to remove a jet that was no longer in temp_dataset2")
                     space_count -= len(jet)
                     jets_in_batch.append(
                         batch_size - space_count - 1

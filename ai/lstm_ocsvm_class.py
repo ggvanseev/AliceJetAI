@@ -43,8 +43,14 @@ class LSTM_OCSVM_CLASSIFIER:
         else:
             data = format_ak_to_list(data)
 
-        data, track_jets_data, _ = branch_filler(data, batch_size=self.batch_size)
-
+        try:
+            data, track_jets_data, _ = branch_filler(data, batch_size=self.batch_size)
+        except TypeError:
+            print("LSTM_OCSVM_CLASSIFIER: TypeError 'cannot unpack non-iterable int object'\nBranch filler failed")
+            classification = -1
+            fraction_anomaly = -1
+            return classification, fraction_anomaly
+            
         data_loader = lstm_data_prep(
             data=data, scaler=self.scaler, batch_size=self.batch_size
         )
