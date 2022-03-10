@@ -44,9 +44,11 @@ Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 from functions.data_manipulation import (
     train_dev_test_split,
     format_ak_to_list,
+    trials_df_and_minimum,
 )
 from functions.data_loader import load_n_filter_data
 from functions.training import try_hyperparameters
+from plotting.general import cost_condition_plots, violin_plots
 
 # from autograd import elementwise_grad as egrad
 
@@ -72,12 +74,26 @@ import numpy as np
 
 import branch_names as na
 
-# Set hyper space and variables
-max_evals = 60
+
+### User Input  ###
+
+# file_name(s) - comment/uncomment when switching between local/Nikhef
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+
+# set run settings
+max_evals = 6
 patience = 5
-debug_flag = False
-gpu_flag = False
-kt_cut = True
+kt_cut = False              # for dataset, splittings kt > 1.0 GeV
+debug_flag = False          # for using debug space = only 1 configuration of hp
+multicore_flag = True       # for using SparkTrials or Trials
+save_results_flag = True    # for saving trials and runtime
+plot_flag = True            # for making cost condition plots, only works if save_results_flag is True
+
+###-------------###
+
+
+# set hyper space and variables
 space = hp.choice(
     "hyper_parameters",
     [
@@ -90,7 +106,7 @@ space = hp.choice(
             "min_epochs": hp.choice(
                 "min_epochs", [int(30)]
             ),  # lijkt niet heel veel te doen
-            "learning_rate": 10 ** hp.quniform("learning_rate", -12, -10, 0.5),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 1),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice(
                 "dropout", [0]
@@ -117,7 +133,7 @@ space = hp.choice(
     ],
 )
 
-# dummy space TODO delete later
+# dummy space for debugging
 space_debug = hp.choice(
     "hyper_parameters",
     [
@@ -126,7 +142,7 @@ space_debug = hp.choice(
             "hidden_dim": hp.choice("hidden_dim", [6]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(25)]),
-            "learning_rate": hp.choice("learning_rate", [1e-2]),
+            "learning_rate": hp.choice("learning_rate", [1e-3]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
@@ -148,10 +164,9 @@ space_debug = hp.choice(
         }
     ],
 )
-
-# file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+# set space if debug
+if debug_flag:
+    space = space_debug
 
 # start time
 start_time = time.time()
@@ -163,148 +178,64 @@ print("Loading data complete")
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
 print("Splitting data complete")
 
-# hyper tuning and evaluation
-if debug_flag:
-    trials = Trials()  # NOTE keep for debugging since can't do with spark trials
-    best = fmin(
-        partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
-            try_hyperparameters,
-            dev_data=dev_data,
-            plot_flag=False,
-            patience=patience,
-        ),
-        space_debug,
-        algo=tpe.suggest,
-        max_evals=max_evals,
-        trials=trials,
-    )
-elif gpu_flag:
-    trials = Trials()  # NOTE keep for debugging since can't do with spark trials
-    best = fmin(
-        partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
-            try_hyperparameters,
-            dev_data=dev_data,
-            plot_flag=False,
-            patience=patience,
-        ),
-        space,
-        algo=tpe.suggest,
-        max_evals=max_evals,
-        trials=trials,
-    )
-    print(f"\nHypertuning completed on dataset:\n{file_name}")
-    # TODO fmin seems to simply choose the first model with the lowest loss -> see notes
-    # print(f"\nBest Hyper Parameters:")
-    # best_hyper_params = "\n".join("  {:10}\t  {}".format(k, v) for k, v in space_eval(space, best).items())
-    # print(f"{best_hyper_params}\nwith loss: {min(spark_trials.losses())}")
-
-    # set out file to job_id for parallel computing
-    job_id = os.getenv("PBS_JOBID")
-    if job_id:
-        out_file = f"storing_results/trials_test_{job_id.split('.')[0]}.p"
-    else:
-        out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y_%H%M')}.p"
-
-    # saving spark_trials as dictionaries
-    # source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
-
-    torch.save(trials, open(out_file, "wb"))
-
-    # TODO next part is copied from make_violin_plots, could be made into a .py in functions
-    # make list of trials
-    trials_list = [trial for trial in trials["_trials"]]
-
-    # build DataFrame
-    df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list])
-    df = df[df["loss"] != 10]  # filter out bad model results
-
-    # get minima
-    min_val = df["loss"].min()
-    min_df = df[df["loss"] == min_val].reset_index()
-
-    # print best model(s) hyperparameters:
-    print("\nBest Hyper Parameters:")
-    hyper_parameters_df = min_df.loc[
-        :, min_df.columns.str.startswith("hyper_parameters")
-    ]
-    for index, row in hyper_parameters_df.iterrows():
-        print(f"\nModel {index}:")
-        for key in hyper_parameters_df.keys():
-            print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
-        print(f"with loss: \t\t{min_df['loss'].iloc[index]}")
-        print(f"with final cost:\t{min_df['final_cost'].iloc[index]}")
-
-    # store runtime
-    run_time = pd.DataFrame(np.array([time.time() - start_time]))
-    run_time.to_csv("storing_results/runtime.p")
-
-else:
-    cores = 6 # os.cpu_count()
-    spark_trials = SparkTrials(
+# set trials or sparktrials
+if multicore_flag:
+    cores = os.cpu_count() if os.cpu_count() < 10 else 10 
+    trials = SparkTrials(
         parallelism=cores
     )  # run as many trials parallel as the nr of cores available
     print(f"Hypertuning {max_evals} evaluations, on {cores} cores:\n")
-    best = fmin(
-        partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
-            try_hyperparameters,
-            dev_data=dev_data,
-            plot_flag=False,
-            patience=patience,
-        ),
-        space,
-        algo=tpe.suggest,
-        max_evals=max_evals,
-        trials=spark_trials,
-    )
-    print(f"\nHypertuning completed on dataset:\n{file_name}")
-    # TODO fmin seems to simply choose the first model with the lowest loss -> see notes
-    # print(f"\nBest Hyper Parameters:")
-    # best_hyper_params = "\n".join("  {:10}\t  {}".format(k, v) for k, v in space_eval(space, best).items())
-    # print(f"{best_hyper_params}\nwith loss: {min(spark_trials.losses())}")
+else:
+    trials = Trials()  # NOTE keep for debugging since can't do with spark trials
+        
+# hyper tuning and evaluation      
+best = fmin(
+    partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
+        try_hyperparameters,
+        dev_data=dev_data,
+        plot_flag=False,
+        patience=patience,
+    ),
+    space,
+    algo=tpe.suggest,
+    max_evals=max_evals,
+    trials=trials,
+)
+print(f"\nHypertuning completed on dataset:\n{file_name}")
 
+# saving spark_trials as dictionaries
+# source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
+pickling_trials = dict()
+for k, v in trials.__dict__.items():
+    if not k in ["_spark_context", "_spark"]:
+        pickling_trials[k] = v
+
+# collect df and print best models
+df, min_val, min_df, parameters = trials_df_and_minimum(pickling_trials, "loss")
+
+# check to save results
+if save_results_flag:
     # set out file to job_id for parallel computing
     job_id = os.getenv("PBS_JOBID")
     if job_id:
-        out_file = f"storing_results/trials_test_{job_id.split('.')[0]}.p"
+        job_id = job_id.split('.')[0]
     else:
-        out_file = f"storing_results/trials_test_{time.strftime('%d_%m_%y_%H%M')}.p"
-
-    # saving spark_trials as dictionaries
-    # source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
-    pickling_trials = dict()
-    for k, v in spark_trials.__dict__.items():
-        if not k in ["_spark_context", "_spark"]:
-            pickling_trials[k] = v
+        job_id = time.strftime('%d_%m_%y_%H%M')
+    
+    out_file = f"storing_results/trials_test_{job_id}.p"
+    
+    # save trials as pickling_trials object
     torch.save(pickling_trials, open(out_file, "wb"))
 
-    # TODO next part is copied from make_violin_plots, could be made into a .py in functions
-    # make list of trials
-    trials_list = [trial for trial in pickling_trials["_trials"]]
-
-    # build DataFrame
-    df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list])
-    df = df[df["loss"] != 10]  # filter out bad model results
-
-    # get minima
-    min_val = df["loss"].min()
-    min_df = df[df["loss"] == min_val].reset_index()
-
-    # print best model(s) hyperparameters:
-    print("\nBest Hyper Parameters:")
-    hyper_parameters_df = min_df.loc[
-        :, min_df.columns.str.startswith("hyper_parameters")
-    ]
-    for index, row in hyper_parameters_df.iterrows():
-        print(f"\nModel {index}:")
-        for key in hyper_parameters_df.keys():
-            print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
-        print(f"with loss: \t\t{min_df['loss'].iloc[index]}")
-        print(f"with final cost:\t{min_df['final_cost'].iloc[index]}")
-
+    # check to make plots
+    if plot_flag:
+        cost_condition_plots(pickling_trials, job_id)
+        violin_plots(df, min_val, min_df, parameters, [job_id], "loss")
+        print("\nPlotting complete")
+    
     # store runtime
     run_time = pd.DataFrame(np.array([time.time() - start_time]))
     run_time.to_csv("storing_results/runtime.p")
+    print(f"\nCompleted run in: {run_time}")
 
     # load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)
-
-a = 1

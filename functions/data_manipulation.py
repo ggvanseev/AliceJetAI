@@ -4,6 +4,7 @@ import awkward as ak
 from copy import copy
 
 import numpy as np
+import pandas as pd
 
 from torch.utils.data import TensorDataset, DataLoader
 
@@ -599,3 +600,32 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     max_epochs = 200 + more_epochs  # order_of_magnitude * 50
 
     return epsilon, max_epochs
+
+
+def trials_df_and_minimum(trials_results , test_param="loss"):
+    # reform to complete list of trials
+    try:
+        trials_list = [trial for trial in trials_results["_trials"]]
+    except:
+        trials_list = [trial for trials in [trials["_trials"] for trials in trials_results] for trial in trials]
+    parameters = trials_list[0]["result"]["hyper_parameters"].keys()
+
+    # build DataFrame
+    df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list])
+    df = df[df["loss"] != 10]  # filter out bad model results
+
+    # get minima
+    min_val = df[test_param].min()
+    min_df = df[df[test_param] == min_val].reset_index()
+
+    # print best model(s) hyperparameters:
+    print("\nBest Hyper Parameters:")
+    hyper_parameters_df = min_df.loc[:, min_df.columns.str.startswith('hyper_parameters')]
+    for index, row in hyper_parameters_df.iterrows():
+        print(f"\nModel {index}:")
+        for key in hyper_parameters_df.keys():
+            print("  {:12}\t  {}".format(key.split('.')[1], row[key]))
+        print(f"with loss: \t\t{min_df['loss'].iloc[index]}") 
+        print(f"with final cost:\t{min_df['final_cost'].iloc[index]}") 
+    
+    return df, min_val, min_df, parameters

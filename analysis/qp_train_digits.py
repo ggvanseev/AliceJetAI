@@ -42,6 +42,7 @@ Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 # from sklearn.externals import joblib
 # import joblib
 
+from pyspark import F
 from functions.data_manipulation import (
     train_dev_test_split,
     format_ak_to_list,
@@ -91,13 +92,8 @@ trials = dict()
 file_names = ["samples/optdigits/optdigits.tes", "samples/optdigits/optdigits.tra"]
 f = open(file_names[0], 'r')
 
-
-
-
-
-
 # split data
-train_data, dev_data, val_data = train_dev_test_split(data, split=[0.8, 0.1])
+train_data, dev_data, val_data = train_dev_test_split(f, split=[0.8, 0.1])
 print("Split data")
 
 # track distance_nu
