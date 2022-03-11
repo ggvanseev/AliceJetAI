@@ -90,6 +90,9 @@ multicore_flag = False       # for using SparkTrials or Trials
 save_results_flag = True    # for saving trials and runtime
 plot_flag = True            # for making cost condition plots, only works if save_results_flag is True
 
+# notes on run, added to run_info.p, keep short or leave empty
+run_notes = ""
+
 ###-------------###
 
 
@@ -235,8 +238,10 @@ if save_results_flag:
     
     # store run info
     run_time = time.time() - start_time
+    run_info = f"{job_id}\ton: {file_name}\truntime: {run_time:.2f} s"
+    run_info = run_info + f"\tnotes: {run_notes}\n" if run_notes else run_info + "\n"
     with open("storing_results/run_info.p", 'a+') as f:
-        f.write(f"{job_id}\ton: {file_name}\truntime: {run_time:.2f} seconds\n")
+        f.write(run_info)
     print(f"\nCompleted run in: {run_time}")
 
     # load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)
