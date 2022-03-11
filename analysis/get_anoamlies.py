@@ -49,48 +49,61 @@ for i in range(len(trials)):
 
 trials = [i for j, i in enumerate(trials) if j not in track_unwanted]
 
-anomaly_tracker = np.zeros(len(trials))
-classifaction_tracker = dict()
-jets_index_tracker = dict()
-for i in range(len(trials)):
-    # select model
-    model = trials[i]["result"]["model"]
+for i in range(2):
+    if i == 0:
+        jets = q_recur_jets
+        type_jets = "quark"
+    else:
+        jets = g_recur_jets
+        type_jets = "gluon"
+    anomaly_tracker = np.zeros(len(trials))
+    classifaction_tracker = dict()
+    jets_index_tracker = dict()
+    jets_tracker = dict()
+    for i in range(len(trials)):
+        # select model
+        model = trials[i]["result"]["model"]
 
-    lstm_model = model["lstm:"]  # note in some old files it is lstm:
-    ocsvm_model = model["ocsvm"]
-    scaler = model["scaler"]
+        lstm_model = model["lstm:"]  # note in some old files it is lstm:
+        ocsvm_model = model["ocsvm"]
+        scaler = model["scaler"]
 
-    # get hyper parameters
-    batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
-    # input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
+        # get hyper parameters
+        batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
+        # input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
 
-    classifier = LSTM_OCSVM_CLASSIFIER(
-        oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler
-    )
+        classifier = LSTM_OCSVM_CLASSIFIER(
+            oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler
+        )
 
-    (
-        classifaction_tracker[i],
-        anomaly_tracker[i],
-        jets_index_tracker[i],
-    ) = classifier.anomaly_classifaction(
-        data=q_recur_jets  # [input_variables]
-    )
+        (
+            classifaction_tracker[i],
+            anomaly_tracker[i],
+            jets_index_tracker[i],
+            jets_tracker[i],
+        ) = classifier.anomaly_classifaction(
+            data=jets  # [input_variables]
+        )
+
+        print(
+            f"Percentage classified as anomaly: {np.round(anomaly_tracker[i]*100,2) }%, where the model has a nu of {trials[i]['result']['hyper_parameters']['svm_nu']}"
+        )
 
     print(
-        f"Percentage classified as anomaly: {np.round(anomaly_tracker[i]*100,2) }%, where the model has a nu of {trials[i]['result']['hyper_parameters']['svm_nu']}"
+        f"Average percentage anomalys: {np.round(np.nanmean(anomaly_tracker)*100,2)} +\- {np.round(np.nanstd(anomaly_tracker)*100,2)}%"
     )
 
-print(
-    f"Average percentage anomalys: {np.round(np.nanmean(anomaly_tracker)*100,2)} +\- {np.round(np.nanstd(anomaly_tracker)*100,2)}%"
-)
-
-# store results
-storing = {
-    "jets_index": jets_index_tracker,
-    "percentage_anomalies": anomaly_tracker,
-    "classifaction_annomaly": classifaction_tracker,
-    "file": file_name,
-}
-pickle.dump(storing, open(f"storing_results/anomaly_classification_{job_id}.pkl", "wb"))
+    # store results
+    storing = {
+        "jets_index": jets_index_tracker,
+        "percentage_anomalies": anomaly_tracker,
+        "classifaction_annomaly": classifaction_tracker,
+        "jets": jets_tracker,
+        "file": file_name,
+    }
+    pickle.dump(
+        storing,
+        open(f"storing_results/anomaly_classification_{type_jets}_{job_id}.pkl", "wb"),
+    )
 
 a = 1

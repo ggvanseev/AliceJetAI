@@ -36,7 +36,9 @@ def format_ak_to_list(arr: ak.Array) -> list:
     # awkward.to_list() creates dictionaries, reform to list only
     lst = [list(x.values()) for x in ak.to_list(arr)]
     # remove empty entries and weird nestedness, e.g. dr[[...]]
-    lst = [[y[0] for y in x] for x in lst if x[0] != []]
+    lst = [
+        [y[0] for y in x] for x in lst if x[0] != []
+    ]  # TODO: fix empty dataframes that come throug.
     # transpose remainder to get correct shape
     lst = [list(map(list, zip(*x))) for x in lst]
     return lst
@@ -602,14 +604,14 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     return epsilon, max_epochs
 
 
-def seperate_anomalies_from_regular(anomaly_track,jets_index, data: list):
+def seperate_anomalies_from_regular(anomaly_track, jets_index, data: list):
     """
     Note data must be the filtered data returning with the same length as the anomaly_track list
     return dict, if passed
     """
+    # TODO, turn on again if problem with ak_to list is fixed.
     # select correct order of jets to match with anomalies
-    data = [data[i] for i in jets_index]
-
+    # data = [data[i] for i in jets_index]
 
     if len(anomaly_track) != len(data):
         return "Failed"
@@ -617,7 +619,7 @@ def seperate_anomalies_from_regular(anomaly_track,jets_index, data: list):
     anomalies = list(compress(data, anomaly_track == -1))
     non_anomalies = list(compress(data, anomaly_track == 1))
 
-    return {0: anomalies, 1: non_anomalies}
+    return anomalies, non_anomalies
 
 
 def find_matching_jet_index(jets_list, original_data):

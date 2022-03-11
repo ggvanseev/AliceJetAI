@@ -89,9 +89,10 @@ class LSTM_OCSVM_CLASSIFIER:
 
         # find original matching jet
         jets_list = h_bar_list_to_numpy(jets_list, self.device)
-        jets_list = np.array([np.array(xi) for xi in data])
+        jets_list = np.array([np.array(xi) for xi in jets_list])
         # jets_index = find_matching_jet_index(jets_list=jets_list, original_data=data)
         jets_index = find_matching_jet_index(jets_list=data, original_data=data)
+        # TODO: check if only jets list, returns the same length length as jets_list, otherwise also doubles present their (besidedes the explainable empty list)
 
         # get prediction
         classifaction = self.oc_svm.predict(h_bar_list_np)
@@ -101,7 +102,7 @@ class LSTM_OCSVM_CLASSIFIER:
 
         fraction_anomaly = n_anomaly / len(classifaction)
 
-        return classifaction, fraction_anomaly, jets_index
+        return classifaction, fraction_anomaly, jets_index, jets_list
 
 
 class CLASSIFICATION_CHECK:
