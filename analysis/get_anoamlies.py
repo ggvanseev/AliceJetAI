@@ -14,11 +14,11 @@ from functions.data_loader import load_n_filter_data
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 
-job_id = 9727358
+job_id = 9792527
 
 
 # Load and filter data for criteria eta and jetpt_cap
-_, _, g_recur_jets, q_recur_jets = load_n_filter_data(file_name)
+_, _, g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=True)
 
 # q_recur_jets = (np.zeros([500, 10, 3])).tolist()
 
@@ -59,18 +59,17 @@ for i in range(2):
     anomaly_tracker = np.zeros(len(trials))
     classifaction_tracker = dict()
     jets_index_tracker = dict()
-    jets_tracker = dict()
     for i in range(len(trials)):
         # select model
         model = trials[i]["result"]["model"]
 
-        lstm_model = model["lstm:"]  # note in some old files it is lstm:
+        lstm_model = model["lstm"]  # note in some old files it is lstm:
         ocsvm_model = model["ocsvm"]
         scaler = model["scaler"]
 
         # get hyper parameters
         batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
-        # input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
+        input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
 
         classifier = LSTM_OCSVM_CLASSIFIER(
             oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler
@@ -80,10 +79,7 @@ for i in range(2):
             classifaction_tracker[i],
             anomaly_tracker[i],
             jets_index_tracker[i],
-            jets_tracker[i],
-        ) = classifier.anomaly_classifaction(
-            data=jets  # [input_variables]
-        )
+        ) = classifier.anomaly_classifaction(data=jets[input_variables])
 
         print(
             f"Percentage classified as anomaly: {np.round(anomaly_tracker[i]*100,2) }%, where the model has a nu of {trials[i]['result']['hyper_parameters']['svm_nu']}"
@@ -98,7 +94,7 @@ for i in range(2):
         "jets_index": jets_index_tracker,
         "percentage_anomalies": anomaly_tracker,
         "classifaction_annomaly": classifaction_tracker,
-        "jets": jets_tracker,
+        "data": jets,
         "file": file_name,
     }
     pickle.dump(

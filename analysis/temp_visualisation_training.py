@@ -48,7 +48,7 @@ for i in range(len(trials)):
         oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler
     )
 
-    classifaction, anomaly_tracker[i] = classifier.anomaly_classifaction(
+    classifaction, anomaly_tracker[i], _ = classifier.anomaly_classifaction(
         data=g_recur_jets
     )
 

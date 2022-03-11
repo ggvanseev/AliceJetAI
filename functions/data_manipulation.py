@@ -610,9 +610,8 @@ def seperate_anomalies_from_regular(anomaly_track, jets_index, data: list):
     Note data must be the filtered data returning with the same length as the anomaly_track list
     return dict, if passed
     """
-    # TODO, turn on again if problem with ak_to list is fixed.
     # select correct order of jets to match with anomalies
-    # data = [data[i] for i in jets_index]
+    data = [data[i] for i in jets_index]
 
     if len(anomaly_track) != len(data):
         return "Failed"
@@ -654,7 +653,7 @@ def find_matching_jet_index(jets_list, original_data):
             # if len(jet) == len(entry_original):
             #     if (jet == entry_original.astype(jet.dtype)).all():
             #         index_jets.append(i)
-    
+
     if len(index_jets) != len(jets_list):
         print("Failed in mathcing jets to original index")
         return -1
