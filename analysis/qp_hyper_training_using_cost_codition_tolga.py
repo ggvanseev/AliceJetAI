@@ -78,15 +78,15 @@ import branch_names as na
 ### User Input  ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # set run settings
-max_evals = 6
+max_evals = 4
 patience = 5
 kt_cut = False              # for dataset, splittings kt > 1.0 GeV
-debug_flag = False          # for using debug space = only 1 configuration of hp
-multicore_flag = True       # for using SparkTrials or Trials
+debug_flag = True          # for using debug space = only 1 configuration of hp
+multicore_flag = False       # for using SparkTrials or Trials
 save_results_flag = True    # for saving trials and runtime
 plot_flag = True            # for making cost condition plots, only works if save_results_flag is True
 
@@ -142,7 +142,7 @@ space_debug = hp.choice(
             "hidden_dim": hp.choice("hidden_dim", [6]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(25)]),
-            "learning_rate": hp.choice("learning_rate", [1e-3]),
+            "learning_rate": hp.choice("learning_rate", [1e-5]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
@@ -233,9 +233,10 @@ if save_results_flag:
         violin_plots(df, min_val, min_df, parameters, [job_id], "loss")
         print("\nPlotting complete")
     
-    # store runtime
-    run_time = pd.DataFrame(np.array([time.time() - start_time]))
-    run_time.to_csv("storing_results/runtime.p")
+    # store run info
+    run_time = time.time() - start_time
+    with open("storing_results/run_info.p", 'a+') as f:
+        f.write(f"{job_id}\ton: {file_name}\truntime: {run_time:.2f} seconds\n")
     print(f"\nCompleted run in: {run_time}")
 
     # load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)
