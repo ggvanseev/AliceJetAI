@@ -5,6 +5,7 @@ import awkward as ak
 from copy import copy
 
 import numpy as np
+import pandas as pd
 
 from torch.utils.data import TensorDataset, DataLoader
 
@@ -36,9 +37,7 @@ def format_ak_to_list(arr: ak.Array) -> list:
     # awkward.to_list() creates dictionaries, reform to list only
     lst = [list(x.values()) for x in ak.to_list(arr)]
     # remove empty entries and weird nestedness, e.g. dr[[...]]
-    lst = [
-        [y[0] for y in x] for x in lst if x[0] != []
-    ]  # TODO: fix empty dataframes that come throug.
+    lst = [[y[0] for y in x] for x in lst if x and any(x) and any(x[0])]
     # transpose remainder to get correct shape
     lst = [list(map(list, zip(*x))) for x in lst]
     return lst
@@ -134,7 +133,12 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                 # Add jet to batch if possible
                 if space_count >= len(jet):
                     batch.append(jet)
-                    temp_dataset2.remove(jet)
+                    try:
+                        temp_dataset2.remove(jet)
+                    except ValueError:
+                        print(
+                            "branch_filler: ValueError 'list.remove(x): x not in list'\nattempted to remove a jet that was no longer in temp_dataset2"
+                        )
                     space_count -= len(jet)
                     jets_in_batch.append(
                         batch_size - space_count - 1
@@ -592,9 +596,7 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     Note:
     learning rate must be of the form: 1e-x, where x is a number [0,99]
     """
-    epsilon = (
-        learning_rate * 1e-3
-    )  # 10 ** -3 #-(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
+    epsilon = 1e-3  # * learning_rate  # 10 ** -3 #-(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
 
     order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
 
@@ -638,3 +640,38 @@ def find_matching_jet_index(jets_list, original_data):
                     index_jets.append(i)
 
     return index_jets
+
+
+def trials_df_and_minimum(trials_results, test_param="loss"):
+    # reform to complete list of trials
+    try:
+        trials_list = [trial for trial in trials_results["_trials"]]
+    except:
+        trials_list = [
+            trial
+            for trials in [trials["_trials"] for trials in trials_results]
+            for trial in trials
+        ]
+    parameters = trials_list[0]["result"]["hyper_parameters"].keys()
+
+    # build DataFrame
+    df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list])
+    df = df[df["loss"] != 10]  # filter out bad model results
+
+    # get minima
+    min_val = df[test_param].min()
+    min_df = df[df[test_param] == min_val].reset_index()
+
+    # print best model(s) hyperparameters:
+    print("\nBest Hyper Parameters:")
+    hyper_parameters_df = min_df.loc[
+        :, min_df.columns.str.startswith("hyper_parameters")
+    ]
+    for index, row in hyper_parameters_df.iterrows():
+        print(f"\nModel {index}:")
+        for key in hyper_parameters_df.keys():
+            print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
+        print(f"with loss: \t\t{min_df['loss'].iloc[index]}")
+        print(f"with final cost:\t{min_df['final_cost'].iloc[index]}")
+
+    return df, min_val, min_df, parameters

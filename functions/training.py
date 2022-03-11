@@ -69,6 +69,7 @@ def training_algorithm(
     training_params,
     device,
     print_out="",
+    pooling="last",
 ):
     """
     Trainging algorithm 1 from paper Tolga: Unsupervised Anomaly Detection With LSTM Neural Networks
@@ -96,6 +97,7 @@ def training_algorithm(
         x_loader,
         track_jets_dev_data,
         device,
+        pooling,
     )
     h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
@@ -126,6 +128,8 @@ def training_algorithm(
         # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
         svm_model.fit(h_bar_list_np)
         alphas = np.abs(svm_model.dual_coef_)[0]
+        
+        alphas = alphas / np.sum(alphas) # NOTE: equation 14, sum alphas = 1
 
         a_idx = svm_model.support_
 
@@ -158,6 +162,7 @@ def training_algorithm(
             x_loader,
             track_jets_dev_data,
             device,
+            pooling,
         )
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
@@ -248,6 +253,7 @@ def try_hyperparameters(
     hidden_dim = int(hyper_parameters["hidden_dim"])
     scaler_id = hyper_parameters["scaler_id"]
     input_variables = list(hyper_parameters["variables"])
+    pooling = hyper_parameters["pooling"]
 
     # Set epsilon and max_epochs
     eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
@@ -365,6 +371,7 @@ def try_hyperparameters(
                 training_params,
                 device,
                 print_out,
+                pooling,
             )
         except RuntimeError as e:
             passed = False
@@ -466,6 +473,8 @@ def training_with_set_parameters(
     svm_nu = hyper_parameters["svm_nu"]
     svm_gamma = hyper_parameters["svm_gamma"]
     hidden_dim = int(hyper_parameters["hidden_dim"])
+    scaler_id = hyper_parameters["scaler_id"]
+    pooling = hyper_parameters["pooling"]
 
     # Set epsilon and max_epochs
     eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
@@ -480,14 +489,19 @@ def training_with_set_parameters(
     print("Device: {}".format(device))
 
     time_track = time.time()
-    train_data, track_jets_train_data = branch_filler(train_data, batch_size=batch_size)
-    val_data, track_jets_val_data = branch_filler(val_data, batch_size=batch_size)
+    train_data, track_jets_train_data, max_n_train_batches = branch_filler(train_data, batch_size=batch_size)
+    print(f"\nMax number of batches: {max_n_train_batches}")
+    val_data, track_jets_val_data, max_n_val_batches = branch_filler(val_data, batch_size=batch_size)
+    print(f"\nMax number of batches: {max_n_val_batches}")
     dt = time.time() - time_track
     print(f"Branch filler, done in: {dt}")
 
     # Only use train and dev data for now
     # Note this has to be saved with the model, to ensure data has the same form.
-    scaler = MinMaxScaler()
+    if scaler_id == "minmax":
+        scaler = MinMaxScaler()
+    elif scaler_id == "std":
+        scaler = StandardScaler()
     train_loader = lstm_data_prep(
         data=train_data, scaler=scaler, batch_size=batch_size, fit_flag=True
     )
@@ -539,6 +553,7 @@ def training_with_set_parameters(
                 track_cost,
                 track_cost_condition,
                 passed,
+                print_out,
             ) = training_algorithm(
                 lstm_model,
                 svm_model,
@@ -547,7 +562,9 @@ def training_with_set_parameters(
                 model_params,
                 training_params,
                 device,
+                pooling,
             )
+            print(print_out)
         except RuntimeError as e:
             passed = False
             logf = open("logfiles/cuda_error.log", "w")

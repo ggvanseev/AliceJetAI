@@ -12,6 +12,7 @@ def lstm_results(
     train_loader,
     track_jets_train_data,
     device=torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu"),
+    pooling="last",
 ):
     """Obtain h_bar states from the lstm with the data
 
@@ -54,27 +55,16 @@ def lstm_results(
             x_batch, theta=theta, theta_gradients=theta_gradients
         )
 
-        ### TODO Try backpropagation after each jet
-        # x_batch_cut = [
-        #     x_batch[s1:s2]
-        #     for s1, s2 in zip([0] + jet_track_local[:-1], jet_track_local)
-        # ]
-        # hn = []
-        # for jet in x_batch_cut:
-        #     hi, theta, theta_gradients_temp = lstm_model(jet)
-
-        #     if "theta_gradients" not in locals():
-        #         theta_gradients = theta_gradients_temp
-        #     else:
-        #         for key1, value1 in theta_gradients_temp.items():
-        #             for key2, value2 in value1.items():
-        #                 theta_gradients[key1][key2] = (
-        #                     theta_gradients[key1][key2] + value2
-        #                 )
-        #     hn.append(hi)
-
         # get mean/last pooled hidden states
-        h_bar = hn[:, jet_track_local]
+        if pooling == "last":
+            h_bar = hn[:, jet_track_local]
+        elif pooling == "mean":
+            h_bar = torch.zeros([1, len(jet_track_local), hn.shape[-1]])
+            jet_track_prev = 0
+            for j, jet_track in enumerate(jet_track_local):
+                h_bar[:, j] = torch.mean(hn[:, jet_track_prev:jet_track],dim=1)
+                jet_track_prev = jet_track
+                
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
@@ -137,7 +127,7 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
     G = dkappa / dW_ij = (dkappa * dh_ij) *(dh_ij / dW_ij)
     Since the derivative of x^T x = 2x and
     dh / dW can be obtained from theta_gradients
-    this is
+    this is:
 
     G = dkappa / dW_ij = (dkappa * dh_ij) *(dh_ij / dW_ij) =
     (0.5*sumi,j alpah_i*alpha_j*2*hi) * dh/dw(theta_gradients)

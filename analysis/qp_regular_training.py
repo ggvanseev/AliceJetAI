@@ -61,25 +61,29 @@ import pandas as pd
 import numpy as np
 
 # Set hyper space and variables
-max_evals = 55
+max_evals = 1
 patience = 5
 
 
 hyper_parameters = dict()
 
+<<<<<<< HEAD
 hyper_parameters["batch_size"] = 100
+=======
+hyper_parameters["batch_size"] = 300
+>>>>>>> feature/wr_full_model_testing
 hyper_parameters["output_dim"] = 1
 hyper_parameters["num_layers"] = 1
-hyper_parameters["dropout"] = 1
-hyper_parameters["min_epochs"] = 1
-hyper_parameters["learning_rate"] = 1
-hyper_parameters["svm_nu"] = 1
-hyper_parameters["svm_gamma"] = 1
-hyper_parameters["hidden_dim"] = 1
+hyper_parameters["dropout"] = 0
+hyper_parameters["min_epochs"] = 25
+hyper_parameters["learning_rate"] = 1e-12
+hyper_parameters["svm_nu"] = 0.05
+hyper_parameters["svm_gamma"] = "auto"
+hyper_parameters["scaler_id"] = "minmax"
+hyper_parameters["hidden_dim"] = 9
 
 # storing dict:
 trials = dict()
-
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
@@ -116,9 +120,9 @@ for trial in range(max_evals):
 # set out file to job_id for parallel computing
 job_id = os.getenv("PBS_JOBID")
 if job_id:
-    out_file = "storing_results/trials_train_{}.p".format(job_id)
+    out_file = f"storing_results/trials_train_{job_id.split('.')[0]}.p"
 else:
-    out_file = "storing_results/trials_train.p"
+    out_file = f"storing_results/trials_train_{time.strftime('%d_%m_%y_%H%M')}.p"
 
 torch.save(trials, open(out_file, "wb"))
 

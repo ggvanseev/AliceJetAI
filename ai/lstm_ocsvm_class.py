@@ -44,10 +44,21 @@ class LSTM_OCSVM_CLASSIFIER:
         else:
             data = format_ak_to_list(data)
 
+<<<<<<< HEAD
         data_in_branches, track_jets_data, _ = branch_filler(
             data, batch_size=self.batch_size
         )
 
+=======
+        try:
+            data, track_jets_data, _ = branch_filler(data, batch_size=self.batch_size)
+        except TypeError:
+            print("LSTM_OCSVM_CLASSIFIER: TypeError 'cannot unpack non-iterable int object'\nBranch filler failed")
+            classification = -1
+            fraction_anomaly = -1
+            return classification, fraction_anomaly
+            
+>>>>>>> feature/wr_full_model_testing
         data_loader = lstm_data_prep(
             data=data_in_branches,
             scaler=self.scaler,
@@ -114,8 +125,17 @@ class CLASSIFICATION_CHECK:
         for i in range(len(trials)):
             # select model
             model = trials[i]["result"]["model"]
+<<<<<<< HEAD
 
             lstm_model = model["lstm:"]  # note in some old files it is lstm:
+=======
+            
+            # TODO check for bad models
+            if model == 10:
+                continue
+            
+            lstm_model = model["lstm"]  # note in some old files it is lstm:
+>>>>>>> feature/wr_full_model_testing
             ocsvm_model = model["ocsvm"]
             scaler = model["scaler"]
 
