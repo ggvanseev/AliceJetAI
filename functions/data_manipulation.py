@@ -36,8 +36,10 @@ def format_ak_to_list(arr: ak.Array) -> list:
 
     # awkward.to_list() creates dictionaries, reform to list only
     lst = [list(x.values()) for x in ak.to_list(arr)]
-    # remove empty entries and weird nestedness, e.g. dr[[...]]
+    # remove weird nestedness, e.g. dr[[...]]
     lst = [[y[0] for y in x] for x in lst if x and any(x) and any(x[0])]
+    # remove empty lists:
+    lst = [x for x in lst if len(x[0]) > 0]
     # transpose remainder to get correct shape
     lst = [list(map(list, zip(*x))) for x in lst]
     return lst
@@ -77,10 +79,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     # Track_jets_in_batch tracks where the last split of the jet is located in the branch
     track_jets_in_batch = []
 
-    # make helping vector:
-    mylen = np.vectorize(len)
-
-    i = 1
+    i = -1
     while i < max_n_batches:
         i += 1
 
@@ -631,13 +630,34 @@ def find_matching_jet_index(jets_list, original_data):
     """
     index_jets = list()
 
-    for i in range(len(original_data)):
-        entry_original = original_data[i]
-        for jet in jets_list:
+    for jet in jets_list:
+        for i in range(len(original_data)):
+            # get original entry with correct data type
+            entry_original = original_data[i].astype(jet.dtype)
+
             if len(jet) == len(entry_original):
-                # if (jet == entry_original).all():
-                if jet == entry_original:
+                # get array with all matches
+                bool_comparision = jet == entry_original
+
+                # only look at relevant row and column, i.e. the diagonal, eg [[[true,true],[false,false]],[[false,false],[true,true]]] should pass
+                if (np.diagonal(bool_comparision)).all():
                     index_jets.append(i)
+                    break  # Note this will avoid detecting the pressence of doubles, but this shouldn't be the case anyway
+
+            # if len(jet) == len(entry_original):
+            #    entry_original = entry_original.astype(jet.dtype)
+            #    for i in range(len(jet)):
+            #        if (jet == entry_original).all():
+            #            index_jets.append(i)
+
+            # if len(jet) == len(entry_original):
+            # if len(jet) == len(entry_original):
+            #     if (jet == entry_original.astype(jet.dtype)).all():
+            #         index_jets.append(i)
+    
+    if len(index_jets) != len(jets_list):
+        print("Failed in mathcing jets to original index")
+        return -1
 
     return index_jets
 

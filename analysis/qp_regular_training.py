@@ -67,11 +67,7 @@ patience = 5
 
 hyper_parameters = dict()
 
-<<<<<<< HEAD
-hyper_parameters["batch_size"] = 100
-=======
 hyper_parameters["batch_size"] = 300
->>>>>>> feature/wr_full_model_testing
 hyper_parameters["output_dim"] = 1
 hyper_parameters["num_layers"] = 1
 hyper_parameters["dropout"] = 0

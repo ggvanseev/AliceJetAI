@@ -1,4 +1,5 @@
 import awkward as ak
+from matplotlib.pyplot import flag
 import torch
 import numpy as np
 
@@ -44,21 +45,18 @@ class LSTM_OCSVM_CLASSIFIER:
         else:
             data = format_ak_to_list(data)
 
-<<<<<<< HEAD
-        data_in_branches, track_jets_data, _ = branch_filler(
-            data, batch_size=self.batch_size
-        )
-
-=======
         try:
-            data, track_jets_data, _ = branch_filler(data, batch_size=self.batch_size)
+            data_in_branches, track_jets_data, _ = branch_filler(
+                data, batch_size=self.batch_size
+            )
         except TypeError:
-            print("LSTM_OCSVM_CLASSIFIER: TypeError 'cannot unpack non-iterable int object'\nBranch filler failed")
+            print(
+                "LSTM_OCSVM_CLASSIFIER: TypeError 'cannot unpack non-iterable int object'\nBranch filler failed"
+            )
             classification = -1
             fraction_anomaly = -1
             return classification, fraction_anomaly
-            
->>>>>>> feature/wr_full_model_testing
+
         data_loader = lstm_data_prep(
             data=data_in_branches,
             scaler=self.scaler,
@@ -70,10 +68,10 @@ class LSTM_OCSVM_CLASSIFIER:
         h_bar_list = list()
         jets_list = list()
         with torch.no_grad():
-            i = 0
+            i = -1
             for x_batch, y_batch in data_loader:
-                jet_track_local = track_jets_data[i]
                 i += 1
+                jet_track_local = track_jets_data[i]
 
                 x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(self.device)
                 y_batch = y_batch.to(self.device)
@@ -86,24 +84,42 @@ class LSTM_OCSVM_CLASSIFIER:
 
                 h_bar_list.append(h_bar)
 
-                # return real jets in list form
-                n_jets = len(jet_track_local)
-                for j in range(n_jets):
-                    jet_track_local_temp = [0] + jet_track_local
-                    jets_list.append(
-                        x_batch[jet_track_local_temp[j] : jet_track_local_temp[j + 1]]
-                    )
+                # return real jets in list form. if not flag
+                if not (nines_test_flag or zeros_test_flag):
+                    n_jets = len(jet_track_local)
+                    for j in range(n_jets):
+                        # add possibility to get first entry
+                        jet_track_local_temp = [-1] + jet_track_local
+                        # add one to all entries, to take correct range
+                        jet_track_local_temp = [x + 1 for x in jet_track_local_temp]
+                        # adjust final entry
+                        jet_track_local_temp[-1] = None
+                        # append to general list
+                        jets_list.append(
+                            x_batch[
+                                jet_track_local_temp[j] : jet_track_local_temp[j + 1]
+                            ]
+                        )
 
         # Take last layer
         h_bar_list = torch.vstack([h_bar[-1] for h_bar in h_bar_list])
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, self.device)
 
         # find original matching jet
-        jets_list = h_bar_list_to_numpy(jets_list, self.device)
-        jets_list = np.array([np.array(xi) for xi in jets_list])
-        # jets_index = find_matching_jet_index(jets_list=jets_list, original_data=data)
-        jets_index = find_matching_jet_index(jets_list=data, original_data=data)
-        # TODO: check if only jets list, returns the same length length as jets_list, otherwise also doubles present their (besidedes the explainable empty list)
+        if zeros_test_flag or nines_test_flag:
+            jets_index = 0
+            jets_list = 0
+        else:
+            jets_list = h_bar_list_to_numpy(jets_list, self.device)
+
+            # scale original data
+            scaled_data = list()
+            for element in data:
+                scaled_data.append(self.scaler.transform(element))
+
+            jets_index = find_matching_jet_index(
+                jets_list=jets_list, original_data=scaled_data
+            )
 
         # get prediction
         classifaction = self.oc_svm.predict(h_bar_list_np)
@@ -113,7 +129,7 @@ class LSTM_OCSVM_CLASSIFIER:
 
         fraction_anomaly = n_anomaly / len(classifaction)
 
-        return classifaction, fraction_anomaly, jets_index, jets_list
+        return classifaction, fraction_anomaly, jets_index
 
 
 class CLASSIFICATION_CHECK:
@@ -125,17 +141,12 @@ class CLASSIFICATION_CHECK:
         for i in range(len(trials)):
             # select model
             model = trials[i]["result"]["model"]
-<<<<<<< HEAD
 
-            lstm_model = model["lstm:"]  # note in some old files it is lstm:
-=======
-            
             # TODO check for bad models
             if model == 10:
                 continue
-            
+
             lstm_model = model["lstm"]  # note in some old files it is lstm:
->>>>>>> feature/wr_full_model_testing
             ocsvm_model = model["ocsvm"]
             scaler = model["scaler"]
 
