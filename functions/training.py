@@ -128,7 +128,7 @@ def training_algorithm(
         # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
         svm_model.fit(h_bar_list_np)
         alphas = np.abs(svm_model.dual_coef_)[0]
-        
+
         alphas = alphas / np.sum(alphas) # NOTE: equation 14, sum alphas = 1
 
         a_idx = svm_model.support_

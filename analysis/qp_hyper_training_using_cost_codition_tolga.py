@@ -149,7 +149,7 @@ space_debug = hp.choice(
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.9]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
