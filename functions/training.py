@@ -128,8 +128,8 @@ def training_algorithm(
         # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
         svm_model.fit(h_bar_list_np)
         alphas = np.abs(svm_model.dual_coef_)[0]
-
-        alphas = alphas / np.sum(alphas) # NOTE: equation 14, sum alphas = 1
+        # NOTE: Tolga equation 14: sum alphas = 1, ref. LIBSVM eq 7 & 8
+        alphas = alphas / (svm_model.nu * h_bar_list_np.shape[0]) 
 
         a_idx = svm_model.support_
 
@@ -208,7 +208,7 @@ def training_algorithm(
             )  # immediately return passed = False
     print_out += f"\nfrac diff: {(cost - cost_prev) / cost_prev},  eps: {training_params['epsilon']} "
     if abs((cost - cost_prev) / cost_prev) > training_params["epsilon"]:
-        print_out += "\nAlgorithm failed: not done learning in max epochs."
+        print_out += f"\nAlgorithm failed: not done learning in max epochs = {k}."
         passed = False
     else:
         print_out += f"\nModel done learning in {k} epochs."
@@ -256,7 +256,7 @@ def try_hyperparameters(
     pooling = hyper_parameters["pooling"]
 
     # Set epsilon and max_epochs
-    eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
+    eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate, svm_nu)
 
     # output string for printing in terminal:
     print_out = ""

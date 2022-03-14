@@ -1,3 +1,12 @@
 14_03_22_1008	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 36.40 s
 14_03_22_1017	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 59.16 s
 14_03_22_1028	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 38.81 s
+14_03_22_1201	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 311.76 s
+14_03_22_1405	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 92.81 s
+14_03_22_1410	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 101.52 s
+14_03_22_1418	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 56.94 s
+14_03_22_1427	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 65.23 s
+14_03_22_1429	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 62.46 s
+14_03_22_1436	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 93.07 s
+14_03_22_1439	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 86.75 s
+14_03_22_1447	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 149.71 s
