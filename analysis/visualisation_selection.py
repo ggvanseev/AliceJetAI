@@ -18,7 +18,7 @@ job_id = "14_03_22_1028"
 
 
 # Load and filter data for criteria eta and jetpt_cap
-_, _, q_recur_jets, _ = load_n_filter_data(file_name, kt_cut=False)
+_, _, _, q_recur_jets = load_n_filter_data(file_name, kt_cut=False)
 
 # q_recur_jets = (np.zeros([500, 10, 3])).tolist()
 
@@ -66,7 +66,7 @@ for i in range(len(trials)):
         oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler
     )
 
-    classifaction, anomaly_tracker[i] = classifier.anomaly_classifaction(
+    classifaction, anomaly_tracker[i], _ = classifier.anomaly_classifaction(
         data=q_recur_jets[input_variables]
     )
 

@@ -1,4 +1,5 @@
 from email.utils import localtime
+from logging import raiseExceptions
 import torch
 import awkward as ak
 from copy import copy
@@ -8,7 +9,10 @@ import pandas as pd
 
 from torch.utils.data import TensorDataset, DataLoader
 
+from itertools import compress
+
 # from numba import njit TODO
+from numba import jit
 
 # from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
 # import warnings
@@ -32,8 +36,10 @@ def format_ak_to_list(arr: ak.Array) -> list:
 
     # awkward.to_list() creates dictionaries, reform to list only
     lst = [list(x.values()) for x in ak.to_list(arr)]
-    # remove empty entries and weird nestedness, e.g. dr[[...]]
+    # remove weird nestedness, e.g. dr[[...]]
     lst = [[y[0] for y in x] for x in lst if x and any(x) and any(x[0])]
+    # remove empty lists:
+    lst = [x for x in lst if len(x[0]) > 0]
     # transpose remainder to get correct shape
     lst = [list(map(list, zip(*x))) for x in lst]
     return lst
@@ -73,10 +79,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     # Track_jets_in_batch tracks where the last split of the jet is located in the branch
     track_jets_in_batch = []
 
-    # make helping vector:
-    mylen = np.vectorize(len)
-
-    i = 1
+    i = -1
     while i < max_n_batches:
         i += 1
 
@@ -132,7 +135,9 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                     try:
                         temp_dataset2.remove(jet)
                     except ValueError:
-                        print("branch_filler: ValueError 'list.remove(x): x not in list'\nattempted to remove a jet that was no longer in temp_dataset2")
+                        print(
+                            "branch_filler: ValueError 'list.remove(x): x not in list'\nattempted to remove a jet that was no longer in temp_dataset2"
+                        )
                     space_count -= len(jet)
                     jets_in_batch.append(
                         batch_size - space_count - 1
@@ -590,9 +595,7 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     Note:
     learning rate must be of the form: 1e-x, where x is a number [0,99]
     """
-    epsilon = (
-        1e-3 #* learning_rate
-    )  # 10 ** -3 #-(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
+    epsilon = 1e-3  # * learning_rate  # 10 ** -3 #-(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
 
     order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
 
@@ -602,12 +605,73 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     return epsilon, max_epochs
 
 
-def trials_df_and_minimum(trials_results , test_param="loss"):
+def seperate_anomalies_from_regular(anomaly_track, jets_index, data: list):
+    """
+    Note data must be the filtered data returning with the same length as the anomaly_track list
+    return dict, if passed
+    """
+    # TODO, turn on again if problem with ak_to list is fixed.
+    # select correct order of jets to match with anomalies
+    # data = [data[i] for i in jets_index]
+
+    if len(anomaly_track) != len(data):
+        return "Failed"
+
+    anomalies = list(compress(data, anomaly_track == -1))
+    non_anomalies = list(compress(data, anomaly_track == 1))
+
+    return anomalies, non_anomalies
+
+
+def find_matching_jet_index(jets_list, original_data):
+    """
+    Finds the matching jet index position, note: after format_ak_to_list,
+    thus empty jets are already out!
+    """
+    index_jets = list()
+
+    for jet in jets_list:
+        for i in range(len(original_data)):
+            # get original entry with correct data type
+            entry_original = original_data[i].astype(jet.dtype)
+
+            if len(jet) == len(entry_original):
+                # get array with all matches
+                bool_comparision = jet == entry_original
+
+                # only look at relevant row and column, i.e. the diagonal, eg [[[true,true],[false,false]],[[false,false],[true,true]]] should pass
+                if (np.diagonal(bool_comparision)).all():
+                    index_jets.append(i)
+                    break  # Note this will avoid detecting the pressence of doubles, but this shouldn't be the case anyway
+
+            # if len(jet) == len(entry_original):
+            #    entry_original = entry_original.astype(jet.dtype)
+            #    for i in range(len(jet)):
+            #        if (jet == entry_original).all():
+            #            index_jets.append(i)
+
+            # if len(jet) == len(entry_original):
+            # if len(jet) == len(entry_original):
+            #     if (jet == entry_original.astype(jet.dtype)).all():
+            #         index_jets.append(i)
+    
+    if len(index_jets) != len(jets_list):
+        print("Failed in mathcing jets to original index")
+        return -1
+
+    return index_jets
+
+
+def trials_df_and_minimum(trials_results, test_param="loss"):
     # reform to complete list of trials
     try:
         trials_list = [trial for trial in trials_results["_trials"]]
     except:
-        trials_list = [trial for trials in [trials["_trials"] for trials in trials_results] for trial in trials]
+        trials_list = [
+            trial
+            for trials in [trials["_trials"] for trials in trials_results]
+            for trial in trials
+        ]
     parameters = trials_list[0]["result"]["hyper_parameters"].keys()
 
     # build DataFrame
@@ -620,12 +684,14 @@ def trials_df_and_minimum(trials_results , test_param="loss"):
 
     # print best model(s) hyperparameters:
     print("\nBest Hyper Parameters:")
-    hyper_parameters_df = min_df.loc[:, min_df.columns.str.startswith('hyper_parameters')]
+    hyper_parameters_df = min_df.loc[
+        :, min_df.columns.str.startswith("hyper_parameters")
+    ]
     for index, row in hyper_parameters_df.iterrows():
         print(f"\nModel {index}:")
         for key in hyper_parameters_df.keys():
-            print("  {:12}\t  {}".format(key.split('.')[1], row[key]))
-        print(f"with loss: \t\t{min_df['loss'].iloc[index]}") 
-        print(f"with final cost:\t{min_df['final_cost'].iloc[index]}") 
-    
+            print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
+        print(f"with loss: \t\t{min_df['loss'].iloc[index]}")
+        print(f"with final cost:\t{min_df['final_cost'].iloc[index]}")
+
     return df, min_val, min_df, parameters

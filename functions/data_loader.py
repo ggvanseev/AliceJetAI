@@ -61,13 +61,17 @@ def load_n_filter_data(
         ]
     ]
     jets_recur = branches[jet_recur_branches]
-    
+
     # Print some info on dataset. Note: Nr of jets is significantly larger than nr of quark/gluon jets.
     # This is because we only know for sure which jets are quark or gluon jets from the Parton Initiator,
     # which in turn means that we can at most obtain 1 quark or gluon jet per event.
     print(f"Number of jets in dataset:\t\t{np.count_nonzero(jets[na.jetpt])}")
-    print(f"Number of gluon jets in dataset:\t{np.count_nonzero(jets[na.parton_match_id] == 21)}")
-    print(f"Number of quark jets in dataset:\t{np.count_nonzero(abs(jets[na.parton_match_id]) < 7)}")
+    print(
+        f"Number of gluon jets in dataset:\t{np.count_nonzero(jets[na.parton_match_id] == 21)}"
+    )
+    print(
+        f"Number of quark jets in dataset:\t{np.count_nonzero(abs(jets[na.parton_match_id]) < 7)}"
+    )
 
     # select quark and gluon jet data
     g_jets = jets[jets[na.parton_match_id] == 21]
@@ -92,28 +96,42 @@ def load_n_filter_data(
         q_jets = q_jets[
             (abs(q_jets[na.jet_eta]) < eta_max) & (q_jets[na.jetpt] > pt_min)
         ]
-        print(f"\tgluon jets left after cuts:\t{np.count_nonzero(g_jets[na.parton_match_id] == 21)}")
-        print(f"\tquark jets left after cuts:\t{np.count_nonzero(abs(q_jets[na.parton_match_id] < 7))} ")
-        
+        print(
+            f"\tgluon jets left after cuts:\t{np.count_nonzero(g_jets[na.parton_match_id] == 21)}"
+        )
+        print(
+            f"\tquark jets left after cuts:\t{np.count_nonzero(abs(q_jets[na.parton_match_id] < 7))} "
+        )
+
     # apply kt_cut of kt > 1.0 GeV
     if kt_cut:
         print("Applying cut: kt > 1.0 GeV on all splittings")
         # get kt values
-        g_jets_kt = g_jets_recur.sigJetRecur_jetpt * g_jets_recur.sigJetRecur_dr12 * g_jets_recur.sigJetRecur_z
-        q_jets_kt = q_jets_recur.sigJetRecur_jetpt * q_jets_recur.sigJetRecur_dr12 * q_jets_recur.sigJetRecur_z
-        
+        g_jets_kt = (
+            g_jets_recur.sigJetRecur_jetpt
+            * g_jets_recur.sigJetRecur_dr12
+            * g_jets_recur.sigJetRecur_z
+        )
+        q_jets_kt = (
+            q_jets_recur.sigJetRecur_jetpt
+            * q_jets_recur.sigJetRecur_dr12
+            * q_jets_recur.sigJetRecur_z
+        )
+
         # cut kts
         g_jets_recur = g_jets_recur[g_jets_kt > kt_min]
         q_jets_recur = q_jets_recur[q_jets_kt > kt_min]
-        
+
         # hist gluons
         g_kts_flat = ak.flatten(ak.flatten(g_jets_kt)).to_list()
         g_kts_hist = np.histogram(g_kts_flat, bins=range(round(max(g_kts_flat))))
         print(f"\tgluon splittings cut:\t\t{g_kts_hist[0][0] / sum(g_kts_hist[0]):.2%}")
-        
+
         # hist quarks
         q_kts_flat = ak.flatten(ak.flatten(q_jets_kt)).to_list()
         q_kts_hist = np.histogram(q_kts_flat, bins=range(round(max(q_kts_flat))))
         print(f"\tquark splittings cut:\t\t{q_kts_hist[0][0] / sum(q_kts_hist[0]):.2%}")
-    
+
+    # remove empty additions TODO
+
     return g_jets, q_jets, g_jets_recur, q_jets_recur

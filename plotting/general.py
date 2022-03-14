@@ -4,8 +4,11 @@ import os
 import seaborn as sns
 
 
-def plot_cost_vs_cost_condition(track_cost, track_cost_condition,title_plot, show_flag=False,save_flag=False):
-    
+
+def plot_cost_vs_cost_condition(
+    track_cost, track_cost_condition, title_plot, show_flag=False, save_flag=False
+):
+
     fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
     fig.suptitle(title_plot, y=1.08)
     ax1.plot(track_cost_condition[1:])
