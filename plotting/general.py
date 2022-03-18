@@ -67,15 +67,15 @@ def cost_condition_plots(pickling_trials, job_id):
     for i, trial in enumerate(pickling_trials["_trials"]):
         out_txt += f"trial: {i}"
         
+        # obtain results from the trial
+        result = trial["result"]
+        
         # extract hyper parameters from the results
         h_parm = result["hyper_parameters"]
         title_plot = f""
         for key in h_parm:
             title_plot += f"{h_parm[key]}_{key}_"
             out_txt += "\n  {:12}\t  {}".format(key, h_parm[key])
-
-        # obtain results from the trial
-        result = trial["result"]
         
         # generate the plot
         fig = cost_condition_plot(result, title_plot)
