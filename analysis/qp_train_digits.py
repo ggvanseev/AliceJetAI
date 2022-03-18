@@ -47,8 +47,8 @@ from functions.data_manipulation import (
     format_ak_to_list,
     trials_df_and_minimum,
 )
-from functions.data_loader import load_n_filter_data, load_digits_data
-from functions.training import training_with_set_parameters
+from functions.data_loader import load_digits_data
+from functions.training import REGULAR_TRAINING
 from plotting.general import cost_condition_plot
 
 import pickle
@@ -116,16 +116,22 @@ test_dict = load_digits_data(test_file)
 
 # mix "0" = 90% as normal data with "9" = 10% as anomalous data
 train_data = train_dict["0"][:675] + train_dict["9"][:75]
-print('Mixed "0": 675 = 90% of normal data with "9": 75 = 10% as anomalous data for a train set of 750 samples')
+print(
+    'Mixed "0": 675 = 90% of normal data with "9": 75 = 10% as anomalous data for a train set of 750 samples'
+)
 test_data = test_dict["0"][:360] + test_dict["9"][:40]
-print('Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples')
+print(
+    'Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples'
+)
 
 
 # track distance_nu
 distance_nu = []
 
+training = REGULAR_TRAINING()
+
 for trial in range(max_evals):
-    trials[trial] = training_with_set_parameters(
+    trials[trial] = training.run_training(
         hyper_parameters=hyper_parameters,
         train_data=train_data,
         val_data=test_data,
@@ -135,7 +141,7 @@ for trial in range(max_evals):
     distance_nu.append(trials[trial]["loss"])
 
     print(f"Best distance so far is: {min(distance_nu)}")
-    
+
 
 # saving spark_trials as dictionaries
 # source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
@@ -152,12 +158,12 @@ if save_results_flag:
     # set out file to job_id for parallel computing
     job_id = os.getenv("PBS_JOBID")
     if job_id:
-        job_id = job_id.split('.')[0]
+        job_id = job_id.split(".")[0]
     else:
-        job_id = time.strftime('%d_%m_%y_%H%M')
-    
+        job_id = time.strftime("%d_%m_%y_%H%M")
+
     out_file = f"storing_results/trials_test_{job_id}.p"
-    
+
     # save trials as pickling_trials object
     torch.save(trials, open(out_file, "wb"))
 
@@ -174,12 +180,12 @@ if save_results_flag:
             fig.savefig(out_dir + "/" f"trial_{trial}.png")
         # violin_plots(df, min_val, min_df, parameters, [job_id], "loss")
         print("\nPlotting complete")
-    
+
     # store run info
     run_time = time.time() - start_time
     run_info = f"{job_id}\ton: {train_file}\truntime: {run_time:.2f} s"
     run_info = run_info + f"\tnotes: {run_notes}\n" if run_notes else run_info + "\n"
-    with open("storing_results/run_info.p", 'a+') as f:
+    with open("storing_results/run_info.p", "a+") as f:
         f.write(run_info)
     print(f"\nCompleted run in: {run_time}")
 

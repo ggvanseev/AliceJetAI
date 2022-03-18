@@ -47,7 +47,7 @@ from functions.data_manipulation import (
     trials_df_and_minimum,
 )
 from functions.data_loader import load_n_filter_data
-from functions.training import try_hyperparameters
+from functions.training import HYPER_TRAINING
 from plotting.general import cost_condition_plots, violin_plots
 
 # from autograd import elementwise_grad as egrad
@@ -78,17 +78,19 @@ import branch_names as na
 ### User Input  ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # set run settings
 max_evals = 4
 patience = 5
-kt_cut = False              # for dataset, splittings kt > 1.0 GeV
-debug_flag = True          # for using debug space = only 1 configuration of hp
-multicore_flag = False       # for using SparkTrials or Trials
-save_results_flag = True    # for saving trials and runtime
-plot_flag = True            # for making cost condition plots, only works if save_results_flag is True
+kt_cut = False  # for dataset, splittings kt > 1.0 GeV
+debug_flag = True  # for using debug space = only 1 configuration of hp
+multicore_flag = False  # for using SparkTrials or Trials
+save_results_flag = True  # for saving trials and runtime
+plot_flag = (
+    True  # for making cost condition plots, only works if save_results_flag is True
+)
 
 # notes on run, added to run_info.p, keep short or leave empty
 run_notes = ""
@@ -126,12 +128,12 @@ space = hp.choice(
                 "variables",
                 [
                     [na.recur_dr, na.recur_jetpt, na.recur_z],
-                    #[na.recur_dr, na.recur_jetpt],
-                    #[na.recur_dr, na.recur_z],
-                    #[na.recur_jetpt, na.recur_z],
+                    # [na.recur_dr, na.recur_jetpt],
+                    # [na.recur_dr, na.recur_z],
+                    # [na.recur_jetpt, na.recur_z],
                 ],
             ),
-            "pooling": hp.choice("pooling",["last"]), # "last" , "mean"
+            "pooling": hp.choice("pooling", ["last"]),  # "last" , "mean"
         }
     ],
 )
@@ -175,7 +177,7 @@ if debug_flag:
 start_time = time.time()
 
 # Load and filter data for criteria eta and jetpt_cap
-_, _, g_recur_jets, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
+g_recur_jets, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
 print("Loading data complete")
 # split data
 train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
@@ -183,19 +185,22 @@ print("Splitting data complete")
 
 # set trials or sparktrials
 if multicore_flag:
-    cores = os.cpu_count() if os.cpu_count() < 10 else 10 
+    cores = os.cpu_count() if os.cpu_count() < 10 else 10
     trials = SparkTrials(
         parallelism=cores
     )  # run as many trials parallel as the nr of cores available
     print(f"Hypertuning {max_evals} evaluations, on {cores} cores:\n")
 else:
     trials = Trials()  # NOTE keep for debugging since can't do with spark trials
-        
-# hyper tuning and evaluation      
+
+# Create training object
+hypertrainer = HYPER_TRAINING()
+
+# hyper tuning and evaluation
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
-        try_hyperparameters,
-        dev_data=dev_data,
+        hypertrainer.run_training,
+        train_data=dev_data,
         plot_flag=False,
         patience=patience,
     ),
@@ -221,12 +226,12 @@ if save_results_flag:
     # set out file to job_id for parallel computing
     job_id = os.getenv("PBS_JOBID")
     if job_id:
-        job_id = job_id.split('.')[0]
+        job_id = job_id.split(".")[0]
     else:
-        job_id = time.strftime('%d_%m_%y_%H%M')
-    
+        job_id = time.strftime("%d_%m_%y_%H%M")
+
     out_file = f"storing_results/trials_test_{job_id}.p"
-    
+
     # save trials as pickling_trials object
     torch.save(pickling_trials, open(out_file, "wb"))
 
@@ -235,12 +240,12 @@ if save_results_flag:
         cost_condition_plots(pickling_trials, job_id)
         violin_plots(df, min_val, min_df, parameters, [job_id], "loss")
         print("\nPlotting complete")
-    
+
     # store run info
     run_time = time.time() - start_time
     run_info = f"{job_id}\ton: {file_name}\truntime: {run_time:.2f} s"
     run_info = run_info + f"\tnotes: {run_notes}\n" if run_notes else run_info + "\n"
-    with open("storing_results/run_info.p", 'a+') as f:
+    with open("storing_results/run_info.p", "a+") as f:
         f.write(run_info)
     print(f"\nCompleted run in: {run_time}")
 

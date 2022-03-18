@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import torch
-from ai.lstm_ocsvm_class import LSTM_OCSVM_CLASSIFIER, CLASSIFICATION_CHECK
+from functions.classification import LSTM_OCSVM_CLASSIFIER, CLASSIFICATION_CHECK
 from functions.data_manipulation import format_ak_to_list
 from functions.data_loader import load_n_filter_data
 
@@ -18,7 +18,7 @@ job_id = "14_03_22_1028"
 
 
 # Load and filter data for criteria eta and jetpt_cap
-_, _, _, q_recur_jets = load_n_filter_data(file_name, kt_cut=False)
+_, q_recur_jets = load_n_filter_data(file_name, kt_cut=False)
 
 # q_recur_jets = (np.zeros([500, 10, 3])).tolist()
 

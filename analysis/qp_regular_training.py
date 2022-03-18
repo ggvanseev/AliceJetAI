@@ -47,7 +47,7 @@ from functions.data_manipulation import (
     format_ak_to_list,
 )
 from functions.data_loader import load_n_filter_data
-from functions.training import training_with_set_parameters
+from functions.training import REGULAR_TRAINING
 
 # from autograd import elementwise_grad as egrad
 
@@ -78,6 +78,7 @@ hyper_parameters["svm_gamma"] = "auto"
 hyper_parameters["scaler_id"] = "minmax"
 hyper_parameters["hidden_dim"] = 9
 hyper_parameters["pooling"] = "mean"
+hyper_parameters["variables"] = [None]
 
 # storing dict:
 trials = dict()
@@ -90,7 +91,7 @@ file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 start_time = time.time()
 
 # Load and filter data for criteria eta and jetpt_cap
-_, _, g_recur_jets, _ = load_n_filter_data(file_name)
+g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
 print("Loaded data")
 
@@ -101,8 +102,11 @@ print("Split data")
 # track distance_nu
 distance_percentage_anomalies = []
 
+# Create object for training
+training = REGULAR_TRAINING()
+
 for trial in range(max_evals):
-    trials[trial] = training_with_set_parameters(
+    trials[trial] = training.run_training(
         hyper_parameters=hyper_parameters,
         train_data=train_data,
         val_data=val_data,

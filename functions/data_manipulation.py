@@ -222,135 +222,6 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
     return batches, track_jets_in_batch, max_n_batches, track_index
 
 
-# @njit()
-def branch_filler_jit(original_dataset, batch_size, n_features=3, max_trials=100):
-    """
-    Tries to fill data into batches, drop left over data.
-    Also trackts where the jets are in the branch.
-    Returns dataset that fits into branches, and a list to track where the jets are in the dataset.
-    Don't use ordering or sorting to avoid introducing biases into the lstm, the sample has a chaotic
-    """
-    # make safety copy to avoid changing results
-    dataset = original_dataset.copy()
-
-    # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
-    dataset_len = 0
-    for i in range(len(dataset)):
-        dataset_len += len(dataset[i])
-
-    max_n_batches = int(dataset_len / batch_size)
-    print("Max number of batches: ", max_n_batches)
-
-    # Batches, is a list with all the batches
-    batches = []
-    # Track_jets_in_batch tracks where the last split of the jet is located in the branch
-    track_jets_in_batch = []
-
-    i = 1
-    while i < max_n_batches:
-        i += 1
-
-        # Space count tracks if branch is filled to max
-        space_count = batch_size
-
-        # make copies of the dataset to be able to remove elemnts while trying to fill branches
-        # without destroyting original dataset
-        temp_dataset = dataset.copy()
-        temp_dataset2 = dataset.copy()
-
-        # local trakcers of batches ad jets_in_batch
-        batch = list()
-        jets_in_batch = list()
-
-        # variables that track progress
-        add_branch_flag = True
-        trials = 0
-
-        # Check if batch is filled
-        while space_count > 0:
-
-            # loop over available jets
-            j = -1
-            len_temp_dataset = len(temp_dataset)
-            while j < len_temp_dataset:
-                j += 1
-
-                # check if temp_dataset2 still has elements
-                if len(temp_dataset2) == 0:
-                    add_branch_flag = False
-                    i = max_n_batches
-                    space_count = 0
-                    break
-
-                jet = temp_dataset[j]
-
-                # Add jet to batch if possible
-                if space_count >= len(jet):
-                    batch.append(jet)
-                    temp_dataset2.remove(jet)
-                    space_count -= len(jet)
-                    jets_in_batch.append(
-                        batch_size - space_count - 1
-                    )  # Position of the last split of jet
-                elif space_count == 0:
-                    break
-
-                # Check if anything could be added at all to avoid unnecesary loop
-                # (if not this means looping doesn't add anything, because no free spots can be filled up any more
-                elif space_count < len(min(temp_dataset2)) and space_count > 0:
-                    # remove first entry from dataset to see try with different initial condition for filling list
-                    dataset.remove(dataset[0])
-
-                    # Reset to original values
-                    # Space count tracks if branch is filled to max
-                    space_count = batch_size
-
-                    # make copies of the dataset to be able to remove elemnts while trying to fill branches
-                    # without destroyting original dataset
-                    temp_dataset = dataset.copy()
-                    temp_dataset2 = dataset.copy()
-
-                    # local trakcers of batches ad jets_in_batch
-                    batch = []
-                    jets_in_batch = []
-
-                    # update trials:
-                    trials += 1
-
-                    dataset_len = 0
-                    for i in range(len(dataset)):
-                        dataset_len += len(dataset[i])
-
-                    if (
-                        trials == max_trials
-                        or int(dataset_len / n_features) < batch_size
-                    ):
-                        add_branch_flag = False
-                        i = max_n_batches
-                        space_count = 0
-                    break
-
-                # If at the end of the temp_dataset update it to try to fill in free spots
-                elif j == len_temp_dataset - 1:
-                    temp_dataset = temp_dataset2.copy()
-                    break
-
-        if add_branch_flag:
-            batches.append([y for x in batch for y in x])  # remove list nesting
-            track_jets_in_batch.append(jets_in_batch)
-            dataset = temp_dataset2
-
-    # Remove list nesting of branches (will be restored by DataLoader from torch if same
-    # batch size and shuffle=False is used)
-    batches = [y for x in batches for y in x]
-
-    # check if not successful
-    if not batches:
-        return -1
-
-    return batches, track_jets_in_batch
-
-
 def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
     """
     Returns a DataLoader class to work with the large datasets in skilearn LSTM
@@ -366,7 +237,6 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
 
     # Data loader needs labels, but isn't needed for unsupervised, thus fill in data for labels to run since it won't be used.
     data = TensorDataset(data, data)
-    # test = TensorDataset(test_features, test_targets)
 
     return DataLoader(data, batch_size=batch_size, shuffle=shuffle)
 
@@ -584,7 +454,9 @@ def get_full_pytorch_weight(weights, device):
 
 def h_bar_list_to_numpy(h_bar_list, device):
     if device.type == "cpu":
-        h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list], dtype=object)
+        h_bar_list_np = np.array(
+            [h_bar.detach().numpy() for h_bar in h_bar_list], dtype=object
+        )
     else:
         h_bar_list_temp = h_bar_list.to(device=torch.device("cpu"))
         h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list_temp])
@@ -641,45 +513,6 @@ def seperate_anomalies_from_regular(anomaly_track, jets_index, data: list):
     non_anomalies = list(compress(data, anomaly_track == 1))
 
     return anomalies, non_anomalies
-
-
-def find_matching_jet_index(jets_list, original_data):
-    """
-    Finds the matching jet index position, note: after format_ak_to_list,
-    thus empty jets are already out!
-    """
-    index_jets = list()
-
-    for jet in jets_list:
-        for i in range(len(original_data)):
-            # get original entry with correct data type
-            entry_original = original_data[i].astype(jet.dtype)
-
-            if len(jet) == len(entry_original):
-                # get array with all matches
-                bool_comparision = jet == entry_original
-
-                # only look at relevant row and column, i.e. the diagonal, eg [[[true,true],[false,false]],[[false,false],[true,true]]] should pass
-                if (np.diagonal(bool_comparision)).all():
-                    index_jets.append(i)
-                    break  # Note this will avoid detecting the pressence of doubles, but this shouldn't be the case anyway
-
-            # if len(jet) == len(entry_original):
-            #    entry_original = entry_original.astype(jet.dtype)
-            #    for i in range(len(jet)):
-            #        if (jet == entry_original).all():
-            #            index_jets.append(i)
-
-            # if len(jet) == len(entry_original):
-            # if len(jet) == len(entry_original):
-            #     if (jet == entry_original.astype(jet.dtype)).all():
-            #         index_jets.append(i)
-
-    if len(index_jets) != len(jets_list):
-        print("Failed in mathcing jets to original index")
-        return -1
-
-    return index_jets
 
 
 def trials_df_and_minimum(trials_results, test_param="loss"):

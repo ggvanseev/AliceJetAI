@@ -1,5 +1,4 @@
 import awkward as ak
-from matplotlib.pyplot import flag
 import torch
 import numpy as np
 
@@ -8,8 +7,9 @@ from functions.data_manipulation import (
     branch_filler,
     h_bar_list_to_numpy,
     format_ak_to_list,
-    find_matching_jet_index,
 )
+
+from functions.run_lstm import calc_lstm_results
 
 
 class LSTM_OCSVM_CLASSIFIER:
@@ -19,6 +19,7 @@ class LSTM_OCSVM_CLASSIFIER:
         lstm,
         batch_size,
         scaler,
+        pooling="last",
         device=torch.device("cuda")
         if torch.cuda.is_available()
         else torch.device("cpu"),
@@ -28,6 +29,7 @@ class LSTM_OCSVM_CLASSIFIER:
         self.batch_size = batch_size
         self.device = device
         self.scaler = scaler
+        self.pooling = pooling
 
     def anomaly_classifaction(
         self, data: ak, zeros_test_flag=False, nines_test_flag=False
@@ -66,27 +68,15 @@ class LSTM_OCSVM_CLASSIFIER:
 
         input_dim = len(data_in_branches[0])
 
-        h_bar_list = list()
-        jets_list = list()
-        with torch.no_grad():
-            i = -1
-            for x_batch, y_batch in data_loader:
-                i += 1
-                jet_track_local = track_jets_data[i]
+        h_bar_list, _, _ = calc_lstm_results(
+            self.lstm,
+            input_dim,
+            data_loader,
+            track_jets_data,
+            self.device,
+            self.pooling,
+        )
 
-                x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(self.device)
-                y_batch = y_batch.to(self.device)
-
-                # Makes predictions, and don't use backpropagation
-                hn = self.lstm(x_batch, backpropagation_flag=False)
-
-                # get mean pooled hidden states TODO: update meanpooling depending on settings
-                h_bar = hn[:, jet_track_local]
-
-                h_bar_list.append(h_bar)
-
-        # Take last layer
-        h_bar_list = torch.vstack([h_bar[-1] for h_bar in h_bar_list])
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, self.device)
 
         # get prediction

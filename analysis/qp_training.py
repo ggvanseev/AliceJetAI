@@ -84,7 +84,7 @@ scaler_id = "std"
 pooling = "last"
 
 # Load and filter data for criteria eta and jetpt_cap
-_, _, g_recur_jets, _ = load_n_filter_data(file_name)
+g_recur_jets, _ = load_n_filter_data(file_name)
 g_recur_jets = format_ak_to_list(g_recur_jets)
 
 # split data

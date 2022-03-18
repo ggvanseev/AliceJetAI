@@ -1,4 +1,4 @@
-import pickle
+simport pickle
 from functions.data_loader import load_n_filter_data
 import branch_names as na
 import matplotlib.pyplot as plt
@@ -17,7 +17,7 @@ anomalies_info = pickle.load(
 )
 
 
-_, _, g_recur_jets, q_recur_jets = load_n_filter_data(
+g_recur_jets, q_recur_jets = load_n_filter_data(
     file_name=anomalies_info["file"],
     jet_recur_branches=[na.recur_dr, na.recur_jetpt, na.recur_z],
 )

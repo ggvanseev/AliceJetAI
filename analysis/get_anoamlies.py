@@ -1,12 +1,7 @@
 import pickle
-import pandas as pd
-import sklearn.svm
-import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
 import torch
-from ai.lstm_ocsvm_class import LSTM_OCSVM_CLASSIFIER, CLASSIFICATION_CHECK
-from functions.data_manipulation import format_ak_to_list
+from functions.classification import LSTM_OCSVM_CLASSIFIER, CLASSIFICATION_CHECK
 from functions.data_loader import load_n_filter_data
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
@@ -18,7 +13,7 @@ job_id = 9792527
 
 
 # Load and filter data for criteria eta and jetpt_cap
-_, _, g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=True)
+g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=True)
 
 # q_recur_jets = (np.zeros([500, 10, 3])).tolist()
 
