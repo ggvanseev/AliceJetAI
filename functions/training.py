@@ -289,7 +289,7 @@ def try_hyperparameters(
 
     dev_data = format_ak_to_list(dev_data)
     try:
-        dev_data, track_jets_dev_data, max_n_batches = branch_filler(
+        dev_data, track_jets_dev_data, max_n_batches, _ = branch_filler(
             dev_data, batch_size=batch_size, n_features=len(input_variables)
         )
     except:
@@ -489,9 +489,13 @@ def training_with_set_parameters(
     print("Device: {}".format(device))
 
     time_track = time.time()
-    train_data, track_jets_train_data, max_n_train_batches = branch_filler(train_data, batch_size=batch_size)
+    train_data, track_jets_train_data, max_n_train_batches, _ = branch_filler(
+        train_data, batch_size=batch_size
+    )
     print(f"\nMax number of batches: {max_n_train_batches}")
-    val_data, track_jets_val_data, max_n_val_batches = branch_filler(val_data, batch_size=batch_size)
+    val_data, track_jets_val_data, max_n_val_batches, _ = branch_filler(
+        val_data, batch_size=batch_size
+    )
     print(f"\nMax number of batches: {max_n_val_batches}")
     dt = time.time() - time_track
     print(f"Branch filler, done in: {dt}")

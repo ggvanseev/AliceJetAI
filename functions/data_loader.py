@@ -16,6 +16,46 @@ import branch_names as na
 import numpy as np
 
 
+def select_non_empty_branches(branches, non_empty_key):
+    """
+    non_empty_key: give along a recur, because due to zcut a branch might have become empty
+    """
+    # First filter all completely empty branches
+    branch_reference = branches[non_empty_key]
+    non_empty = list()
+    for i in range(len(branch_reference)):
+        if len(branch_reference[i]) > 0 and ak.any(branch_reference[i]):
+            non_empty.append(i)
+
+    branches = branches[non_empty]
+    branch_reference = branches[non_empty_key]
+
+    # empty partially empty entries
+    mask = ak.ArrayBuilder()
+    for i in range(len(branch_reference)):
+        mask.begin_list()
+        for j in range(len(branch_reference[i])):
+            if len(branch_reference[i, j]) > 0 and ak.any(branch_reference[i, j]):
+                mask.integer(j)
+        mask.end_list()
+
+    for field in branches.fields:
+        branches[field] = branches[field][mask]
+    return branches
+
+
+def flatten_array(branches):
+    """
+    returns a flattend array
+    """
+    new_branches = dict()
+
+    for field in branches.fields:
+        new_branches[field] = ak.concatenate(branches[field], axis=0)
+
+    return ak.Array(new_branches)
+
+
 def load_n_filter_data(
     file_name: str,
     tree_name: str = na.tree,
@@ -132,7 +172,18 @@ def load_n_filter_data(
         q_kts_hist = np.histogram(q_kts_flat, bins=range(round(max(q_kts_flat))))
         print(f"\tquark splittings cut:\t\t{q_kts_hist[0][0] / sum(q_kts_hist[0]):.2%}")
 
-    # remove empty additions TODO
+    # remove empty additions from recursive jets and flatten them, i.e. take jet out of event nesting
+    g_jets_recur = select_non_empty_branches(
+        g_jets_recur, non_empty_key=jet_recur_branches[0]
+    )
+
+    g_jets_recur = flatten_array(g_jets_recur)
+
+    q_jets_recur = select_non_empty_branches(
+        q_jets_recur, non_empty_key=jet_recur_branches[0]
+    )
+
+    q_jets_recur = flatten_array(q_jets_recur)
 
     return g_jets, q_jets, g_jets_recur, q_jets_recur
 

@@ -13,6 +13,7 @@ from itertools import compress
 
 # from numba import njit TODO
 from numba import jit
+from copy import deepcopy
 
 # from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
 # import warnings
@@ -37,9 +38,9 @@ def format_ak_to_list(arr: ak.Array) -> list:
     # awkward.to_list() creates dictionaries, reform to list only
     lst = [list(x.values()) for x in ak.to_list(arr)]
     # remove weird nestedness, e.g. dr[[...]]
-    lst = [[y[0] for y in x] for x in lst if x and any(x) and any(x[0])]
+    # lst = [[y[0] for y in x] for x in lst if x and any(x) and any(x[0])]
     # remove empty lists:
-    lst = [x for x in lst if len(x[0]) > 0]
+    # lst = [x for x in lst if len(x[0]) > 0]
     # transpose remainder to get correct shape
     lst = [list(map(list, zip(*x))) for x in lst]
     return lst
@@ -69,15 +70,22 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
     Don't use ordering or sorting to avoid introducing biases into the lstm, the sample has a chaotic
     """
     # make safety copy to avoid changing results
-    dataset = original_dataset.copy()
+    original_data = original_dataset.copy()
 
     # count all values (, is indicative of a value), and divide by n_features to prevent double counting splits
-    max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
+    max_n_batches = int(str(original_data).count(",") / n_features / batch_size)
 
     # batches, is a list with all the batches
     batches = []
     # Track_jets_in_batch tracks where the last split of the jet is located in the branch
     track_jets_in_batch = []
+
+    # Track index
+    track_index = list()
+
+    original_index = list(range(0, len(original_data)))
+
+    dataset = [original_data, original_index]
 
     i = -1
     while i < max_n_batches:
@@ -88,12 +96,13 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
 
         # make copies of the dataset to be able to remove elemnts while trying to fill branches
         # without destroyting original dataset
-        temp_dataset = dataset.copy()
-        temp_dataset2 = dataset.copy()
+        temp_dataset = deepcopy(dataset)
+        temp_dataset2 = deepcopy(dataset)
 
         # local trakcers of batches ad jets_in_batch
-        batch = []
-        jets_in_batch = []
+        batch = list()
+        jets_in_batch = list()
+        index_in_batch = list()
 
         # variables that track progress
         add_branch_flag = True
@@ -104,36 +113,44 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
 
             # loop over available jets
             j = -1
-            len_temp_dataset = len(temp_dataset)
+            len_temp_dataset = len(temp_dataset[0])
             while j < len_temp_dataset:
                 j += 1
 
                 # check if temp_dataset2 still has elements
-                if temp_dataset2 == []:
+                if temp_dataset2[0] == []:
                     add_branch_flag = False
                     i = max_n_batches
                     space_count = 0
                     break
 
-                # use a normal jet finding sequence for large jets
+                # use a normal jet finding sequence when there is a lot of space
                 if space_count > 12:
-                    jet = temp_dataset[j]
+                    jet = temp_dataset[0][j]
                 # when approaching end of the list, can be a long time, thus use arrays to find
                 # next jet more easily
-                elif space_count >= min(map(len, temp_dataset2)):
+                elif space_count >= min(map(len, temp_dataset2[0])):
                     jet_index = np.argmax(
-                        np.array(list(map(len, temp_dataset2)), dtype=object)
+                        np.array(list(map(len, temp_dataset2[0])), dtype=object)
                         <= space_count
                     )
-                    jet = temp_dataset2[jet_index]
+                    jet = temp_dataset2[0][jet_index]
                 else:
-                    jet = temp_dataset[j]
+                    jet = temp_dataset[0][j]
 
                 # Add jet to batch if possible
                 if space_count >= len(jet):
                     batch.append(jet)
+
+                    # index position of jet in dataset
+                    index_pos = temp_dataset2[0].index(jet)
+                    # Append original index position for later tracking
+                    index_in_batch.append(temp_dataset2[1][index_pos])
+
                     try:
-                        temp_dataset2.remove(jet)
+                        # Delete element by index position
+                        del temp_dataset2[0][index_pos]
+                        del temp_dataset2[1][index_pos]
                     except ValueError:
                         print(
                             "branch_filler: ValueError 'list.remove(x): x not in list'\nattempted to remove a jet that was no longer in temp_dataset2"
@@ -148,9 +165,10 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
 
                 # Check if anything could be added at all to avoid unnecesary loop
                 # (if not this means looping doesn't add anything, because no free spots can be filled up any more
-                elif space_count < len(min(temp_dataset2)) and space_count > 0:
+                elif space_count < len(min(temp_dataset2[0])) and space_count > 0:
                     # remove first entry from dataset to see try with different initial condition for filling list
-                    dataset.remove(dataset[0])
+                    del dataset[0][0]
+                    del dataset[1][0]
 
                     # Reset to original values
                     # Space count tracks if branch is filled to max
@@ -158,19 +176,20 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
 
                     # make copies of the dataset to be able to remove elemnts while trying to fill branches
                     # without destroyting original dataset
-                    temp_dataset = dataset.copy()
-                    temp_dataset2 = dataset.copy()
+                    temp_dataset = deepcopy(dataset)
+                    temp_dataset2 = deepcopy(dataset)
 
                     # local trakcers of batches ad jets_in_batch
-                    batch = []
-                    jets_in_batch = []
+                    batch = list()
+                    jets_in_batch = list()
+                    index_in_batch = list()
 
                     # update trials:
                     trials += 1
 
                     if (
                         trials == max_trials
-                        or int(str(dataset).count(",") / n_features) < batch_size
+                        or int(str(dataset[0]).count(",") / n_features) < batch_size
                     ):
                         add_branch_flag = False
                         i = max_n_batches
@@ -180,7 +199,7 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
 
                 # If at the end of the temp_dataset update it to try to fill in free spots
                 elif j == len_temp_dataset - 1:
-                    temp_dataset = temp_dataset2.copy()
+                    temp_dataset = deepcopy(temp_dataset2)
                     break
 
         if add_branch_flag:
@@ -189,16 +208,18 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
                 list(dict.fromkeys(jets_in_batch))
             )  # Only unique values (empty jet can add "end" jet)
             dataset = temp_dataset2
+            track_index.append(index_in_batch)
 
     # Remove list nesting of branches (will be restored by DataLoader from torch if same
     # batch size and shuffle=False is used)
     batches = [y for x in batches for y in x]
+    track_index = [y for x in track_index for y in x]
 
     # check if not successful
     if not batches:
         return -1
 
-    return batches, track_jets_in_batch, max_n_batches
+    return batches, track_jets_in_batch, max_n_batches, track_index
 
 
 # @njit()
@@ -610,9 +631,8 @@ def seperate_anomalies_from_regular(anomaly_track, jets_index, data: list):
     Note data must be the filtered data returning with the same length as the anomaly_track list
     return dict, if passed
     """
-    # TODO, turn on again if problem with ak_to list is fixed.
     # select correct order of jets to match with anomalies
-    # data = [data[i] for i in jets_index]
+    data = [data[i] for i in jets_index]
 
     if len(anomaly_track) != len(data):
         return "Failed"
@@ -654,7 +674,7 @@ def find_matching_jet_index(jets_list, original_data):
             # if len(jet) == len(entry_original):
             #     if (jet == entry_original.astype(jet.dtype)).all():
             #         index_jets.append(i)
-    
+
     if len(index_jets) != len(jets_list):
         print("Failed in mathcing jets to original index")
         return -1
