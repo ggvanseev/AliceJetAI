@@ -575,9 +575,7 @@ def training_with_set_parameters(
             logf.write(str(e))
 
         # check if the model passed the training
-        distance_nu = (
-            10  # Add large distance to ensure wrong model doesn't end up in list
-        )
+        diff_percentage_anomalies = 10  # Create standard for saving
         train_success = False
         if passed:
             percentage_anomaly_validation = calc_percentage_anomalies(
@@ -600,11 +598,14 @@ def training_with_set_parameters(
                 pooling=pooling,
             )
 
+            diff_percentage_anomalies = abs(
+                percentage_anomaly_training - percentage_anomaly_validation
+            )
+
             # Check if distance between percentage considered anomaly for training and validation
             # is smaller than required, to ensure the algorithm is consistent
             if (
-                abs(percentage_anomaly_training - percentage_anomaly_validation)
-                < max_distance_percentage_anomalies
+                diff_percentage_anomalies < max_distance_percentage_anomalies
                 and track_cost[0] != track_cost[-1]
             ):
                 n_attempt = max_attempts
@@ -614,7 +615,7 @@ def training_with_set_parameters(
 
     if plot_flag:
         # plot cost condition and cost function
-        title_plot = f"plot_with_{max_epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu_{distance_nu}_distance_nu"
+        title_plot = f"plot_with_{max_epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu_{diff_percentage_anomalies}_distance_nu"
         plot_cost_vs_cost_condition(
             track_cost=track_cost,
             track_cost_condition=track_cost_condition,
@@ -631,7 +632,7 @@ def training_with_set_parameters(
     )
 
     return {
-        "loss": distance_nu,
+        "loss": diff_percentage_anomalies,
         "final_cost": track_cost[-1],
         "status": STATUS_OK if train_success else STATUS_FAIL,
         "model": lstm_ocsvm,
