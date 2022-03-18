@@ -443,7 +443,7 @@ def training_with_set_parameters(
     train_data,
     val_data,
     plot_flag: bool = False,
-    patience=50,
+    patience=10,
     max_attempts=4,
     max_distance_nu=0.01,
 ):

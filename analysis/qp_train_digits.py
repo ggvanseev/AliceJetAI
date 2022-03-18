@@ -42,16 +42,14 @@ Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 # from sklearn.externals import joblib
 # import joblib
 
-from pyspark import F
 from functions.data_manipulation import (
     train_dev_test_split,
     format_ak_to_list,
+    trials_df_and_minimum,
 )
-from functions.data_loader import load_n_filter_data
+from functions.data_loader import load_n_filter_data, load_digits_data
 from functions.training import training_with_set_parameters
-
-# from autograd import elementwise_grad as egrad
-
+from plotting.general import cost_condition_plot
 
 import pickle
 import os
@@ -64,23 +62,35 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+### --- User input --- ###
 # Set hyper space and variables
 max_evals = 1
-patience = 5
+patience = 10
+print_dataset_info = True
+save_results_flag = True
+plot_flag = True
 
+# notes on run, added to run_info.p, keep short or leave empty
+run_notes = "first succesful test with digits"
 
+# set hyper parameters
 hyper_parameters = dict()
-
-hyper_parameters["batch_size"] = 300
-hyper_parameters["output_dim"] = 1
+hyper_parameters["batch_size"] = 500
+hyper_parameters["output_dim"] = 2
+hyper_parameters["hidden_dim"] = 2
 hyper_parameters["num_layers"] = 1
 hyper_parameters["dropout"] = 0
 hyper_parameters["min_epochs"] = 25
-hyper_parameters["learning_rate"] = 1e-12
-hyper_parameters["svm_nu"] = 0.05
-hyper_parameters["svm_gamma"] = "auto"
+hyper_parameters["learning_rate"] = 5e-5
+hyper_parameters["svm_nu"] = 0.5
+hyper_parameters["svm_gamma"] = "scale"
 hyper_parameters["scaler_id"] = "minmax"
-hyper_parameters["hidden_dim"] = 9
+hyper_parameters["pooling"] = "mean"
+
+# ---------------------- #
+
+
+### --- Program Start --- ###
 
 # start time
 start_time = time.time()
@@ -89,12 +99,27 @@ start_time = time.time()
 trials = dict()
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_names = ["samples/optdigits/optdigits.tes", "samples/optdigits/optdigits.tra"]
-f = open(file_names[0], 'r')
+train_file = "samples/pendigits/pendigits-orig.tra"
+test_file = "samples/pendigits/pendigits-orig.tes"
+names_file = "samples/pendigits/pendigits-orig.names"
 
-# split data
-train_data, dev_data, val_data = train_dev_test_split(f, split=[0.8, 0.1])
-print("Split data")
+# get digits data
+train_dict = load_digits_data(train_file, print_dataset_info=print_dataset_info)
+test_dict = load_digits_data(test_file)
+
+# plot random sample
+# plt.figure()
+# plt.scatter(*train_dict["8"][24].T)
+# plt.xlim(0,500)
+# plt.ylim(0,500)
+# plt.show()
+
+# mix "0" = 90% as normal data with "9" = 10% as anomalous data
+train_data = train_dict["0"][:675] + train_dict["9"][:75]
+print('Mixed "0": 675 = 90% of normal data with "9": 75 = 10% as anomalous data for a train set of 750 samples')
+test_data = test_dict["0"][:360] + test_dict["9"][:40]
+print('Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples')
+
 
 # track distance_nu
 distance_nu = []
@@ -103,25 +128,59 @@ for trial in range(max_evals):
     trials[trial] = training_with_set_parameters(
         hyper_parameters=hyper_parameters,
         train_data=train_data,
-        val_data=val_data,
+        val_data=test_data,
         patience=patience,
     )
 
     distance_nu.append(trials[trial]["loss"])
 
-    print(f"Best distance so far is:{min(distance_nu)}")
+    print(f"Best distance so far is: {min(distance_nu)}")
+    
 
+# saving spark_trials as dictionaries
+# source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
+# pickling_trials = dict()
+# for k, v in trials.__dict__.items():
+#     if not k in ["_spark_context", "_spark"]:
+#         pickling_trials[k] = v
 
-# set out file to job_id for parallel computing
-job_id = os.getenv("PBS_JOBID")
-if job_id:
-    out_file = f"storing_results/trials_train_{job_id.split('.')[0]}.p"
-else:
-    out_file = f"storing_results/trials_train_{time.strftime('%d_%m_%y_%H%M')}.p"
+# collect df and print best models
+# df, min_val, min_df, parameters = trials_df_and_minimum(trials, "loss")
 
-torch.save(trials, open(out_file, "wb"))
+# check to save results
+if save_results_flag:
+    # set out file to job_id for parallel computing
+    job_id = os.getenv("PBS_JOBID")
+    if job_id:
+        job_id = job_id.split('.')[0]
+    else:
+        job_id = time.strftime('%d_%m_%y_%H%M')
+    
+    out_file = f"storing_results/trials_test_{job_id}.p"
+    
+    # save trials as pickling_trials object
+    torch.save(trials, open(out_file, "wb"))
 
-run_time = pd.DataFrame(np.array([time.time() - start_time]))
+    # check to make plots
+    if plot_flag:
+        # make out directory if it does not exist yet
+        out_dir = f"output/cost_condition_{job_id}"
+        try:
+            os.mkdir(out_dir)
+        except FileExistsError:
+            pass
+        for trial in trials:
+            fig = cost_condition_plot(trials[trial], job_id)
+            fig.savefig(out_dir + "/" f"trial_{trial}.png")
+        # violin_plots(df, min_val, min_df, parameters, [job_id], "loss")
+        print("\nPlotting complete")
+    
+    # store run info
+    run_time = time.time() - start_time
+    run_info = f"{job_id}\ton: {train_file}\truntime: {run_time:.2f} s"
+    run_info = run_info + f"\tnotes: {run_notes}\n" if run_notes else run_info + "\n"
+    with open("storing_results/run_info.p", 'a+') as f:
+        f.write(run_info)
+    print(f"\nCompleted run in: {run_time}")
 
-run_time.to_csv("storing_results/runtime.p")
-# load trials_test = pickle.load(open("/storing_results/trials_test.p", "rb"))
+    # load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)

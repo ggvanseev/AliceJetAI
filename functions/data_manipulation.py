@@ -59,7 +59,7 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
     return train_data, dev_data, test_data
 
 
-def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
+def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
     """
     Tries to fill data into batches, drop left over data.
     Also trackts where the jets are in the branch.
@@ -69,7 +69,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     Don't use ordering or sorting to avoid introducing biases into the lstm, the sample has a chaotic
     """
     # make safety copy to avoid changing results
-    dataset = orignal_dataset.copy()
+    dataset = original_dataset.copy()
 
     # count all values (, is indicative of a value), and divide by n_features to prevent double counting splits
     max_n_batches = int(str(dataset).count(",") / n_features / batch_size)
@@ -202,7 +202,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
 
 # @njit()
-def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100):
+def branch_filler_jit(original_dataset, batch_size, n_features=3, max_trials=100):
     """
     Tries to fill data into batches, drop left over data.
     Also trackts where the jets are in the branch.
@@ -210,7 +210,7 @@ def branch_filler_jit(orignal_dataset, batch_size, n_features=3, max_trials=100)
     Don't use ordering or sorting to avoid introducing biases into the lstm, the sample has a chaotic
     """
     # make safety copy to avoid changing results
-    dataset = orignal_dataset.copy()
+    dataset = original_dataset.copy()
 
     # Count all values (, is indicative of a value), and devide by n_features to prevent double counting splits
     dataset_len = 0
