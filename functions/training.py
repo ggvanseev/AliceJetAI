@@ -223,7 +223,7 @@ def try_hyperparameters(
     plot_flag: bool = False,
     patience=5,
     max_attempts=4,
-    max_distance_nu=0.03,
+    # max_distance_nu=0.03,
 ):
     """
     This function searches for the correct hyperparameters.
@@ -395,9 +395,9 @@ def try_hyperparameters(
             )
 
             # Check if distance to svm_nu is smaller than required
-            if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1]:
-                n_attempt = max_attempts
-                train_success = True
+            # if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1]:
+            #     n_attempt = max_attempts
+            train_success = True
 
     # training time and print statement
     dt = time.time() - time_track
@@ -430,7 +430,7 @@ def try_hyperparameters(
     return {
         "loss": distance_nu,
         "final_cost": track_cost[-1],
-        "status": STATUS_OK if train_success else STATUS_FAIL,
+        "status": STATUS_OK if passed else STATUS_FAIL,
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,
         "cost_data": cost_data,
@@ -445,7 +445,7 @@ def training_with_set_parameters(
     plot_flag: bool = False,
     patience=10,
     max_attempts=4,
-    max_distance_nu=0.01,
+    # max_distance_nu=0.01,
 ):
     """
     This function searches for the correct hyperparameters.
@@ -587,9 +587,9 @@ def training_with_set_parameters(
             )
 
             # Check if distance to svm_nu is smaller than required
-            if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1]:
-                n_attempt = max_attempts
-                train_success = True
+            # if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1]:
+            #     n_attempt = max_attempts
+            train_success = True
 
     print(f"{'Passed' if train_success else 'Failed'} in: {time.time()-time_track}")
 
@@ -619,7 +619,7 @@ def training_with_set_parameters(
     return {
         "loss": distance_nu,
         "final_cost": track_cost[-1],
-        "status": STATUS_OK,  # update with train_success? TODO
+        "status": STATUS_OK if passed else STATUS_FAIL,  # update with passed or train_success? TODO
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,
         "cost_data": cost_data,

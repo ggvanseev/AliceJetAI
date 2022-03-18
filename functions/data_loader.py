@@ -176,7 +176,7 @@ def load_digits_data(data_file, print_dataset_info=False):
             elif "SEGMENT DIGIT" in line: # if new sample
                 if digit != -1: # check if not the first sample (or wrong digit)
                     sample = np.vstack(sample)
-                    data_dict[digit].append(sample.tolist()) # append numpied? sample
+                    data_dict[digit].append(sample) # append numpied? sample
                     # check if dx > dy 
                     dx = np.max(sample[:,0]) - np.min(sample[:,0])
                     dy = np.max(sample[:,1]) - np.min(sample[:,1])
