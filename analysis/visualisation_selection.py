@@ -11,10 +11,10 @@ from functions.data_loader import load_n_filter_data
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny_500k.root"
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
-job_id = 9792527
+
+job_id = "14_03_22_1028"
 
 
 # Load and filter data for criteria eta and jetpt_cap
@@ -74,7 +74,7 @@ for i in range(len(trials)):
     #     f"Percentage classified as anomaly: {np.round(anomaly_tracker[i]*100,2) }%, where the model has a nu of {trials[i]['result']['hyper_parameters']['svm_nu']}"
     # )
     print(
-        f"Anomalous: {np.round(anomaly_tracker[i]*100,2)}%,\tnu: {trials[i]['result']['hyper_parameters']['svm_nu']},\tLoss: {trials[i]['result']['loss']:.2E},  \tCost: {trials[i]['result']['final_cost']:.2f}"
+        f"Anomalous: {np.round(anomaly_tracker[i]*100,2)}%,\tnu: {trials[i]['result']['hyper_parameters']['svm_nu']},\tLoss: {trials[i]['result']['loss']:.2E},  \tCost: {trials[i]['result']['final_cost']:.2E}"
     )
 print(
     f"Average percentage anomalies: {np.round(np.nanmean(anomaly_tracker)*100,2)} +\- {np.round(np.nanstd(anomaly_tracker)*100,2)}%"

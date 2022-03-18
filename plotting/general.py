@@ -26,6 +26,31 @@ def plot_cost_vs_cost_condition(
         plt.show()
 
 
+def cost_condition_plot(result, title_plot):
+    # extract cost data from the results
+    cost_data = result["cost_data"]
+    if cost_data != 10: # check for failed models
+        track_cost = cost_data["cost"]
+        track_cost_condition = cost_data["cost_condition"]
+    else:
+        out_txt += "\n *** FAILED MODEL *** \n"
+        return -1
+
+    # plot cost condition and cost function
+    fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
+    fig.suptitle(title_plot, y=1.08)
+    ax1.plot(track_cost_condition[1:], label="Cost Condition")
+    ax1.set_xlabel("Epochs")
+    ax1.set_ylabel("Cost Condition")
+
+    ax2 = ax1.twinx()
+    ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7, label="Cost")
+    ax2.set_ylabel("Cost")
+
+    fig.legend()
+    return fig
+    
+
 def cost_condition_plots(pickling_trials, job_id):
     
     # make out directory if it does not exist yet
@@ -41,10 +66,7 @@ def cost_condition_plots(pickling_trials, job_id):
     # build plots for each trial
     for i, trial in enumerate(pickling_trials["_trials"]):
         out_txt += f"trial: {i}"
-
-        # obtain results from the trial
-        result = trial["result"]
-
+        
         # extract hyper parameters from the results
         h_parm = result["hyper_parameters"]
         title_plot = f""
@@ -52,29 +74,18 @@ def cost_condition_plots(pickling_trials, job_id):
             title_plot += f"{h_parm[key]}_{key}_"
             out_txt += "\n  {:12}\t  {}".format(key, h_parm[key])
 
-        # extract cost data from the results
-        cost_data = result["cost_data"]
-        if cost_data != 10: # check for failed models
-            track_cost = cost_data["cost"]
-            track_cost_condition = cost_data["cost_condition"]
-        else:
-            out_txt += "\n *** FAILED MODEL *** \n"
+        # obtain results from the trial
+        result = trial["result"]
+        
+        # generate the plot
+        fig = cost_condition_plot(result, title_plot)
+        if fig == -1:
             break
-
-        # plot cost condition and cost function
-        fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
-        fig.suptitle(title_plot, y=1.08)
-        ax1.plot(track_cost_condition[1:], label="Cost Condition")
-        ax1.set_xlabel("Epochs")
-        ax1.set_ylabel("Cost Condition")
-
-        ax2 = ax1.twinx()
-        ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7, label="Cost")
-        ax2.set_ylabel("Cost")
-
-        fig.legend()
+        
+        # save and close the plot
         fig.savefig(out_dir + "/" f"trial_{i}.png")
         plt.close(fig)  # close figure - clean memory
+        
         out_txt += "\n\n"
     
     # save info on all trials

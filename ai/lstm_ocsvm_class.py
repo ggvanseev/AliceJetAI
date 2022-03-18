@@ -43,7 +43,8 @@ class LSTM_OCSVM_CLASSIFIER:
         elif nines_test_flag:
             data = (np.zeros([500, int(self.batch_size / 100), len(data)]) + 9).tolist()
         else:
-            data = format_ak_to_list(data)
+            if type(data) != list:
+                data = format_ak_to_list(data)
 
         try:
             data_in_branches, track_jets_data, _, jets_index = branch_filler(

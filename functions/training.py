@@ -128,7 +128,7 @@ def training_algorithm(
         svm_model.fit(h_bar_list_np)
         alphas = np.abs(svm_model.dual_coef_)[0]
 
-        alphas = alphas / np.sum(alphas)  # NOTE: equation 14, sum alphas = 1
+        alphas = alphas / np.sum(alphas) # NOTE: equation 14, sum alphas = 1
 
         a_idx = svm_model.support_
 
@@ -222,7 +222,7 @@ def try_hyperparameters(
     plot_flag: bool = False,
     patience=5,
     max_attempts=4,
-    max_distance_nu=0.03,
+    # max_distance_nu=0.03,
 ):
     """
     This function searches for the correct hyperparameters.
@@ -430,7 +430,7 @@ def try_hyperparameters(
     return {
         "loss": distance_nu,
         "final_cost": track_cost[-1],
-        "status": STATUS_OK if train_success else STATUS_FAIL,
+        "status": STATUS_OK if passed else STATUS_FAIL,
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,
         "cost_data": cost_data,
@@ -443,7 +443,7 @@ def training_with_set_parameters(
     train_data,
     val_data,
     plot_flag: bool = False,
-    patience=50,
+    patience=10,
     max_attempts=4,
     max_distance_percentage_anomalies=0.01,
 ):
@@ -624,7 +624,7 @@ def training_with_set_parameters(
         )
 
     # return the model
-    lstm_ocsvm = dict({"lstm:": lstm_model, "ocsvm": svm_model, "scaler": scaler})
+    lstm_ocsvm = dict({"lstm": lstm_model, "ocsvm": svm_model, "scaler": scaler})
 
     # save plot data
     cost_data = dict(
