@@ -61,10 +61,11 @@ def lstm_results(
         elif pooling == "mean":
             h_bar = torch.zeros([1, len(jet_track_local), hn.shape[-1]])
             jet_track_prev = 0
+            jet_track_local = [x + 1 for x in jet_track_local]
+            jet_track_local[-1] = None
             for j, jet_track in enumerate(jet_track_local):
-                h_bar[:, j] = torch.mean(hn[:, jet_track_prev:jet_track],dim=1)
+                h_bar[:, j] = torch.mean(hn[:, jet_track_prev:jet_track], dim=1)
                 jet_track_prev = jet_track
-                
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
