@@ -1,5 +1,3 @@
-from email.utils import localtime
-from logging import raiseExceptions
 import torch
 import awkward as ak
 from copy import copy
@@ -10,10 +8,6 @@ import pandas as pd
 from torch.utils.data import TensorDataset, DataLoader
 
 from itertools import compress
-
-# from numba import njit TODO
-from numba import jit
-from copy import deepcopy
 
 # from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
 # import warnings
@@ -60,6 +54,19 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
     return train_data, dev_data, test_data
 
 
+def copy_dataset(dataset):
+    temp_dataset = dict()
+    temp_dataset2 = dict()
+
+    temp_dataset[0] = copy(dataset[0])
+    temp_dataset[1] = copy(dataset[1])
+
+    temp_dataset2[0] = copy(dataset[0])
+    temp_dataset2[1] = copy(dataset[1])
+
+    return temp_dataset, temp_dataset2
+
+
 def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
     """
     Tries to fill data into batches, drop left over data.
@@ -96,8 +103,7 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
 
         # make copies of the dataset to be able to remove elemnts while trying to fill branches
         # without destroyting original dataset
-        temp_dataset = deepcopy(dataset)
-        temp_dataset2 = deepcopy(dataset)
+        temp_dataset, temp_dataset2 = copy_dataset(dataset)
 
         # local trakcers of batches ad jets_in_batch
         batch = list()
@@ -176,8 +182,7 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
 
                     # make copies of the dataset to be able to remove elemnts while trying to fill branches
                     # without destroyting original dataset
-                    temp_dataset = deepcopy(dataset)
-                    temp_dataset2 = deepcopy(dataset)
+                    temp_dataset, temp_dataset2 = copy_dataset(dataset)
 
                     # local trakcers of batches ad jets_in_batch
                     batch = list()
@@ -199,7 +204,8 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
 
                 # If at the end of the temp_dataset update it to try to fill in free spots
                 elif j == len_temp_dataset - 1:
-                    temp_dataset = deepcopy(temp_dataset2)
+                    temp_dataset[0] = copy(temp_dataset2[0])
+                    temp_dataset[1] = copy(temp_dataset2[1])
                     break
 
         if add_branch_flag:
