@@ -563,7 +563,7 @@ def get_full_pytorch_weight(weights, device):
 
 def h_bar_list_to_numpy(h_bar_list, device):
     if device.type == "cpu":
-        h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list])
+        h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list], dtype=object)
     else:
         h_bar_list_temp = h_bar_list.to(device=torch.device("cpu"))
         h_bar_list_np = np.array([h_bar.detach().numpy() for h_bar in h_bar_list_temp])

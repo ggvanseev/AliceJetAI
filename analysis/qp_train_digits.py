@@ -64,7 +64,7 @@ import matplotlib.pyplot as plt
 
 ### --- User input --- ###
 # Set hyper space and variables
-max_evals = 1
+max_evals = 10
 patience = 10
 print_dataset_info = True
 save_results_flag = True

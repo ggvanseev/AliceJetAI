@@ -585,7 +585,7 @@ def training_with_set_parameters(
                 svm_model,
                 device,
             )
-
+            n_attempt = max_attempts
             # Check if distance to svm_nu is smaller than required
             # if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1]:
             #     n_attempt = max_attempts
@@ -609,7 +609,7 @@ def training_with_set_parameters(
         fig.savefig("output/" + title_plot + str(time.time()) + ".png")
 
     # return the model
-    lstm_ocsvm = dict({"lstm:": lstm_model, "ocsvm": svm_model, "scaler": scaler})
+    lstm_ocsvm = dict({"lstm": lstm_model, "ocsvm": svm_model, "scaler": scaler})
 
     # save plot data
     cost_data = dict(
