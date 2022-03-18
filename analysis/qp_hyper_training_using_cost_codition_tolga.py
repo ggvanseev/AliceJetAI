@@ -78,17 +78,19 @@ import branch_names as na
 ### User Input  ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # set run settings
 max_evals = 6
 patience = 5
-kt_cut = False              # for dataset, splittings kt > 1.0 GeV
-debug_flag = False          # for using debug space = only 1 configuration of hp
-multicore_flag = True       # for using SparkTrials or Trials
-save_results_flag = True    # for saving trials and runtime
-plot_flag = True            # for making cost condition plots, only works if save_results_flag is True
+kt_cut = False  # for dataset, splittings kt > 1.0 GeV
+debug_flag = False  # for using debug space = only 1 configuration of hp
+multicore_flag = False  # for using SparkTrials or Trials
+save_results_flag = False  # for saving trials and runtime
+plot_flag = (
+    False  # for making cost condition plots, only works if save_results_flag is True
+)
 
 ###-------------###
 
@@ -123,12 +125,12 @@ space = hp.choice(
                 "variables",
                 [
                     [na.recur_dr, na.recur_jetpt, na.recur_z],
-                    #[na.recur_dr, na.recur_jetpt],
-                    #[na.recur_dr, na.recur_z],
-                    #[na.recur_jetpt, na.recur_z],
+                    # [na.recur_dr, na.recur_jetpt],
+                    # [na.recur_dr, na.recur_z],
+                    # [na.recur_jetpt, na.recur_z],
                 ],
             ),
-            "pooling": hp.choice("pooling",["last"]), # "last" , "mean"
+            "pooling": hp.choice("pooling", ["last"]),  # "last" , "mean"
         }
     ],
 )
@@ -180,15 +182,15 @@ print("Splitting data complete")
 
 # set trials or sparktrials
 if multicore_flag:
-    cores = os.cpu_count() if os.cpu_count() < 10 else 10 
+    cores = os.cpu_count() if os.cpu_count() < 10 else 10
     trials = SparkTrials(
         parallelism=cores
     )  # run as many trials parallel as the nr of cores available
     print(f"Hypertuning {max_evals} evaluations, on {cores} cores:\n")
 else:
     trials = Trials()  # NOTE keep for debugging since can't do with spark trials
-        
-# hyper tuning and evaluation      
+
+# hyper tuning and evaluation
 best = fmin(
     partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
         try_hyperparameters,
@@ -218,12 +220,12 @@ if save_results_flag:
     # set out file to job_id for parallel computing
     job_id = os.getenv("PBS_JOBID")
     if job_id:
-        job_id = job_id.split('.')[0]
+        job_id = job_id.split(".")[0]
     else:
-        job_id = time.strftime('%d_%m_%y_%H%M')
-    
+        job_id = time.strftime("%d_%m_%y_%H%M")
+
     out_file = f"storing_results/trials_test_{job_id}.p"
-    
+
     # save trials as pickling_trials object
     torch.save(pickling_trials, open(out_file, "wb"))
 
@@ -232,7 +234,7 @@ if save_results_flag:
         cost_condition_plots(pickling_trials, job_id)
         violin_plots(df, min_val, min_df, parameters, [job_id], "loss")
         print("\nPlotting complete")
-    
+
     # store runtime
     run_time = pd.DataFrame(np.array([time.time() - start_time]))
     run_time.to_csv("storing_results/runtime.p")

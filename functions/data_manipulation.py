@@ -13,7 +13,7 @@ from itertools import compress
 
 # from numba import njit TODO
 from numba import jit
-from copy import deepcopy
+from copy import copy
 
 # from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
 # import warnings
@@ -60,6 +60,19 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
     return train_data, dev_data, test_data
 
 
+def copy_dataset(dataset):
+    temp_dataset = dict()
+    temp_dataset2 = dict()
+
+    temp_dataset[0] = copy(dataset[0])
+    temp_dataset[1] = copy(dataset[1])
+
+    temp_dataset2[0] = copy(dataset[0])
+    temp_dataset2[1] = copy(dataset[1])
+
+    return temp_dataset, temp_dataset2
+
+
 def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
     """
     Tries to fill data into batches, drop left over data.
@@ -85,7 +98,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
     original_index = list(range(0, len(original_data)))
 
-    dataset = [original_data, original_index]
+    dataset = {0: original_data, 1: original_index}
 
     i = -1
     while i < max_n_batches:
@@ -96,8 +109,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
         # make copies of the dataset to be able to remove elemnts while trying to fill branches
         # without destroyting original dataset
-        temp_dataset = deepcopy(dataset)
-        temp_dataset2 = deepcopy(dataset)
+        temp_dataset, temp_dataset2 = copy_dataset(dataset)
 
         # local trakcers of batches ad jets_in_batch
         batch = list()
@@ -118,7 +130,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
                 j += 1
 
                 # check if temp_dataset2 still has elements
-                if temp_dataset2[0] == []:
+                if len(temp_dataset2[0]) < 1:
                     add_branch_flag = False
                     i = max_n_batches
                     space_count = 0
@@ -176,8 +188,7 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
                     # make copies of the dataset to be able to remove elemnts while trying to fill branches
                     # without destroyting original dataset
-                    temp_dataset = deepcopy(dataset)
-                    temp_dataset2 = deepcopy(dataset)
+                    temp_dataset, temp_dataset2 = copy_dataset(dataset)
 
                     # local trakcers of batches ad jets_in_batch
                     batch = list()
@@ -199,7 +210,8 @@ def branch_filler(orignal_dataset, batch_size, n_features=3, max_trials=100):
 
                 # If at the end of the temp_dataset update it to try to fill in free spots
                 elif j == len_temp_dataset - 1:
-                    temp_dataset = deepcopy(temp_dataset2)
+                    temp_dataset[0] = copy(temp_dataset2[0])
+                    temp_dataset[1] = copy(temp_dataset2[1])
                     break
 
         if add_branch_flag:
