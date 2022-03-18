@@ -33,8 +33,7 @@ from functions.optimization_orthogonality_constraints import (
 
 from plotting.general import plot_cost_vs_cost_condition
 
-from functions.validation import validation_distance_nu
-
+from functions.validation import validation_distance_nu, calc_percentage_anomalies
 from ai.model_lstm import LSTMModel
 
 # from autograd import elementwise_grad as egrad
@@ -97,7 +96,7 @@ def training_algorithm(
         x_loader,
         track_jets_dev_data,
         device,
-        pooling,
+        pooling=pooling,
     )
     h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
@@ -161,8 +160,8 @@ def training_algorithm(
             model_params["input_dim"],
             x_loader,
             track_jets_dev_data,
-            device,
-            pooling,
+            device=device,
+            pooling=pooling,
         )
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
@@ -391,13 +390,14 @@ def try_hyperparameters(
                 input_dim,
                 lstm_model,
                 svm_model,
+                pooling,
                 device,
             )
 
             # Check if distance to svm_nu is smaller than required
-            # if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1]:
-            #     n_attempt = max_attempts
-            train_success = True
+            if track_cost[0] != track_cost[-1]:
+                n_attempt = max_attempts
+                train_success = True
 
     # training time and print statement
     dt = time.time() - time_track
@@ -445,7 +445,7 @@ def training_with_set_parameters(
     plot_flag: bool = False,
     patience=10,
     max_attempts=4,
-    # max_distance_nu=0.01,
+    max_distance_percentage_anomalies=0.01,
 ):
     """
     This function searches for the correct hyperparameters.
@@ -566,7 +566,7 @@ def training_with_set_parameters(
                 model_params,
                 training_params,
                 device,
-                pooling,
+                pooling=pooling,
             )
             print(print_out)
         except RuntimeError as e:
@@ -580,37 +580,47 @@ def training_with_set_parameters(
         )
         train_success = False
         if passed:
-            distance_nu = validation_distance_nu(
-                svm_nu,
+            percentage_anomaly_validation = calc_percentage_anomalies(
                 val_loader,
                 track_jets_train_data,
                 input_dim,
                 lstm_model,
                 svm_model,
-                device,
+                pooling=pooling,
+                device=device,
             )
-            n_attempt = max_attempts
-            # Check if distance to svm_nu is smaller than required
-            # if distance_nu < max_distance_nu and track_cost[0] != track_cost[-1]:
-            #     n_attempt = max_attempts
-            train_success = True
+
+            percentage_anomaly_training = calc_percentage_anomalies(
+                train_loader,
+                track_jets_train_data,
+                input_dim,
+                lstm_model,
+                svm_model,
+                device=device,
+                pooling=pooling,
+            )
+
+            # Check if distance between percentage considered anomaly for training and validation
+            # is smaller than required, to ensure the algorithm is consistent
+            if (
+                abs(percentage_anomaly_training - percentage_anomaly_validation)
+                < max_distance_percentage_anomalies
+                and track_cost[0] != track_cost[-1]
+            ):
+                n_attempt = max_attempts
+                train_success = True
 
     print(f"{'Passed' if train_success else 'Failed'} in: {time.time()-time_track}")
 
     if plot_flag:
         # plot cost condition and cost function
         title_plot = f"plot_with_{max_epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu_{distance_nu}_distance_nu"
-        fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
-        fig.suptitle(title_plot, y=1.08)
-        ax1.plot(track_cost_condition[1:])
-        ax1.set_xlabel("Epochs")
-        ax1.set_ylabel("Cost Condition")
-
-        ax2 = ax1.twinx()
-        ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7)
-        ax2.set_ylabel("Cost")
-
-        fig.savefig("output/" + title_plot + str(time.time()) + ".png")
+        plot_cost_vs_cost_condition(
+            track_cost=track_cost,
+            track_cost_condition=track_cost_condition,
+            title_plot=title_plot,
+            save_flag=True,
+        )
 
     # return the model
     lstm_ocsvm = dict({"lstm": lstm_model, "ocsvm": svm_model, "scaler": scaler})
@@ -623,7 +633,7 @@ def training_with_set_parameters(
     return {
         "loss": distance_nu,
         "final_cost": track_cost[-1],
-        "status": STATUS_OK if passed else STATUS_FAIL,  # update with passed or train_success? TODO
+        "status": STATUS_OK if train_success else STATUS_FAIL,
         "model": lstm_ocsvm,
         "hyper_parameters": hyper_parameters,
         "cost_data": cost_data,

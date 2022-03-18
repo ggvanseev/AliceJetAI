@@ -72,18 +72,19 @@ hyper_parameters["output_dim"] = 1
 hyper_parameters["num_layers"] = 1
 hyper_parameters["dropout"] = 0
 hyper_parameters["min_epochs"] = 25
-hyper_parameters["learning_rate"] = 1e-12
+hyper_parameters["learning_rate"] = 1e-4
 hyper_parameters["svm_nu"] = 0.05
 hyper_parameters["svm_gamma"] = "auto"
 hyper_parameters["scaler_id"] = "minmax"
 hyper_parameters["hidden_dim"] = 9
+hyper_parameters["pooling"] = "mean"
 
 # storing dict:
 trials = dict()
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # start time
 start_time = time.time()
@@ -98,7 +99,7 @@ train_data, dev_data, val_data = train_dev_test_split(g_recur_jets, split=[0.8, 
 print("Split data")
 
 # track distance_nu
-distance_nu = []
+distance_percentage_anomalies = []
 
 for trial in range(max_evals):
     trials[trial] = training_with_set_parameters(
@@ -108,9 +109,9 @@ for trial in range(max_evals):
         patience=patience,
     )
 
-    distance_nu.append(trials[trial]["loss"])
+    distance_percentage_anomalies.append(trials[trial]["loss"])
 
-    print(f"Best distance so far is:{min(distance_nu)}")
+    print(f"Best distance so far is:{min(distance_percentage_anomalies)}")
 
 
 # set out file to job_id for parallel computing
