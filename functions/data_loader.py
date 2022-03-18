@@ -172,12 +172,12 @@ def load_n_filter_data(
         q_kts_hist = np.histogram(q_kts_flat, bins=range(round(max(q_kts_flat))))
         print(f"\tquark splittings cut:\t\t{q_kts_hist[0][0] / sum(q_kts_hist[0]):.2%}")
 
-    # remove empty additions from recursive jets and flatten them
+    # remove empty additions from recursive jets and flatten them, i.e. take jet out of event nesting
     g_jets_recur = select_non_empty_branches(
         g_jets_recur, non_empty_key=jet_recur_branches[0]
     )
 
-    g_jets_recur = flatten_array(q_jets_recur)
+    g_jets_recur = flatten_array(g_jets_recur)
 
     q_jets_recur = select_non_empty_branches(
         q_jets_recur, non_empty_key=jet_recur_branches[0]

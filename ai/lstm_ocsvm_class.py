@@ -46,7 +46,7 @@ class LSTM_OCSVM_CLASSIFIER:
             data = format_ak_to_list(data)
 
         try:
-            data_in_branches, track_jets_data, _ = branch_filler(
+            data_in_branches, track_jets_data, _, jets_index = branch_filler(
                 data, batch_size=self.batch_size
             )
         except TypeError:
@@ -84,42 +84,9 @@ class LSTM_OCSVM_CLASSIFIER:
 
                 h_bar_list.append(h_bar)
 
-                # return real jets in list form. if not flag
-                if not (nines_test_flag or zeros_test_flag):
-                    n_jets = len(jet_track_local)
-                    for j in range(n_jets):
-                        # add possibility to get first entry
-                        jet_track_local_temp = [-1] + jet_track_local
-                        # add one to all entries, to take correct range
-                        jet_track_local_temp = [x + 1 for x in jet_track_local_temp]
-                        # adjust final entry
-                        jet_track_local_temp[-1] = None
-                        # append to general list
-                        jets_list.append(
-                            x_batch[
-                                jet_track_local_temp[j] : jet_track_local_temp[j + 1]
-                            ]
-                        )
-
         # Take last layer
         h_bar_list = torch.vstack([h_bar[-1] for h_bar in h_bar_list])
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, self.device)
-
-        # find original matching jet
-        if zeros_test_flag or nines_test_flag:
-            jets_index = 0
-            jets_list = 0
-        else:
-            jets_list = h_bar_list_to_numpy(jets_list, self.device)
-
-            # scale original data
-            scaled_data = list()
-            for element in data:
-                scaled_data.append(self.scaler.transform(element))
-
-            jets_index = find_matching_jet_index(
-                jets_list=jets_list, original_data=scaled_data
-            )
 
         # get prediction
         classifaction = self.oc_svm.predict(h_bar_list_np)
