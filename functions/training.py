@@ -1,3 +1,4 @@
+from msilib.schema import Error
 import torch
 import numpy as np
 
@@ -191,7 +192,7 @@ def training_algorithm(
         else:
             cost_condition_passed_flag = False
 
-        # Check if cost function starts to explode
+        # Check if cost function starts to explode to infinity.
         if np.isnan(track_cost_condition[k]):
             print_out += "\nBroke, for given hyper parameters"
             return (
@@ -200,7 +201,9 @@ def training_algorithm(
                 track_cost,
                 track_cost_condition,
                 False,
+                print_out,
             )  # immediately return passed = False
+
     print_out += f"\nfrac diff: {(cost - cost_prev) / cost_prev},  eps: {training_params['epsilon']} "
     if abs((cost - cost_prev) / cost_prev) > training_params["epsilon"]:
         print_out += "\nAlgorithm failed: not done learning in max epochs."
@@ -563,6 +566,9 @@ class REGULAR_TRAINING(TRAINING):
     def data_prep_branch_filler(
         self, train_data, val_data, batch_size, input_variables
     ):
+        train_data = format_ak_to_list(train_data)
+        val_data = format_ak_to_list(val_data)
+
         train_data, track_jets_train_data, max_n_train_batches, _ = branch_filler(
             train_data, batch_size=batch_size
         )
@@ -575,7 +581,8 @@ class REGULAR_TRAINING(TRAINING):
         return train_data, val_data, track_jets_train_data
 
 
-def run_full_training(*,
+def run_full_training(
+    *,
     TRAINING_TYPE: REGULAR_TRAINING or HYPER_TRAINING,
     file_name: str,
     space,
@@ -607,10 +614,18 @@ def run_full_training(*,
     g_recur_jets, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
     print("Loading data complete")
     # split data
-    train_data, dev_data, test_data = train_dev_test_split(
+    split_train_data, split_dev_data, split_val_data = train_dev_test_split(
         g_recur_jets, split=[0.8, 0.1]
     )
     print("Splitting data complete")
+
+    # Decide what data to use based on training type
+    if TRAINING_TYPE == REGULAR_TRAINING:
+        train_data = split_train_data
+        val_data = split_val_data
+    else:
+        train_data = split_dev_data
+        val_data = None
 
     # set trials or sparktrials
     if multicore_flag:
@@ -629,8 +644,9 @@ def run_full_training(*,
     best = fmin(
         partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
             training.run_training,
-            train_data=dev_data,
-            plot_flag=False,
+            train_data=train_data,
+            val_data=val_data,
+            plot_flag=plot_flag,
             patience=patience,
         ),
         space,

@@ -1,6 +1,14 @@
 import torch
 
 
+def get_mean_theta_gradients(theta_gradients, n_datasets):
+    for key1, value1 in theta_gradients.items():
+        for key2, value2 in value1.items():
+            theta_gradients[key1][key2] = theta_gradients[key1][key2] / n_datasets
+
+    return theta_gradients
+
+
 def calc_lstm_results(
     lstm_model,
     input_dim,
@@ -65,9 +73,9 @@ def calc_lstm_results(
         h_bar_list.append(h_bar)
 
     # Get mean of theta gradients
-    for key1, value1 in theta_gradients.items():
-        for key2, value2 in value1.items():
-            theta_gradients[key1][key2] = theta_gradients[key1][key2] / len(data_loader)
+    theta_gradients = get_mean_theta_gradients(
+        theta_gradients, n_datasets=len(data_loader)
+    )
 
     return (
         torch.vstack([h_bar[-1] for h_bar in h_bar_list]),

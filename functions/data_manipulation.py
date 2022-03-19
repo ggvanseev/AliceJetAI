@@ -81,7 +81,7 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
     Don't use ordering or sorting to avoid introducing biases into the lstm, the sample has a chaotic
     """
     # make safety copy to avoid changing results
-    original_data = original_dataset.copy()
+    original_data = copy(original_dataset)
 
     # count all values (, is indicative of a value), and divide by n_features to prevent double counting splits
     max_n_batches = int(str(original_data).count(",") / n_features / batch_size)
@@ -128,7 +128,7 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
                 j += 1
 
                 # check if temp_dataset2 still has elements
-                if temp_dataset2[0] == []:
+                if len(temp_dataset2[0]) < 1:
                     add_branch_flag = False
                     i = max_n_batches
                     space_count = 0

@@ -57,7 +57,6 @@ file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 max_evals = 4
 patience = 5
 kt_cut = 1.0  # for dataset, splittings kt > 1.0 GeV, assign None if not using
-debug_flag = True  # for using debug space = only 1 configuration of hp
 multicore_flag = False  # for using SparkTrials or Trials
 save_results_flag = True  # for saving trials and runtime
 plot_flag = (
@@ -74,7 +73,7 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.choice("num_batch", 300),
+            "batch_size": hp.choice("num_batch", [100]),
             "hidden_dim": hp.choice("hidden_dim", [20]),
             "num_layers": hp.choice(
                 "num_layers", [1]
