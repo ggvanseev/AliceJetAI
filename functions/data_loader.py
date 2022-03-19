@@ -60,10 +60,9 @@ def load_n_filter_data(
     file_name: str,
     tree_name: str = na.tree,
     cut: bool = True,
-    kt_cut: bool = True,
+    kt_cut: float = None,
     eta_max: float = 2.0,
     pt_min: int = 130,
-    kt_min: float = 1.0,
     jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z],
 ) -> Tuple[ak.Array, ak.Array, ak.Array, ak.Array]:
     """Load in dataset from ROOT file of jet data. Subsequently, the jet data will be
@@ -77,9 +76,10 @@ def load_n_filter_data(
         tree_name (str, optional): Name of the TTree object of the ROOT file. Defaults
                 to "jetTreeSig".
         cut (bool, optional): Boolean statement whether to apply cuts. Defaults to True.
-        kt_cut (bool, optional): Boolean statement whether to apply kt_cut to splittings. Defaults to True.
+        kt_cut (float, optional): Functions as boolean statement whether to apply kt_cut
+                to splittings by setting a value. Value for kt cut measured in GeV, sets
+                a minumum. Defaults to None, i.e. no kt_cut.
         eta_max (float, optional): Value for eta cut. Defaults to 2.0.
-        kt_min (float, optional): Value for kt cut. Defaults to 1.0 GeV.
         pt_cut (int, optional): Value for pt cut. Defaults to 130.
 
     Returns:
@@ -145,7 +145,7 @@ def load_n_filter_data(
 
     # apply kt_cut of kt > 1.0 GeV
     if kt_cut:
-        print("Applying cut: kt > 1.0 GeV on all splittings")
+        print(f"Applying cut: kt > {kt_cut} GeV on all splittings")
         # get kt values
         g_jets_kt = (
             g_jets_recur.sigJetRecur_jetpt
@@ -159,8 +159,8 @@ def load_n_filter_data(
         )
 
         # cut kts
-        g_jets_recur = g_jets_recur[g_jets_kt > kt_min]
-        q_jets_recur = q_jets_recur[q_jets_kt > kt_min]
+        g_jets_recur = g_jets_recur[g_jets_kt > kt_cut]
+        q_jets_recur = q_jets_recur[q_jets_kt > kt_cut]
 
         # hist gluons
         g_kts_flat = ak.flatten(ak.flatten(g_jets_kt)).to_list()

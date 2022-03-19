@@ -1,10 +1,6 @@
 import torch
 import numpy as np
 
-from hyperopt import STATUS_OK, STATUS_FAIL
-
-import numpy as np
-
 from sklearn.svm import OneClassSVM
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
@@ -14,15 +10,16 @@ from sklearn.preprocessing import StandardScaler
 
 import time
 
-import torch
-
 from functions.data_manipulation import (
     branch_filler,
     lstm_data_prep,
     h_bar_list_to_numpy,
     scaled_epsilon_n_max_epochs,
     format_ak_to_list,
+    train_dev_test_split,
+    trials_df_and_minimum,
 )
+
 from functions.optimization_orthogonality_constraints import (
     kappa,
     optimization,
@@ -39,7 +36,23 @@ from ai.model_lstm import LSTMModel
 
 from copy import copy
 
-import matplotlib.pyplot as plt
+from functions.data_loader import load_n_filter_data
+from plotting.general import cost_condition_plots, violin_plots
+
+# from autograd import elementwise_grad as egrad
+
+
+from hyperopt import (
+    fmin,
+    tpe,
+    STATUS_OK,
+    STATUS_FAIL,
+    Trials,
+    SparkTrials,
+)  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
+from functools import partial
+
+import os
 
 
 def training_algorithm(
@@ -560,3 +573,111 @@ class REGULAR_TRAINING(TRAINING):
         print(f"\nMax number of batches: {max_n_val_batches}")
 
         return train_data, val_data, track_jets_train_data
+
+
+def run_full_training(*,
+    TRAINING_TYPE: REGULAR_TRAINING or HYPER_TRAINING,
+    file_name: str,
+    space,
+    max_evals: int = 4,
+    patience: int = 5,
+    kt_cut=False,  # for dataset, splittings kt > 1.0 GeV
+    multicore_flag: bool = False,
+    save_results_flag: bool = True,
+    plot_flag: bool = True,
+    run_notes="",
+):
+    """
+    Run a full training
+    TRAINING_TYPE: REGULAR_TRAINING or HYPER_TRAINING: training object
+    file_name: file name to train from
+    space: set hyper_parameters
+    max_evals: max number of evals per trial
+    patience: minum number of epochs where cost condition is met before succes condition
+    kt_cut: weather to apply a kt_cut
+    multicore_flag: for using SparkTrials or Trials, ie multiple cpu cores parallel
+    save_results_flag: for saving trials and runtime
+    plot_flag: for making cost condition plots, only works if save_results_flag is True
+    run_nots: notes on run, added to run_info.p, keep short or leave empty
+    """
+    # start time
+    start_time = time.time()
+
+    # Load and filter data for criteria eta and jetpt_cap
+    g_recur_jets, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
+    print("Loading data complete")
+    # split data
+    train_data, dev_data, test_data = train_dev_test_split(
+        g_recur_jets, split=[0.8, 0.1]
+    )
+    print("Splitting data complete")
+
+    # set trials or sparktrials
+    if multicore_flag:
+        cores = os.cpu_count() if os.cpu_count() < 10 else 10
+        trials = SparkTrials(
+            parallelism=cores
+        )  # run as many trials parallel as the nr of cores available
+        print(f"Hypertuning {max_evals} evaluations, on {cores} cores:\n")
+    else:
+        trials = Trials()  # NOTE keep for debugging since can't do with spark trials
+
+    # Create training object
+    training = TRAINING_TYPE()
+
+    # hyper tuning and evaluation
+    best = fmin(
+        partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
+            training.run_training,
+            train_data=dev_data,
+            plot_flag=False,
+            patience=patience,
+        ),
+        space,
+        algo=tpe.suggest,
+        max_evals=max_evals,
+        trials=trials,
+    )
+    print(f"\nHypertuning completed on dataset:\n{file_name}")
+
+    # saving spark_trials as dictionaries
+    # source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
+    pickling_trials = dict()
+    for k, v in trials.__dict__.items():
+        if not k in ["_spark_context", "_spark"]:
+            pickling_trials[k] = v
+
+    # collect df and print best models
+    df, min_val, min_df, parameters = trials_df_and_minimum(pickling_trials, "loss")
+
+    # check to save results
+    if save_results_flag:
+        # set out file to job_id for parallel computing
+        job_id = os.getenv("PBS_JOBID")
+        if job_id:
+            job_id = job_id.split(".")[0]
+        else:
+            job_id = time.strftime("%d_%m_%y_%H%M")
+
+        out_file = f"storing_results/trials_test_{job_id}.p"
+
+        # save trials as pickling_trials object
+        torch.save(pickling_trials, open(out_file, "wb"))
+
+        # check to make plots
+        if plot_flag:
+            cost_condition_plots(pickling_trials, job_id)
+            violin_plots(df, min_val, min_df, parameters, [job_id], "loss")
+            print("\nPlotting complete")
+
+        # store run info
+        run_time = time.time() - start_time
+        run_info = f"{job_id}\ton: {file_name}\truntime: {run_time:.2f} s"
+        run_info = (
+            run_info + f"\tnotes: {run_notes}\n" if run_notes else run_info + "\n"
+        )
+        with open("storing_results/run_info.p", "a+") as f:
+            f.write(run_info)
+        print(f"\nCompleted run in: {run_time}")
+
+        # load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)

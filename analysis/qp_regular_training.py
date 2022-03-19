@@ -39,95 +39,86 @@ parameter. Using Ak, we update the chosen parameter as in (24).
 Using algorithm 2 of Unsupervised Anomaly Detection With LSTM Neural Networks
 Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 """
-# from sklearn.externals import joblib
-# import joblib
+from hyperopt import (
+    hp,
+)  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
 
-from functions.data_manipulation import (
-    train_dev_test_split,
-    format_ak_to_list,
-)
-from functions.data_loader import load_n_filter_data
-from functions.training import REGULAR_TRAINING
+import branch_names as na
 
-# from autograd import elementwise_grad as egrad
+from functions.training import REGULAR_TRAINING, run_full_training
 
-
-import pickle
-import os
-import time
-import torch
-
-import pandas as pd
-import numpy as np
-
-# Set hyper space and variables
-max_evals = 1
-patience = 5
-
-
-hyper_parameters = dict()
-
-hyper_parameters["batch_size"] = 300
-hyper_parameters["output_dim"] = 1
-hyper_parameters["num_layers"] = 1
-hyper_parameters["dropout"] = 0
-hyper_parameters["min_epochs"] = 25
-hyper_parameters["learning_rate"] = 1e-4
-hyper_parameters["svm_nu"] = 0.05
-hyper_parameters["svm_gamma"] = "auto"
-hyper_parameters["scaler_id"] = "minmax"
-hyper_parameters["hidden_dim"] = 9
-hyper_parameters["pooling"] = "mean"
-hyper_parameters["variables"] = [None]
-
-# storing dict:
-trials = dict()
+# Select file
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
-# start time
-start_time = time.time()
+# set run settings
+max_evals = 4
+patience = 5
+kt_cut = 1.0  # for dataset, splittings kt > 1.0 GeV, assign None if not using
+debug_flag = True  # for using debug space = only 1 configuration of hp
+multicore_flag = False  # for using SparkTrials or Trials
+save_results_flag = True  # for saving trials and runtime
+plot_flag = (
+    True  # for making cost condition plots, only works if save_results_flag is True
+)
 
-# Load and filter data for criteria eta and jetpt_cap
-g_recur_jets, _ = load_n_filter_data(file_name)
-g_recur_jets = format_ak_to_list(g_recur_jets)
-print("Loaded data")
+run_notes = ""  # Small command on run, will be save to save file.
 
-# split data
-train_data, dev_data, val_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
-print("Split data")
-
-# track distance_nu
-distance_percentage_anomalies = []
-
-# Create object for training
-training = REGULAR_TRAINING()
-
-for trial in range(max_evals):
-    trials[trial] = training.run_training(
-        hyper_parameters=hyper_parameters,
-        train_data=train_data,
-        val_data=val_data,
-        patience=patience,
-    )
-
-    distance_percentage_anomalies.append(trials[trial]["loss"])
-
-    print(f"Best distance so far is:{min(distance_percentage_anomalies)}")
+###-------------###
 
 
-# set out file to job_id for parallel computing
-job_id = os.getenv("PBS_JOBID")
-if job_id:
-    out_file = f"storing_results/trials_train_{job_id.split('.')[0]}.p"
-else:
-    out_file = f"storing_results/trials_train_{time.strftime('%d_%m_%y_%H%M')}.p"
+# set space
+space = hp.choice(
+    "hyper_parameters",
+    [
+        {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
+            "batch_size": hp.choice("num_batch", 300),
+            "hidden_dim": hp.choice("hidden_dim", [20]),
+            "num_layers": hp.choice(
+                "num_layers", [1]
+            ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
+            "min_epochs": hp.choice(
+                "min_epochs", [int(30)]
+            ),  # lijkt niet heel veel te doen
+            "learning_rate": 10 ** hp.choice("learning_rate", [-5]),
+            # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
+            "dropout": hp.choice(
+                "dropout", [0]
+            ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
+            "output_dim": hp.choice("output_dim", [1]),
+            "svm_nu": hp.choice("svm_nu", [0.05]),  # 0.5 was the default
+            "svm_gamma": hp.choice(
+                "svm_gamma", ["auto"]  # Auto seems to give weird results
+            ),  # , "scale", , "auto"[ 0.23 was the defeault before]
+            "scaler_id": hp.choice(
+                "scaler_id", ["minmax"]
+            ),  # MinMaxScaler or StandardScaler
+            "variables": hp.choice(
+                "variables",
+                [
+                    [na.recur_dr, na.recur_jetpt, na.recur_z],
+                    # [na.recur_dr, na.recur_jetpt],
+                    # [na.recur_dr, na.recur_z],
+                    # [na.recur_jetpt, na.recur_z],
+                ],
+            ),
+            "pooling": hp.choice("pooling", ["last"]),  # "last" , "mean"
+        }
+    ],
+)
 
-torch.save(trials, open(out_file, "wb"))
 
-run_time = pd.DataFrame(np.array([time.time() - start_time]))
-
-run_time.to_csv("storing_results/runtime.p")
-# load trials_test = pickle.load(open("/storing_results/trials_test.p", "rb"))
+run_full_training(
+    TRAINING_TYPE=REGULAR_TRAINING,
+    file_name=file_name,
+    space=space,
+    max_evals=max_evals,
+    patience=patience,
+    kt_cut=kt_cut,  # for dataset, splittings kt > 1.0 GeV
+    multicore_flag=multicore_flag,
+    save_results_flag=save_results_flag,
+    plot_flag=plot_flag,
+    run_notes=run_notes,
+)

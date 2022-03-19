@@ -55,6 +55,10 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
 
 
 def copy_dataset(dataset):
+    """
+    Function copies the dataset such that it has similar qualities to a deepcopy,
+    e.g. manipulation of the copy won't affect the original
+    """
     temp_dataset = dict()
     temp_dataset2 = dict()
 

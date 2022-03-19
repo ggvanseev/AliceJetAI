@@ -11,6 +11,8 @@ from functions.data_manipulation import (
 
 from functions.run_lstm import calc_lstm_results
 
+import pickle
+
 
 class LSTM_OCSVM_CLASSIFIER:
     def __init__(
@@ -138,3 +140,54 @@ class CLASSIFICATION_CHECK:
 
     def classifaction_all_zeros_test(self, trials):
         return self.classifaction_test(trials, zeros_flag=True, nines_test_flag=False)
+
+
+def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
+    # Create storing containers
+    anomaly_tracker = np.zeros(len(trials))
+    classifaction_tracker = dict()
+    jets_index_tracker = dict()
+
+    # Run through all trials
+    for i in range(len(trials)):
+        # select model
+        model = trials[i]["result"]["model"]
+
+        lstm_model = model["lstm"]  # note in some old files it is lstm:
+        ocsvm_model = model["ocsvm"]
+        scaler = model["scaler"]
+
+        # get hyper parameters
+        batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
+        input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
+
+        classifier = LSTM_OCSVM_CLASSIFIER(
+            oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler
+        )
+
+        (
+            classifaction_tracker[i],
+            anomaly_tracker[i],
+            jets_index_tracker[i],
+        ) = classifier.anomaly_classifaction(data=jets[input_variables])
+
+        print(
+            f"Percentage classified as anomaly: {np.round(anomaly_tracker[i]*100,2) }%, where the model has a nu of {trials[i]['result']['hyper_parameters']['svm_nu']}"
+        )
+
+    print(
+        f"Average percentage anomalys: {np.round(np.nanmean(anomaly_tracker)*100,2)} +\- {np.round(np.nanstd(anomaly_tracker)*100,2)}%"
+    )
+
+    # store results
+    storing = {
+        "jets_index": jets_index_tracker,
+        "percentage_anomalies": anomaly_tracker,
+        "classifaction_annomaly": classifaction_tracker,
+        "data": jets,
+        "file": file_name,
+    }
+    pickle.dump(
+        storing,
+        open(f"storing_results/anomaly_classification_{jet_info}_{job_id}.pkl", "wb"),
+    )

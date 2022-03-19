@@ -39,38 +39,11 @@ parameter. Using Ak, we update the chosen parameter as in (24).
 Using algorithm 2 of Unsupervised Anomaly Detection With LSTM Neural Networks
 Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 """
-# from sklearn.externals import joblib
-# import joblib
-from functions.data_manipulation import (
-    train_dev_test_split,
-    format_ak_to_list,
-    trials_df_and_minimum,
-)
-from functions.data_loader import load_n_filter_data
-from functions.training import HYPER_TRAINING
-from plotting.general import cost_condition_plots, violin_plots
-
-# from autograd import elementwise_grad as egrad
-
+from functions.training import run_full_training, HYPER_TRAINING
 
 from hyperopt import (
-    fmin,
-    tpe,
     hp,
-    space_eval,
-    STATUS_OK,
-    Trials,
-    SparkTrials,
 )  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
-from functools import partial
-
-import torch
-import os
-import time
-import torch
-
-import pandas as pd
-import numpy as np
 
 import branch_names as na
 
@@ -84,7 +57,7 @@ file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # set run settings
 max_evals = 4
 patience = 5
-kt_cut = False  # for dataset, splittings kt > 1.0 GeV
+kt_cut = 1.0  # for dataset, splittings kt > 1.0 GeV, assign None if not using
 debug_flag = True  # for using debug space = only 1 configuration of hp
 multicore_flag = False  # for using SparkTrials or Trials
 save_results_flag = True  # for saving trials and runtime
@@ -92,8 +65,7 @@ plot_flag = (
     True  # for making cost condition plots, only works if save_results_flag is True
 )
 
-# notes on run, added to run_info.p, keep short or leave empty
-run_notes = ""
+run_notes = ""  # Small command on run, will be save to save file.
 
 ###-------------###
 
@@ -173,80 +145,15 @@ space_debug = hp.choice(
 if debug_flag:
     space = space_debug
 
-# start time
-start_time = time.time()
-
-# Load and filter data for criteria eta and jetpt_cap
-g_recur_jets, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
-print("Loading data complete")
-# split data
-train_data, dev_data, test_data = train_dev_test_split(g_recur_jets, split=[0.8, 0.1])
-print("Splitting data complete")
-
-# set trials or sparktrials
-if multicore_flag:
-    cores = os.cpu_count() if os.cpu_count() < 10 else 10
-    trials = SparkTrials(
-        parallelism=cores
-    )  # run as many trials parallel as the nr of cores available
-    print(f"Hypertuning {max_evals} evaluations, on {cores} cores:\n")
-else:
-    trials = Trials()  # NOTE keep for debugging since can't do with spark trials
-
-# Create training object
-hypertrainer = HYPER_TRAINING()
-
-# hyper tuning and evaluation
-best = fmin(
-    partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
-        hypertrainer.run_training,
-        train_data=dev_data,
-        plot_flag=False,
-        patience=patience,
-    ),
-    space,
-    algo=tpe.suggest,
+run_full_training(
+    TRAINING_TYPE=HYPER_TRAINING,
+    file_name=file_name,
+    space=space,
     max_evals=max_evals,
-    trials=trials,
+    patience=patience,
+    kt_cut=kt_cut,  # for dataset, splittings kt > 1.0 GeV
+    multicore_flag=multicore_flag,
+    save_results_flag=save_results_flag,
+    plot_flag=plot_flag,
+    run_notes=run_notes,
 )
-print(f"\nHypertuning completed on dataset:\n{file_name}")
-
-# saving spark_trials as dictionaries
-# source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
-pickling_trials = dict()
-for k, v in trials.__dict__.items():
-    if not k in ["_spark_context", "_spark"]:
-        pickling_trials[k] = v
-
-# collect df and print best models
-df, min_val, min_df, parameters = trials_df_and_minimum(pickling_trials, "loss")
-
-# check to save results
-if save_results_flag:
-    # set out file to job_id for parallel computing
-    job_id = os.getenv("PBS_JOBID")
-    if job_id:
-        job_id = job_id.split(".")[0]
-    else:
-        job_id = time.strftime("%d_%m_%y_%H%M")
-
-    out_file = f"storing_results/trials_test_{job_id}.p"
-
-    # save trials as pickling_trials object
-    torch.save(pickling_trials, open(out_file, "wb"))
-
-    # check to make plots
-    if plot_flag:
-        cost_condition_plots(pickling_trials, job_id)
-        violin_plots(df, min_val, min_df, parameters, [job_id], "loss")
-        print("\nPlotting complete")
-
-    # store run info
-    run_time = time.time() - start_time
-    run_info = f"{job_id}\ton: {file_name}\truntime: {run_time:.2f} s"
-    run_info = run_info + f"\tnotes: {run_notes}\n" if run_notes else run_info + "\n"
-    with open("storing_results/run_info.p", "a+") as f:
-        f.write(run_info)
-    print(f"\nCompleted run in: {run_time}")
-
-    # load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)

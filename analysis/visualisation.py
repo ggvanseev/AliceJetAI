@@ -1,4 +1,4 @@
-simport pickle
+import pickle
 from functions.data_loader import load_n_filter_data
 import branch_names as na
 import matplotlib.pyplot as plt
@@ -8,12 +8,12 @@ from functions.data_manipulation import (
 )
 
 job_id = 9792527
-type_jets = "gluon"
+jet_info = "gluon"
 num = 0
 
 # load data
 anomalies_info = pickle.load(
-    open(f"storing_results/anomaly_classification_{type_jets}_{job_id}.pkl", "rb")
+    open(f"storing_results/anomaly_classification_{jet_info}_{job_id}.pkl", "rb")
 )
 
 
@@ -29,12 +29,9 @@ q_anomaly, q_normal = seperate_anomalies_from_regular(
     data=q_recur_jets,
 )
 
-# TODO:
-# Filter empty entries at load_n_filter_data, to make it easier to use
-
-plt.figure(f"Distribution histogram anomalies {type_jets}", figsize=[1.36 * 8, 8])
+plt.figure(f"Distribution histogram anomalies {jet_info}", figsize=[1.36 * 8, 8])
 plt.hist(anomalies_info["percentage_anomalies"])
-plt.xlabel(f"Percentage (%) jets anomalies {type_jets}")
+plt.xlabel(f"Percentage (%) jets anomalies {jet_info}")
 plt.ylabel(f"N")
 
 a = 1
