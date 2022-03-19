@@ -519,8 +519,8 @@ def seperate_anomalies_from_regular(anomaly_track, jets_index, data: list):
     if len(anomaly_track) != len(data):
         return "Failed"
 
-    anomalies = list(compress(data, anomaly_track == -1))
-    non_anomalies = list(compress(data, anomaly_track == 1))
+    anomalies = ak.Array(list(compress(data, anomaly_track == -1)))
+    non_anomalies = ak.Array(list(compress(data, anomaly_track == 1)))
 
     return anomalies, non_anomalies
 
