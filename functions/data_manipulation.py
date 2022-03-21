@@ -3,6 +3,7 @@ from logging import raiseExceptions
 import torch
 import awkward as ak
 from copy import copy
+import time
 
 import numpy as np
 import pandas as pd
@@ -90,6 +91,9 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
     i = -1
     while i < max_n_batches:
         i += 1
+        
+        ### TRACK TIME ### TODO
+        time_at_step = time.time()
 
         # space count tracks if branch is filled to max
         space_count = batch_size
@@ -107,9 +111,19 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
         # variables that track progress
         add_branch_flag = True
         trials = 0
+        
+        ### TRACK TIME ### TODO
+        dt = time.time() - time_at_step
+        time_at_step = time.time()
+        #print(f"temp_datasets made: {dt}")
 
         # Check if batch is filled
         while space_count > 0:
+            
+            ### TRACK TIME ### TODO
+            dt = time.time() - time_at_step
+            time_at_step = time.time()
+            #print(f"start of while space_count > 0 loop: {dt}")
 
             # loop over available jets
             j = -1

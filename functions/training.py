@@ -602,6 +602,7 @@ def training_with_set_parameters(
 
             # Check if distance between percentage considered anomaly for training and validation
             # is smaller than required, to ensure the algorithm is consistent
+            print(f"Anomaly percentage difference between training and validation: {abs(percentage_anomaly_training - percentage_anomaly_validation)}")
             if (
                 abs(percentage_anomaly_training - percentage_anomaly_validation)
                 < max_distance_percentage_anomalies
