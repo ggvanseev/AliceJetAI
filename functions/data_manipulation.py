@@ -463,6 +463,17 @@ def get_full_pytorch_weight(weights, device):
 
 
 def h_bar_list_to_numpy(h_bar_list, device):
+    """Function that converts a list type object filled
+    with h_bar's to a numpy object. If device was cuda,
+    the data is returned to device: cpu first.
+
+    Args:
+        h_bar_list (list): Contains h_bar objects
+        device (torch.device): Currently used device (cpu/cuda)
+
+    Returns:
+        numpy.Array: Numpy array containing h_bar objects
+    """
     if device.type == "cpu":
         h_bar_list_np = np.array(
             [h_bar.detach().numpy() for h_bar in h_bar_list], dtype=object
@@ -502,13 +513,13 @@ def scaled_epsilon_n_max_epochs(learning_rate):
 
     order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
 
-    more_epochs = 100 * (order_of_magnitude - 10) if order_of_magnitude > 10 else 0
+    more_epochs = 100 * (order_of_magnitude - 3) if order_of_magnitude > 3 else 0
     max_epochs = 200 + more_epochs  # order_of_magnitude * 50
 
     return epsilon, max_epochs
 
 
-def seperate_anomalies_from_regular(anomaly_track, jets_index, data: list):
+def separate_anomalies_from_regular(anomaly_track, jets_index, data: list):
     """
     Note data must be the filtered data returning with the same length as the anomaly_track list
     return dict, if passed
@@ -526,6 +537,23 @@ def seperate_anomalies_from_regular(anomaly_track, jets_index, data: list):
 
 
 def trials_df_and_minimum(trials_results, test_param="loss"):
+    """Function that takes a dictionary of trials and converts
+    this to a Pandas Dataframe. Subsequently the minimum loss
+    is taken and the model(s) corresponding to this loss is/are
+    selected and their information is printed.
+
+    Args:
+        trials_results (dict): Dictionary containing the trials results
+        test_param (str, optional): Parameter which was tested. Can be loss or cost 
+                                    or something else. Defaults to "loss".
+
+    Returns:
+        Tuple[Pandas.Dataframe, float, Pandas.Dataframe, dict_keys]:
+            - Pandas Dataframe of the trials results
+            - Minimum test_param value 
+            - Pandas Dataframe of trials corresponding to minimum test_param
+            - List of hyperparameter names
+    """
     # reform to complete list of trials
     try:
         trials_list = [trial for trial in trials_results["_trials"]]
@@ -538,11 +566,12 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
     parameters = trials_list[0]["result"]["hyper_parameters"].keys()
 
     # build DataFrame
-    df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list])
+    df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list]).reset_index()
     df = df[df["loss"] != 10]  # filter out bad model results
 
     # get minima
     min_val = df[test_param].min()
+    min_idxs = df.index[df[test_param] == min_val].to_list()
     min_df = df[df[test_param] == min_val].reset_index()
 
     # print best model(s) hyperparameters:
@@ -551,7 +580,7 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
         :, min_df.columns.str.startswith("hyper_parameters")
     ]
     for index, row in hyper_parameters_df.iterrows():
-        print(f"\nModel {index}:")
+        print(f"\nModel {index} from trial {min_idxs[index]}:")
         for key in hyper_parameters_df.keys():
             print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
         print(f"with loss: \t\t{min_df['loss'].iloc[index]}")

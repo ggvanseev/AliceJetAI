@@ -3,14 +3,14 @@ from functions.data_loader import load_n_filter_data
 import branch_names as na
 import matplotlib.pyplot as plt
 from functions.data_manipulation import (
-    seperate_anomalies_from_regular,
+    separate_anomalies_from_regular,
 )
 
 import awkward as ak
 import numpy as np
 
-job_id = 9792527
-jet_info = "gluon"
+job_id = "21_03_22_1650"
+jet_info = "9 digits"
 num = 0
 
 # load data
@@ -25,8 +25,8 @@ g_recur_jets, q_recur_jets = load_n_filter_data(
 )
 
 # get anomalies and normal out
-q_anomaly, q_normal = seperate_anomalies_from_regular(
-    anomaly_track=anomalies_info["classifaction_annomaly"][num],
+q_anomaly, q_normal = separate_anomalies_from_regular(
+    anomaly_track=anomalies_info["classification_annomaly"][num],
     jets_index=anomalies_info["jets_index"][num],
     data=q_recur_jets,
 )

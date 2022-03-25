@@ -1,3 +1,7 @@
+"""
+File which stores functions related to plotting the svm boundary in 2D.
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 

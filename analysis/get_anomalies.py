@@ -10,10 +10,10 @@ file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 
 job_id = 9792527
-
+kt_cut = None
 
 # Load and filter data for criteria eta and jetpt_cap
-g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=True)
+g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=kt_cut)
 
 # q_recur_jets = (np.zeros([500, 10, 3])).tolist()
 
@@ -26,8 +26,8 @@ trials_test_list = torch.load(
 trials = trials_test_list["_trials"]
 
 # from run excluded files:
-classifaction_check = CLASSIFICATION_CHECK()
-# indices_zero_per_anomaly_nine_flag = classifaction_check.classifaction_all_nines_test(
+classification_check = CLASSIFICATION_CHECK()
+# indices_zero_per_anomaly_nine_flag = classification_check.classification_all_nines_test(
 #     trials=trials
 # )
 
@@ -47,9 +47,10 @@ trials = [i for j, i in enumerate(trials) if j not in track_unwanted]
 for i in range(2):
     if i == 0:
         jets = q_recur_jets
-        type_jets = "quark"
+        type_jets = "quark jet"
     else:
         jets = g_recur_jets
-        type_jets = "gluon"
+        type_jets = "gluon jet"
 
+    print(f"\nAnomalies for data of type: {type_jets}")
     get_anomalies(jets, job_id, trials, file_name, jet_info=type_jets)
