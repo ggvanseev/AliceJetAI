@@ -37,8 +37,36 @@ plt.xlabel(f"Percentage (%) jets anomalies {jet_info}")
 plt.ylabel(f"N")
 
 
-def hist_comparison(anomaly: np, normal: np, feature: str, jet_info=None, n_bins=50):
-    fig, ax = plt.subplots(2, 1, sharex=True, figsize=(1.36 * 8, 8))
+def set_axis_at_origin(ax):
+    # set the x-spine
+    ax.spines["left"].set_position("zero")
+
+    # turn off the right spine/ticks
+    ax.spines["right"].set_color("none")
+    ax.yaxis.tick_left()
+    ax.set_ylabel("y", fontsize=16)
+    ax.yaxis.set_label_coords(0.49, 1)
+
+    # set the y-spine
+    ax.spines["bottom"].set_position("zero")
+
+    # turn off the top spine/ticks
+    ax.spines["top"].set_color("none")
+    ax.xaxis.tick_bottom()
+    ax.set_xlabel("x", fontsize=16)
+    ax.xaxis.set_label_coords(1, 0.5)
+
+
+def hist_comparison(
+    anomaly: np,
+    normal: np,
+    feature: str,
+    jet_info=None,
+    n_bins=50,
+):
+    fig, ax = plt.subplots(
+        2, 1, sharex=True, figsize=(1.36 * 8, 8), gridspec_kw={"height_ratios": [3, 1]}
+    )
 
     # Ensure same bin-size
     dist_combined, bins = np.histogram(
@@ -91,7 +119,20 @@ def hist_comparison(anomaly: np, normal: np, feature: str, jet_info=None, n_bins
 
     ax[1].set_xlabel(feature)
     ax[1].set_ylabel("ratio")
+
+    max = (
+        np.nanmax(ratio_anomaly[1:])
+        if np.nanmax(ratio_anomaly[1:]) > np.nanmax(ratio_normal[1:])
+        else np.nanmax(ratio_normal[1:])
+    )
+
+    ax[1].set_ylim([0, max])
+    ax[1].set_xlim([0, bins[-1] + bins[1]])
     ax[0].legend()
+
+    # move spines
+    ax[0].spines["left"].set_position(("data", 0.0))
+    ax[1].spines["left"].set_position(("data", 0.0))
 
 
 def hist_comparison_first_entries(
@@ -212,4 +253,5 @@ def stacked_plot_normalised_first_entries(anomaly, normal, feature, jet_info=Non
 hist_comparison_first_entries(
     anomaly=q_anomaly, normal=q_normal, feature=na.recur_dr, jet_info=None, n_bins=50
 )
+plt.show()
 a = 1
