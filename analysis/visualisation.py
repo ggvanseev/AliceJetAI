@@ -68,7 +68,7 @@ def hist_comparison(
         2, 1, sharex=True, figsize=(1.36 * 8, 8), gridspec_kw={"height_ratios": [3, 1]}
     )
 
-    # Ensure same bin-size
+    # Ensure same bin-size.
     dist_combined, bins = np.histogram(
         np.hstack((normal, anomaly)), bins=n_bins, density=True
     )
