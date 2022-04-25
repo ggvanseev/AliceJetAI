@@ -80,6 +80,7 @@ from functions.data_manipulation import (
     h_bar_list_to_numpy,
     scaled_epsilon_n_max_epochs,
     format_ak_to_list,
+    shuffle_batches,
     trials_df_and_minimum,
 )
 from functions.optimization_orthogonality_constraints import (
@@ -92,8 +93,8 @@ from functions.validation import calc_percentage_anomalies
 from ai.model_lstm import LSTMModel
 
 from plotting.cost_condition import cost_condition_plots
+from plotting.svm_boundary import svm_boundary_plots
 from plotting.violin import violin_plots
-
 
 def training_algorithm(
     lstm_model,
@@ -163,6 +164,9 @@ def training_algorithm(
         k < min_epochs_patience or cost_condition_passed_flag == False
     ) and k < training_params["max_epochs"]:
         k += 1
+        
+        # shuffle jets in batches each epoch
+        x_loader, track_jets_dev_data = shuffle_batches(x_loader, track_jets_dev_data)
 
         # keep previous cost result stored
         cost_prev = copy(cost)
@@ -234,14 +238,15 @@ def training_algorithm(
     ### TRACK TIME ### TODO
     dt = time.time() - time_track
     print_out += f"\nTraining done in: {dt}"
-    print_out += f"\nWith cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
 
+    # check if passed cost condition
     if abs((cost - cost_prev) / cost_prev) > training_params["epsilon"]:
-        print_out += "\nAlgorithm failed: not done learning in max epochs"
+        print_out += f"\n  Algorithm failed: not done learning in max = {k} epochs"
         passed = False
     else:
-        print_out += f"\nModel done learning in {k} epochs"
+        print_out += f"\n  Model done learning in {k} epochs"
         passed = True
+    print_out += f"\n  With cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
 
     return lstm_model, svm_model, track_cost, track_cost_condition, passed, print_out
 
@@ -370,33 +375,38 @@ class TRAINING:
             lstm_model.to(device)
 
             # train models
-            try:
-                (
-                    lstm_model,
-                    svm_model,
-                    track_cost,
-                    track_cost_condition,
-                    passed,
-                    print_out,
-                ) = training_algorithm(
-                    lstm_model,
-                    svm_model,
-                    train_loader,
-                    track_jets_train_data,
-                    model_params,
-                    training_params,
-                    device,
-                    print_out,
-                    pooling,
-                )
-            except RuntimeError as e:
-                passed = False
-                logf = open("logfiles/cuda_error.log", "w")
-                logf.write(str(e))
+            # try:
+            (
+                lstm_model,
+                svm_model,
+                track_cost,
+                track_cost_condition,
+                passed,
+                print_out,
+            ) = training_algorithm(
+                lstm_model,
+                svm_model,
+                train_loader,
+                track_jets_train_data,
+                model_params,
+                training_params,
+                device,
+                print_out,
+                pooling,
+            )
+            # except RuntimeError as e:
+            #     passed = False
+            #     print("Training algorithm: Cuda error")
+            #     logf = open("logfiles/cuda_error.log", "a+")
+            #     logf.write(str(e))
 
             # check if the model passed the training
             diff_percentage_anomalies = 10  # Create standard for saving
             train_success = False
+            
+            # TODO REMOVE LATER! -> Test on single attempt
+            n_attempt = max_attempts
+            train_success = True
 
             # check if passed the training
             if passed:
@@ -425,7 +435,7 @@ class TRAINING:
             time.strftime("%H:%M:%S", time.gmtime(dt)) if dt > 60 else f"{dt:.2f} s"
         )
         if train_success:
-            print_out += f"\nWith loss: {diff_percentage_anomalies:.4E}"
+            print_out += f"\n  With loss: {diff_percentage_anomalies:.4E}"
         print_out += f"\n{'Passed' if train_success else 'Failed'} in: {time_str}"
 
         # return the model
@@ -442,7 +452,7 @@ class TRAINING:
         return {
             "loss": diff_percentage_anomalies,
             "final_cost": track_cost[-1],
-            "status": STATUS_OK if passed else STATUS_FAIL,
+            "status": STATUS_OK, #if passed else STATUS_FAIL,
             "model": lstm_ocsvm,
             "hyper_parameters": hyper_parameters,
             "cost_data": cost_data,
@@ -514,14 +524,14 @@ class HYPER_TRAINING(TRAINING):
         train_data, track_jets_train_data, max_n_batches, _ = branch_filler(
             train_data, batch_size=batch_size, n_features=len(input_variables)
         )
-        bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)} out of max.: {max_n_batches}"
+        bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_batches}"
 
         return train_data, val_data, track_jets_train_data, bf_out_txt
 
 
 class REGULAR_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=0.5)
+        super().__init__(max_distance=1000.5) # TODO set it back
 
     def calc_diff_percentage(
         self,
@@ -583,11 +593,11 @@ class REGULAR_TRAINING(TRAINING):
         train_data, track_jets_train_data, max_n_train_batches, _ = branch_filler(
             train_data, batch_size=batch_size
         )
-        bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)} out of max.: {max_n_train_batches}"
+        bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_train_batches}"
         val_data, track_jets_val_data, max_n_val_batches, _ = branch_filler(
             val_data, batch_size=batch_size
         )
-        bf_out_txt += f"\nNr. of validation batches: {int(len(val_data) / batch_size)} out of max.: {max_n_val_batches}"
+        bf_out_txt += f"\nNr. of validation batches: {int(len(val_data) / batch_size)}, out of max.: {max_n_val_batches}"
 
         return train_data, val_data, track_jets_train_data, bf_out_txt
 
@@ -686,7 +696,8 @@ def run_full_training(
         # check to make plots
         if plot_flag:
             cost_condition_plots(pickling_trials, job_id)
-            violin_plots(df, min_val, min_df, parameters, [job_id], "loss")
+            violin_plots(df, min_val, min_df, parameters, [job_id], "loss") if TRAINING_TYPE == HYPER_TRAINING else None
+            svm_boundary_plots(pickling_trials, job_id, train_data)
             print(f"Plotting complete, stored results at:\n\toutput/cost_condition_{job_id}/\n\toutput/violin_plots_{job_id}/")
 
         # store run info

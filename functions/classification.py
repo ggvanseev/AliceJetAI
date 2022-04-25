@@ -10,7 +10,7 @@ from functions.data_manipulation import (
 )
 
 from functions.run_lstm import calc_lstm_results
-from testing.plotting import normal_vs_anomaly_2D # TODO testing
+from testing.plotting_test import normal_vs_anomaly_2D # TODO testing
 
 import pickle
 
@@ -147,6 +147,7 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
     classification_tracker = dict()
     jets_index_tracker = dict()
     h_bar_list_all = dict() # TODO testing
+    out_txt = ""
 
     # Run through all trials
     for i in range(len(trials)):
@@ -178,15 +179,15 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
         ) = classifier.anomaly_classification(data=data)
 
         # TODO test creating plots of normal data vs anomalies
-        normal_vs_anomaly_2D(h_bar_list_all[i], classification_tracker[i], f"{job_id}_{jet_info}_trial_{i}")
+        normal_vs_anomaly_2D(h_bar_list_all[i], classification_tracker[i], f"{job_id}/{jet_info}_trial_{i}")
 
-        print(
-            f"trial {i} percentage anomaly: {np.round(anomaly_tracker[i]*100,2) }%, where the model has a nu of {trials[i]['result']['hyper_parameters']['svm_nu']}"
-        )
+        trial_txt = f"trial {i} percentage anomaly: {np.round(anomaly_tracker[i]*100,2) }%, where the model has a nu of {trials[i]['result']['hyper_parameters']['svm_nu']}"
+        print(trial_txt)
+        out_txt += "\n"+trial_txt
 
-    print(
-        f"Average percentage anomalys: {np.round(np.nanmean(anomaly_tracker)*100,2)} +\- {np.round(np.nanstd(anomaly_tracker)*100,2)}%"
-    )
+    test_txt = f"Average percentage anomalys: {np.round(np.nanmean(anomaly_tracker)*100,2)} +\- {np.round(np.nanstd(anomaly_tracker)*100,2)}%"
+    print(test_txt)
+    out_txt += "\n"+test_txt+"\n\n"
 
     # store results
     storing = {
@@ -200,5 +201,8 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
         storing,
         open(f"storing_results/anomaly_classification_{jet_info}_{job_id}.pkl", "wb"),
     )
+    txt_file = open(f"testing/output/{job_id}/info.txt", "w")
+    txt_file.write(out_txt)
+    txt_file.close()
     
-    return h_bar_list_all, classification_tracker # TODO testing
+    return h_bar_list_all, classification_tracker#, test_txt# TODO testing

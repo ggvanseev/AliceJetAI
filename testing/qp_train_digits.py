@@ -39,10 +39,9 @@ parameter. Using Ak, we update the chosen parameter as in (24).
 Using algorithm 2 of Unsupervised Anomaly Detection With LSTM Neural Networks
 Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
 """
-# from sklearn.externals import joblib
-# import joblib
 
 from testing_functions import load_digits_data
+from plotting_test import sample_plot
 from functions.training import REGULAR_TRAINING, run_full_training
 
 import matplotlib.pyplot as plt
@@ -57,14 +56,15 @@ from hyperopt import (
 # Set hyper space and variables
 max_evals = 4
 patience = 10
-print_dataset_info = True
-save_results_flag = True
 multicore_flag = False
+print_dataset_info = False
+save_results_flag = True
 plot_flag = True
-random.seed(0)
+plot_sample = False
+random.seed(0) # for shuffling of data sequences
 
 # notes on run, added to run_info.p, keep short or leave empty
-run_notes = "digits: frac 0:0.9 9:0.1, hid: 60, batch: 800, mean pooled"
+run_notes = "SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 2500 epchs, lr 1e-4, eps 1e-2, FIXED SHUFFLE!!!"
 
 # ---------------------- #
 
@@ -73,8 +73,8 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  
-            "batch_size": hp.choice("num_batch", [800]),
-            "hidden_dim": hp.choice("hidden_dim", [60]),
+            "batch_size": hp.choice("num_batch", [5000]),
+            "hidden_dim": hp.choice("hidden_dim", [2]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(50)]),
             "learning_rate": 10 ** hp.choice("learning_rate", [-5]),
@@ -99,20 +99,19 @@ train_dict = load_digits_data(train_file, print_dataset_info=print_dataset_info)
 test_dict = load_digits_data(test_file)
 
 # mix "0" = 90% as normal data with "9" = 10% as anomalous data
-train_data = train_dict["0"][:675] + train_dict["9"][:75]
-print('Mixed "9": 675 = 90% of normal data with "0": 75 = 10% as anomalous data for a train set of 750 samples')
+train_data = train_dict["0"][:675] + train_dict["9"][75:150]
+#print('Mixed "9": 675 = 90% of normal data with "0": 75 = 10% as anomalous data for a train set of 750 samples')
 test_data = test_dict["9"][:360] + test_dict["0"][:40]
-print('Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples')
+#print('Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples')
 
 # plot random sample
-sample = train_data[0]
-x = [i[0] for i in sample]
-y = [i[1] for i in sample]
-plt.figure()
-plt.scatter(x, y)
-plt.xlim(0,100)
-plt.ylim(0,100)
-plt.show()
+if plot_sample:
+    index = 49
+    plt.figure()
+    sample_plot(train_dict["0"], index, label="0")
+    sample_plot(train_dict["9"], index, label="9")
+    plt.legend()
+    plt.show()
 
 # shuffle datasets to make anomalies appear randomly
 random.shuffle(train_data)

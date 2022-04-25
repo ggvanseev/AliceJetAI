@@ -1,12 +1,10 @@
 import torch
 import awkward as ak
 from copy import copy
-
+import random
 import numpy as np
 import pandas as pd
-
 from torch.utils.data import TensorDataset, DataLoader
-
 from itertools import compress
 
 # from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
@@ -44,6 +42,7 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
     """
     Split is the percentage cut of for selecting training data.
     Thus split 0.8 means 80% of data is considered for training.
+    Second split of 0.1 means 10% of data is considered for development.
     """
     max_train_index = int(len(dataset) * split[0])
     max_dev_index = int(len(dataset) * (split[0] + split[1]))
@@ -232,6 +231,49 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
     return batches, track_jets_in_batch, max_n_batches, track_index
 
 
+def shuffle_batches(batches, track_jets_in_batch, shuffle=False):
+    """_summary_
+
+    Args:
+        batches (_type_): _description_
+        track_jets_in_batch (_type_): _description_
+        shuffle (bool, optional): _description_. Defaults to False.
+
+    Returns:
+        _type_: _description_
+    """
+    batches_shuffled = list() # contains newly shuffled batches
+    track_jets_shuffled = list() # ontains newly shuffled tracks
+
+    for (batch, _), tracks in zip(batches, track_jets_in_batch):
+        
+        # rebuild batches in order to shuffle them
+        batch_rebuilt = [batch[tracks[i-1]+1 if i>0 else None:tracks[i]+1] for i in range(len(tracks))]
+        
+        # shuffle batches
+        random.shuffle(batch_rebuilt)
+        
+        # create new tracks  
+        current_pos = -1
+        new_tracks = list()
+        for length in [len(x) for x in batch_rebuilt]:
+            current_pos += length
+            new_tracks.append(current_pos)
+        
+        # add to lists
+        track_jets_shuffled.append(new_tracks)
+        batches_shuffled.extend([x for y in batch_rebuilt for x in y]) 
+    
+    # convert back to torch tensor
+    data = torch.stack(batches_shuffled)
+
+    # Data loader needs labels, but isn't needed for unsupervised, thus fill in data for labels to run since it won't be used.
+    data = TensorDataset(data, data)
+    data = DataLoader(data, batch_size=len(batch), shuffle=shuffle)
+
+    return data, track_jets_shuffled
+
+
 def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
     """
     Returns a DataLoader class to work with the large datasets in skilearn LSTM
@@ -242,9 +284,10 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
         data = scaler.fit_transform(data)
     else:
         data = scaler.transform(data)
+    
     # Make data in tensor format
     data = torch.Tensor(data)
-
+    
     # Data loader needs labels, but isn't needed for unsupervised, thus fill in data for labels to run since it won't be used.
     data = TensorDataset(data, data)
 
@@ -514,7 +557,7 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
 
     more_epochs = 100 * (order_of_magnitude - 3) if order_of_magnitude > 3 else 0
-    max_epochs = 200 + more_epochs  # order_of_magnitude * 50
+    max_epochs = 1000 #+ more_epochs  # order_of_magnitude * 50
 
     return epsilon, max_epochs
 

@@ -1,13 +1,13 @@
-import pickle
+import os
 import numpy as np
 import torch
 from functions.classification import get_anomalies, CLASSIFICATION_CHECK
 from testing_functions import load_digits_data
 
-from  testing.plotting import normal_vs_anomaly_2D_all
+from  testing.plotting_test import *
 
 
-job_id = "22_03_24_1808"
+job_id = "22_04_19_1648"
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 train_file = "samples/pendigits/pendigits-orig.tra"
@@ -29,6 +29,13 @@ test_dict = load_digits_data(test_file)
 # print('Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples')
 
 # q_recur_jets = (np.zeros([500, 10, 3])).tolist()
+
+# make out directory if it does not exist yet
+out_dir = f"testing/output/{job_id}"
+try:
+    os.mkdir(out_dir)
+except FileExistsError:
+    pass
 
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -61,22 +68,27 @@ trials = [i for j, i in enumerate(trials) if j not in track_unwanted]
 
 trials_h_bars = dict()
 trials_classifications = dict()
+trials_ocsvms = [trials[i]['result']['model']['ocsvm'] for i in range(len(trials))]
 
-for i in range(3):
+for i in range(4):
     if i == 0:
-        jets = test_dict["0"][:200]
+        jets = test_dict["0"][:700]
         type_jets = "0_digits"
     elif i == 1:
-        jets = test_dict["9"][:200]
+        jets = test_dict["9"][:700]
         type_jets = "9_digits"
-    else:
-        jets = test_dict["8"][:200]
+    elif i == 2:
+        jets = test_dict["8"][:700]
         type_jets = "8_digits"
-
-    print(f"Anomalies for data of type: {type_jets}")
+    else:
+        jets = test_dict["7"][:700]
+        type_jets = "7_digits"
+    
+    out_txt = f"Anomalies for data of type: {type_jets}"
+    print(out_txt)
     trials_h_bars[type_jets], trials_classifications[type_jets] = get_anomalies(jets, job_id, trials, file_name, jet_info=type_jets)
     
     print("\n")
     
 
-normal_vs_anomaly_2D_all(trials_h_bars, trials_classifications, f"testing/output/{job_id}")
+normal_vs_anomaly_2D_all(trials_h_bars, trials_classifications, trials_ocsvms, f"testing/output/{job_id}")
