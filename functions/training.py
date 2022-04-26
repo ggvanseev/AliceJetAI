@@ -170,6 +170,7 @@ def training_algorithm(
 
         # keep previous cost result stored
         cost_prev = copy(cost)
+        #print("cost before ocsvm\t",cost)
 
         # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
         svm_model.fit(h_bar_list_np)
@@ -178,6 +179,8 @@ def training_algorithm(
         alphas = alphas / np.sum(alphas)  # NOTE: equation 14, sum alphas = 1
 
         a_idx = svm_model.support_
+        
+        #print("cost after ocsvm\t", kappa(alphas, a_idx, h_bar_list))
 
         # obtain theta_k+1 using the optimization algorithm
         lstm_model, theta_next = optimization(
@@ -201,6 +204,9 @@ def training_algorithm(
             pooling=pooling,
         )
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
+        
+        
+        #print("cost after optim\t", kappa(alphas, a_idx, h_bar_list))
 
         # obtain the new cost and cost condition given theta_k+1 and alpha_k+1
         cost = kappa(alphas, a_idx, h_bar_list)
