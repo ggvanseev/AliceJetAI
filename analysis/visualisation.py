@@ -15,7 +15,7 @@ num = 0
 
 # load data
 anomalies_info = pickle.load(
-    open(f"storing_results/anomaly_classification_{jet_info}_{job_id}.pkl", "rb")
+    open(f"storing_results_1/anomaly_classification_{jet_info}_{job_id}.pkl", "rb")
 )
 
 

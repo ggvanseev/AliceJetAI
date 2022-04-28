@@ -538,7 +538,7 @@ class HYPER_TRAINING(TRAINING):
 
 class REGULAR_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=1000.5) # TODO set it back
+        super().__init__(max_distance=.01)
 
     def calc_diff_percentage(
         self,
