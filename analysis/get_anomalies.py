@@ -32,7 +32,7 @@ classification_check = CLASSIFICATION_CHECK()
 #     trials=trials
 # )
 
-# TODO part of testing! to plot in 2D anomalous vs normal data
+# TODO part of testing! to plot in 2D anomalous vs normal data asdf
 # make out directory if it does not exist yet
 out_dir = f"testing/output/{job_id}"
 try:
