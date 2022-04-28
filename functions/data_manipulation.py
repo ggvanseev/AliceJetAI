@@ -1,12 +1,10 @@
 import torch
 import awkward as ak
 from copy import copy
-
+import random
 import numpy as np
 import pandas as pd
-
 from torch.utils.data import TensorDataset, DataLoader
-
 from itertools import compress
 
 # from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
@@ -44,6 +42,7 @@ def train_dev_test_split(dataset, split=[0.8, 0.1]):
     """
     Split is the percentage cut of for selecting training data.
     Thus split 0.8 means 80% of data is considered for training.
+    Second split of 0.1 means 10% of data is considered for development.
     """
     max_train_index = int(len(dataset) * split[0])
     max_dev_index = int(len(dataset) * (split[0] + split[1]))
@@ -232,6 +231,49 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
     return batches, track_jets_in_batch, max_n_batches, track_index
 
 
+def shuffle_batches(batches, track_jets_in_batch, shuffle=False):
+    """_summary_
+
+    Args:
+        batches (_type_): _description_
+        track_jets_in_batch (_type_): _description_
+        shuffle (bool, optional): _description_. Defaults to False.
+
+    Returns:
+        _type_: _description_
+    """
+    batches_shuffled = list() # contains newly shuffled batches
+    track_jets_shuffled = list() # ontains newly shuffled tracks
+
+    for (batch, _), tracks in zip(batches, track_jets_in_batch):
+        
+        # rebuild batches in order to shuffle them
+        batch_rebuilt = [batch[tracks[i-1]+1 if i>0 else None:tracks[i]+1] for i in range(len(tracks))]
+        
+        # shuffle batches
+        random.shuffle(batch_rebuilt)
+        
+        # create new tracks  
+        current_pos = -1
+        new_tracks = list()
+        for length in [len(x) for x in batch_rebuilt]:
+            current_pos += length
+            new_tracks.append(current_pos)
+        
+        # add to lists
+        track_jets_shuffled.append(new_tracks)
+        batches_shuffled.extend([x for y in batch_rebuilt for x in y]) 
+    
+    # convert back to torch tensor
+    data = torch.stack(batches_shuffled)
+
+    # Data loader needs labels, but isn't needed for unsupervised, thus fill in data for labels to run since it won't be used.
+    data = TensorDataset(data, data)
+    data = DataLoader(data, batch_size=len(batch), shuffle=shuffle)
+
+    return data, track_jets_shuffled
+
+
 def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
     """
     Returns a DataLoader class to work with the large datasets in skilearn LSTM
@@ -242,9 +284,10 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
         data = scaler.fit_transform(data)
     else:
         data = scaler.transform(data)
+    
     # Make data in tensor format
     data = torch.Tensor(data)
-
+    
     # Data loader needs labels, but isn't needed for unsupervised, thus fill in data for labels to run since it won't be used.
     data = TensorDataset(data, data)
 
@@ -463,6 +506,17 @@ def get_full_pytorch_weight(weights, device):
 
 
 def h_bar_list_to_numpy(h_bar_list, device):
+    """Function that converts a list type object filled
+    with h_bar's to a numpy object. If device was cuda,
+    the data is returned to device: cpu first.
+
+    Args:
+        h_bar_list (list): Contains h_bar objects
+        device (torch.device): Currently used device (cpu/cuda)
+
+    Returns:
+        numpy.Array: Numpy array containing h_bar objects
+    """
     if device.type == "cpu":
         h_bar_list_np = np.array(
             [h_bar.detach().numpy() for h_bar in h_bar_list], dtype=object
@@ -498,17 +552,17 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     Note:
     learning rate must be of the form: 1e-x, where x is a number [0,99]
     """
-    epsilon = 1e-3  # * learning_rate  # 10 ** -3 #-(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
+    epsilon = 1e-8  # * learning_rate  # 10 ** -3 #-(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
 
     order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
 
-    more_epochs = 100 * (order_of_magnitude - 10) if order_of_magnitude > 10 else 0
-    max_epochs = 200 + more_epochs  # order_of_magnitude * 50
+    more_epochs = 100 * (order_of_magnitude - 3) if order_of_magnitude > 3 else 0
+    max_epochs = 700 #+ more_epochs  # order_of_magnitude * 50
 
     return epsilon, max_epochs
 
 
-def seperate_anomalies_from_regular(anomaly_track, jets_index, data: list):
+def separate_anomalies_from_regular(anomaly_track, jets_index, data: list):
     """
     Note data must be the filtered data returning with the same length as the anomaly_track list
     return dict, if passed
@@ -526,6 +580,23 @@ def seperate_anomalies_from_regular(anomaly_track, jets_index, data: list):
 
 
 def trials_df_and_minimum(trials_results, test_param="loss"):
+    """Function that takes a dictionary of trials and converts
+    this to a Pandas Dataframe. Subsequently the minimum loss
+    is taken and the model(s) corresponding to this loss is/are
+    selected and their information is printed.
+
+    Args:
+        trials_results (dict): Dictionary containing the trials results
+        test_param (str, optional): Parameter which was tested. Can be loss or cost 
+                                    or something else. Defaults to "loss".
+
+    Returns:
+        Tuple[Pandas.Dataframe, float, Pandas.Dataframe, dict_keys]:
+            - Pandas Dataframe of the trials results
+            - Minimum test_param value 
+            - Pandas Dataframe of trials corresponding to minimum test_param
+            - List of hyperparameter names
+    """
     # reform to complete list of trials
     try:
         trials_list = [trial for trial in trials_results["_trials"]]
@@ -538,11 +609,12 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
     parameters = trials_list[0]["result"]["hyper_parameters"].keys()
 
     # build DataFrame
-    df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list])
+    df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list]).reset_index()
     df = df[df["loss"] != 10]  # filter out bad model results
 
     # get minima
     min_val = df[test_param].min()
+    min_idxs = df.index[df[test_param] == min_val].to_list()
     min_df = df[df[test_param] == min_val].reset_index()
 
     # print best model(s) hyperparameters:
@@ -551,7 +623,7 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
         :, min_df.columns.str.startswith("hyper_parameters")
     ]
     for index, row in hyper_parameters_df.iterrows():
-        print(f"\nModel {index}:")
+        print(f"\nModel {index} from trial {min_idxs[index]}:")
         for key in hyper_parameters_df.keys():
             print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
         print(f"with loss: \t\t{min_df['loss'].iloc[index]}")

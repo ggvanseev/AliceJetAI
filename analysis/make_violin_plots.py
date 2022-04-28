@@ -1,11 +1,10 @@
+"""
+Make file to generate violin plots from a list of job ids.
+"""
+
 import torch
-from posixpath import split
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import os
 from functions.data_manipulation import trials_df_and_minimum
-from plotting.general import violin_plots
+from plotting.violin import violin_plots
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
@@ -22,5 +21,8 @@ trials_test_list = [
     for job_id in job_ids
 ]
 
+# convert trials to Dataframe and get minimum/minima
 df, min_val, min_df, parameters = trials_df_and_minimum(trials_test_list, test_param)
+
+# create violin plots which are stored in "output/violin_plots_{job_id}"
 violin_plots(df, min_val, min_df, parameters, job_ids, test_param)

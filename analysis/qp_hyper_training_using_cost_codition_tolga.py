@@ -1,45 +1,16 @@
 """
-Using algorithm 1 of Unsupervised Anomaly Detection With LSTM Neural Networks
-Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE
+Run a Hyper Tuning with Quadratic Programming-Based Training for the Anomaly Detection 
+Algorithm Based on OC-SVM with an LSTM with Algorithm 1 of Tolga Ergen's paper
+"Unsupervised Anomaly Detection With LSTM Neural Networks.
+For reference on the training procedure, see 'functions/training.py'.
 
------------------------------------------------------------------------------------------
-Algorithm 1: Quadratic Programming-Based Training for the Anomaly Detection Algorithm
-             Based on OC-SVM
------------------------------------------------------------------------------------------
-1. Initialize the LSTM parameters as θ_0 and the dual OC-SVM parameters as α_0
-2. Determine a threshold ϵ as convergence criterion
-3. k = −1
-4. do
-5.    k = k+1
-6.    Using θ_k, obtain {h}^n_{i=1} according to Fig. 2
-7.    Find optimal α_{k+1} for {h}^n_{i=1} using (20) and (21)
-8.    Based on α_{k+1}, obtain θ_{k+1} using (24) and Remark 3
-8. while (κ(θ_{k+1}, α{k+1})− κ(θ_k, α))^2 > ϵ
-9. Detect anomalies using (19) evaluated at θ_k and α_k
------------------------------------------------------------------------------------------
-
-(20): α_1 = 1 − S − α_2, where S= sum^n_{i=3} α_i.
-(21): α_{k+1,2} = ((α_{k,1} + α_{k,2})(K_{11} − K_{12})  + M_1 − M_2) / (K_{11} + K_{22}
-                                                                               − 2K_{12})
-      K_{ij} =def= h ^T_iT h _j, Mi =def= sum^n_{j=3} α_{k,j}K_{ij}
-(24): W^(·)_{k+1} = (I + (mu/2)A_k)^-1 (I− (mu/2)A_k) W^(·)_k
-      Ak = Gk(W(·))T −W(·)GT
-
-Dual problem of the OC-SVM:
-(22): min_{theta}  κ(θ, α_{k+1}) = 1/2 sum^n_{i=1} sum^n_{j=1} α_{k+1,i} α_{k+1,j} h^T_i h_j
-(23): s.t.: W(·)^T W(·) = I, R(·)^T R(·) = I and b(·)^T b(·) = 1
-
-Remark 3: For R(·) and b(·), we first compute the gradient of the objective function with
-respect to the chosen parameter as in (25). We then obtain Ak according to the chosen
-parameter. Using Ak, we update the chosen parameter as in (24).
-
-         ----------------------------------------------------------------------
-
-
-Using algorithm 2 of Unsupervised Anomaly Detection With LSTM Neural Networks
-Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE]
+Hyper tuning implies a training of LSTM and OC-SVM models on hyper parameters within
+a pre-defined space. The best hyper parameters will be selected after training is
+completed on a number of trials equal to 'max_evals'.
 """
 from functions.training import run_full_training, HYPER_TRAINING
+from functions.data_manipulation import train_dev_test_split
+from functions.data_loader import load_n_filter_data
 
 from hyperopt import (
     hp,
@@ -47,8 +18,7 @@ from hyperopt import (
 
 import branch_names as na
 
-
-### User Input  ###
+### ------------------------------- User Input ------------------------------- ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
@@ -65,9 +35,9 @@ plot_flag = (
     True  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = ""  # Small command on run, will be save to save file.
+run_notes = ""  # Small comment on run, will be saved to save file.
 
-###-------------###
+###-----------------------------------------------------------------------------###
 
 
 # set hyper space and variables
@@ -119,7 +89,7 @@ space_debug = hp.choice(
             "hidden_dim": hp.choice("hidden_dim", [6]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(25)]),
-            "learning_rate": hp.choice("learning_rate", [1e-5]),
+            "learning_rate": hp.choice("learning_rate", [1e-3]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0]),
             "output_dim": hp.choice("output_dim", [1]),
@@ -144,11 +114,23 @@ space_debug = hp.choice(
 # set space if debug
 if debug_flag:
     space = space_debug
+    
+# Load and filter data for criteria eta and jetpt_cap
+g_recur_jets, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
+print("Loading data complete")
 
+# split data
+_, split_dev_data, _ = train_dev_test_split(
+    g_recur_jets, split=[0.8, 0.1]
+)
+print("Splitting data complete")
+
+# do full training
 run_full_training(
     TRAINING_TYPE=HYPER_TRAINING,
     file_name=file_name,
     space=space,
+    train_data=split_dev_data,
     max_evals=max_evals,
     patience=patience,
     kt_cut=kt_cut,  # for dataset, splittings kt > 1.0 GeV

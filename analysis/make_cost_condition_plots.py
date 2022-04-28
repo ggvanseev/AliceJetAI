@@ -1,17 +1,16 @@
-import torch
-import time
-import matplotlib.pyplot as plt
-import os
+"""
+Make file to generate cost condition and cost plots from a list of job ids.
+"""
 
-from plotting.general import cost_condition_plots
+import torch
+from plotting.cost_condition import cost_condition_plots
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
-    "17_03_22_1717",
+    "22_04_28_1438",
 ]
-
 # select "test" or "train"
-trial_type = "train"
+trial_type = "test"
 
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -20,6 +19,7 @@ trials_test_list = [
     for job_id in job_ids
 ]
 
+# create cost condition plots from trials and jobs 
 for job_id, trials in zip(job_ids, trials_test_list):
     cost_condition_plots(trials, job_id)
     

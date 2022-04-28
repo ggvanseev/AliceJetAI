@@ -1,48 +1,68 @@
-from msilib.schema import Error
-import torch
-import numpy as np
+"""
+This file is structured to contain all required functions and classes for 
+the subsequent training of the LSTM and OC-SVM.
 
+The training is based on the Quadratic Programming-Based Training algorithm 
+described in Tolga Ergen's paper "Unsupervised Anomaly Detection With LSTM Neural
+Networks. The algorithm is given below in the THEORY part.
+
+The file contains the training algorithm, the TRAINING class that is used to invoke
+training of the models on the data, and two child classes of TRAINING:
+    - REGULAR_TRAINING: Class used when a regular training is to be done using
+    a set space of hyper parameter values, for n number of evaluations
+    - HYPER_TRAINING: Class used when a hyper tuning of the model is to be done
+    to tune the model/training parameters for this dataset
+The difference between the two is mainly in which part of the data it uses:
+train, test and development.
+Lastly, run_full_training is a function that orchestrates one training session. 
+
+
+         ------------------------------- THEORY ---------------------------------
+Algorithm 1 of Unsupervised Anomaly Detection With LSTM Neural Networks
+Sauce: Tolga Ergen and Suleyman Serdar Kozat, Senior Member, IEEE
+
+-----------------------------------------------------------------------------------------
+Algorithm 1: Quadratic Programming-Based Training for the Anomaly Detection Algorithm
+             Based on OC-SVM
+-----------------------------------------------------------------------------------------
+1. Initialize the LSTM parameters as θ_0 and the dual OC-SVM parameters as α_0
+2. Determine a threshold ϵ as convergence criterion
+3. k = −1
+4. do
+5.    k = k+1
+6.    Using θ_k, obtain {h}^n_{i=1} according to Fig. 2
+7.    Find optimal α_{k+1} for {h}^n_{i=1} using (20) and (21)
+8.    Based on α_{k+1}, obtain θ_{k+1} using (24) and Remark 3
+8. while (κ(θ_{k+1}, α{k+1})− κ(θ_k, α))^2 > ϵ
+9. Detect anomalies using (19) evaluated at θ_k and α_k
+-----------------------------------------------------------------------------------------
+
+(20): α_1 = 1 − S − α_2, where S= sum^n_{i=3} α_i.
+(21): α_{k+1,2} = ((α_{k,1} + α_{k,2})(K_{11} − K_{12})  + M_1 − M_2) / (K_{11} + K_{22}
+                                                                               − 2K_{12})
+      K_{ij} =def= h ^T_iT h _j, Mi =def= sum^n_{j=3} α_{k,j}K_{ij}
+(24): W^(·)_{k+1} = (I + (mu/2)A_k)^-1 (I− (mu/2)A_k) W^(·)_k
+      Ak = Gk(W(·))T −W(·)GT
+
+Dual problem of the OC-SVM:
+(22): min_{theta}  κ(θ, α_{k+1}) = 1/2 sum^n_{i=1} sum^n_{j=1} α_{k+1,i} α_{k+1,j} h^T_i h_j
+(23): s.t.: W(·)^T W(·) = I, R(·)^T R(·) = I and b(·)^T b(·) = 1
+
+Remark 3: For R(·) and b(·), we first compute the gradient of the objective function with
+respect to the chosen parameter as in (25). We then obtain Ak according to the chosen
+parameter. Using Ak, we update the chosen parameter as in (24).
+
+         ----------------------------------------------------------------------
+"""
+
+import numpy as np
+import time
+import os
+from copy import copy
+import torch
 from sklearn.svm import OneClassSVM
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
-
-# from sklearn.externals import joblib
-# import joblib
-
-import time
-
-from functions.data_manipulation import (
-    branch_filler,
-    lstm_data_prep,
-    h_bar_list_to_numpy,
-    scaled_epsilon_n_max_epochs,
-    format_ak_to_list,
-    train_dev_test_split,
-    trials_df_and_minimum,
-)
-
-from functions.optimization_orthogonality_constraints import (
-    kappa,
-    optimization,
-)
-
-from functions.run_lstm import calc_lstm_results
-
-from plotting.general import plot_cost_vs_cost_condition
-
-from functions.validation import calc_percentage_anomalies
-from ai.model_lstm import LSTMModel
-
-# from autograd import elementwise_grad as egrad
-
-from copy import copy
-
-from functions.data_loader import load_n_filter_data
-from plotting.general import cost_condition_plots, violin_plots
-
-# from autograd import elementwise_grad as egrad
-
-
 from hyperopt import (
     fmin,
     tpe,
@@ -53,8 +73,28 @@ from hyperopt import (
 )  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
 from functools import partial
 
-import os
 
+from functions.data_manipulation import (
+    branch_filler,
+    lstm_data_prep,
+    h_bar_list_to_numpy,
+    scaled_epsilon_n_max_epochs,
+    format_ak_to_list,
+    shuffle_batches,
+    trials_df_and_minimum,
+)
+from functions.optimization_orthogonality_constraints import (
+    kappa,
+    optimization,
+)
+from functions.run_lstm import calc_lstm_results
+from functions.validation import calc_percentage_anomalies
+
+from ai.model_lstm import LSTMModel
+
+from plotting.cost_condition import cost_condition_plots
+from plotting.svm_boundary import svm_boundary_plots
+from plotting.violin import violin_plots
 
 def training_algorithm(
     lstm_model,
@@ -67,16 +107,33 @@ def training_algorithm(
     print_out="",
     pooling="last",
 ):
-    """
-    Trainging algorithm 1 from paper Tolga: Unsupervised Anomaly Detection With LSTM Neural Networks
-    """
-    # path for model - only used for saving
-    # model_path = f'models/{lstm_model}_{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}'
+    """Trainging algorithm 1 from paper Tolga: Unsupervised Anomaly Detection With LSTM
+    Neural Networks, described in the theory part above
 
-    ### ALGORITHM START ###
+
+    Args:
+        lstm_model (torch.nn.LSTM): LSTM model
+        svm_model (sklearn.svm.OneClassSVM): OC-SVM model
+        x_loader (list): Dataloader list with batches
+        track_jets_dev_data (list): Tracking list for datasequences
+        model_params (dict): Parameters used for the models
+        training_params (dict): Parameters used for training
+        device (torch.device): Cpu or cuda device
+        print_out (str, optional): Save output text. Defaults to "".
+        pooling (str, optional): Type of pooling used. Defaults to "last".
+
+    Returns:
+        Tuple[torch.nn.LSTM, sklearn.svm.OneClassSVM, list, list, bool, str]:
+            - LSTM model
+            - OC-SVM model
+            - list containing cost info of training
+            - list containing cost condition info of training
+            - Pass or Fail boolean statement
+            - Save output text 
+    """    
 
     ### TRACK TIME ### TODO
-    time_at_step = time.time()
+    time_track = time.time()
 
     # Set initial cost
     # TODO set alphas to 1 or 0 so cost_next - cost will be large
@@ -101,25 +158,19 @@ def training_algorithm(
     track_cost = []
     track_cost_condition = []
 
-    ### TRACK TIME ### TODO
-    # dt = time.time() - time_at_step
-    # time_at_step = time.time()
-    # print(f"Obtained first h_bars, done in: {dt}")
-
     # loop over k (epochs) for nr. set epochs and unsatisfied cost condition
     k = -1
     while (
         k < min_epochs_patience or cost_condition_passed_flag == False
     ) and k < training_params["max_epochs"]:
         k += 1
-
-        ### TRACK TIME ### TODO
-        # dt = time.time() - time_at_step
-        # time_at_step = time.time()
-        # print(f"Start of loop, done in: {dt} \t epoch {k}")
+        
+        # shuffle jets in batches each epoch
+        x_loader, track_jets_dev_data = shuffle_batches(x_loader, track_jets_dev_data)
 
         # keep previous cost result stored
         cost_prev = copy(cost)
+        #print("cost before ocsvm\t",cost)
 
         # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
         svm_model.fit(h_bar_list_np)
@@ -128,11 +179,8 @@ def training_algorithm(
         alphas = alphas / np.sum(alphas)  # NOTE: equation 14, sum alphas = 1
 
         a_idx = svm_model.support_
-
-        ### TRACK TIME ### TODO
-        # dt = time.time() - time_at_step
-        # time_at_step = time.time()
-        # print(f"Obtained alphas, done in: {dt}")
+        
+        #print("cost after ocsvm\t", kappa(alphas, a_idx, h_bar_list))
 
         # obtain theta_k+1 using the optimization algorithm
         lstm_model, theta_next = optimization(
@@ -146,11 +194,6 @@ def training_algorithm(
             device=device,
         )
 
-        ### TRACK TIME ### TODO
-        # dt = time.time() - time_at_step
-        # time_at_step = time.time()
-        # print(f"Obtained thetas, done in: {dt}")
-
         # obtain h_bar from the lstm with theta_k+1, given the data
         h_bar_list, theta, theta_gradients = calc_lstm_results(
             lstm_model,
@@ -161,27 +204,20 @@ def training_algorithm(
             pooling=pooling,
         )
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
-
-        ### TRACK TIME ### TODO
-        # dt = time.time() - time_at_step
-        # time_at_step = time.time()
-        # print(f"Obtained h_bar, done in: {dt}")
+        
+        
+        #print("cost after optim\t", kappa(alphas, a_idx, h_bar_list))
 
         # obtain the new cost and cost condition given theta_k+1 and alpha_k+1
         cost = kappa(alphas, a_idx, h_bar_list)
         cost_condition = (cost - cost_prev) ** 2
-
-        ### TRACK TIME ### TODO
-        # dt = time.time() - time_at_step
-        # time_at_step = time.time()
-        # print(f"Obtained cost, done in: {dt}")
 
         # track cost and cost_condition
         track_cost.append(cost)
         track_cost_condition.append(cost_condition)
 
         # check condition algorithm 1, paper Tolga
-        if abs((cost - cost_prev) / cost_prev) < training_params["epsilon"]:
+        if cost_condition < training_params["epsilon"]:
             # check if condition had been satisfied recently
             if cost_condition_passed_flag == False:
                 cost_condition_passed_flag = True
@@ -204,13 +240,20 @@ def training_algorithm(
                 print_out,
             )  # immediately return passed = False
 
-    print_out += f"\nfrac diff: {(cost - cost_prev) / cost_prev},  eps: {training_params['epsilon']} "
-    if abs((cost - cost_prev) / cost_prev) > training_params["epsilon"]:
-        print_out += "\nAlgorithm failed: not done learning in max epochs."
+    # add print statements
+    ### TRACK TIME ### TODO
+    dt = time.time() - time_track
+    print_out += f"\nTraining done in: {dt}"
+
+    # check if passed cost condition
+    if cost_condition > training_params["epsilon"]:
+        print_out += f"\n  Algorithm failed: not done learning in max = {k} epochs"
         passed = False
     else:
-        print_out += f"\nModel done learning in {k} epochs."
+        print_out += f"\n  Model done learning in {k} epochs"
         passed = True
+    #print_out += f"\n  With cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
+    print_out += f"\n  With cost condition: {cost_condition}, vs epsilon: {training_params['epsilon']} "
 
     return lstm_model, svm_model, track_cost, track_cost_condition, passed, print_out
 
@@ -224,7 +267,6 @@ class TRAINING:
         hyper_parameters: dict,
         train_data,
         val_data=None,
-        plot_flag: bool = False,
         patience=5,
         max_attempts=4,
     ):
@@ -241,10 +283,10 @@ class TRAINING:
         5. Return distance distance annomalies (With respect to validation if regular training) as loss.
 
         """
-        # Track time
+        # track time
         time_track = time.time()
 
-        # Variables:
+        # variables:
         batch_size = int(hyper_parameters["batch_size"])
         output_dim = int(hyper_parameters["output_dim"])
         layer_dim = int(hyper_parameters["num_layers"])
@@ -255,16 +297,19 @@ class TRAINING:
         svm_gamma = hyper_parameters["svm_gamma"]
         hidden_dim = int(hyper_parameters["hidden_dim"])
         scaler_id = hyper_parameters["scaler_id"]
-        input_variables = list(hyper_parameters["variables"])
+        if "variables" in hyper_parameters:
+            input_variables = list(hyper_parameters["variables"])
+        else:
+            input_variables = None
         pooling = hyper_parameters["pooling"]
 
-        # Set epsilon and max_epochs
+        # set epsilon and max_epochs
         eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
 
         # output string for printing in terminal:
         print_out = ""
 
-        # Show used hyper_parameters in terminal
+        # show used hyper_parameters in terminal
         # sauce https://stackoverflow.com/questions/44689546/how-to-print-out-a-dictionary-nicely-in-python
         print_out += "\n\nHyper Parameters:\n"
         print_out += "\n".join(
@@ -277,43 +322,24 @@ class TRAINING:
         )
         print_out += "\nDevice: {}".format(device)
 
-        # prepare data for usage
-        # dev_data_copy = copy(dev_data)  # save this to check the error of data[] TODO
-        # try:
-        #     dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
-        # except TypeError:
-        #     print("Could not create jet branch with given data and parameters!")
-        #     return (
-        #         10  # for "loss", since this will be added to the 1st column of the result
-        #     )
-
+        # track time
         time_track = time.time()
-
-        try:
-            train_data, val_data, track_jets_train_data = self.data_prep_branch_filler(
-                train_data, val_data, batch_size, input_variables
-            )
-        except:
-            print("Branch filler failed")
-            return {
-                "loss": 10,
-                "final_cost": 10,
-                "status": STATUS_FAIL,
-                "model": 10,
-                "hyper_parameters": hyper_parameters,
-                "cost_data": 10,
-                "num_batches": batch_size,
-            }
-
+        train_data, val_data, track_jets_train_data, bf_out_txt = self.data_prep_branch_filler(
+            train_data, val_data, batch_size, input_variables
+        )
+        print_out += bf_out_txt
+        
+        # track time branch filler
         dt = time.time() - time_track
-        print(f"Branch filler, done in: {dt}")
+        print_out += f"\nBranch filler done in: {dt}"
 
-        # Note this has to be saved with the model, to ensure data has the same form.
+        # scaler: note this has to be saved with the model, to ensure data has the same form.
         if scaler_id == "minmax":
             scaler = MinMaxScaler()
         elif scaler_id == "std":
             scaler = StandardScaler()
 
+        # scale branches
         train_loader, val_loader = self.data_prep_scaling(
             train_data, val_data, scaler, batch_size
         )
@@ -339,49 +365,57 @@ class TRAINING:
             "patience": patience,
         }
 
-        ### TRACK TIME ### TODO
+        # track time data preparation
         dt = time.time() - time_track
-        print_out += f"\nDataprep, done in: {dt}"
+        print_out += f"\nDataprep done in: {dt}"
 
+        # loop for n attempts: if training fails, it attempts more trainings
         n_attempt = 0
         while n_attempt < max_attempts:
             n_attempt += 1
 
-            # Declare models
+            # declare models
             lstm_model = LSTMModel(**model_params)
             svm_model = OneClassSVM(nu=svm_nu, gamma=svm_gamma, kernel="linear")
 
             # set model to correct device
             lstm_model.to(device)
 
-            try:
-                (
-                    lstm_model,
-                    svm_model,
-                    track_cost,
-                    track_cost_condition,
-                    passed,
-                    print_out,
-                ) = training_algorithm(
-                    lstm_model,
-                    svm_model,
-                    train_loader,
-                    track_jets_train_data,
-                    model_params,
-                    training_params,
-                    device,
-                    print_out,
-                    pooling,
-                )
-            except RuntimeError as e:
-                passed = False
-                logf = open("logfiles/cuda_error.log", "w")
-                logf.write(str(e))
+            # train models
+            # try:
+            (
+                lstm_model,
+                svm_model,
+                track_cost,
+                track_cost_condition,
+                passed,
+                print_out,
+            ) = training_algorithm(
+                lstm_model,
+                svm_model,
+                train_loader,
+                track_jets_train_data,
+                model_params,
+                training_params,
+                device,
+                print_out,
+                pooling,
+            )
+            # except RuntimeError as e:
+            #     passed = False
+            #     print("Training algorithm: Cuda error")
+            #     logf = open("logfiles/cuda_error.log", "a+")
+            #     logf.write(str(e))
 
             # check if the model passed the training
             diff_percentage_anomalies = 10  # Create standard for saving
             train_success = False
+            
+            # TODO REMOVE LATER! -> Test on single attempt
+            n_attempt = max_attempts
+            train_success = True
 
+            # check if passed the training
             if passed:
                 diff_percentage_anomalies = self.calc_diff_percentage(
                     train_loader,
@@ -394,7 +428,7 @@ class TRAINING:
                     device=device,
                 )
 
-                # Check if distance to svm_nu is smaller than required
+                # check if distance to svm_nu is smaller than required
                 if (
                     diff_percentage_anomalies < self.max_distance_percentage_anomalies
                     and track_cost[0] != track_cost[-1]
@@ -402,24 +436,14 @@ class TRAINING:
                     n_attempt = max_attempts
                     train_success = True
 
-        # training time and print statement
+        # track training time and print statement
         dt = time.time() - time_track
         time_str = (
             time.strftime("%H:%M:%S", time.gmtime(dt)) if dt > 60 else f"{dt:.2f} s"
         )
-        print_out += f"\n{'Passed' if train_success else 'Failed'} in: {time_str}"
         if train_success:
-            print_out += f"\twith loss: {diff_percentage_anomalies:.4E}"
-
-        if plot_flag:
-            # plot cost condition and cost function
-            title_plot = f"plot_with_{max_epochs}_epochs_{batch_size}_batch_size_{learning_rate}_learning_rate_{svm_gamma}_svm_gamma_{svm_nu}_svm_nu_{diff_percentage_anomalies}_distance_nu"
-            plot_cost_vs_cost_condition(
-                track_cost=track_cost,
-                track_cost_condition=track_cost_condition,
-                title_plot=title_plot,
-                save_flag=True,
-            )
+            print_out += f"\n  With loss: {diff_percentage_anomalies:.4E}"
+        print_out += f"\n{'Passed' if train_success else 'Failed'} in: {time_str}"
 
         # return the model
         lstm_ocsvm = dict({"lstm": lstm_model, "ocsvm": svm_model, "scaler": scaler})
@@ -435,7 +459,7 @@ class TRAINING:
         return {
             "loss": diff_percentage_anomalies,
             "final_cost": track_cost[-1],
-            "status": STATUS_OK if passed else STATUS_FAIL,
+            "status": STATUS_OK, #if passed else STATUS_FAIL,
             "model": lstm_ocsvm,
             "hyper_parameters": hyper_parameters,
             "cost_data": cost_data,
@@ -502,18 +526,19 @@ class HYPER_TRAINING(TRAINING):
         # select only desired input variables
         train_data = train_data[input_variables]
 
-        train_data = format_ak_to_list(train_data)
+        if type(train_data) is not list:
+            train_data = format_ak_to_list(train_data)
         train_data, track_jets_train_data, max_n_batches, _ = branch_filler(
             train_data, batch_size=batch_size, n_features=len(input_variables)
         )
-        print(f"\nMax number of batches: {max_n_batches}")
+        bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_batches}"
 
-        return train_data, val_data, track_jets_train_data
+        return train_data, val_data, track_jets_train_data, bf_out_txt
 
 
 class REGULAR_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=0.01)
+        super().__init__(max_distance=1000.5) # TODO set it back
 
     def calc_diff_percentage(
         self,
@@ -566,19 +591,22 @@ class REGULAR_TRAINING(TRAINING):
     def data_prep_branch_filler(
         self, train_data, val_data, batch_size, input_variables
     ):
-        train_data = format_ak_to_list(train_data)
-        val_data = format_ak_to_list(val_data)
+        if type(train_data) is not list:
+            train_data = format_ak_to_list(train_data)
+        if type(val_data) is not list:
+            val_data = format_ak_to_list(val_data)
 
+        bf_out_txt = ""
         train_data, track_jets_train_data, max_n_train_batches, _ = branch_filler(
             train_data, batch_size=batch_size
         )
-        print(f"\nMax number of batches: {max_n_train_batches}")
+        bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_train_batches}"
         val_data, track_jets_val_data, max_n_val_batches, _ = branch_filler(
             val_data, batch_size=batch_size
         )
-        print(f"\nMax number of batches: {max_n_val_batches}")
+        bf_out_txt += f"\nNr. of validation batches: {int(len(val_data) / batch_size)}, out of max.: {max_n_val_batches}"
 
-        return train_data, val_data, track_jets_train_data
+        return train_data, val_data, track_jets_train_data, bf_out_txt
 
 
 def run_full_training(
@@ -586,9 +614,11 @@ def run_full_training(
     TRAINING_TYPE: REGULAR_TRAINING or HYPER_TRAINING,
     file_name: str,
     space,
+    train_data,
+    val_data = None,
     max_evals: int = 4,
-    patience: int = 5,
-    kt_cut=False,  # for dataset, splittings kt > 1.0 GeV
+    patience: int = 10,
+    kt_cut: float = None,  # for dataset, splittings kt > 1.0 GeV
     multicore_flag: bool = False,
     save_results_flag: bool = True,
     plot_flag: bool = True,
@@ -610,22 +640,10 @@ def run_full_training(
     # start time
     start_time = time.time()
 
-    # Load and filter data for criteria eta and jetpt_cap
-    g_recur_jets, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
-    print("Loading data complete")
-    # split data
-    split_train_data, split_dev_data, split_val_data = train_dev_test_split(
-        g_recur_jets, split=[0.8, 0.1]
-    )
-    print("Splitting data complete")
-
     # Decide what data to use based on training type
-    if TRAINING_TYPE == REGULAR_TRAINING:
-        train_data = split_train_data
-        val_data = split_val_data
-    else:
-        train_data = split_dev_data
-        val_data = None
+    if TRAINING_TYPE == REGULAR_TRAINING and val_data is None:
+        print("ERROR: Regular training requires validation data which has not been provided.\nPlease provide this or switch training type.")
+        return -1
 
     # set trials or sparktrials
     if multicore_flag:
@@ -633,7 +651,7 @@ def run_full_training(
         trials = SparkTrials(
             parallelism=cores
         )  # run as many trials parallel as the nr of cores available
-        print(f"Hypertuning {max_evals} evaluations, on {cores} cores:\n")
+        print(f"Running {max_evals} evaluations, on {cores} cores:\n")
     else:
         trials = Trials()  # NOTE keep for debugging since can't do with spark trials
 
@@ -646,7 +664,6 @@ def run_full_training(
             training.run_training,
             train_data=train_data,
             val_data=val_data,
-            plot_flag=plot_flag,
             patience=patience,
         ),
         space,
@@ -654,8 +671,7 @@ def run_full_training(
         max_evals=max_evals,
         trials=trials,
     )
-    print(f"\nHypertuning completed on dataset:\n{file_name}")
-
+    
     # saving spark_trials as dictionaries
     # source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
     pickling_trials = dict()
@@ -663,8 +679,11 @@ def run_full_training(
         if not k in ["_spark_context", "_spark"]:
             pickling_trials[k] = v
 
-    # collect df and print best models
+    # collect df and print best model(s)
     df, min_val, min_df, parameters = trials_df_and_minimum(pickling_trials, "loss")
+    
+    # print run statement
+    print(f"\n{'Hypertuning' if TRAINING_TYPE == HYPER_TRAINING else 'Regular training'} completed on dataset:\n\t{file_name}")
 
     # check to save results
     if save_results_flag:
@@ -673,18 +692,20 @@ def run_full_training(
         if job_id:
             job_id = job_id.split(".")[0]
         else:
-            job_id = time.strftime("%d_%m_%y_%H%M")
+            job_id = time.strftime("%y_%m_%d_%H%M")
 
         out_file = f"storing_results/trials_test_{job_id}.p"
 
         # save trials as pickling_trials object
         torch.save(pickling_trials, open(out_file, "wb"))
+        print(f"Stored results in:\n\t{out_file}")
 
         # check to make plots
         if plot_flag:
             cost_condition_plots(pickling_trials, job_id)
-            violin_plots(df, min_val, min_df, parameters, [job_id], "loss")
-            print("\nPlotting complete")
+            violin_plots(df, min_val, min_df, parameters, [job_id], "loss") if TRAINING_TYPE == HYPER_TRAINING else None
+            #svm_boundary_plots(pickling_trials, job_id, train_data)
+            print(f"Plotting complete, stored results at:\n\toutput/cost_condition_{job_id}/\n\toutput/violin_plots_{job_id}/")
 
         # store run info
         run_time = time.time() - start_time
@@ -694,6 +715,4 @@ def run_full_training(
         )
         with open("storing_results/run_info.p", "a+") as f:
             f.write(run_info)
-        print(f"\nCompleted run in: {run_time}")
-
-        # load torch.load(r"storing_results\trials_test.p",map_location=torch.device('cpu'), pickle_module=pickle)
+        print(f"\nCompleted run in: {run_time:.2f} seconds\n\ton job: {job_id}")

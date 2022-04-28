@@ -161,16 +161,17 @@ def load_n_filter_data(
         # cut kts
         g_jets_recur = g_jets_recur[g_jets_kt > kt_cut]
         q_jets_recur = q_jets_recur[q_jets_kt > kt_cut]
+        print(f"\tgluon splittings cut:\t\t{1 - np.count_nonzero(g_jets_kt[g_jets_kt > kt_cut]) / np.count_nonzero(g_jets_kt):.2%}")
+        print(f"\tquark splittings cut:\t\t{1 - np.count_nonzero(q_jets_kt[q_jets_kt > kt_cut]) / np.count_nonzero(q_jets_kt):.2%}")
 
-        # hist gluons
-        g_kts_flat = ak.flatten(ak.flatten(g_jets_kt)).to_list()
-        g_kts_hist = np.histogram(g_kts_flat, bins=range(round(max(g_kts_flat))))
-        print(f"\tgluon splittings cut:\t\t{g_kts_hist[0][0] / sum(g_kts_hist[0]):.2%}")
 
-        # hist quarks
-        q_kts_flat = ak.flatten(ak.flatten(q_jets_kt)).to_list()
-        q_kts_hist = np.histogram(q_kts_flat, bins=range(round(max(q_kts_flat))))
-        print(f"\tquark splittings cut:\t\t{q_kts_hist[0][0] / sum(q_kts_hist[0]):.2%}")
+        # hist gluons TODO keep for possible later analysis: histograms
+        #g_kts_flat = ak.flatten(ak.flatten(g_jets_kt)).to_list()
+        # g_kts_hist = np.histogram(g_kts_flat, bins=range(round(max(g_kts_flat)))) 
+
+        # hist quarks TODO keep for possible later analysis: histograms
+        #q_kts_flat = ak.flatten(ak.flatten(q_jets_kt)).to_list()
+        # q_kts_hist = np.histogram(q_kts_flat, bins=range(round(max(q_kts_flat)))) 
 
     # remove empty additions from recursive jets and flatten them, i.e. take jet out of event nesting
     g_jets_recur = select_non_empty_branches(

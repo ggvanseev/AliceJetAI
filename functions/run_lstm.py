@@ -53,21 +53,9 @@ def calc_lstm_results(
         # lstm_model.train()  # TODO should this be off so the backward() call in the forward pass does not update the weights?
 
         # Makes predictions
-        hn, theta, theta_gradients = lstm_model(
-            x_batch, theta=theta, theta_gradients=theta_gradients
+        h_bar, theta, theta_gradients = lstm_model(
+            x_batch, jet_track_local, pooling=pooling, theta=theta, theta_gradients=theta_gradients
         )
-
-        # get mean/last pooled hidden states
-        if pooling == "last":
-            h_bar = hn[:, jet_track_local]
-        elif pooling == "mean":
-            h_bar = torch.zeros([1, len(jet_track_local), hn.shape[-1]])
-            jet_track_prev = 0
-            jet_track_local = [x + 1 for x in jet_track_local]
-            jet_track_local[-1] = None
-            for j, jet_track in enumerate(jet_track_local):
-                h_bar[:, j] = torch.mean(hn[:, jet_track_prev:jet_track], dim=1)
-                jet_track_prev = jet_track
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)

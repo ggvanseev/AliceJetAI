@@ -1,0 +1,32 @@
+A small test to see what the hn states look like of the digits dataset.
+The test results have been made with the debugger tool of VSCode.
+With the debugger a break-point was set right after a model has "passed" the training.
+At this breakpoint, where the models have completed their training procedure and are considered
+to be good models, I insert samples into the LSTM to see what the hidden states look like.
+From these it can be seen that the structure of the digits, or rather the relative locations of
+the coordinates does not change much. They are scaled differently, but their relative locations
+to one another are roughly intact. Therefore, plotting the hn states results are similar to the
+input to the LSTM. Does this imply the LSTM does not learn much? Or is this good since the task
+of the LSTM is to produce digits in a space that makes it easy for the OC-SVM to distinguish them?
+-> ask Tolga.
+
+I repeat the process with a nu of 0.1 since this gives good anomalous vs normal results: 90% data
+considered normal, now finally the 0s are considered normal and 9s anomalous
+
+Note: during the first test, with nu = 0.5, I found that giving the LSTM the full training again
+set -> obtain h_bar,i states -> insert this into the OC-SVM will result in an anomaly fraction
+of exactly 0.5! This implies that the nu parameter used in the sklearn OC-SVM clearly corresponds
+to the fraction of anomalous data its fitting process aims for. Hence the reason I repeat the
+test for a different nu value.
+I would like to point out that this is ONLY the case when testing this on the training set.
+Using the validation set (which should be a similar model) results in worse results: about 90%
+Could this be due to not shuffling the batches every epoch? -> shuffle and test this!
+
+nu = 0.1:
+worse performance on training set:
+$ diff_percentage_anomalies
+0.42037372917760485
+$ percentage_anomaly_training
+0.3501742160278746
+$ percentage_anomaly_validation
+0.7705479452054794
