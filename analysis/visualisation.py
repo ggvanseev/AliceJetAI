@@ -9,8 +9,8 @@ from functions.data_manipulation import (
 import awkward as ak
 import numpy as np
 
-job_id = "21_03_22_1650"
-jet_info = "9 digits"
+job_id = 9792527
+jet_info = "quark"
 num = 0
 
 # load data

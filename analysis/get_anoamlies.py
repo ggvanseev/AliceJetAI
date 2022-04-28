@@ -20,7 +20,7 @@ g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=1)
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 trials_test_list = torch.load(
-    f"storing_results/trials_test_{job_id}.p", map_location=device
+    f"storing_results/old_24_03_2022/trials_test_{job_id}.p", map_location=device
 )
 
 trials = trials_test_list["_trials"]

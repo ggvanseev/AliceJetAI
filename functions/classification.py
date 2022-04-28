@@ -10,7 +10,7 @@ from functions.data_manipulation import (
 )
 
 from functions.run_lstm import calc_lstm_results
-from testing.plotting_test import normal_vs_anomaly_2D # TODO testing
+from testing.plotting_test import normal_vs_anomaly_2D  # TODO testing
 
 import pickle
 
@@ -87,11 +87,19 @@ class LSTM_OCSVM_CLASSIFIER:
         # count anomalies
         n_anomaly = np.count_nonzero(classification == -1)
         fraction_anomaly = n_anomaly / len(classification)
-        
-        return classification, fraction_anomaly, jets_index, h_bar_list_np # TODO testing
+
+        return (
+            classification,
+            fraction_anomaly,
+            jets_index,
+            h_bar_list_np,
+        )  # TODO testing
 
 
 class CLASSIFICATION_CHECK:
+    """
+        Dummy jets with value nine, to exclude ai-models than don't look at the content of the jets.
+    """
     def __init__(self) -> None:
         pass
 
@@ -138,6 +146,9 @@ class CLASSIFICATION_CHECK:
         return self.classification_test(trials, zeros_flag=False, nines_test_flag=True)
 
     def classification_all_zeros_test(self, trials):
+        """
+        Dummy jets with value nine, to exclude ai-models than don't look at the content of the jets.
+        """
         return self.classification_test(trials, zeros_flag=True, nines_test_flag=False)
 
 
@@ -146,7 +157,7 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
     anomaly_tracker = np.zeros(len(trials))
     classification_tracker = dict()
     jets_index_tracker = dict()
-    h_bar_list_all = dict() # TODO testing
+    h_bar_list_all = dict()  # TODO testing
     out_txt = ""
 
     # Run through all trials
@@ -166,7 +177,7 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
         else:
             # if data does not have variable names
             data = jets
-            
+
         classifier = LSTM_OCSVM_CLASSIFIER(
             oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler
         )
@@ -175,19 +186,19 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
             classification_tracker[i],
             anomaly_tracker[i],
             jets_index_tracker[i],
-            h_bar_list_all[i]
+            h_bar_list_all[i],
         ) = classifier.anomaly_classification(data=data)
 
         # TODO test creating plots of normal data vs anomalies
-        normal_vs_anomaly_2D(h_bar_list_all[i], classification_tracker[i], f"{job_id}/{jet_info}_trial_{i}")
+        # normal_vs_anomaly_2D(h_bar_list_all[i], classification_tracker[i], f"{job_id}/{jet_info}_trial_{i}")
 
         trial_txt = f"trial {i} percentage anomaly: {np.round(anomaly_tracker[i]*100,2) }%, where the model has a nu of {trials[i]['result']['hyper_parameters']['svm_nu']}"
         print(trial_txt)
-        out_txt += "\n"+trial_txt
+        out_txt += "\n" + trial_txt
 
     test_txt = f"Average percentage anomalys: {np.round(np.nanmean(anomaly_tracker)*100,2)} +\- {np.round(np.nanstd(anomaly_tracker)*100,2)}%"
     print(test_txt)
-    out_txt += "\n"+test_txt+"\n\n"
+    out_txt += "\n" + test_txt + "\n\n"
 
     # store results
     storing = {
@@ -201,8 +212,8 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
         storing,
         open(f"storing_results/anomaly_classification_{jet_info}_{job_id}.pkl", "wb"),
     )
-    txt_file = open(f"testing/output/{job_id}/info.txt", "w")
-    txt_file.write(out_txt)
-    txt_file.close()
-    
-    return h_bar_list_all, classification_tracker#, test_txt# TODO testing
+    # txt_file = open(f"testing/output/{job_id}/info.txt", "w")
+    # txt_file.write(out_txt)
+    # txt_file.close()
+
+    return h_bar_list_all, classification_tracker  # , test_txt# TODO testing
