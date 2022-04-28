@@ -37,7 +37,7 @@ plot_flag = (
     True  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = ""  # Small command on run, will be save to save file.
+run_notes = "qg with new settings, check if it improves"  # Small command on run, will be save to save file.
 
 ###-------------###
 
@@ -49,8 +49,8 @@ space = hp.choice(
             "batch_size": hp.choice("num_batch", [500]),
             "hidden_dim": hp.choice("hidden_dim", [20]),
             "num_layers": hp.choice("num_layers", [1]),
-            "min_epochs": hp.choice("min_epochs", [int(30)]),
-            "learning_rate": 10 ** hp.choice("learning_rate", [-6]),
+            "min_epochs": hp.choice("min_epochs", [int(100)]),
+            "learning_rate": 10 ** hp.choice("learning_rate", [-4]),
             "dropout": hp.choice("dropout", [0]),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default

@@ -64,8 +64,7 @@ plot_sample = False
 random.seed(0) # for shuffling of data sequences
 
 # notes on run, added to run_info.p, keep short or leave empty
-run_notes = "SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 2500 epchs, lr 1e-4, eps 1e-2, FIXED SHUFFLE!!!"
-"0:0.9 9:0.1[75:150],bs=2000, nu=0.5, lr=1e-4, eps=1e-2, epchs=100->2000, backward on h bar"
+run_notes = "0:0.9 9:0.1[75:150],bs=2000, nu=0.1, lr=1e-4, eps=1e-9, epchs=100->700, backward on h bar, old cost condition"
 
 # ---------------------- #
 
@@ -81,7 +80,7 @@ space = hp.choice(
             "learning_rate": 10 ** hp.choice("learning_rate", [-4]),
             "dropout": hp.choice("dropout", [0]),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.5]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default
             "svm_gamma": hp.choice("svm_gamma", ["scale"]),  #"scale" or "auto"[ 0.23 was the defeault before], auto seems weird
             "scaler_id": hp.choice("scaler_id", ["minmax"]),  # "minmax" = MinMaxScaler or "std" = StandardScaler
             "pooling": hp.choice("pooling", ["mean"]),  # "last" , "mean"

@@ -217,7 +217,7 @@ def training_algorithm(
         track_cost_condition.append(cost_condition)
 
         # check condition algorithm 1, paper Tolga
-        if abs((cost - cost_prev) / cost_prev) < training_params["epsilon"]:
+        if cost_condition < training_params["epsilon"]:
             # check if condition had been satisfied recently
             if cost_condition_passed_flag == False:
                 cost_condition_passed_flag = True
@@ -246,13 +246,13 @@ def training_algorithm(
     print_out += f"\nTraining done in: {dt}"
 
     # check if passed cost condition
-    if abs((cost - cost_prev) / cost_prev) > training_params["epsilon"]:
+    if cost_condition > training_params["epsilon"]:
         print_out += f"\n  Algorithm failed: not done learning in max = {k} epochs"
         passed = False
     else:
         print_out += f"\n  Model done learning in {k} epochs"
         passed = True
-    print_out += f"\n  With cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
+    #print_out += f"\n  With cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
     print_out += f"\n  With cost condition: {cost_condition}, vs epsilon: {training_params['epsilon']} "
 
     return lstm_model, svm_model, track_cost, track_cost_condition, passed, print_out
