@@ -8,13 +8,13 @@ from testing.testing_functions import load_digits_data
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
-    "22_04_25_1857",
+    "22_04_28_1438",
 ]
 # select "test" or "train"
 trial_type = "test"
 
 # fit for testing?
-fit=False
+fit=True
 
 # ----- data that was trained on: -----
 # file_name(s) - comment/uncomment when switching between local/Nikhef
