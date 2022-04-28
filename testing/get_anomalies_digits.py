@@ -7,7 +7,7 @@ from testing_functions import load_digits_data
 from  testing.plotting_test import *
 
 
-job_id = "22_04_19_1648"
+job_id = "22_04_26_1633"
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 train_file = "samples/pendigits/pendigits-orig.tra"

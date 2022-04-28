@@ -253,6 +253,7 @@ def training_algorithm(
         print_out += f"\n  Model done learning in {k} epochs"
         passed = True
     print_out += f"\n  With cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
+    print_out += f"\n  With cost condition: {cost_condition}, vs epsilon: {training_params['epsilon']} "
 
     return lstm_model, svm_model, track_cost, track_cost_condition, passed, print_out
 

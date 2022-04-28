@@ -65,6 +65,7 @@ random.seed(0) # for shuffling of data sequences
 
 # notes on run, added to run_info.p, keep short or leave empty
 run_notes = "SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 2500 epchs, lr 1e-4, eps 1e-2, FIXED SHUFFLE!!!"
+"0:0.9 9:0.1[75:150],bs=2000, nu=0.5, lr=1e-4, eps=1e-2, epchs=100->2000, backward on h bar"
 
 # ---------------------- #
 
@@ -73,11 +74,11 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  
-            "batch_size": hp.choice("num_batch", [5000]),
+            "batch_size": hp.choice("num_batch", [2000]),
             "hidden_dim": hp.choice("hidden_dim", [2]),
             "num_layers": hp.choice("num_layers", [1]),
-            "min_epochs": hp.choice("min_epochs", [int(50)]),
-            "learning_rate": 10 ** hp.choice("learning_rate", [-5]),
+            "min_epochs": hp.choice("min_epochs", [int(100)]),
+            "learning_rate": 10 ** hp.choice("learning_rate", [-4]),
             "dropout": hp.choice("dropout", [0]),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.5]),  # 0.5 was the default
