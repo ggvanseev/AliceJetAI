@@ -250,7 +250,7 @@ def stacked_plot_normalised_first_entries(anomaly, normal, feature, jet_info=Non
     plt.legend()
 
 
-hist_comparison_first_entries(
+stacked_plot_normalised_first_entries(
     anomaly=q_anomaly, normal=q_normal, feature=na.recur_dr, jet_info=None, n_bins=50
 )
 plt.show()
