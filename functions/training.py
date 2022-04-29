@@ -538,7 +538,7 @@ class HYPER_TRAINING(TRAINING):
 
 class REGULAR_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=1000.5) # TODO set it back
+        super().__init__(max_distance=.01)
 
     def calc_diff_percentage(
         self,
@@ -704,7 +704,7 @@ def run_full_training(
         if plot_flag:
             cost_condition_plots(pickling_trials, job_id)
             violin_plots(df, min_val, min_df, parameters, [job_id], "loss") if TRAINING_TYPE == HYPER_TRAINING else None
-            svm_boundary_plots(pickling_trials, job_id, train_data)
+            #svm_boundary_plots(pickling_trials, job_id, train_data)
             print(f"Plotting complete, stored results at:\n\toutput/cost_condition_{job_id}/\n\toutput/violin_plots_{job_id}/")
 
         # store run info
