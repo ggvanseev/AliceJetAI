@@ -326,10 +326,11 @@ class TRAINING:
             "  {:10}\t  {}".format(k, v) for k, v in hyper_parameters.items()
         )
 
-        # use correct device:
-        device = (
-            torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-        )
+        # use correct device: # TODO, fix issues with gpu, for now only run on cpu
+        device = torch.device("cpu")
+        # (
+        #     torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        # )
         print_out += "\nDevice: {}".format(device)
 
         # track time
