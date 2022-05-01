@@ -77,7 +77,7 @@ class LSTMModel(nn.Module):
         if pooling == "last":
             h_bar = hn[:, jet_track_local]
         elif pooling == "mean":
-            h_bar = torch.zeros([1, len(jet_track_local), hn.shape[-1]])
+            h_bar = torch.zeros([hn.shape[0], len(jet_track_local), hn.shape[-1]])
             jet_track_prev = 0
             jet_track_local = [x + 1 for x in jet_track_local]
             jet_track_local[-1] = None

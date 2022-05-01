@@ -109,7 +109,7 @@ space_debug = hp.choice(
                     # [na.recur_jetpt, na.recur_z],
                 ],
             ),
-            "pooling": hp.choice("pooling", ["last"]),
+            "pooling": hp.choice("pooling", ["mean"]),
         }
     ],
 )
