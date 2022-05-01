@@ -1,0 +1,64 @@
+trial: 0
+  batch_size  	  20
+  dropout     	  0
+  hidden_dim  	  6
+  learning_rate	  0.001
+  min_epochs  	  25
+  num_layers  	  1
+  output_dim  	  2
+  pooling     	  mean
+  scaler_id   	  std
+  svm_gamma   	  scale
+  svm_nu      	  0.9
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.9014084507042254
+with final cost:  0.000964762183862003
+
+trial: 1
+  batch_size  	  20
+  dropout     	  0
+  hidden_dim  	  6
+  learning_rate	  0.001
+  min_epochs  	  25
+  num_layers  	  1
+  output_dim  	  2
+  pooling     	  mean
+  scaler_id   	  std
+  svm_gamma   	  scale
+  svm_nu      	  0.9
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.8873239436619719
+with final cost:  0.005998200924968069
+
+trial: 2
+  batch_size  	  20
+  dropout     	  0
+  hidden_dim  	  6
+  learning_rate	  0.001
+  min_epochs  	  25
+  num_layers  	  1
+  output_dim  	  2
+  pooling     	  mean
+  scaler_id   	  std
+  svm_gamma   	  scale
+  svm_nu      	  0.9
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        10.0
+with final cost:  0.003063613317179017
+
+trial: 3
+  batch_size  	  20
+  dropout     	  0
+  hidden_dim  	  6
+  learning_rate	  0.001
+  min_epochs  	  25
+  num_layers  	  1
+  output_dim  	  2
+  pooling     	  mean
+  scaler_id   	  std
+  svm_gamma   	  scale
+  svm_nu      	  0.9
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.9014084507042254
+with final cost:  0.002459882060858128
+
