@@ -426,13 +426,11 @@ class TRAINING:
             diff_percentage_anomalies = 10  # Create standard for saving
             train_success = False
 
-            # TODO REMOVE LATER! -> Test on single attempt
-            n_attempt = max_attempts
-            train_success = True
-
             # check if passed the training
             if passed:
-                diff_percentage_anomalies = self.calc_diff_percentage(
+                # Calc loss
+                # For regular training also checks if diff_percentage anomalies is small enough.
+                loss, passed_loss = self.calc_loss(
                     train_loader,
                     val_loader,
                     track_jets_train_data,
@@ -441,13 +439,10 @@ class TRAINING:
                     svm_model,
                     pooling=pooling,
                     device=device,
+                    track_cost=track_cost,
                 )
 
-                # check if distance to svm_nu is smaller than required
-                if (
-                    diff_percentage_anomalies < self.max_distance_percentage_anomalies
-                    and track_cost[0] != track_cost[-1]
-                ):
+                if passed_loss:
                     n_attempt = max_attempts
                     train_success = True
 
@@ -472,16 +467,16 @@ class TRAINING:
         print(print_out)
 
         return {
-            "loss": diff_percentage_anomalies,
+            "loss": loss,
             "final_cost": track_cost[-1],
-            "status": STATUS_OK,  # if passed else STATUS_FAIL,
+            "status": STATUS_OK if passed else STATUS_FAIL,
             "model": lstm_ocsvm,
             "hyper_parameters": hyper_parameters,
             "cost_data": cost_data,
             "num_batches": len(train_loader),
         }
 
-    def calc_diff_percentage(
+    def calc_loss(
         self,
         train_loader,
         val_loader,
@@ -491,6 +486,7 @@ class TRAINING:
         svm_model,
         pooling,
         device,
+        track_cost,
     ):
         pass
 
@@ -505,9 +501,9 @@ class TRAINING:
 
 class HYPER_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=0.05)
+        super().__init__(max_distance=1)
 
-    def calc_diff_percentage(
+    def calc_loss(
         self,
         train_loader,
         val_loader,
@@ -517,16 +513,9 @@ class HYPER_TRAINING(TRAINING):
         svm_model,
         pooling,
         device,
+        track_cost,
     ):
-        return calc_percentage_anomalies(
-            train_loader,
-            track_jets_train_data,
-            input_dim,
-            lstm_model,
-            svm_model,
-            device=device,
-            pooling=pooling,
-        )
+        return track_cost[-1], True
 
     def data_prep_scaling(self, train_data, val_data, scaler, batch_size):
         train_loader = lstm_data_prep(
@@ -555,7 +544,7 @@ class REGULAR_TRAINING(TRAINING):
     def __init__(self) -> None:
         super().__init__(max_distance=0.01)
 
-    def calc_diff_percentage(
+    def calc_loss(
         self,
         train_loader,
         val_loader,
@@ -565,6 +554,7 @@ class REGULAR_TRAINING(TRAINING):
         svm_model,
         pooling,
         device,
+        track_cost,
     ):
         percentage_anomaly_validation = calc_percentage_anomalies(
             val_loader,
@@ -590,7 +580,16 @@ class REGULAR_TRAINING(TRAINING):
             percentage_anomaly_training - percentage_anomaly_validation
         )
 
-        return diff_percentage_anomalies
+        # check if distance to svm_nu is smaller than required
+        if (
+            diff_percentage_anomalies < self.max_distance_percentage_anomalies
+            and track_cost[0] != track_cost[-1]
+        ):
+            succes = True
+        else:
+            succes = False
+
+        return diff_percentage_anomalies, succes
 
     def data_prep_scaling(self, train_data, val_data, scaler, batch_size):
         train_loader = lstm_data_prep(
