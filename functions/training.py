@@ -165,6 +165,9 @@ def training_algorithm(
         k < min_epochs_patience or cost_condition_passed_flag == False
     ) and k < training_params["max_epochs"]:
         k += 1
+        # Copy ai-models to test for next alpha
+        svm_model_next = copy(svm_model)
+        lstm_model_next = copy(lstm_model)
 
         # shuffle jets in batches each epoch
         x_loader, track_jets_dev_data = shuffle_batches(x_loader, track_jets_dev_data)
@@ -174,18 +177,18 @@ def training_algorithm(
         # print("cost before ocsvm\t",cost)
 
         # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
-        svm_model.fit(h_bar_list_np)
-        alphas = np.abs(svm_model.dual_coef_)[0]
+        svm_model_next.fit(h_bar_list_np)
+        alphas = np.abs(svm_model_next.dual_coef_)[0]
 
         alphas = alphas / np.sum(alphas)  # NOTE: equation 14, sum alphas = 1
 
-        a_idx = svm_model.support_
+        a_idx = svm_model_next.support_
 
         # print("cost after ocsvm\t", kappa(alphas, a_idx, h_bar_list))
 
         # obtain theta_k+1 using the optimization algorithm
-        lstm_model, theta_next = optimization(
-            lstm=lstm_model,
+        lstm_model_next, theta_next = optimization(
+            lstm=lstm_model_next,
             alphas=alphas,
             a_idx=a_idx,
             mu=training_params["learning_rate"],
@@ -197,7 +200,7 @@ def training_algorithm(
 
         # obtain h_bar from the lstm with theta_k+1, given the data
         h_bar_list, theta, theta_gradients = calc_lstm_results(
-            lstm_model,
+            lstm_model_next,
             model_params["input_dim"],
             x_loader,
             track_jets_dev_data,
@@ -232,13 +235,20 @@ def training_algorithm(
         if np.isnan(track_cost_condition[k]):
             print_out += "\nBroke, for given hyper parameters"
             return (
-                lstm_model,
-                svm_model,
+                lstm_model_next,
+                svm_model_next,
                 track_cost,
                 track_cost_condition,
                 False,
                 print_out,
             )  # immediately return passed = False
+
+        # use  models if conditions not yet satisfied
+        if (
+            k < min_epochs_patience or cost_condition_passed_flag == False
+        ) and k < training_params["max_epochs"]:
+            lstm_model = copy(lstm_model_next)
+            svm_model = copy(svm_model_next)
 
     # add print statements
     ### TRACK TIME ### TODO
@@ -290,7 +300,7 @@ class TRAINING:
         batch_size = int(hyper_parameters["batch_size"])
         output_dim = int(hyper_parameters["output_dim"])
         layer_dim = int(hyper_parameters["num_layers"])
-        dropout = hyper_parameters["dropout"] if layer_dim > 1 else 0  # TODO
+        dropout = hyper_parameters["dropout"] if layer_dim > 1 else 0
         min_epochs = int(hyper_parameters["min_epochs"])
         learning_rate = hyper_parameters["learning_rate"]
         svm_nu = hyper_parameters["svm_nu"]
@@ -416,13 +426,11 @@ class TRAINING:
             diff_percentage_anomalies = 10  # Create standard for saving
             train_success = False
 
-            # TODO REMOVE LATER! -> Test on single attempt
-            n_attempt = max_attempts
-            train_success = True
-
             # check if passed the training
             if passed:
-                diff_percentage_anomalies = self.calc_diff_percentage(
+                # Calc loss
+                # For regular training also checks if diff_percentage anomalies is small enough.
+                loss, train_success = self.calc_loss(
                     train_loader,
                     val_loader,
                     track_jets_train_data,
@@ -431,15 +439,11 @@ class TRAINING:
                     svm_model,
                     pooling=pooling,
                     device=device,
+                    track_cost=track_cost,
                 )
 
-                # check if distance to svm_nu is smaller than required
-                if (
-                    diff_percentage_anomalies < self.max_distance_percentage_anomalies
-                    and track_cost[0] != track_cost[-1]
-                ):
+                if train_success:
                     n_attempt = max_attempts
-                    train_success = True
 
         # track training time and print statement
         dt = time.time() - time_track
@@ -462,16 +466,16 @@ class TRAINING:
         print(print_out)
 
         return {
-            "loss": diff_percentage_anomalies,
+            "loss": loss,
             "final_cost": track_cost[-1],
-            "status": STATUS_OK,  # if passed else STATUS_FAIL,
+            "status": STATUS_OK if passed else STATUS_FAIL,
             "model": lstm_ocsvm,
             "hyper_parameters": hyper_parameters,
             "cost_data": cost_data,
             "num_batches": len(train_loader),
         }
 
-    def calc_diff_percentage(
+    def calc_loss(
         self,
         train_loader,
         val_loader,
@@ -481,6 +485,7 @@ class TRAINING:
         svm_model,
         pooling,
         device,
+        track_cost,
     ):
         pass
 
@@ -495,9 +500,9 @@ class TRAINING:
 
 class HYPER_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=1000)
+        super().__init__(max_distance=1)
 
-    def calc_diff_percentage(
+    def calc_loss(
         self,
         train_loader,
         val_loader,
@@ -507,16 +512,9 @@ class HYPER_TRAINING(TRAINING):
         svm_model,
         pooling,
         device,
+        track_cost,
     ):
-        return calc_percentage_anomalies(
-            train_loader,
-            track_jets_train_data,
-            input_dim,
-            lstm_model,
-            svm_model,
-            device=device,
-            pooling=pooling,
-        )
+        return track_cost[-1], True
 
     def data_prep_scaling(self, train_data, val_data, scaler, batch_size):
         train_loader = lstm_data_prep(
@@ -545,7 +543,7 @@ class REGULAR_TRAINING(TRAINING):
     def __init__(self) -> None:
         super().__init__(max_distance=0.01)
 
-    def calc_diff_percentage(
+    def calc_loss(
         self,
         train_loader,
         val_loader,
@@ -555,6 +553,7 @@ class REGULAR_TRAINING(TRAINING):
         svm_model,
         pooling,
         device,
+        track_cost,
     ):
         percentage_anomaly_validation = calc_percentage_anomalies(
             val_loader,
@@ -580,7 +579,16 @@ class REGULAR_TRAINING(TRAINING):
             percentage_anomaly_training - percentage_anomaly_validation
         )
 
-        return diff_percentage_anomalies
+        # check if distance to svm_nu is smaller than required
+        if (
+            diff_percentage_anomalies < self.max_distance_percentage_anomalies
+            and track_cost[0] != track_cost[-1]
+        ):
+            succes = True
+        else:
+            succes = False
+
+        return diff_percentage_anomalies, succes
 
     def data_prep_scaling(self, train_data, val_data, scaler, batch_size):
         train_loader = lstm_data_prep(
