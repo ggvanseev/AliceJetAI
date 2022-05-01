@@ -165,6 +165,9 @@ def training_algorithm(
         k < min_epochs_patience or cost_condition_passed_flag == False
     ) and k < training_params["max_epochs"]:
         k += 1
+        # Copy ai-models to test for next alpha
+        svm_model_next = copy(svm_model)
+        lstm_model_next = copy(lstm_model)
 
         # shuffle jets in batches each epoch
         x_loader, track_jets_dev_data = shuffle_batches(x_loader, track_jets_dev_data)
@@ -174,18 +177,18 @@ def training_algorithm(
         # print("cost before ocsvm\t",cost)
 
         # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
-        svm_model.fit(h_bar_list_np)
-        alphas = np.abs(svm_model.dual_coef_)[0]
+        svm_model_next.fit(h_bar_list_np)
+        alphas = np.abs(svm_model_next.dual_coef_)[0]
 
         alphas = alphas / np.sum(alphas)  # NOTE: equation 14, sum alphas = 1
 
-        a_idx = svm_model.support_
+        a_idx = svm_model_next.support_
 
         # print("cost after ocsvm\t", kappa(alphas, a_idx, h_bar_list))
 
         # obtain theta_k+1 using the optimization algorithm
-        lstm_model, theta_next = optimization(
-            lstm=lstm_model,
+        lstm_model_next, theta_next = optimization(
+            lstm=lstm_model_next,
             alphas=alphas,
             a_idx=a_idx,
             mu=training_params["learning_rate"],
@@ -197,7 +200,7 @@ def training_algorithm(
 
         # obtain h_bar from the lstm with theta_k+1, given the data
         h_bar_list, theta, theta_gradients = calc_lstm_results(
-            lstm_model,
+            lstm_model_next,
             model_params["input_dim"],
             x_loader,
             track_jets_dev_data,
@@ -232,13 +235,20 @@ def training_algorithm(
         if np.isnan(track_cost_condition[k]):
             print_out += "\nBroke, for given hyper parameters"
             return (
-                lstm_model,
-                svm_model,
+                lstm_model_next,
+                svm_model_next,
                 track_cost,
                 track_cost_condition,
                 False,
                 print_out,
             )  # immediately return passed = False
+
+        # use  models if conditions not yet satisfied
+        if (
+            k < min_epochs_patience or cost_condition_passed_flag == False
+        ) and k < training_params["max_epochs"]:
+            lstm_model = copy(lstm_model_next)
+            svm_model = copy(svm_model_next)
 
     # add print statements
     ### TRACK TIME ### TODO

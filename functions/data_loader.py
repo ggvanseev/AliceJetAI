@@ -44,14 +44,22 @@ def select_non_empty_branches(branches, non_empty_key):
     return branches
 
 
-def flatten_array(branches):
+def flatten_array(branches, step_size=3000):
     """
     returns a flattend array
     """
     new_branches = dict()
 
     for field in branches.fields:
-        new_branches[field] = ak.concatenate(branches[field], axis=0)
+        # Use this work around to avoid memory issues with ak.concatenate.
+        temp_array = ak.ArrayBuilder()
+        n_steps = len(branches[field]) // step_size + 1
+        steps = np.append(np.arange(n_steps) * step_size, None)
+        for i in np.arange(n_steps):
+            temp_array.append(
+                ak.concatenate(branches[field][steps[i] : steps[i + 1]], axis=0)
+            )
+        new_branches[field] = ak.flatten(temp_array, axis=1)
 
     return ak.Array(new_branches)
 
