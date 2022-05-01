@@ -25,12 +25,12 @@ import branch_names as na
 file_name = "samples/time_cluster_10k.root"
 
 # set run settings
-max_evals = 2
+max_evals = 200
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
-debug_flag = True  # for using debug space = only 1 configuration of hp
+debug_flag = False  # for using debug space = only 1 configuration of hp
 multicore_flag = True  # for using SparkTrials or Trials, turns of when debugging
-save_results_flag = False  # for saving trials and runtime
+save_results_flag = True  # for saving trials and runtime
 plot_flag = (
     True  # for making cost condition plots, only works if save_results_flag is True
 )

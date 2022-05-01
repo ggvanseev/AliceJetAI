@@ -430,7 +430,7 @@ class TRAINING:
             if passed:
                 # Calc loss
                 # For regular training also checks if diff_percentage anomalies is small enough.
-                loss, passed_loss = self.calc_loss(
+                loss, train_success = self.calc_loss(
                     train_loader,
                     val_loader,
                     track_jets_train_data,
@@ -442,9 +442,8 @@ class TRAINING:
                     track_cost=track_cost,
                 )
 
-                if passed_loss:
+                if train_success:
                     n_attempt = max_attempts
-                    train_success = True
 
         # track training time and print statement
         dt = time.time() - time_track
