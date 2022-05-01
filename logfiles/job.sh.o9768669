@@ -1,3490 +1,0 @@
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-22/03/01 16:19:46 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Number of jets in dataset:		2121894
-Number of gluon jets in dataset:	330915
-Number of quark jets in dataset:	287288
-Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
-	gluon jets left after cuts:	150107
-	quark jets left after cuts:	147878 
-Applying cut: kt > 1.0 GeV on all splittings
-	gluon splittings cut:		57.46%
-	quark splittings cut:		68.67%
-Loading data complete
-Splitting data complete
-Hypertuning 160 evaluations, on 32 cores:
-
-  0%|          | 0/160 [00:00<?, ?trial/s, best loss=?][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                  (0 + 1) / 1][Stage 1:>                  (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1]Branch filler failed
-[Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1]                                                                                  1%|          | 1/160 [00:16<42:46, 16.14s/trial, best loss: 10][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 94
-Branch filler jit, done in: 7.104338884353638
-Dataprep, done in: 7.1495749950408936
-frac diff: -3.0239252700357252e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.68 s	with loss: 5.1971E-05
-[Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1]                                                                                [Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1]  1%|▏         | 2/160 [00:51<1:12:10, 27.41s/trial, best loss: 5.197089629806889e-05]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 8.345632314682007
-Dataprep, done in: 8.39037036895752
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 40.93 s
-                                                                                  2%|▏         | 3/160 [01:35<1:31:37, 35.02s/trial, best loss: 5.197089629806889e-05][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 3 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 4 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 5 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 94
-Branch filler jit, done in: 8.561309576034546
-Dataprep, done in: 8.607926368713379
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 49.37 s
-                                                                                [Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1]  2%|▎         | 4/160 [03:04<2:26:37, 56.39s/trial, best loss: 5.197089629806889e-05]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 7 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 8 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 28
-Branch filler jit, done in: 6.522226810455322
-Dataprep, done in: 6.562378644943237
-frac diff: -2.860703490221821e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 27.95 s	with loss: 1.5285E-04
-                                                                                  3%|▎         | 5/160 [03:59<2:24:29, 55.93s/trial, best loss: 5.197089629806889e-05][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 10 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 11 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 12 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 13 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1]Branch filler failed
-                                                                                [Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1]  4%|▍         | 6/160 [04:56<2:24:37, 56.35s/trial, best loss: 5.197089629806889e-05]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 6.64477014541626
-Dataprep, done in: 6.689158201217651
-frac diff: -3.120994107144728e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 28.25 s	with loss: 1.0134E-04
-                                                                                  4%|▍         | 7/160 [05:28<2:03:25, 48.40s/trial, best loss: 5.197089629806889e-05][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 6.701359748840332
-Dataprep, done in: 6.746946573257446
-frac diff: -1.0771118905578833e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.32 s	with loss: 6.0803E-05
-                                                                                [Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1]  5%|▌         | 8/160 [06:05<1:52:40, 44.47s/trial, best loss: 5.197089629806889e-05]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  9
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 8.539204597473145
-Dataprep, done in: 8.59215760231018
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 26.57 s	with loss: 9.1797E-04
-                                                                                  6%|▌         | 9/160 [06:35<1:40:34, 39.96s/trial, best loss: 5.197089629806889e-05][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt')
-Device: cpu
-Max number of batches: 71
-Branch filler jit, done in: 6.738795757293701
-Dataprep, done in: 6.785413980484009
-frac diff: -2.1882941846201005e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 44.20 s	with loss: 2.8681E-04
-                                                                                [Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1]  6%|▋         | 10/160 [07:24<1:46:56, 42.78s/trial, best loss: 5.197089629806889e-05]
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 94
-Branch filler jit, done in: 6.7692551612854
-Dataprep, done in: 6.815325498580933
-frac diff: -8.50697282679066e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 29.26 s	with loss: 5.1971E-05
-                                                                                  7%|▋         | 11/160 [07:57<1:38:50, 39.80s/trial, best loss: 5.197089629806889e-05][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 20 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt')
-Device: cpu
-Max number of batches: 71
-Branch filler jit, done in: 6.704853773117065
-Dataprep, done in: 6.750699996948242
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 00:01:45
-[Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1]                                                                                [Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1]  8%|▊         | 12/160 [09:58<2:39:13, 64.55s/trial, best loss: 5.197089629806889e-05]Branch filler failed
-                                                                                  8%|▊         | 13/160 [10:08<1:57:41, 48.04s/trial, best loss: 5.197089629806889e-05][Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 23 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1][Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt')
-Device: cpu
-Max number of batches: 71
-Branch filler jit, done in: 6.693852663040161
-Dataprep, done in: 6.7351393699646
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 00:01:43
-[Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1]                                                                                  9%|▉         | 14/160 [12:06<2:48:25, 69.22s/trial, best loss: 5.197089629806889e-05][Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1]Branch filler failed
-                                                                                  9%|▉         | 15/160 [12:17<2:04:53, 51.68s/trial, best loss: 5.197089629806889e-05][Stage 26:>   (0 + 1) / 1][Stage 27:>   (0 + 0) / 1][Stage 28:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 26 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1][Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 6.6443400382995605
-Dataprep, done in: 6.68543553352356
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 00:01:41
-[Stage 28:>   (0 + 1) / 1][Stage 29:>   (0 + 0) / 1][Stage 30:>   (0 + 0) / 1]                                                                                 10%|█         | 16/160 [14:12<2:49:53, 70.79s/trial, best loss: 5.197089629806889e-05][Stage 28:>   (0 + 1) / 1][Stage 29:>   (0 + 0) / 1][Stage 30:>   (0 + 0) / 1]Branch filler failed
-                                                                                 11%|█         | 17/160 [14:23<2:05:53, 52.82s/trial, best loss: 5.197089629806889e-05][Stage 29:>   (0 + 1) / 1][Stage 30:>   (0 + 0) / 1][Stage 31:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 29 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 30:>   (0 + 1) / 1][Stage 31:>   (0 + 0) / 1][Stage 32:>   (0 + 0) / 1][Stage 30:>   (0 + 1) / 1][Stage 31:>   (0 + 0) / 1][Stage 32:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 6.6566126346588135
-Dataprep, done in: 6.6987998485565186
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 00:01:41
-                                                                                [Stage 31:>   (0 + 1) / 1][Stage 32:>   (0 + 0) / 1][Stage 33:>   (0 + 0) / 1] 11%|█▏        | 18/160 [16:20<2:50:45, 72.15s/trial, best loss: 5.197089629806889e-05]Branch filler failed
-                                                                                [Stage 32:>   (0 + 1) / 1][Stage 33:>   (0 + 0) / 1][Stage 34:>   (0 + 0) / 1] 12%|█▏        | 19/160 [16:32<2:06:25, 53.80s/trial, best loss: 5.197089629806889e-05]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 32 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 33:>   (0 + 1) / 1][Stage 34:>   (0 + 0) / 1][Stage 35:>   (0 + 0) / 1][Stage 33:>   (0 + 1) / 1][Stage 34:>   (0 + 0) / 1][Stage 35:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 6.563573837280273
-Dataprep, done in: 6.604645729064941
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 00:01:47
-                                                                                [Stage 34:>   (0 + 1) / 1][Stage 35:>   (0 + 0) / 1][Stage 36:>   (0 + 0) / 1] 12%|█▎        | 20/160 [18:34<2:53:25, 74.32s/trial, best loss: 5.197089629806889e-05]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 6.593701124191284
-Dataprep, done in: 6.634666919708252
-frac diff: -2.648716895332827e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 28.65 s	with loss: 8.5777E-05
-                                                                                [Stage 35:>   (0 + 1) / 1][Stage 36:>   (0 + 0) / 1][Stage 37:>   (0 + 0) / 1] 13%|█▎        | 21/160 [19:07<2:23:29, 61.94s/trial, best loss: 5.197089629806889e-05]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 8.479140281677246
-Dataprep, done in: 8.525928258895874
-frac diff: 6.131215569478811e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 29.95 s	with loss: 1.2394E-05
-                                                                                [Stage 36:>   (0 + 1) / 1][Stage 37:>   (0 + 0) / 1][Stage 38:>   (0 + 0) / 1] 14%|█▍        | 22/160 [19:41<2:03:12, 53.57s/trial, best loss: 1.2393621416181833e-05]
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 28
-Branch filler jit, done in: 8.507203817367554
-Dataprep, done in: 8.553224802017212
-frac diff: -8.908751766070353e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.18 s	with loss: 1.5285E-04
-                                                                                 14%|█▍        | 23/160 [20:16<1:49:37, 48.01s/trial, best loss: 1.2393621416181833e-05][Stage 37:>   (0 + 1) / 1][Stage 38:>   (0 + 0) / 1][Stage 39:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 94
-Branch filler jit, done in: 8.74545693397522
-Dataprep, done in: 8.793078422546387
-frac diff: -1.0887979702011078e-05,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.62 s	with loss: 5.1971E-05
-                                                                                 15%|█▌        | 24/160 [20:52<1:40:42, 44.43s/trial, best loss: 1.2393621416181833e-05][Stage 38:>   (0 + 1) / 1][Stage 39:>   (0 + 0) / 1][Stage 40:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 28
-Branch filler jit, done in: 8.500451803207397
-Dataprep, done in: 8.549310445785522
-frac diff: -5.6515756251727585e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.69 s	with loss: 7.0231E-05
-                                                                                 16%|█▌        | 25/160 [21:27<1:33:38, 41.62s/trial, best loss: 1.2393621416181833e-05][Stage 39:>   (0 + 1) / 1][Stage 40:>   (0 + 0) / 1][Stage 41:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.533656597137451
-Dataprep, done in: 8.58116364479065
-frac diff: -1.8520094000577923e-05,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.45 s	with loss: 8.5777E-05
-                                                                                [Stage 40:>   (0 + 1) / 1][Stage 41:>   (0 + 0) / 1][Stage 42:>   (0 + 0) / 1] 16%|█▋        | 26/160 [22:02<1:28:33, 39.66s/trial, best loss: 1.2393621416181833e-05]
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 94
-Branch filler jit, done in: 8.758147478103638
-Dataprep, done in: 8.809096813201904
-frac diff: -3.777803822374587e-05,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.72 s	with loss: 2.7984E-05
-                                                                                [Stage 41:>   (0 + 1) / 1][Stage 42:>   (0 + 0) / 1][Stage 43:>   (0 + 0) / 1] 17%|█▋        | 27/160 [22:37<1:24:50, 38.28s/trial, best loss: 1.2393621416181833e-05]
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 28
-Branch filler jit, done in: 8.464818000793457
-Dataprep, done in: 8.511066198348999
-frac diff: -1.2213441253806269e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 32.98 s	with loss: 9.5018E-05
-                                                                                [Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1] 18%|█▊        | 28/160 [23:14<1:23:24, 37.91s/trial, best loss: 1.2393621416181833e-05]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 6.603864908218384
-Dataprep, done in: 6.64518404006958
-frac diff: -4.084466774440942e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.77 s	with loss: 3.7323E-04
-                                                                                [Stage 43:>   (0 + 1) / 1][Stage 44:>   (0 + 0) / 1][Stage 45:>   (0 + 0) / 1] 18%|█▊        | 29/160 [23:49<1:20:54, 37.06s/trial, best loss: 1.2393621416181833e-05]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 71
-Branch filler jit, done in: 6.679165840148926
-Dataprep, done in: 6.721359968185425
-frac diff: -7.709437176180845e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 28.99 s	with loss: 3.1867E-05
-                                                                                [Stage 44:>   (0 + 1) / 1][Stage 45:>   (0 + 0) / 1][Stage 46:>   (0 + 0) / 1] 19%|█▉        | 30/160 [24:22<1:17:42, 35.86s/trial, best loss: 1.2393621416181833e-05]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.534130811691284
-Dataprep, done in: 8.583768844604492
-frac diff: -4.292634838818681e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 45.65 s	with loss: 4.0846E-06
-                                                                                [Stage 45:>   (0 + 1) / 1][Stage 46:>   (0 + 0) / 1][Stage 47:>   (0 + 0) / 1] 19%|█▉        | 31/160 [25:12<1:26:16, 40.13s/trial, best loss: 4.084633608368582e-06] 
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 6.531111717224121
-Dataprep, done in: 6.572130918502808
-frac diff: -5.497015761061565e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.38 s	with loss: 7.0231E-05
-                                                                                 20%|██        | 32/160 [25:47<1:22:22, 38.61s/trial, best loss: 4.084633608368582e-06][Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1][Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 6.582037448883057
-Dataprep, done in: 6.623702526092529
-frac diff: 5.243032150171778e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 57.33 s	with loss: 7.6655E-03
-                                                                                 21%|██        | 33/160 [26:50<1:36:38, 45.66s/trial, best loss: 4.084633608368582e-06][Stage 47:>   (0 + 1) / 1][Stage 48:>   (0 + 0) / 1][Stage 49:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 8.62994933128357
-Dataprep, done in: 8.680150985717773
-frac diff: 1.19533573968897e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 17.31 s	with loss: 1.3498E-04
-                                                                                [Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1] 21%|██▏       | 34/160 [27:12<1:21:01, 38.58s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 28
-Branch filler jit, done in: 6.521321058273315
-Dataprep, done in: 6.562157869338989
-frac diff: -1.5005537070286144e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 29.24 s	with loss: 7.0231E-05
-                                                                                [Stage 49:>   (0 + 1) / 1][Stage 50:>   (0 + 0) / 1][Stage 51:>   (0 + 0) / 1] 22%|██▏       | 35/160 [27:45<1:16:56, 36.93s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 71
-Branch filler jit, done in: 6.676060438156128
-Dataprep, done in: 6.719029903411865
-frac diff: -1.2609513507105532e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 32.18 s	with loss: 1.1154E-04
-                                                                                [Stage 50:>   (0 + 1) / 1][Stage 51:>   (0 + 0) / 1][Stage 52:>   (0 + 0) / 1] 22%|██▎       | 36/160 [28:21<1:15:47, 36.67s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 94
-Branch filler jit, done in: 6.798689365386963
-Dataprep, done in: 6.84201979637146
-frac diff: -1.4492728019546015e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 32.06 s	with loss: 2.7984E-05
-                                                                                 23%|██▎       | 37/160 [28:57<1:14:48, 36.49s/trial, best loss: 4.084633608368582e-06][Stage 51:>   (0 + 1) / 1][Stage 52:>   (0 + 0) / 1][Stage 53:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 71
-Branch filler jit, done in: 6.683908224105835
-Dataprep, done in: 6.728449583053589
-frac diff: -4.836235806230939e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 32.37 s	with loss: 2.0714E-04
-                                                                                [Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1] 24%|██▍       | 38/160 [29:34<1:14:32, 36.66s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 94
-Branch filler jit, done in: 6.829956769943237
-Dataprep, done in: 6.875880241394043
-frac diff: -1.0197379876693993e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.48 s	with loss: 2.7984E-05
-                                                                                [Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1] 24%|██▍       | 39/160 [30:09<1:12:57, 36.18s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 53 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 6.637454032897949
-Dataprep, done in: 6.6819093227386475
-frac diff: -1.3194884517166825e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 28.56 s	with loss: 1.0134E-04
-                                                                                 25%|██▌       | 40/160 [30:52<1:16:30, 38.25s/trial, best loss: 4.084633608368582e-06][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 55 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 56:>   (0 + 1) / 1][Stage 57:>   (0 + 0) / 1][Stage 58:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 56 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 57:>   (0 + 1) / 1][Stage 58:>   (0 + 0) / 1][Stage 59:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 71
-Branch filler jit, done in: 6.726263999938965
-Dataprep, done in: 6.77328896522522
-frac diff: -7.400389098929091e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 29.45 s	with loss: 4.7801E-05
-                                                                                 26%|██▌       | 41/160 [31:47<1:25:54, 43.31s/trial, best loss: 4.084633608368582e-06][Stage 58:>   (0 + 1) / 1][Stage 59:>   (0 + 0) / 1][Stage 60:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 6.647023439407349
-Dataprep, done in: 6.692546129226685
-frac diff: -1.7720229515920614e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 44.78 s	with loss: 1.1147E-03
-[Stage 59:>   (0 + 1) / 1][Stage 60:>   (0 + 0) / 1][Stage 61:>   (0 + 0) / 1]                                                                                 26%|██▋       | 42/160 [32:36<1:28:34, 45.04s/trial, best loss: 4.084633608368582e-06][Stage 59:>   (0 + 1) / 1][Stage 60:>   (0 + 0) / 1][Stage 61:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 59 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 60:>   (0 + 1) / 1][Stage 61:>   (0 + 0) / 1][Stage 62:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 60 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 61:>   (0 + 1) / 1][Stage 62:>   (0 + 0) / 1][Stage 63:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  9
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 71
-Branch filler jit, done in: 6.722006559371948
-Dataprep, done in: 6.768146753311157
-frac diff: -2.2791606476966907e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 29.53 s	with loss: 2.0714E-04
-                                                                                 27%|██▋       | 43/160 [33:31<1:33:44, 48.07s/trial, best loss: 4.084633608368582e-06][Stage 62:>   (0 + 1) / 1][Stage 63:>   (0 + 0) / 1][Stage 64:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 62 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 63:>   (0 + 1) / 1][Stage 64:>   (0 + 0) / 1][Stage 65:>   (0 + 0) / 1]Branch filler failed
-                                                                                 28%|██▊       | 44/160 [33:53<1:17:51, 40.27s/trial, best loss: 4.084633608368582e-06][Stage 64:>   (0 + 1) / 1][Stage 65:>   (0 + 0) / 1][Stage 66:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 6.551681756973267
-Dataprep, done in: 6.597096920013428
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 43.65 s
-                                                                                [Stage 65:>   (0 + 1) / 1][Stage 66:>   (0 + 0) / 1][Stage 67:>   (0 + 0) / 1] 28%|██▊       | 45/160 [34:42<1:21:40, 42.61s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 65 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 66:>   (0 + 1) / 1][Stage 67:>   (0 + 0) / 1][Stage 68:>   (0 + 0) / 1][Stage 66:>   (0 + 1) / 1][Stage 67:>   (0 + 0) / 1][Stage 68:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 6.664377450942993
-Dataprep, done in: 6.710419416427612
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 00:01:02
-                                                                                [Stage 67:>   (0 + 1) / 1][Stage 68:>   (0 + 0) / 1][Stage 69:>   (0 + 0) / 1] 29%|██▉       | 46/160 [35:59<1:40:38, 52.97s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 6.572993278503418
-Dataprep, done in: 6.618008852005005
-frac diff: -1.4342339431357635e-05,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.64 s	with loss: 7.0231E-05
-                                                                                 29%|██▉       | 47/160 [36:34<1:29:38, 47.59s/trial, best loss: 4.084633608368582e-06][Stage 68:>   (0 + 1) / 1][Stage 69:>   (0 + 0) / 1][Stage 70:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 8.468790531158447
-Dataprep, done in: 8.52193570137024
-frac diff: -8.97491064469805e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.65 s	with loss: 1.2394E-05
-                                                                                [Stage 69:>   (0 + 1) / 1][Stage 70:>   (0 + 0) / 1][Stage 71:>   (0 + 0) / 1] 30%|███       | 48/160 [37:10<1:22:23, 44.14s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 69 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 70:>   (0 + 1) / 1][Stage 71:>   (0 + 0) / 1][Stage 72:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.50599479675293
-Dataprep, done in: 8.559014558792114
-frac diff: 7.197726971375922e-10,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 17.71 s	with loss: 6.2005E-05
-                                                                                 31%|███       | 49/160 [37:44<1:16:04, 41.12s/trial, best loss: 4.084633608368582e-06][Stage 71:>   (0 + 1) / 1][Stage 72:>   (0 + 0) / 1][Stage 73:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 8.522779941558838
-Dataprep, done in: 8.5759756565094
-frac diff: -8.535793391310122e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.88 s	with loss: 1.2714E-04
-                                                                                 31%|███▏      | 50/160 [38:19<1:12:03, 39.30s/trial, best loss: 4.084633608368582e-06][Stage 72:>   (0 + 1) / 1][Stage 73:>   (0 + 0) / 1][Stage 74:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 8.538213014602661
-Dataprep, done in: 8.590166807174683
-frac diff: -1.4268734793743071e-05,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.21 s	with loss: 3.6912E-05
-[Stage 72:>   (0 + 1) / 1][Stage 73:>   (0 + 1) / 1][Stage 74:>   (0 + 0) / 1]                                                                                [Stage 73:>   (0 + 1) / 1][Stage 74:>   (0 + 0) / 1][Stage 75:>   (0 + 0) / 1] 32%|███▏      | 51/160 [38:54<1:09:06, 38.04s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 28
-Branch filler jit, done in: 8.482676982879639
-Dataprep, done in: 8.533025979995728
-frac diff: -3.721695320680519e-05,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.29 s	with loss: 7.0231E-05
-                                                                                [Stage 74:>   (0 + 1) / 1][Stage 75:>   (0 + 0) / 1][Stage 76:>   (0 + 0) / 1] 32%|███▎      | 52/160 [39:29<1:06:51, 37.14s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 74 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 75:>   (0 + 1) / 1][Stage 76:>   (0 + 0) / 1][Stage 77:>   (0 + 0) / 1]Branch filler failed
-                                                                                [Stage 76:>   (0 + 1) / 1][Stage 77:>   (0 + 0) / 1][Stage 78:>   (0 + 0) / 1] 33%|███▎      | 53/160 [39:54<59:47, 33.52s/trial, best loss: 4.084633608368582e-06]  [Stage 76:>   (0 + 1) / 1][Stage 77:>   (0 + 0) / 1][Stage 78:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.536040544509888
-Dataprep, done in: 8.586917638778687
-frac diff: 1.1900365618243481e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 00:01:23	with loss: 4.0846E-06
-[Stage 76:>   (0 + 1) / 1][Stage 77:>   (0 + 1) / 1][Stage 78:>   (0 + 0) / 1]                                                                                 34%|███▍      | 54/160 [41:21<1:27:37, 49.60s/trial, best loss: 4.084633608368582e-06][Stage 77:>   (0 + 1) / 1][Stage 78:>   (0 + 0) / 1][Stage 79:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.559788227081299
-Dataprep, done in: 8.61039113998413
-frac diff: -3.387407849436463e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 45.03 s	with loss: 4.0846E-06
-                                                                                [Stage 78:>   (0 + 1) / 1][Stage 79:>   (0 + 0) / 1][Stage 80:>   (0 + 0) / 1] 34%|███▍      | 55/160 [42:11<1:27:03, 49.75s/trial, best loss: 4.084633608368582e-06][Stage 78:>   (0 + 1) / 1][Stage 79:>   (0 + 0) / 1][Stage 80:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 8.504300117492676
-Dataprep, done in: 8.557935237884521
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 00:01:08
-                                                                                [Stage 79:>   (0 + 1) / 1][Stage 80:>   (0 + 0) / 1][Stage 81:>   (0 + 0) / 1] 35%|███▌      | 56/160 [43:24<1:38:22, 56.76s/trial, best loss: 4.084633608368582e-06]Branch filler failed
-                                                                                [Stage 80:>   (0 + 1) / 1][Stage 81:>   (0 + 0) / 1][Stage 82:>   (0 + 0) / 1] 36%|███▌      | 57/160 [43:38<1:14:55, 43.64s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 8.481844663619995
-Dataprep, done in: 8.536022901535034
-frac diff: -2.5995215509167737e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 43.38 s	with loss: 7.0231E-05
-                                                                                [Stage 81:>   (0 + 1) / 1][Stage 82:>   (0 + 0) / 1][Stage 83:>   (0 + 0) / 1] 36%|███▋      | 58/160 [44:25<1:15:56, 44.67s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.572367668151855
-Dataprep, done in: 8.627819776535034
-frac diff: -3.602714941823813e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 45.05 s	with loss: 8.5777E-05
-                                                                                 37%|███▋      | 59/160 [45:14<1:17:26, 46.00s/trial, best loss: 4.084633608368582e-06][Stage 82:>   (0 + 1) / 1][Stage 83:>   (0 + 0) / 1][Stage 84:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 8.532577514648438
-Dataprep, done in: 8.586922645568848
-frac diff: -8.218493471522796e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.72 s	with loss: 3.6912E-05
-                                                                                 38%|███▊      | 60/160 [45:50<1:11:42, 43.02s/trial, best loss: 4.084633608368582e-06][Stage 83:>   (0 + 1) / 1][Stage 84:>   (0 + 0) / 1][Stage 85:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 28
-Branch filler jit, done in: 8.515700817108154
-Dataprep, done in: 8.568459033966064
-frac diff: -1.9745047983409206e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 43.08 s	with loss: 1.2394E-05
-                                                                                [Stage 84:>   (0 + 1) / 1][Stage 85:>   (0 + 0) / 1][Stage 86:>   (0 + 0) / 1] 38%|███▊      | 61/160 [46:38<1:13:29, 44.54s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.54440450668335
-Dataprep, done in: 8.597813606262207
-frac diff: -0.00010072161497822899,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.85 s	with loss: 8.5777E-05
-                                                                                [Stage 85:>   (0 + 1) / 1][Stage 86:>   (0 + 0) / 1][Stage 87:>   (0 + 0) / 1] 39%|███▉      | 62/160 [47:13<1:08:07, 41.71s/trial, best loss: 4.084633608368582e-06]Branch filler failed
-                                                                                 39%|███▉      | 63/160 [47:25<53:03, 32.82s/trial, best loss: 4.084633608368582e-06]  [Stage 86:>   (0 + 1) / 1][Stage 87:>   (0 + 0) / 1][Stage 88:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 8.503653287887573
-Dataprep, done in: 8.554916858673096
-frac diff: -2.109157501998217e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 34.21 s	with loss: 1.5285E-04
-                                                                                [Stage 87:>   (0 + 1) / 1][Stage 88:>   (0 + 0) / 1][Stage 89:>   (0 + 0) / 1] 40%|████      | 64/160 [48:04<55:30, 34.69s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 6.5313720703125
-Dataprep, done in: 6.576355934143066
-frac diff: -5.5096164505878224e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.04 s	with loss: 7.0231E-05
-                                                                                [Stage 88:>   (0 + 1) / 1][Stage 89:>   (0 + 0) / 1][Stage 90:>   (0 + 0) / 1] 41%|████      | 65/160 [48:39<55:06, 34.81s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 88 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 89:>   (0 + 1) / 1][Stage 90:>   (0 + 0) / 1][Stage 91:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 89 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 90:>   (0 + 1) / 1][Stage 91:>   (0 + 0) / 1][Stage 92:>   (0 + 0) / 1]Branch filler failed
-                                                                                [Stage 91:>   (0 + 1) / 1][Stage 92:>   (0 + 0) / 1][Stage 93:>   (0 + 0) / 1] 41%|████▏     | 66/160 [49:11<53:15, 34.00s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 6.555243253707886
-Dataprep, done in: 6.599355697631836
-frac diff: -7.172813818197639e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.74 s	with loss: 8.5777E-05
-                                                                                 42%|████▏     | 67/160 [49:46<53:11, 34.32s/trial, best loss: 4.084633608368582e-06][Stage 92:>   (0 + 1) / 1][Stage 93:>   (0 + 0) / 1][Stage 94:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 92 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 93:>   (0 + 1) / 1][Stage 94:>   (0 + 0) / 1][Stage 95:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 93 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 94:>   (0 + 1) / 1][Stage 95:>   (0 + 0) / 1][Stage 96:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 94 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 95:>   (0 + 1) / 1][Stage 96:>   (0 + 0) / 1][Stage 97:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 94
-Branch filler jit, done in: 6.778311491012573
-Dataprep, done in: 6.821953058242798
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 43.82 s
-                                                                                 42%|████▎     | 68/160 [51:07<1:13:44, 48.09s/trial, best loss: 4.084633608368582e-06][Stage 96:>   (0 + 1) / 1][Stage 97:>   (0 + 0) / 1][Stage 98:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 96 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 97:>   (0 + 1) / 1][Stage 98:>   (0 + 0) / 1][Stage 99:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 6.56643271446228
-Dataprep, done in: 6.608319282531738
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 43.51 s
-                                                                                [Stage 98:>   (0 + 1) / 1][Stage 99:>   (0 + 0) / 1][Stage 100:>  (0 + 0) / 1] 43%|████▎     | 69/160 [52:06<1:17:57, 51.41s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 98 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 99:>   (0 + 1) / 1][Stage 100:>  (0 + 0) / 1][Stage 101:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 6.6330413818359375
-Dataprep, done in: 6.6754467487335205
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 25.12 s	with loss: 1.4839E-04
-                                                                                [Stage 100:>  (0 + 1) / 1][Stage 101:>  (0 + 0) / 1][Stage 102:>  (0 + 0) / 1] 44%|████▍     | 70/160 [52:46<1:12:02, 48.02s/trial, best loss: 4.084633608368582e-06][Stage 100:>  (0 + 1) / 1][Stage 101:>  (0 + 0) / 1][Stage 102:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 6.560920000076294
-Dataprep, done in: 6.602715730667114
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 00:01:46
-                                                                                 44%|████▍     | 71/160 [54:36<1:38:52, 66.66s/trial, best loss: 4.084633608368582e-06][Stage 101:>  (0 + 1) / 1][Stage 102:>  (0 + 0) / 1][Stage 103:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 28
-Branch filler jit, done in: 8.508446455001831
-Dataprep, done in: 8.55355167388916
-frac diff: -4.9297206339184575e-05,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.64 s	with loss: 7.0231E-05
-                                                                                [Stage 102:>  (0 + 1) / 1][Stage 103:>  (0 + 0) / 1][Stage 104:>  (0 + 0) / 1] 45%|████▌     | 72/160 [55:12<1:24:18, 57.48s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 102 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 103:>  (0 + 1) / 1][Stage 104:>  (0 + 0) / 1][Stage 105:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 8.477144241333008
-Dataprep, done in: 8.523682117462158
-frac diff: -1.0839453024862253e-05,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.24 s	with loss: 1.2394E-05
-                                                                                 46%|████▌     | 73/160 [55:59<1:18:50, 54.37s/trial, best loss: 4.084633608368582e-06][Stage 104:>  (0 + 1) / 1][Stage 105:>  (0 + 0) / 1][Stage 106:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 28
-Branch filler jit, done in: 8.485783576965332
-Dataprep, done in: 8.53179383277893
-frac diff: -4.621889576039466e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 45.18 s	with loss: 2.6027E-04
-                                                                                [Stage 105:>  (0 + 1) / 1][Stage 106:>  (0 + 0) / 1][Stage 107:>  (0 + 0) / 1] 46%|████▋     | 74/160 [56:49<1:16:06, 53.09s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 8.478469848632812
-Dataprep, done in: 8.52425742149353
-frac diff: -6.7859833918347665e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.29 s	with loss: 1.5285E-04
-                                                                                [Stage 106:>  (0 + 1) / 1][Stage 107:>  (0 + 0) / 1][Stage 108:>  (0 + 0) / 1] 47%|████▋     | 75/160 [57:23<1:07:07, 47.39s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 106 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 107:>  (0 + 1) / 1][Stage 108:>  (0 + 0) / 1][Stage 109:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 8.485482692718506
-Dataprep, done in: 8.531534433364868
-frac diff: -1.1009995452678716e-05,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 32.10 s	with loss: 1.7764E-04
-                                                                                [Stage 108:>  (0 + 1) / 1][Stage 109:>  (0 + 0) / 1][Stage 110:>  (0 + 0) / 1] 48%|████▊     | 76/160 [58:13<1:07:05, 47.92s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 108 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 109:>  (0 + 1) / 1][Stage 110:>  (0 + 0) / 1][Stage 111:>  (0 + 0) / 1][Stage 109:>  (0 + 1) / 1][Stage 110:>  (0 + 0) / 1][Stage 111:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.533262729644775
-Dataprep, done in: 8.580153942108154
-frac diff: -1.0927053048345529e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 00:01:21	with loss: 1.6747E-04
-                                                                                 48%|████▊     | 77/160 [59:51<1:27:09, 63.00s/trial, best loss: 4.084633608368582e-06][Stage 110:>  (0 + 1) / 1][Stage 111:>  (0 + 0) / 1][Stage 112:>  (0 + 0) / 1][Stage 110:>  (0 + 1) / 1][Stage 111:>  (0 + 0) / 1][Stage 112:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.724343299865723
-Dataprep, done in: 8.772138833999634
-frac diff: -4.518229742480157e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 00:01:20	with loss: 2.4099E-04
-                                                                                 49%|████▉     | 78/160 [1:01:16<1:35:11, 69.65s/trial, best loss: 4.084633608368582e-06][Stage 111:>  (0 + 1) / 1][Stage 112:>  (0 + 0) / 1][Stage 113:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 6.622180938720703
-Dataprep, done in: 6.662997245788574
-frac diff: -2.58608936840188e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 40.87 s	with loss: 1.6747E-04
-[Stage 112:>  (0 + 1) / 1][Stage 113:>  (0 + 0) / 1][Stage 114:>  (0 + 0) / 1]                                                                                [Stage 112:>  (0 + 1) / 1][Stage 113:>  (0 + 0) / 1][Stage 114:>  (0 + 0) / 1] 49%|████▉     | 79/160 [1:02:02<1:24:29, 62.59s/trial, best loss: 4.084633608368582e-06]Branch filler failed
-                                                                                 50%|█████     | 80/160 [1:02:14<1:03:13, 47.42s/trial, best loss: 4.084633608368582e-06][Stage 113:>  (0 + 1) / 1][Stage 114:>  (0 + 0) / 1][Stage 115:>  (0 + 0) / 1]Branch filler failed
-                                                                                 51%|█████     | 81/160 [1:02:26<48:27, 36.81s/trial, best loss: 4.084633608368582e-06]  [Stage 114:>  (0 + 1) / 1][Stage 115:>  (0 + 0) / 1][Stage 116:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.540402889251709
-Dataprep, done in: 8.588451385498047
-frac diff: -2.903583341514506e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 45.43 s	with loss: 2.4099E-04
-                                                                                 51%|█████▏    | 82/160 [1:03:16<53:01, 40.79s/trial, best loss: 4.084633608368582e-06][Stage 115:>  (0 + 1) / 1][Stage 116:>  (0 + 0) / 1][Stage 117:>  (0 + 0) / 1]Branch filler failed
-                                                                                 52%|█████▏    | 83/160 [1:03:28<41:16, 32.17s/trial, best loss: 4.084633608368582e-06][Stage 116:>  (0 + 1) / 1][Stage 117:>  (0 + 0) / 1][Stage 118:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 116 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 117:>  (0 + 1) / 1][Stage 118:>  (0 + 0) / 1][Stage 119:>  (0 + 0) / 1][Stage 117:>  (0 + 1) / 1][Stage 118:>  (0 + 0) / 1][Stage 119:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 6.646114826202393
-Dataprep, done in: 6.687267541885376
-frac diff: -6.132156345694292e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 00:01:24	with loss: 1.8241E-04
-                                                                                [Stage 118:>  (0 + 1) / 1][Stage 119:>  (0 + 0) / 1][Stage 120:>  (0 + 0) / 1] 52%|█████▎    | 84/160 [1:05:10<1:07:20, 53.17s/trial, best loss: 4.084633608368582e-06]Branch filler failed
-                                                                                [Stage 119:>  (0 + 1) / 1][Stage 120:>  (0 + 0) / 1][Stage 121:>  (0 + 0) / 1] 53%|█████▎    | 85/160 [1:05:23<51:24, 41.13s/trial, best loss: 4.084633608368582e-06]  
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.519458293914795
-Dataprep, done in: 8.566586256027222
-frac diff: -2.2342479185606988e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 45.87 s	with loss: 4.0438E-04
-                                                                                [Stage 120:>  (0 + 1) / 1][Stage 121:>  (0 + 0) / 1][Stage 122:>  (0 + 0) / 1] 54%|█████▍    | 86/160 [1:06:13<54:02, 43.82s/trial, best loss: 4.084633608368582e-06]Branch filler failed
-                                                                                 54%|█████▍    | 87/160 [1:06:26<41:42, 34.29s/trial, best loss: 4.084633608368582e-06][Stage 121:>  (0 + 1) / 1][Stage 122:>  (0 + 0) / 1][Stage 123:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 121 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 122:>  (0 + 1) / 1][Stage 123:>  (0 + 0) / 1][Stage 124:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 122 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 123:>  (0 + 1) / 1][Stage 124:>  (0 + 0) / 1][Stage 125:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 8.58170485496521
-Dataprep, done in: 8.629242658615112
-frac diff: -1.4182578859700114e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 42.82 s	with loss: 2.2294E-04
-                                                                                 55%|█████▌    | 88/160 [1:07:36<54:04, 45.06s/trial, best loss: 4.084633608368582e-06][Stage 124:>  (0 + 1) / 1][Stage 125:>  (0 + 0) / 1][Stage 126:>  (0 + 0) / 1][Stage 124:>  (0 + 1) / 1][Stage 125:>  (0 + 0) / 1][Stage 126:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 8.538583040237427
-Dataprep, done in: 8.58457350730896
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Failed in: 00:01:52
-                                                                                 56%|█████▌    | 89/160 [1:09:32<1:18:33, 66.39s/trial, best loss: 4.084633608368582e-06][Stage 125:>  (0 + 1) / 1][Stage 126:>  (0 + 0) / 1][Stage 127:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 125 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 126:>  (0 + 1) / 1][Stage 127:>  (0 + 0) / 1][Stage 128:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 126 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 127:>  (0 + 1) / 1][Stage 128:>  (0 + 0) / 1][Stage 129:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 127 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 128:>  (0 + 1) / 1][Stage 129:>  (0 + 0) / 1][Stage 130:>  (0 + 0) / 1]Branch filler failed
-                                                                                 56%|█████▋    | 90/160 [1:10:17<1:10:01, 60.02s/trial, best loss: 4.084633608368582e-06][Stage 129:>  (0 + 1) / 1][Stage 130:>  (0 + 0) / 1][Stage 131:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 129 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 130:>  (0 + 1) / 1][Stage 131:>  (0 + 0) / 1][Stage 132:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 130 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 131:>  (0 + 1) / 1][Stage 132:>  (0 + 0) / 1][Stage 133:>  (0 + 0) / 1]Branch filler failed
-                                                                                [Stage 132:>  (0 + 1) / 1][Stage 133:>  (0 + 0) / 1][Stage 134:>  (0 + 0) / 1] 57%|█████▋    | 91/160 [1:10:51<1:00:03, 52.22s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 132 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 133:>  (0 + 1) / 1][Stage 134:>  (0 + 0) / 1][Stage 135:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 6.6305992603302
-Dataprep, done in: 6.671634912490845
-frac diff: -5.387197227178002e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.56 s	with loss: 1.0134E-04
-                                                                                 57%|█████▊    | 92/160 [1:11:36<56:44, 50.07s/trial, best loss: 4.084633608368582e-06]  [Stage 134:>  (0 + 1) / 1][Stage 135:>  (0 + 0) / 1][Stage 136:>  (0 + 0) / 1][Stage 134:>  (0 + 1) / 1][Stage 135:>  (0 + 0) / 1][Stage 136:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 8.544384241104126
-Dataprep, done in: 8.590917348861694
-frac diff: -3.772694584952885e-08,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 00:01:19	with loss: 1.1894E-04
-                                                                                [Stage 135:>  (0 + 1) / 1][Stage 136:>  (0 + 0) / 1][Stage 137:>  (0 + 0) / 1] 58%|█████▊    | 93/160 [1:13:00<1:07:18, 60.27s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 135 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 136:>  (0 + 1) / 1][Stage 137:>  (0 + 0) / 1][Stage 138:>  (0 + 0) / 1][Stage 136:>  (0 + 1) / 1][Stage 137:>  (0 + 0) / 1][Stage 138:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 8.49800968170166
-Dataprep, done in: 8.543864250183105
-frac diff: -6.067478468745e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 00:01:19	with loss: 3.7323E-04
-                                                                                 59%|█████▉    | 94/160 [1:14:36<1:18:07, 71.02s/trial, best loss: 4.084633608368582e-06][Stage 137:>  (0 + 1) / 1][Stage 138:>  (0 + 0) / 1][Stage 139:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 6.586743593215942
-Dataprep, done in: 6.628108501434326
-frac diff: -7.896167720040904e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 33.57 s	with loss: 2.4467E-03
-                                                                                 59%|█████▉    | 95/160 [1:15:14<1:06:13, 61.13s/trial, best loss: 4.084633608368582e-06][Stage 138:>  (0 + 1) / 1][Stage 139:>  (0 + 0) / 1][Stage 140:>  (0 + 0) / 1]Branch filler failed
-                                                                                 60%|██████    | 96/160 [1:15:26<49:29, 46.39s/trial, best loss: 4.084633608368582e-06]  [Stage 139:>  (0 + 1) / 1][Stage 140:>  (0 + 0) / 1][Stage 141:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 139 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 140:>  (0 + 1) / 1][Stage 141:>  (0 + 0) / 1][Stage 142:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  9
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.551206588745117
-Dataprep, done in: 8.59826397895813
-frac diff: -1.700682704245153e-05,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.01 s	with loss: 4.0846E-06
-                                                                                 61%|██████    | 97/160 [1:16:14<49:14, 46.89s/trial, best loss: 4.084633608368582e-06][Stage 141:>  (0 + 1) / 1][Stage 142:>  (0 + 0) / 1][Stage 143:>  (0 + 0) / 1]Branch filler failed
-                                                                                [Stage 142:>  (0 + 1) / 1][Stage 143:>  (0 + 0) / 1][Stage 144:>  (0 + 0) / 1] 61%|██████▏   | 98/160 [1:16:27<37:57, 36.73s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 6.55376124382019
-Dataprep, done in: 6.595174074172974
-frac diff: -3.6926861548234577e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 31.03 s	with loss: 5.2908E-04
-                                                                                [Stage 143:>  (0 + 1) / 1][Stage 144:>  (0 + 0) / 1][Stage 145:>  (0 + 0) / 1] 62%|██████▏   | 99/160 [1:17:02<36:49, 36.22s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 56
-Branch filler jit, done in: 8.616074562072754
-Dataprep, done in: 8.663633584976196
-frac diff: -6.301208457900392e-10,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 44.73 s	with loss: 2.6348E-04
-[Stage 144:>  (0 + 1) / 1][Stage 145:>  (0 + 0) / 1][Stage 146:>  (0 + 0) / 1]                                                                                [Stage 144:>  (0 + 1) / 1][Stage 145:>  (0 + 0) / 1][Stage 146:>  (0 + 0) / 1] 62%|██████▎   | 100/160 [1:17:51<40:04, 40.07s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 144 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 145:>  (0 + 1) / 1][Stage 146:>  (0 + 0) / 1][Stage 147:>  (0 + 0) / 1][Stage 145:>  (0 + 1) / 1][Stage 146:>  (0 + 0) / 1][Stage 147:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.514852046966553
-Dataprep, done in: 8.562410831451416
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-frac diff: 0.0,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 00:01:07	with loss: 2.2539E-04
-                                                                                 63%|██████▎   | 101/160 [1:19:13<51:29, 52.37s/trial, best loss: 4.084633608368582e-06][Stage 146:>  (0 + 1) / 1][Stage 147:>  (0 + 0) / 1][Stage 148:>  (0 + 0) / 1]Branch filler failed
-                                                                                 64%|██████▍   | 102/160 [1:19:24<38:37, 39.96s/trial, best loss: 4.084633608368582e-06][Stage 147:>  (0 + 1) / 1][Stage 148:>  (0 + 0) / 1][Stage 149:>  (0 + 0) / 1][Stage 147:>  (0 + 1) / 1][Stage 148:>  (0 + 0) / 1][Stage 149:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 8.511994361877441
-Dataprep, done in: 8.55975079536438
-frac diff: -6.630673955624828e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 00:01:18	with loss: 2.8300E-04
-                                                                                [Stage 148:>  (0 + 1) / 1][Stage 149:>  (0 + 0) / 1][Stage 150:>  (0 + 0) / 1] 64%|██████▍   | 103/160 [1:20:47<50:15, 52.90s/trial, best loss: 4.084633608368582e-06]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 31
-Branch filler jit, done in: 6.569369554519653
-Dataprep, done in: 6.609710931777954
-frac diff: -1.1634028531316726e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 29.17 s	with loss: 7.0231E-05
-                                                                                 65%|██████▌   | 104/160 [1:21:20<43:48, 46.94s/trial, best loss: 4.084633608368582e-06][Stage 149:>  (0 + 1) / 1][Stage 150:>  (0 + 0) / 1][Stage 151:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 149 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 150:>  (0 + 1) / 1][Stage 151:>  (0 + 0) / 1][Stage 152:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 35
-Branch filler jit, done in: 8.509352445602417
-Dataprep, done in: 8.556229591369629
-frac diff: -1.704562348219872e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 43.48 s	with loss: 3.6912E-05
-                                                                                 66%|██████▌   | 105/160 [1:22:20<46:38, 50.88s/trial, best loss: 4.084633608368582e-06][Stage 151:>  (0 + 1) / 1][Stage 152:>  (0 + 0) / 1][Stage 153:>  (0 + 0) / 1]Branch filler failed
-                                                                                 66%|██████▋   | 106/160 [1:22:33<35:33, 39.52s/trial, best loss: 4.084633608368582e-06][Stage 152:>  (0 + 1) / 1][Stage 153:>  (0 + 0) / 1][Stage 154:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 8.509580612182617
-Dataprep, done in: 8.556138753890991
-frac diff: -3.371384849636931e-07,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 43.70 s	with loss: 4.0846E-06
-                                                                                 67%|██████▋   | 107/160 [1:23:20<36:54, 41.78s/trial, best loss: 4.084633608368582e-06][Stage 153:>  (0 + 1) / 1][Stage 154:>  (0 + 0) / 1][Stage 155:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 153 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 154:>  (0 + 1) / 1][Stage 155:>  (0 + 0) / 1][Stage 156:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 154 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 155:>  (0 + 1) / 1][Stage 156:>  (0 + 0) / 1][Stage 157:>  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt')
-Device: cpu
-Max number of batches: 40
-Branch filler jit, done in: 6.587594509124756
-Dataprep, done in: 6.629037618637085
-frac diff: -5.482122915891832e-06,  eps: 0.001 
-Model done learning in 30 epochs.
-Passed in: 30.38 s	with loss: 3.2269E-04
-                                                                                 68%|██████▊   | 108/160 [1:24:18<40:26, 46.66s/trial, best loss: 4.084633608368582e-06][Stage 156:>  (0 + 1) / 1][Stage 157:>  (0 + 0) / 1][Stage 158:>  (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 156 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 157:>  (0 + 1) / 1][Stage 158:>  (0 + 0) / 1][Stage 159:>  (0 + 0) / 1]Branch filler failed
-                                                                                [Stage 158:>                (0 + 1) / 1][Stage 159:>                (0 + 0) / 1] 68%|██████▊   | 109/160 [1:24:42<33:53, 39.87s/trial, best loss: 4.084633608368582e-06]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 158 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-[Stage 159:>                                                        (0 + 1) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
-                                                                                trial task 159 failed, exception is list index out of range.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 372, in try_hyperparameters
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 100, in training_algorithm
-    pooling,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 41, in lstm_results
-    jet_track_local = track_jets_train_data[i]
-IndexError: list index out of range
-
- 68%|██████▊   | 109/160 [1:25:02<39:47, 46.81s/trial, best loss: 4.084633608368582e-06]Total Trials: 160: 109 succeeded, 51 failed, 0 cancelled.
-
-
-Hypertuning completed on dataset:
-/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root
-
-Best Hyper Parameters:
-
-Model 0:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-with loss: 		4.084633608368582e-06
-with final cost:	8161.364840133267
-
-Model 1:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-with loss: 		4.084633608368582e-06
-with final cost:	7901.640730860818
-
-Model 2:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-with loss: 		4.084633608368582e-06
-with final cost:	6822.480602655108
-
-Model 3:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  9
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-with loss: 		4.084633608368582e-06
-with final cost:	2581.757396405702
-
-Model 4:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-with loss: 		4.084633608368582e-06
-with final cost:	8403.059365144562

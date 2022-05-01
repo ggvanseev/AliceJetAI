@@ -1,23 +1,0 @@
-Loaded data
-Split data
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]
-Traceback (most recent call last):
-  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 142, in <module>
-    trials=trials,
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/fmin.py", line 555, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 688, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/fmin.py", line 586, in fmin
-    rval.exhaust()
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/fmin.py", line 364, in exhaust
-    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/fmin.py", line 279, in run
-    new_ids, self.domain, trials, self.rstate.integers(2 ** 31 - 1)
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/tpe.py", line 860, in suggest
-    domain, prior_weight, gamma
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/tpe.py", line 824, in build_posterior_wrapper
-    pyll.Literal(float(prior_weight)),
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/tpe.py", line 705, in build_posterior
-    b_post = fn(*b_args, **named_args)
-TypeError: ap_quniform_sampler() missing 2 required positional arguments: 'high' and 'q'

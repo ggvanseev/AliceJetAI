@@ -1,196 +1,0 @@
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-22/03/10 09:32:25 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Number of jets in dataset:		2121894
-Number of gluon jets in dataset:	330915
-Number of quark jets in dataset:	287288
-Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
-	gluon jets left after cuts:	150107
-	quark jets left after cuts:	147878 
-Loading data complete
-Splitting data complete
-Hypertuning 6 evaluations, on 6 cores:
-
-  0%|          | 0/6 [00:00<?, ?trial/s, best loss=?][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                  (0 + 1) / 1][Stage 1:>                  (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  0.0001
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 130
-Branch filler jit, done in: 7.235998868942261
-Dataprep, done in: 7.326917409896851
-frac diff: -0.013366877646257026,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.00418558152112931,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.00850858415358774,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.0087178202908239,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:51:50
-[Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1]                                                                                 17%|█▋        | 1/6 [51:59<4:19:55, 3119.15s/trial, best loss: 10][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  9
-  learning_rate	  1e-05
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 72
-Branch filler jit, done in: 7.066229820251465
-Dataprep, done in: 7.15903639793396
-frac diff: 0.0007950548617519271,  eps: 0.001 
-Model done learning in 78 epochs.
-Passed in: 00:01:18	with loss: 9.6309E-04
-                                                                                 33%|███▎      | 2/6 [53:22<1:28:52, 1333.23s/trial, best loss: 0.0009630880208733039][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  200
-  learning_rate	  0.0001
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 72
-Branch filler jit, done in: 7.131712198257446
-Dataprep, done in: 7.224631309509277
-frac diff: -0.18407935646286783,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.14056861886124267,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.0007347472810163759,  eps: 0.001 
-Model done learning in 79 epochs.
-Passed in: 00:11:27	with loss: 2.3789E-06
-[Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1]                                                                                [Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1] 50%|█████     | 3/6 [1:04:54<52:02, 1040.75s/trial, best loss: 2.378942521679122e-06][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  0.0001
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 109
-Branch filler jit, done in: 7.143370151519775
-Dataprep, done in: 7.237293243408203
-frac diff: 0.030438118890390036,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.13869562059830473,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.021500190342759205,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.1893682058692431,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:08:24
-                                                                                [Stage 4:>                  (0 + 1) / 1][Stage 5:>                  (0 + 0) / 1] 67%|██████▋   | 4/6 [1:13:24<27:42, 831.02s/trial, best loss: 2.378942521679122e-06] [Stage 4:>                  (0 + 1) / 1][Stage 5:>                  (0 + 0) / 1][Stage 4:>                  (0 + 1) / 1][Stage 5:>                  (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  1e-05
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 163
-Branch filler jit, done in: 7.635913372039795
-Dataprep, done in: 7.730867624282837
-frac diff: -0.0008657672989297904,  eps: 0.001 
-Model done learning in 154 epochs.
-Passed in: 00:02:37	with loss: 1.0596E-04
-                                                                                [Stage 5:>                                                          (0 + 1) / 1] 83%|████████▎ | 5/6 [1:16:06<09:49, 589.83s/trial, best loss: 2.378942521679122e-06][Stage 5:>                                                          (0 + 1) / 1][Stage 5:>                                                          (0 + 1) / 1][Stage 5:>                                                          (0 + 1) / 1][Stage 5:>                                                          (0 + 1) / 1][Stage 5:>                                                          (0 + 1) / 1][Stage 5:>                                                          (0 + 1) / 1][Stage 5:>                                                          (0 + 1) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  0.001
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.001
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Device: cpu
-Max number of batches: 130
-Branch filler jit, done in: 7.505649566650391
-Dataprep, done in: 7.603604555130005
-frac diff: -0.3333611235800908,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 2.004177840018834,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.7141278215417306,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.24502124180050944,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:07:00
-                                                                                100%|██████████| 6/6 [1:23:11<00:00, 533.59s/trial, best loss: 2.378942521679122e-06]100%|██████████| 6/6 [1:23:11<00:00, 831.84s/trial, best loss: 2.378942521679122e-06]Total Trials: 6: 6 succeeded, 0 failed, 0 cancelled.
-
-
-Hypertuning completed on dataset:
-/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root
-
-Best Hyper Parameters:
-
-Model 0:
-  batch_size  	  900.0
-  dropout     	  0
-  hidden_dim  	  200
-  learning_rate	  0.0001
-  min_epochs  	  30
-  num_layers  	  1
-  output_dim  	  1
-  pooling     	  last
-  scaler_id   	  std
-  svm_gamma   	  auto
-  svm_nu      	  0.001
-  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-with loss: 		2.378942521679122e-06
-with final cost:	0.006808942854548577
-
-Plotting complete
-
-Completed run in:              0
-0  5138.633871

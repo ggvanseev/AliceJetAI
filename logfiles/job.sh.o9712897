@@ -1,50 +1,0 @@
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-22/02/23 11:16:10 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Loading data complete
-Splitting data complete
-Hypertuning 1 evaluations, on 6 cores:
-
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1]
-
-Hyper Parameters:
-  batch_size	  50
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-09
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 1306
-Branch filler jit, done in: 22.44597554206848
-Dataprep, done in: 22.547966480255127
-frac diff: -0.0049673008367558625,  eps: 1e-06 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.035803193199560095,  eps: 1e-06 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.01685350420015303,  eps: 1e-06 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.09505446044996621,  eps: 1e-06 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:22:11
-                                                                                100%|██████████| 1/1 [22:18<00:00, 1338.34s/trial, best loss: 10.0]100%|██████████| 1/1 [22:18<00:00, 1338.34s/trial, best loss: 10.0]Total Trials: 1: 1 succeeded, 0 failed, 0 cancelled.
-
-
-Hypertuning completed on dataset:
-/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root
-
-Best Hyper Parameters:
-  batch_size	  50
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-09
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-with loss: 10.0

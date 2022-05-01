@@ -1,39 +1,0 @@
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      
-Hyper Parameters:
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                        batch_size	  100
-  decay_factor	  0.5
-  dropout   	  0
-  hidden_dim	  15.0
-  learning_rate	  0.001
-  min_epochs	  5
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Device: cuda
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Max number of batches: 653
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Branch filler jit, done in: 35.77810883522034
-  0%|          | 0/55 [00:35<?, ?trial/s, best loss=?]                                                      Dataprep, done in: 35.9300422668457
-  0%|          | 0/55 [00:35<?, ?trial/s, best loss=?]                                                      Broke, for given hyper parameters
-  0%|          | 0/55 [01:20<?, ?trial/s, best loss=?]job exception: 'float' object is not iterable
-  0%|          | 0/55 [01:20<?, ?trial/s, best loss=?]
-Traceback (most recent call last):
-  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 119, in <module>
-    trials=trials,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 555, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 688, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 586, in fmin
-    rval.exhaust()
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 364, in exhaust
-    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 300, in run
-    self.serial_evaluate()
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 178, in serial_evaluate
-    result = self.domain.evaluate(spec, ctrl)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 320, in try_hyperparameters
-    device,
-TypeError: 'float' object is not iterable

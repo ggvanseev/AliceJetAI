@@ -96,6 +96,7 @@ from plotting.cost_condition import cost_condition_plots
 from plotting.svm_boundary import svm_boundary_plots
 from plotting.violin import violin_plots
 
+
 def training_algorithm(
     lstm_model,
     svm_model,
@@ -129,8 +130,8 @@ def training_algorithm(
             - list containing cost info of training
             - list containing cost condition info of training
             - Pass or Fail boolean statement
-            - Save output text 
-    """    
+            - Save output text
+    """
 
     ### TRACK TIME ### TODO
     time_track = time.time()
@@ -164,13 +165,13 @@ def training_algorithm(
         k < min_epochs_patience or cost_condition_passed_flag == False
     ) and k < training_params["max_epochs"]:
         k += 1
-        
+
         # shuffle jets in batches each epoch
         x_loader, track_jets_dev_data = shuffle_batches(x_loader, track_jets_dev_data)
 
         # keep previous cost result stored
         cost_prev = copy(cost)
-        #print("cost before ocsvm\t",cost)
+        # print("cost before ocsvm\t",cost)
 
         # obtain alpha_k+1 from the h_bars with SMO through the OC-SVMs .fit()
         svm_model.fit(h_bar_list_np)
@@ -179,8 +180,8 @@ def training_algorithm(
         alphas = alphas / np.sum(alphas)  # NOTE: equation 14, sum alphas = 1
 
         a_idx = svm_model.support_
-        
-        #print("cost after ocsvm\t", kappa(alphas, a_idx, h_bar_list))
+
+        # print("cost after ocsvm\t", kappa(alphas, a_idx, h_bar_list))
 
         # obtain theta_k+1 using the optimization algorithm
         lstm_model, theta_next = optimization(
@@ -204,9 +205,8 @@ def training_algorithm(
             pooling=pooling,
         )
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
-        
-        
-        #print("cost after optim\t", kappa(alphas, a_idx, h_bar_list))
+
+        # print("cost after optim\t", kappa(alphas, a_idx, h_bar_list))
 
         # obtain the new cost and cost condition given theta_k+1 and alpha_k+1
         cost = kappa(alphas, a_idx, h_bar_list)
@@ -252,7 +252,7 @@ def training_algorithm(
     else:
         print_out += f"\n  Model done learning in {k} epochs"
         passed = True
-    #print_out += f"\n  With cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
+    # print_out += f"\n  With cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
     print_out += f"\n  With cost condition: {cost_condition}, vs epsilon: {training_params['epsilon']} "
 
     return lstm_model, svm_model, track_cost, track_cost_condition, passed, print_out
@@ -290,7 +290,7 @@ class TRAINING:
         batch_size = int(hyper_parameters["batch_size"])
         output_dim = int(hyper_parameters["output_dim"])
         layer_dim = int(hyper_parameters["num_layers"])
-        dropout = hyper_parameters["dropout"] if layer_dim > 1 else 0  # TODO
+        dropout = hyper_parameters["dropout"] if layer_dim > 1 else 0
         min_epochs = int(hyper_parameters["min_epochs"])
         learning_rate = hyper_parameters["learning_rate"]
         svm_nu = hyper_parameters["svm_nu"]
@@ -324,11 +324,16 @@ class TRAINING:
 
         # track time
         time_track = time.time()
-        train_data, val_data, track_jets_train_data, bf_out_txt = self.data_prep_branch_filler(
+        (
+            train_data,
+            val_data,
+            track_jets_train_data,
+            bf_out_txt,
+        ) = self.data_prep_branch_filler(
             train_data, val_data, batch_size, input_variables
         )
         print_out += bf_out_txt
-        
+
         # track time branch filler
         dt = time.time() - time_track
         print_out += f"\nBranch filler done in: {dt}"
@@ -410,7 +415,7 @@ class TRAINING:
             # check if the model passed the training
             diff_percentage_anomalies = 10  # Create standard for saving
             train_success = False
-            
+
             # TODO REMOVE LATER! -> Test on single attempt
             n_attempt = max_attempts
             train_success = True
@@ -459,7 +464,7 @@ class TRAINING:
         return {
             "loss": diff_percentage_anomalies,
             "final_cost": track_cost[-1],
-            "status": STATUS_OK, #if passed else STATUS_FAIL,
+            "status": STATUS_OK,  # if passed else STATUS_FAIL,
             "model": lstm_ocsvm,
             "hyper_parameters": hyper_parameters,
             "cost_data": cost_data,
@@ -490,7 +495,7 @@ class TRAINING:
 
 class HYPER_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=1000)
+        super().__init__(max_distance=0.05)
 
     def calc_diff_percentage(
         self,
@@ -531,14 +536,14 @@ class HYPER_TRAINING(TRAINING):
         train_data, track_jets_train_data, max_n_batches, _ = branch_filler(
             train_data, batch_size=batch_size, n_features=len(input_variables)
         )
-        bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_batches}"
+        bf_out_txt = f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_batches}"
 
         return train_data, val_data, track_jets_train_data, bf_out_txt
 
 
 class REGULAR_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=.01)
+        super().__init__(max_distance=0.01)
 
     def calc_diff_percentage(
         self,
@@ -615,7 +620,7 @@ def run_full_training(
     file_name: str,
     space,
     train_data,
-    val_data = None,
+    val_data=None,
     max_evals: int = 4,
     patience: int = 10,
     kt_cut: float = None,  # for dataset, splittings kt > 1.0 GeV
@@ -642,7 +647,9 @@ def run_full_training(
 
     # Decide what data to use based on training type
     if TRAINING_TYPE == REGULAR_TRAINING and val_data is None:
-        print("ERROR: Regular training requires validation data which has not been provided.\nPlease provide this or switch training type.")
+        print(
+            "ERROR: Regular training requires validation data which has not been provided.\nPlease provide this or switch training type."
+        )
         return -1
 
     # set trials or sparktrials
@@ -671,7 +678,7 @@ def run_full_training(
         max_evals=max_evals,
         trials=trials,
     )
-    
+
     # saving spark_trials as dictionaries
     # source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials
     pickling_trials = dict()
@@ -681,9 +688,11 @@ def run_full_training(
 
     # collect df and print best model(s)
     df, min_val, min_df, parameters = trials_df_and_minimum(pickling_trials, "loss")
-    
+
     # print run statement
-    print(f"\n{'Hypertuning' if TRAINING_TYPE == HYPER_TRAINING else 'Regular training'} completed on dataset:\n\t{file_name}")
+    print(
+        f"\n{'Hypertuning' if TRAINING_TYPE == HYPER_TRAINING else 'Regular training'} completed on dataset:\n\t{file_name}"
+    )
 
     # check to save results
     if save_results_flag:
@@ -703,9 +712,13 @@ def run_full_training(
         # check to make plots
         if plot_flag:
             cost_condition_plots(pickling_trials, job_id)
-            violin_plots(df, min_val, min_df, parameters, [job_id], "loss") if TRAINING_TYPE == HYPER_TRAINING else None
-            #svm_boundary_plots(pickling_trials, job_id, train_data)
-            print(f"Plotting complete, stored results at:\n\toutput/cost_condition_{job_id}/\n\toutput/violin_plots_{job_id}/")
+            violin_plots(
+                df, min_val, min_df, parameters, [job_id], "loss"
+            ) if TRAINING_TYPE == HYPER_TRAINING else None
+            # svm_boundary_plots(pickling_trials, job_id, train_data)
+            print(
+                f"Plotting complete, stored results at:\n\toutput/cost_condition_{job_id}/\n\toutput/violin_plots_{job_id}/"
+            )
 
         # store run info
         run_time = time.time() - start_time

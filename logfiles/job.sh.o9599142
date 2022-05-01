@@ -1,46 +1,0 @@
-Loaded data
-Split data
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      
-Hyper Parameters:
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                        batch_size	  150
-  decay_factor	  0.1
-  dropout   	  0.4
-  hidden_dim	  18.0
-  learning_rate	  1e-05
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Device: cuda
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Max number of batches: 435
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Branch filler jit, done in: 2.990562677383423
-  0%|          | 0/55 [00:03<?, ?trial/s, best loss=?]                                                      Dataprep, done in: 3.157639980316162
-  0%|          | 0/55 [00:03<?, ?trial/s, best loss=?]job exception: inverse_cuda: (Batch element 0): The diagonal element 18 is zero, the inversion could not be completed because the input matrix is singular.
-  0%|          | 0/55 [03:23<?, ?trial/s, best loss=?]
-Traceback (most recent call last):
-  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 141, in <module>
-    trials=trials,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 555, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 688, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 586, in fmin
-    rval.exhaust()
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 364, in exhaust
-    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 300, in run
-    self.serial_evaluate()
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 178, in serial_evaluate
-    result = self.domain.evaluate(spec, ctrl)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 326, in try_hyperparameters
-    device,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 139, in training_algorithm
-    device=device,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 281, in optimization
-    device,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/optimization_orthogonality_constraints.py", line 212, in updating_theta
-    torch.inverse(i + mu / 2 * a) @ (i - mu / 2 * a) @ weight
-RuntimeError: inverse_cuda: (Batch element 0): The diagonal element 18 is zero, the inversion could not be completed because the input matrix is singular.

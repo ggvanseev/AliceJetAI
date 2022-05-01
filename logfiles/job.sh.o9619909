@@ -1,202 +1,0 @@
-Loaded data
-Split data
-  0%|          | 0/10 [00:00<?, ?trial/s, best loss=?]                                                      
-Hyper Parameters:
-  0%|          | 0/10 [00:00<?, ?trial/s, best loss=?]                                                        batch_size	  200
-  decay_factor	  0.4
-  dropout   	  0
-  hidden_dim	  3.0
-  learning_rate	  1e-08
-  min_epochs	  10
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  0%|          | 0/10 [00:00<?, ?trial/s, best loss=?]                                                      Device: cuda
-  0%|          | 0/10 [00:00<?, ?trial/s, best loss=?]                                                      Max number of batches: 3
-  0%|          | 0/10 [00:00<?, ?trial/s, best loss=?]                                                      Branch filler jit, done in: 0.006119251251220703
-  0%|          | 0/10 [00:00<?, ?trial/s, best loss=?]                                                      Dataprep, done in: 0.009752750396728516
-  0%|          | 0/10 [00:00<?, ?trial/s, best loss=?]                                                      Model done learning in 10 epochs.
-  0%|          | 0/10 [00:04<?, ?trial/s, best loss=?]                                                      Model done learning in 10 epochs.
-  0%|          | 0/10 [00:04<?, ?trial/s, best loss=?]                                                      Model done learning in 10 epochs.
-  0%|          | 0/10 [00:05<?, ?trial/s, best loss=?]                                                      Model done learning in 10 epochs.
-  0%|          | 0/10 [00:05<?, ?trial/s, best loss=?]                                                      Failed in: 5.371691942214966
-  0%|          | 0/10 [00:05<?, ?trial/s, best loss=?] 10%|#         | 1/10 [00:05<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                 
-Hyper Parameters:
- 10%|#         | 1/10 [00:05<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                   batch_size	  200
-  decay_factor	  0.5
-  dropout   	  0.2
-  hidden_dim	  15.0
-  learning_rate	  1e-06
-  min_epochs	  5
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 10%|#         | 1/10 [00:05<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                 Device: cuda
- 10%|#         | 1/10 [00:05<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                 Max number of batches: 3
- 10%|#         | 1/10 [00:05<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                 Branch filler jit, done in: 0.006218671798706055
- 10%|#         | 1/10 [00:05<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                 Dataprep, done in: 0.008098363876342773
- 10%|#         | 1/10 [00:05<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                 Algorithm failed: not done learning in max epochs.
- 10%|#         | 1/10 [00:12<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                 Algorithm failed: not done learning in max epochs.
- 10%|#         | 1/10 [00:19<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                 Algorithm failed: not done learning in max epochs.
- 10%|#         | 1/10 [00:25<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                 Algorithm failed: not done learning in max epochs.
- 10%|#         | 1/10 [00:32<00:48,  5.38s/trial, best loss: 0.46948051948051944]                                                                                 Failed in: 27.41829562187195
- 10%|#         | 1/10 [00:32<00:48,  5.38s/trial, best loss: 0.46948051948051944] 20%|##        | 2/10 [00:32<02:26, 18.35s/trial, best loss: 0.46948051948051944]                                                                                 
-Hyper Parameters:
- 20%|##        | 2/10 [00:32<02:26, 18.35s/trial, best loss: 0.46948051948051944]                                                                                   batch_size	  150
-  decay_factor	  0.1
-  dropout   	  0.2
-  hidden_dim	  6.0
-  learning_rate	  1e-05
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
- 20%|##        | 2/10 [00:32<02:26, 18.35s/trial, best loss: 0.46948051948051944]                                                                                 Device: cuda
- 20%|##        | 2/10 [00:32<02:26, 18.35s/trial, best loss: 0.46948051948051944]                                                                                 Max number of batches: 4
- 20%|##        | 2/10 [00:32<02:26, 18.35s/trial, best loss: 0.46948051948051944]                                                                                 Branch filler jit, done in: 0.003621339797973633
- 20%|##        | 2/10 [00:32<02:26, 18.35s/trial, best loss: 0.46948051948051944]                                                                                 Dataprep, done in: 0.0056836605072021484
- 20%|##        | 2/10 [00:32<02:26, 18.35s/trial, best loss: 0.46948051948051944]                                                                                 Model done learning in 74 epochs.
- 20%|##        | 2/10 [00:33<02:26, 18.35s/trial, best loss: 0.46948051948051944]                                                                                 Passed in: 1.0770843029022217
- 20%|##        | 2/10 [00:33<02:26, 18.35s/trial, best loss: 0.46948051948051944] 30%|###       | 3/10 [00:33<01:13, 10.47s/trial, best loss: 0.0068181818181818135]                                                                                   
-Hyper Parameters:
- 30%|###       | 3/10 [00:33<01:13, 10.47s/trial, best loss: 0.0068181818181818135]                                                                                     batch_size	  50
-  decay_factor	  0.9
-  dropout   	  0.6
-  hidden_dim	  6.0
-  learning_rate	  1e-06
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
- 30%|###       | 3/10 [00:33<01:13, 10.47s/trial, best loss: 0.0068181818181818135]                                                                                   Device: cuda
- 30%|###       | 3/10 [00:33<01:13, 10.47s/trial, best loss: 0.0068181818181818135]                                                                                   Max number of batches: 13
- 30%|###       | 3/10 [00:33<01:13, 10.47s/trial, best loss: 0.0068181818181818135]                                                                                   Branch filler jit, done in: 0.013523101806640625
- 30%|###       | 3/10 [00:33<01:13, 10.47s/trial, best loss: 0.0068181818181818135]                                                                                   Dataprep, done in: 0.016054868698120117
- 30%|###       | 3/10 [00:33<01:13, 10.47s/trial, best loss: 0.0068181818181818135]                                                                                   Model done learning in 20 epochs.
- 30%|###       | 3/10 [00:34<01:13, 10.47s/trial, best loss: 0.0068181818181818135]                                                                                   Passed in: 0.5123834609985352
- 30%|###       | 3/10 [00:34<01:13, 10.47s/trial, best loss: 0.0068181818181818135] 40%|####      | 4/10 [00:34<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                    
-Hyper Parameters:
- 40%|####      | 4/10 [00:34<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                      batch_size	  100
-  decay_factor	  0.5
-  dropout   	  0.6
-  hidden_dim	  18.0
-  learning_rate	  1e-08
-  min_epochs	  10
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 40%|####      | 4/10 [00:34<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                    Device: cuda
- 40%|####      | 4/10 [00:34<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                    Max number of batches: 6
- 40%|####      | 4/10 [00:34<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                    Branch filler jit, done in: 0.0060350894927978516
- 40%|####      | 4/10 [00:34<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                    Dataprep, done in: 0.008183002471923828
- 40%|####      | 4/10 [00:34<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 40%|####      | 4/10 [00:45<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 40%|####      | 4/10 [00:56<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 40%|####      | 4/10 [01:07<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 40%|####      | 4/10 [01:18<00:39,  6.54s/trial, best loss: 0.00042016806722688926]                                                                                    Failed in: 44.43427228927612
- 40%|####      | 4/10 [01:18<00:39,  6.54s/trial, best loss: 0.00042016806722688926] 50%|#####     | 5/10 [01:18<01:41, 20.21s/trial, best loss: 0.00042016806722688926]                                                                                    
-Hyper Parameters:
- 50%|#####     | 5/10 [01:18<01:41, 20.21s/trial, best loss: 0.00042016806722688926]                                                                                      batch_size	  150
-  decay_factor	  0.1
-  dropout   	  0.4
-  hidden_dim	  3.0
-  learning_rate	  1e-07
-  min_epochs	  10
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 50%|#####     | 5/10 [01:18<01:41, 20.21s/trial, best loss: 0.00042016806722688926]                                                                                    Device: cuda
- 50%|#####     | 5/10 [01:18<01:41, 20.21s/trial, best loss: 0.00042016806722688926]                                                                                    Max number of batches: 4
- 50%|#####     | 5/10 [01:18<01:41, 20.21s/trial, best loss: 0.00042016806722688926]                                                                                    Branch filler jit, done in: 0.003594636917114258
- 50%|#####     | 5/10 [01:18<01:41, 20.21s/trial, best loss: 0.00042016806722688926]                                                                                    Dataprep, done in: 0.005670309066772461
- 50%|#####     | 5/10 [01:18<01:41, 20.21s/trial, best loss: 0.00042016806722688926]                                                                                    Model done learning in 10 epochs.
- 50%|#####     | 5/10 [01:19<01:41, 20.21s/trial, best loss: 0.00042016806722688926]                                                                                    Model done learning in 10 epochs.
- 50%|#####     | 5/10 [01:19<01:41, 20.21s/trial, best loss: 0.00042016806722688926]                                                                                    Passed in: 0.3372952938079834
- 50%|#####     | 5/10 [01:19<01:41, 20.21s/trial, best loss: 0.00042016806722688926] 60%|######    | 6/10 [01:19<00:53, 13.45s/trial, best loss: 0.00042016806722688926]                                                                                    
-Hyper Parameters:
- 60%|######    | 6/10 [01:19<00:53, 13.45s/trial, best loss: 0.00042016806722688926]                                                                                      batch_size	  150
-  decay_factor	  0.4
-  dropout   	  0.2
-  hidden_dim	  9.0
-  learning_rate	  1e-05
-  min_epochs	  5
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
- 60%|######    | 6/10 [01:19<00:53, 13.45s/trial, best loss: 0.00042016806722688926]                                                                                    Device: cuda
- 60%|######    | 6/10 [01:19<00:53, 13.45s/trial, best loss: 0.00042016806722688926]                                                                                    Max number of batches: 4
- 60%|######    | 6/10 [01:19<00:53, 13.45s/trial, best loss: 0.00042016806722688926]                                                                                    Branch filler jit, done in: 0.00350189208984375
- 60%|######    | 6/10 [01:19<00:53, 13.45s/trial, best loss: 0.00042016806722688926]                                                                                    Dataprep, done in: 0.00552821159362793
- 60%|######    | 6/10 [01:19<00:53, 13.45s/trial, best loss: 0.00042016806722688926]                                                                                    Model done learning in 111 epochs.
- 60%|######    | 6/10 [01:20<00:53, 13.45s/trial, best loss: 0.00042016806722688926]                                                                                    Passed in: 1.5863821506500244
- 60%|######    | 6/10 [01:20<00:53, 13.45s/trial, best loss: 0.00042016806722688926] 70%|#######   | 7/10 [01:20<00:28,  9.58s/trial, best loss: 0.00042016806722688926]                                                                                    
-Hyper Parameters:
- 70%|#######   | 7/10 [01:20<00:28,  9.58s/trial, best loss: 0.00042016806722688926]                                                                                      batch_size	  100
-  decay_factor	  0.4
-  dropout   	  0.4
-  hidden_dim	  12.0
-  learning_rate	  1e-07
-  min_epochs	  10
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
- 70%|#######   | 7/10 [01:20<00:28,  9.58s/trial, best loss: 0.00042016806722688926]                                                                                    Device: cuda
- 70%|#######   | 7/10 [01:20<00:28,  9.58s/trial, best loss: 0.00042016806722688926]                                                                                    Max number of batches: 6
- 70%|#######   | 7/10 [01:20<00:28,  9.58s/trial, best loss: 0.00042016806722688926]                                                                                    Branch filler jit, done in: 0.006120443344116211
- 70%|#######   | 7/10 [01:20<00:28,  9.58s/trial, best loss: 0.00042016806722688926]                                                                                    Dataprep, done in: 0.008338212966918945
- 70%|#######   | 7/10 [01:20<00:28,  9.58s/trial, best loss: 0.00042016806722688926]                                                                                    Model done learning in 10 epochs.
- 70%|#######   | 7/10 [01:20<00:28,  9.58s/trial, best loss: 0.00042016806722688926]                                                                                    Model done learning in 10 epochs.
- 70%|#######   | 7/10 [01:21<00:28,  9.58s/trial, best loss: 0.00042016806722688926]                                                                                    Model done learning in 10 epochs.
- 70%|#######   | 7/10 [01:21<00:28,  9.58s/trial, best loss: 0.00042016806722688926]                                                                                    Passed in: 0.5815455913543701
- 70%|#######   | 7/10 [01:21<00:28,  9.58s/trial, best loss: 0.00042016806722688926] 80%|########  | 8/10 [01:21<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                    
-Hyper Parameters:
- 80%|########  | 8/10 [01:21<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                      batch_size	  150
-  decay_factor	  0.9
-  dropout   	  0.2
-  hidden_dim	  18.0
-  learning_rate	  0.001
-  min_epochs	  5
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
- 80%|########  | 8/10 [01:21<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                    Device: cuda
- 80%|########  | 8/10 [01:21<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                    Max number of batches: 4
- 80%|########  | 8/10 [01:21<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                    Branch filler jit, done in: 0.003534078598022461
- 80%|########  | 8/10 [01:21<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                    Dataprep, done in: 0.005557060241699219
- 80%|########  | 8/10 [01:21<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 80%|########  | 8/10 [01:25<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 80%|########  | 8/10 [01:28<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                    Model done learning in 150 epochs.
- 80%|########  | 8/10 [01:32<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 80%|########  | 8/10 [01:36<00:13,  6.72s/trial, best loss: 0.00042016806722688926]                                                                                    Failed in: 15.152573823928833
- 80%|########  | 8/10 [01:36<00:13,  6.72s/trial, best loss: 0.00042016806722688926] 90%|######### | 9/10 [01:36<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                    
-Hyper Parameters:
- 90%|######### | 9/10 [01:36<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                      batch_size	  100
-  decay_factor	  0.4
-  dropout   	  0.4
-  hidden_dim	  12.0
-  learning_rate	  1e-06
-  min_epochs	  10
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 90%|######### | 9/10 [01:36<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                    Device: cuda
- 90%|######### | 9/10 [01:36<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                    Max number of batches: 6
- 90%|######### | 9/10 [01:36<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                    Branch filler jit, done in: 0.006250858306884766
- 90%|######### | 9/10 [01:36<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                    Dataprep, done in: 0.008517742156982422
- 90%|######### | 9/10 [01:36<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 90%|######### | 9/10 [01:44<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 90%|######### | 9/10 [01:52<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 90%|######### | 9/10 [02:00<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                    Algorithm failed: not done learning in max epochs.
- 90%|######### | 9/10 [02:08<00:09,  9.36s/trial, best loss: 0.00042016806722688926]                                                                                    Failed in: 31.680662393569946
- 90%|######### | 9/10 [02:08<00:09,  9.36s/trial, best loss: 0.00042016806722688926]100%|##########| 10/10 [02:08<00:00, 16.25s/trial, best loss: 0.00042016806722688926]100%|##########| 10/10 [02:08<00:00, 12.82s/trial, best loss: 0.00042016806722688926]
-{'batch_size': 50, 'decay_factor': 0.9, 'dropout': 0.6, 'hidden_dim': 6.0, 'learning_rate': 1e-06, 'min_epochs': 20, 'num_layers': 1, 'output_dim': 1, 'svm_gamma': 'auto', 'svm_nu': 0.05}

@@ -1,50 +1,0 @@
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-22/02/23 16:51:12 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Loading data complete
-Splitting data complete
-Hypertuning 1 evaluations, on 6 cores:
-
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                                                          (0 + 1) / 1]
-
-Hyper Parameters:
-  batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 130
-Branch filler jit, done in: 0.43764209747314453
-Dataprep, done in: 0.5279486179351807
-frac diff: -0.004354491618161138,  eps: 4.641588833612782e-08 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.00026292399884997433,  eps: 4.641588833612782e-08 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.0008146842930580341,  eps: 4.641588833612782e-08 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.00034509261517961983,  eps: 4.641588833612782e-08 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:12:40
-                                                                                100%|██████████| 1/1 [12:47<00:00, 767.77s/trial, best loss: 10.0]100%|██████████| 1/1 [12:47<00:00, 767.77s/trial, best loss: 10.0]Total Trials: 1: 1 succeeded, 0 failed, 0 cancelled.
-
-
-Hypertuning completed on dataset:
-/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root
-
-Best Hyper Parameters:
-  batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-with loss: 10.0

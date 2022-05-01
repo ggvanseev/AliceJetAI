@@ -1,48 +1,0 @@
-Loaded data
-Split data
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     
-Hyper Parameters:
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                       batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Device: cpu
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Max number of batches: 130
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Branch filler jit, done in: 0.43876075744628906
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     Dataprep, done in: 0.5331869125366211
-  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     0.0407025967033371
-  0%|          | 0/1 [08:18<?, ?trial/s, best loss=?]                                                     4.641588833612782e-08
-  0%|          | 0/1 [08:18<?, ?trial/s, best loss=?]                                                     Algorithm failed: not done learning in max epochs.
-  0%|          | 0/1 [08:18<?, ?trial/s, best loss=?]                                                     -0.09798785971262251
-  0%|          | 0/1 [16:38<?, ?trial/s, best loss=?]                                                     4.641588833612782e-08
-  0%|          | 0/1 [16:38<?, ?trial/s, best loss=?]                                                     Algorithm failed: not done learning in max epochs.
-  0%|          | 0/1 [16:38<?, ?trial/s, best loss=?]                                                     0.013302821023259635
-  0%|          | 0/1 [24:56<?, ?trial/s, best loss=?]                                                     4.641588833612782e-08
-  0%|          | 0/1 [24:56<?, ?trial/s, best loss=?]                                                     Algorithm failed: not done learning in max epochs.
-  0%|          | 0/1 [24:56<?, ?trial/s, best loss=?]                                                     -0.04175013383606808
-  0%|          | 0/1 [33:15<?, ?trial/s, best loss=?]                                                     4.641588833612782e-08
-  0%|          | 0/1 [33:15<?, ?trial/s, best loss=?]                                                     Algorithm failed: not done learning in max epochs.
-  0%|          | 0/1 [33:15<?, ?trial/s, best loss=?]                                                     Failed in: 1995.8506078720093
-  0%|          | 0/1 [33:15<?, ?trial/s, best loss=?]100%|██████████| 1/1 [33:15<00:00, 1995.86s/trial, best loss: 10.0]100%|██████████| 1/1 [33:15<00:00, 1995.86s/trial, best loss: 10.0]
-================================================================================
-ERROR in rec_eval
-EXCEPTION <class 'AttributeError'> 'NoneType' object has no attribute 'integers'
-NODE
-0 randint
-1   Literal{5}
-================================================================================
-Traceback (most recent call last):
-  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 144, in <module>
-    print(space_eval(space, best))
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/fmin.py", line 618, in space_eval
-    rval = pyll.rec_eval(space, memo=memo)
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/pyll/base.py", line 902, in rec_eval
-    rval = scope._impls[node.name](*args, **kwargs)
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/pyll/stochastic.py", line 100, in randint
-    return rng.integers(low, high, size)
-AttributeError: 'NoneType' object has no attribute 'integers'
