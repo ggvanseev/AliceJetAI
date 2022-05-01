@@ -71,6 +71,7 @@ def load_n_filter_data(
     kt_cut: float = None,
     eta_max: float = 2.0,
     pt_min: int = 130,
+    jet_branches: list = None,
     jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z],
 ) -> Tuple[ak.Array, ak.Array, ak.Array, ak.Array]:
     """Load in dataset from ROOT file of jet data. Subsequently, the jet data will be
@@ -97,7 +98,7 @@ def load_n_filter_data(
 
     # open file and select jet data and recursive jet data
     branches = uproot.open(file_name)[tree_name].arrays()
-    jets = branches[
+    jets_eta_pt_cut = branches[
         [
             na.jetpt,
             na.jet_eta,
@@ -105,17 +106,31 @@ def load_n_filter_data(
     ]
     jets_recur = branches[jet_recur_branches]
 
+    if jet_branches:
+        jets = branches[jet_branches]
+    else:
+        jets = None
+
     # Print some info on dataset. Note: Nr of jets is significantly larger than nr of quark/gluon jets.
     # This is because we only know for sure which jets are quark or gluon jets from the Parton Initiator,
     # which in turn means that we can at most obtain 1 quark or gluon jet per event.
-    print(f"Number of splits in dataset:\t\t{np.count_nonzero(jets[na.jetpt])}")
+    print(
+        f"Number of splits in dataset:\t\t{np.count_nonzero(jets_eta_pt_cut[na.jetpt])}"
+    )
 
     # apply cuts: -2 < eta < 2 and jet_pt > 130 GeV
     if cut:
         print("Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV")
         jets_recur = jets_recur[
-            (abs(jets[na.jet_eta]) < eta_max) & (jets[na.jetpt] > pt_min)
+            (abs(jets_eta_pt_cut[na.jet_eta]) < eta_max)
+            & (jets_eta_pt_cut[na.jetpt] > pt_min)
         ]
+        if jets:
+            jets = jets[
+                (abs(jets_eta_pt_cut[na.jet_eta]) < eta_max)
+                & (jets_eta_pt_cut[na.jetpt] > pt_min)
+            ]
+
         print(
             f"\tNumber of splits left after cuts:\t{np.count_nonzero(jets_recur[jet_recur_branches[0]])}"
         )
@@ -133,6 +148,9 @@ def load_n_filter_data(
         # cut kts
         jets_recur = jets_recur[jets_recur_kt > kt_cut]
 
+        if jets:
+            jets = jets[jets_recur_kt > kt_cut]
+
         # hist gluons TODO keep for possible later analysis: histograms
         # g_kts_flat = ak.flatten(ak.flatten(g_jets_kt)).to_list()
         # g_kts_hist = np.histogram(g_kts_flat, bins=range(round(max(g_kts_flat))))
@@ -148,4 +166,10 @@ def load_n_filter_data(
 
     jets_recur = flatten_array(jets_recur)
 
-    return jets_recur
+    if jets:
+        jets = select_non_empty_branches(jets, non_empty_key=jet_branches[0])
+        jets = flatten_array(jets)
+
+    print(f"Number of jets in dataset:\t\t{len(jets_recur)}")
+
+    return jets_recur, jets

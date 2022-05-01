@@ -119,7 +119,7 @@ if debug_flag:
     multicore_flag = False
 
 # Load and filter data for criteria eta and jetpt_cap
-jets_recur = load_n_filter_data(file_name, kt_cut=kt_cut)
+jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
 print("Loading data complete")
 
 # split data
