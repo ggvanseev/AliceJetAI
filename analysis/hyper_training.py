@@ -22,14 +22,14 @@ import branch_names as na
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_1k.root"
+file_name = "samples/time_cluster_10k.root"
 
 # set run settings
-max_evals = 4
+max_evals = 200
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
-debug_flag = True  # for using debug space = only 1 configuration of hp
-multicore_flag = False  # for using SparkTrials or Trials
+debug_flag = False  # for using debug space = only 1 configuration of hp
+multicore_flag = True  # for using SparkTrials or Trials
 save_results_flag = True  # for saving trials and runtime
 plot_flag = (
     True  # for making cost condition plots, only works if save_results_flag is True
@@ -89,7 +89,7 @@ space_debug = hp.choice(
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
             "batch_size": hp.choice("num_batch", [20]),
             "hidden_dim": hp.choice("hidden_dim", [6]),
-            "num_layers": hp.choice("num_layers", [2]),
+            "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(25)]),
             "learning_rate": hp.choice("learning_rate", [1e-3]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
