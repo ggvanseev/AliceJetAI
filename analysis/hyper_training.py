@@ -25,7 +25,7 @@ import branch_names as na
 file_name = "samples/time_cluster_10k.root"
 
 # set run settings
-max_evals = 200
+max_evals = 300
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
 debug_flag = False  # for using debug space = only 1 configuration of hp
@@ -45,15 +45,15 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.quniform("num_batch", 300, 1000, 100),
-            "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20, 50, 100, 200, 500]),
+            "batch_size": hp.quniform("num_batch", 700, 1000, 100),
+            "hidden_dim": hp.choice("hidden_dim", [9, 12, 400, 1000]),
             "num_layers": hp.choice(
-                "num_layers", [1, 2]
+                "num_layers", [1]
             ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
             "min_epochs": hp.choice(
-                "min_epochs", [int(30)]
+                "min_epochs", [int(30), int(60), int(100)]
             ),  # lijkt niet heel veel te doen
-            "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 1),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -4, -3, 1),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice(
                 "dropout", [0.1, 0]
@@ -72,9 +72,9 @@ space = hp.choice(
                 "variables",
                 [
                     [na.recur_dr, na.recur_jetpt, na.recur_z],
-                    # [na.recur_dr, na.recur_jetpt],
-                    # [na.recur_dr, na.recur_z],
-                    # [na.recur_jetpt, na.recur_z],
+                    [na.recur_dr, na.recur_jetpt],
+                    [na.recur_dr, na.recur_z],
+                    [na.recur_jetpt, na.recur_z],
                 ],
             ),
             "pooling": hp.choice("pooling", ["mean", "last"]),  # "last" , "mean"
