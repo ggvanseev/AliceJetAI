@@ -9,13 +9,13 @@ from functions.data_manipulation import (
 import awkward as ak
 import numpy as np
 
-job_id = 9792527
+job_id = "9792527"
 jet_info = "quark"
 num = 0
 
 # load data
 anomalies_info = pickle.load(
-    open(f"storing_results_1/anomaly_classification_{jet_info}_{job_id}.pkl", "rb")
+    open(f"storing_results/anomaly_classification_{jet_info}_{job_id}.pkl", "rb")
 )
 
 
@@ -23,6 +23,7 @@ g_recur_jets, q_recur_jets = load_n_filter_data(
     file_name=anomalies_info["file"],
     jet_recur_branches=[na.recur_dr, na.recur_jetpt, na.recur_z],
 )
+# mixed_sample = ak.concatenate((g_recur_jets[:1350], q_recur_jets[:150]))
 
 # get anomalies and normal out
 q_anomaly, q_normal = separate_anomalies_from_regular(
@@ -250,8 +251,8 @@ def stacked_plot_normalised_first_entries(anomaly, normal, feature, jet_info=Non
     plt.legend()
 
 
-stacked_plot_normalised_first_entries(
-    anomaly=q_anomaly, normal=q_normal, feature=na.recur_dr, jet_info=None, n_bins=50
+hist_comparison(
+    anomaly=q_anomaly, normal=q_normal, feature=na.recur_jetpt, jet_info=None
 )
 plt.show()
 a = 1
