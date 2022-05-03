@@ -37,12 +37,12 @@ def calc_lstm_results(
     # make sure theta is only generetad once.
     theta = None
     theta_gradients = None
-
+    print("In lstm results")
     i = 0
     for x_batch, y_batch in data_loader:
         jet_track_local = track_jets_data[i]
         i += 1
-
+        print("In data loader loop")
         # x_batch as input for lstm, pytorch says shape = [sequence_length, batch_size, n_features]
         # x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
