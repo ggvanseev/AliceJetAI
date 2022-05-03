@@ -61,6 +61,7 @@ def calc_lstm_results(
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
+        print("lstm results", h_bar.device.type,h_bar_list.device.type)
 
     # Get mean of theta gradients
     theta_gradients = get_mean_theta_gradients(
