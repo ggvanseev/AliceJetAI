@@ -59,6 +59,8 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
         alphas_tensor = torch.tensor(alphas).type(torch.FloatTensor).cuda()
 
     d_kappa = alphas_tensor @ h_bar_list[a_idx] # * alphas_sum
+    
+    print(gradient_hi.device.type, d_kappa.device.type, alphas_tensor.device.type, h_bar_list.device.type)
 
     # seems this one is correct after all...
     out = (d_kappa * gradient_hi.T).T
