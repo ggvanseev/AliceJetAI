@@ -83,10 +83,8 @@ class LSTMModel(nn.Module):
             jet_track_local = [x + 1 for x in jet_track_local]
             jet_track_local[-1] = None
             for j, jet_track in enumerate(jet_track_local):
-                h_bar[:, j] = torch.mean(hn[:, jet_track_prev:jet_track], dim=1)
+                h_bar[:, j] = torch.mean(hn[:, jet_track_prev:jet_track], dim=1).to(self.set_device)
                 jet_track_prev = jet_track
-
-        print("forward",hn.device, x.device, self.set_h0.device, self.set_h0.detach().device, h_bar.device)
 
         # Check if backpropogation is required
         if backpropagation_flag:
