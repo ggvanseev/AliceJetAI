@@ -1,0 +1,77 @@
+14_03_22_1008	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 36.40 s
+14_03_22_1017	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 59.16 s
+14_03_22_1028	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 38.81 s
+14_03_22_1459	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 437.69 s
+17_03_22_1900	on: samples/pendigits/pendigits-orig.tra	runtime: 102.33 s	notes: first succesful test with digits
+18_03_22_1415	on: samples/pendigits/pendigits-orig.tra	runtime: 96.42 s	notes: first succesful test with digits
+18_03_22_1428	on: samples/pendigits/pendigits-orig.tra	runtime: 173.02 s	notes: first succesful test with digits
+19_03_22_1725	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 34.22 s
+21_03_22_1454	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 230.67 s	notes: testing digits with lstm-ocsvm 3.0 -> test generalizability of the program
+21_03_22_1645	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 222.25 s	notes: testing digits with lstm-ocsvm 3.0 -> test generalizability of the program
+21_03_22_1650	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 239.05 s	notes: testing digits with lstm-ocsvm 3.0 -> test generalizability of the program
+24_03_22_1103	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 141.70 s	notes: testing digits with lstm-ocsvm 3.0 -> test generalizability of the program
+24_03_22_1112	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 126.92 s	notes: digits with lstm-ocsvm 3.0 -> 0's first, then 9's
+24_03_22_1133	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 647.62 s	notes: digits with lstm-ocsvm 3.0 -> shuffled set - 15 trials
+22_03_24_1344	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1157.02 s	notes: digits with lstm-ocsvm 3.0 -> shuffled set - 15 trials - last pooling
+22_03_24_1503	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 25.86 s
+22_03_24_1508	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 18.22 s
+22_03_24_1546	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 126.30 s	notes: digits with lstm-ocsvm 3.0 -> 0s and 1s?
+22_03_24_1613	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 210.96 s	notes: digits with lstm-ocsvm 3.0 -> only 0s -> GOOD RESULTS
+22_03_24_1623	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 91.33 s	notes: digits with lstm-ocsvm 3.0 -> 0s and 9s, hidden dim = 10
+22_03_24_1708	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 177.75 s	notes: digits with lstm-ocsvm 3.0 -> 0s and 9s, hidden dim = 40
+22_03_24_1714	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 89.50 s	notes: digits with lstm-ocsvm 3.0 -> 0s and 9s, hidden dim = 40, last pooled
+22_03_24_1727	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 233.90 s	notes: digits with lstm-ocsvm 3.0 -> 0s and 9s, hidden dim = 40, last pooled
+22_03_24_1732	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 82.14 s	notes: digits with lstm-ocsvm 3.0 -> 0s and 9s, hidden dim = 40, last pooled
+22_03_24_1808	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 151.01 s	notes: digits: frac 9:0.9 0:0.1, hid: 60, batch: 1000, last pooled
+22_03_24_1812	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 81.04 s	notes: digits: frac 0:0.9 9:0.1, hid: 60, batch: 800, last pooled
+22_03_24_1816	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 77.63 s	notes: digits: frac 0:0.9 9:0.1, hid: 60, batch: 800, mean pooled
+22_03_28_1330	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 760.08 s	notes: digits: frac 0:0.9 9:0.1, batch: 800, mean pooled, G norm = b
+22_03_28_1344	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 57.28 s	notes: digits: frac 0:0.9 9:0.1, batch: 800, mean pooled, G norm = d
+22_03_28_1348	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 101.33 s	notes: digits: frac 0:0.9 9:0.1, batch: 800, mean pooled, G norm = d, std scale
+22_03_28_1417	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 194.92 s	notes: digits: frac 0:0.9 9:0.1, batch: 800, mean pooled, G norm = c
+22_03_28_1451	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 268.77 s	notes: digits: frac 0:0.9 9:0.1, batch: 800, mean pooled, kernel = rbf for fun 
+22_03_29_1311	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 332.96 s	notes: digits: frac 0:0.9 9:0.1, batch: 5000, rbf kernel
+22_03_29_1319	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 169.00 s	notes: digits: frac 0:0.9 9:0.1, batch: 5000, linear kernel
+22_03_30_1745	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 336.16 s	notes: digits: frac 0:0.9 9:0.1, batch: 5000, linear kernel
+22_03_31_1152	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 706.03 s	notes: digits: frac 0:0.9 9:0.1, batch: 5000, linear kernel, mean pooled, nu = 0.1 -> GOOD RESULTS
+22_03_31_1208	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 624.92 s	notes: digits: frac 0:0.9 9:0.1, batch: 5000, linear kernel, last pooled, nu = 0.1
+22_04_01_1025	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 705.93 s	notes: digits: frac 9:1.0, batch: 5000, last pooled, nu=0.5
+22_04_01_1050	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 619.59 s	notes: digits: frac 9:1.0, batch: 5000, mean pooled, nu=0.5
+22_04_01_1112	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 550.36 s	notes: digits: frac 0:0.9 7:0.1, batch: 5000, mean pooled, nu=0.5
+22_04_04_1404	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 278.60 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1, SHUFFLED, batch: 5000, mean pooled, SHUFFLED, nu=0.5, lr=1e-3, eps 0.01 w. 100 max epochs -> testing -> NOT GOOD
+22_04_04_1410	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 281.53 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1, SHUFFLED, batch: 5000, mean pooled, SHUFFLED, nu=0.5, lr=1e-3, eps 0.01 w. 100 max epochs -> testing -> NOT GOOD
+22_04_04_1434	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1017.75 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1, SHUFFLED, batch: 5000, mean pooled, SHUFFLED, nu=0.5, lr=1e-5, eps 0.01 w. 300 max epochs -> testing -> Better
+22_04_04_1440	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 515.16 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1, SHUFFLED, batch: 5000, mean pooled, SHUFFLED, nu=0.5, lr=1e-5, eps 0.01 w. 300 max epochs -> testing -> Better
+22_04_04_1520	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1313.63 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1, nu=0.5, test lr 1e-6
+22_04_04_1603	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1969.04 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1, nu=0.5, test lr 1e-4
+22_04_04_1635	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 488.16 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1, nu=0.5, test lr 1e-3 -> NO, bad time!
+22_04_04_1750	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1643.58 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1, nu=0.5, test 800 epchs, lr 1e-4
+22_04_04_1811	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 504.96 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1, nu=0.5, test 800 epchs, lr 1e-4
+22_04_04_1822	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 373.27 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1, nu=0.5, test 800 epchs, lr 1e-5
+22_04_07_1307	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 439.41 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1 [75:150], nu=0.5, test max 400 epchs, lr 1e-5
+22_04_07_1323	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 972.81 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1 [75:150], nu=0.1, test max 400 epchs, lr 1e-5
+22_04_07_1344	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 814.71 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1 [75:150], nu=0.1, test max 400 epchs, lr 1e-5
+22_04_07_1354	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 436.11 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1 [75:150], nu=0.3, test max 200 epchs, lr 1e-5
+22_04_08_1552	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 185.07 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1 [75:150], bs=2000, nu=0.5, test max 100 epchs, lr 1e-5, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T)
+22_04_08_1559	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 325.87 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1 [75:150], bs=2000, nu=0.5, test max 200 epchs, lr 1e-5, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T)
+22_04_08_1609	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 261.89 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1 [75:150], bs=3500, nu=0.5, test max 300 epchs, lr 1e-5, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T)
+22_04_11_0930	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 93.73 s	notes: no shuffling digits: frac 0:0.9 9:0.1 [75:150], bs=3500, nu=0.5, test max 300 epchs, lr 1e-5, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T)
+22_04_11_0936	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 193.43 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1 [75:150], bs=3500, nu=0.5, test max 600 epchs, lr 1e-6, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T)
+22_04_11_1004	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1065.33 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 300 epchs, lr 1e-5, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T)
+22_04_11_1030	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 8.47 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 300 epchs, lr 1e-3, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) & G normalized to sum
+22_04_11_1104	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 14.19 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 300 epchs, lr 1e-3, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) & G normalized to sum
+22_04_11_1146	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1127.31 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 300 epchs, lr 1e-3, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) & G normalized to sum
+22_04_11_1306	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 3643.58 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 2000 epchs, lr 1e-4, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) & G normalized to sum
+22_04_11_1430	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 4950.57 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 2000 epchs, lr 1e-3, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) & G normalized to sum
+22_04_12_1302	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 79400.34 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 2000 epchs, lr 1e-3, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) no G norm
+22_04_12_1312	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 375.87 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 100 epchs, lr 1e-3, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) no G norm
+22_04_12_1321	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 292.63 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 100 epchs, lr 1e-4, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) no G norm
+22_04_12_1342	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 244.31 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 100 epchs, lr 1e-4, eps 1e-2, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) no G norm
+22_04_12_1449	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 246.78 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.4, test max 100 epchs, lr 1e-4, eps 1e-2, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) no G norm
+22_04_12_1558	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 423.12 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.3, test max 100 epchs, lr 1e-4, eps 1e-2, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) no G norm
+22_04_14_1339	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 190.71 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.2, test max 100 epchs, lr 1e-4, eps 1e-2, G: out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T) no G norm
+22_04_19_1648	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 613.58 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 2500 epchs, lr 1e-4, eps 1e-2, FIXED SHUFFLE!!!
+22_04_26_1849	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 459.66 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 2500 epchs, lr 1e-4, eps 1e-2, FIXED SHUFFLE!!!
+22_04_26_1857	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 279.24 s	notes: 0:0.9 9:0.1[75:150],bs=2000, nu=0.5, lr=1e-4, eps=1e-2, epchs=100->2000, backward on h bar -> good results, niet geaccepteerd
+22_04_28_1334	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 167.34 s	notes: SHUFFLED digits: frac 0:0.9 9:0.1[75:150], bs=2500, nu=0.5, test max 2500 epchs, lr 1e-4, eps 1e-2, FIXED SHUFFLE!!!
+22_04_28_1349	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 790.25 s	notes: 0:0.9 9:0.1[75:150],bs=2000, nu=0.5, lr=1e-4, eps=1e-3, epchs=100->1000, backward on h bar

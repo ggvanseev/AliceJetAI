@@ -7,3 +7,4 @@
 18_03_22_1428	on: samples/pendigits/pendigits-orig.tra	runtime: 173.02 s	notes: first succesful test with digits
 19_03_22_1725	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 34.22 s
 22_04_29_1016	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 312.08 s	notes: qg with new settings, check if it improves
+22_05_02_1505	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 108.40 s	notes: 0:0.9 9:0.1[75:150],bs=2000, nu=0.1, lr=1e-4, eps=1e-9, epchs=100->700, backward on h bar, old cost condition

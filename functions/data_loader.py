@@ -79,7 +79,7 @@ def load_n_filter_data_single(
             na.jet_area,
         ]
     ]
-    jets_recur = branches[jet_recur_branches]
+    #jets_recur = branches[jet_recur_branches]
     
     # Print some info on dataset. Note: Nr of jets is significantly larger than nr of quark/gluon jets.
     # This is because we only know for sure which jets are quark or gluon jets from the Parton Initiator,
