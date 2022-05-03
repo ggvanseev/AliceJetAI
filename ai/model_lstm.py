@@ -59,7 +59,7 @@ class LSTMModel(nn.Module):
         self,
         x,
         jet_track_local,
-        pooling ="last",
+        pooling="last",
         theta=None,
         theta_gradients=None,
         backpropagation_flag=True,
@@ -72,12 +72,12 @@ class LSTMModel(nn.Module):
         # out = F.avg_pool2d(out)
         # self.mp(out)
         # self.mp(hn)
-        
+
         # get mean/last pooled hidden states
         if pooling == "last":
             h_bar = hn[:, jet_track_local]
         elif pooling == "mean":
-            h_bar = torch.zeros([1, len(jet_track_local), hn.shape[-1]])
+            h_bar = torch.zeros([hn.shape[0], len(jet_track_local), hn.shape[-1]])
             jet_track_prev = 0
             jet_track_local = [x + 1 for x in jet_track_local]
             jet_track_local[-1] = None
@@ -89,7 +89,7 @@ class LSTMModel(nn.Module):
         if backpropagation_flag:
             # Do backward to get gradients with respect to hn (to get first part of chain rule, only take derivative of kappa later for algorithm Tolga)
             h_bar.sum().backward()
-            
+
             # Get parameters to update, save in dict for easy reference.
             if (
                 not theta
@@ -97,7 +97,9 @@ class LSTMModel(nn.Module):
                 theta = get_weights(model=self.lstm, hidden_dim=h_bar.shape[2])
 
             theta_gradients = get_gradient_weights(
-                model=self.lstm, hidden_dim=h_bar.shape[2], theta_gradients=theta_gradients
+                model=self.lstm,
+                hidden_dim=h_bar.shape[2],
+                theta_gradients=theta_gradients,
             )
 
             return h_bar, theta, theta_gradients
