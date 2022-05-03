@@ -452,7 +452,7 @@ class TRAINING:
             time.strftime("%H:%M:%S", time.gmtime(dt)) if dt > 60 else f"{dt:.2f} s"
         )
         if train_success:
-            print_out += f"\n  With loss: {diff_percentage_anomalies:.4E}"
+            print_out += f"\n  With loss: {loss:.4E}"
         print_out += f"\n{'Passed' if train_success else 'Failed'} in: {time_str}"
 
         # return the model
