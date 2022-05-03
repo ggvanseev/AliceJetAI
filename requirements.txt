@@ -1,6 +1,7 @@
+# install pytorch by hand
 autograd
 awkward
-hyperopt==0.2.7 # if this does not work, try https://stackoverflow.com/questions/29286624/how-to-install-pypi-packages-using-anaconda-conda-command
+hyperopt==0.2.7 # if this does not work, try https://stackoverflow.com/questions/29286624/how-to-install-pypi-packages-using-anaconda-conda-command - now did it with pip install hyperopt==0.2.7 in conda
 # pickle
 # functools
 numpy
@@ -13,5 +14,5 @@ scikit-learn==1.0.2
 scipy
 seaborn
 spyder
-torch==1.10.2
+# torch==1.10.2
 uproot
