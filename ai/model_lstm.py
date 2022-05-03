@@ -72,7 +72,7 @@ class LSTMModel(nn.Module):
         # out = F.avg_pool2d(out)
         # self.mp(out)
         # self.mp(hn)
-
+        print("forward",hn.device, x.device, self.set_h0.device, self.set_h0.detach().device)
         # get mean/last pooled hidden states
         if pooling == "last":
             h_bar = hn[:, jet_track_local]
