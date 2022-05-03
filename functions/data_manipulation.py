@@ -231,8 +231,9 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
     return batches, track_jets_in_batch, max_n_batches, track_index
 
 
-def shuffle_batches(batches, track_jets_in_batch, shuffle=False):
-    """_summary_
+def shuffle_batches(batches, track_jets_in_batch, device, shuffle=False):
+    """Function that shuffles batches according to batch structure
+    built by the branch_filler
 
     Args:
         batches (_type_): _description_
@@ -242,10 +243,15 @@ def shuffle_batches(batches, track_jets_in_batch, shuffle=False):
     Returns:
         _type_: _description_
     """
+        
     batches_shuffled = list() # contains newly shuffled batches
     track_jets_shuffled = list() # ontains newly shuffled tracks
 
     for (batch, _), tracks in zip(batches, track_jets_in_batch):
+        
+        # convert to cpu
+        if device.type != "cpu":
+            batch = batch.to(torch.device("cpu"))
         
         # rebuild batches in order to shuffle them
         batch_rebuilt = [batch[tracks[i-1]+1 if i>0 else None:tracks[i]+1] for i in range(len(tracks))]

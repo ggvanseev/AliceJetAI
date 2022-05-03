@@ -166,7 +166,7 @@ def training_algorithm(
         k += 1
         
         # shuffle jets in batches each epoch
-        x_loader, track_jets_dev_data = shuffle_batches(x_loader, track_jets_dev_data)
+        x_loader, track_jets_dev_data = shuffle_batches(x_loader, track_jets_dev_data, device)
 
         # keep previous cost result stored
         cost_prev = copy(cost)
