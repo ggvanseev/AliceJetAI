@@ -424,7 +424,7 @@ class TRAINING:
             #     logf.write(str(e))
 
             # check if the model passed the training
-            diff_percentage_anomalies = 10  # Create standard for saving
+            loss = 10  # Create standard for saving
             train_success = False
 
             # check if passed the training
