@@ -72,7 +72,8 @@ class LSTMModel(nn.Module):
         # out = F.avg_pool2d(out)
         # self.mp(out)
         # self.mp(hn)
-        print("forward",hn.device, x.device, self.set_h0.device, self.set_h0.detach().device)
+
+
         # get mean/last pooled hidden states
         if pooling == "last":
             h_bar = hn[:, jet_track_local]
@@ -84,6 +85,8 @@ class LSTMModel(nn.Module):
             for j, jet_track in enumerate(jet_track_local):
                 h_bar[:, j] = torch.mean(hn[:, jet_track_prev:jet_track], dim=1)
                 jet_track_prev = jet_track
+
+        print("forward",hn.device, x.device, self.set_h0.device, self.set_h0.detach().device, h_bar.device)
 
         # Check if backpropogation is required
         if backpropagation_flag:
