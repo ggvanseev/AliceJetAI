@@ -276,6 +276,9 @@ class TRAINING:
         self,
         hyper_parameters: dict,
         train_data,
+        device=torch.device("cuda")
+        if torch.cuda.is_available()
+        else torch.device("cpu"),
         val_data=None,
         patience=5,
         max_attempts=4,
@@ -318,6 +321,8 @@ class TRAINING:
 
         # output string for printing in terminal:
         print_out = ""
+        # Track device
+        print_out += "\nDevice: {}".format(device)
 
         # show used hyper_parameters in terminal
         # sauce https://stackoverflow.com/questions/44689546/how-to-print-out-a-dictionary-nicely-in-python
@@ -325,12 +330,6 @@ class TRAINING:
         print_out += "\n".join(
             "  {:10}\t  {}".format(k, v) for k, v in hyper_parameters.items()
         )
-
-        # use correct device:
-        device = (
-            torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-        )
-        print_out += "\nDevice: {}".format(device)
 
         # track time
         time_track = time.time()
@@ -451,7 +450,7 @@ class TRAINING:
             time.strftime("%H:%M:%S", time.gmtime(dt)) if dt > 60 else f"{dt:.2f} s"
         )
         if train_success:
-            print_out += f"\n  With loss: {diff_percentage_anomalies:.4E}"
+            print_out += f"\n  With loss: {loss:.4E}"
         print_out += f"\n{'Passed' if train_success else 'Failed'} in: {time_str}"
 
         # return the model
@@ -673,6 +672,14 @@ def run_full_training(
     # Create training object
     training = TRAINING_TYPE()
 
+    # use correct device:
+    if multicore_flag:
+        device = torch.device("cpu")
+    else:
+        device = (
+            torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        )
+
     # hyper tuning and evaluation
     best = fmin(
         partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
@@ -680,6 +687,7 @@ def run_full_training(
             train_data=train_data,
             val_data=val_data,
             patience=patience,
+            device=device,
         ),
         space,
         algo=tpe.suggest,
