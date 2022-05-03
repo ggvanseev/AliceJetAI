@@ -45,18 +45,26 @@ run_notes = ""  # Small command on run, will be save to save file.
 space = hp.choice(
     "hyper_parameters",
     [
-        {  
+        {
             "batch_size": hp.choice("num_batch", [800]),
             "hidden_dim": hp.choice("hidden_dim", [9]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(50)]),
             "learning_rate": 10 ** hp.choice("learning_rate", [-3]),
-            "dropout": hp.choice("dropout", [0]),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
+            "dropout": hp.choice(
+                "dropout", [0]
+            ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.3]),  # 0.5 was the default
-            "svm_gamma": hp.choice("svm_gamma", ["auto"]),  #"scale" or "auto"[ 0.23 was the defeault before], auto seems weird
-            "scaler_id": hp.choice("scaler_id", ["std"]),  # "minmax" = MinMaxScaler or "std" = StandardScaler
-            "variables": hp.choice("variables",[[na.recur_dr, na.recur_jetpt, na.recur_z]]),
+            "svm_gamma": hp.choice(
+                "svm_gamma", ["auto"]
+            ),  # "scale" or "auto"[ 0.23 was the defeault before], auto seems weird
+            "scaler_id": hp.choice(
+                "scaler_id", ["std"]
+            ),  # "minmax" = MinMaxScaler or "std" = StandardScaler
+            "variables": hp.choice(
+                "variables", [[na.recur_dr, na.recur_jetpt, na.recur_z]]
+            ),
             "pooling": hp.choice("pooling", ["last"]),  # "last" , "mean"
         }
     ],
@@ -69,9 +77,7 @@ print("Loading data complete")
 # Mix sample with e.g. 90% gluons and 10% quarks
 
 # split data
-split_train_data, _, split_val_data = train_dev_test_split(
-    recur_jets, split=[0.8, 0.1]
-)
+split_train_data, _, split_val_data = train_dev_test_split(recur_jets, split=[0.8, 0.1])
 print("Splitting data complete")
 
 # do full training
@@ -79,8 +85,8 @@ run_full_training(
     TRAINING_TYPE=REGULAR_TRAINING,
     file_name=file_name,
     space=space,
-    train_data = split_train_data,
-    val_data= split_val_data,
+    train_data=split_train_data,
+    val_data=split_val_data,
     max_evals=max_evals,
     patience=patience,
     kt_cut=kt_cut,  # for dataset, splittings kt > 1.0 GeV
