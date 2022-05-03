@@ -69,7 +69,7 @@ space = hp.choice(
 )
 
 # Load and filter data for criteria eta and jetpt_cap
-g_recur_jets, q_recur_jets = load_n_filter_data_single(file_name, kt_cut=kt_cut)
+g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=kt_cut)
 print("Loading data complete")
 
 # Mix sample with e.g. 90% gluons and 10% quarks
