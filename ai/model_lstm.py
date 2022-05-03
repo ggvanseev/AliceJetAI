@@ -75,9 +75,9 @@ class LSTMModel(nn.Module):
 
         # get mean/last pooled hidden states
         if pooling == "last":
-            h_bar = hn[:, jet_track_local]
+            h_bar = hn[:, jet_track_local].to(self.set_device)
         elif pooling == "mean":
-            h_bar = torch.zeros([hn.shape[0], len(jet_track_local), hn.shape[-1]])
+            h_bar = torch.zeros([hn.shape[0], len(jet_track_local), hn.shape[-1]]).to(self.set_device)
             jet_track_prev = 0
             jet_track_local = [x + 1 for x in jet_track_local]
             jet_track_local[-1] = None
