@@ -21,11 +21,15 @@ import branch_names as na
 ### ------------------------------- User Input ------------------------------- ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_10k.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+
+# jewel samples
+#file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
+#file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 
 # set run settings
-max_evals = 2
+max_evals = 60
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
 debug_flag = True  # for using debug space = only 1 configuration of hp
@@ -46,14 +50,14 @@ space = hp.choice(
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
             "batch_size": hp.quniform("num_batch", 300, 1000, 100),
-            "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20, 50, 100, 200, 500]),
+            "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20, 50, 100]),
             "num_layers": hp.choice(
                 "num_layers", [1, 2]
             ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
             "min_epochs": hp.choice(
-                "min_epochs", [int(30)]
+                "min_epochs", [int(50)]
             ),  # lijkt niet heel veel te doen
-            "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 1),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 0.5),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice(
                 "dropout", [0.1, 0]
