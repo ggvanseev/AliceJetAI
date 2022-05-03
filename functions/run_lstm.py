@@ -47,6 +47,8 @@ def calc_lstm_results(
         # x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         y_batch = y_batch.to(device)
+        
+        print("run_lstm", x_batch.device.type)
 
         ### Train step
         # set model to train
