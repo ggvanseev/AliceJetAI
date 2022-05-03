@@ -37,19 +37,17 @@ def calc_lstm_results(
     # make sure theta is only generetad once.
     theta = None
     theta_gradients = None
-    print("In lstm results")
+
     i = 0
     for x_batch, y_batch in data_loader:
         jet_track_local = track_jets_data[i]
         i += 1
-        print("In data loader loop")
+
         # x_batch as input for lstm, pytorch says shape = [sequence_length, batch_size, n_features]
         # x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         y_batch = y_batch.to(device)
         
-        print("run_lstm", x_batch.device.type)
-
         ### Train step
         # set model to train
         # lstm_model.train()  # TODO should this be off so the backward() call in the forward pass does not update the weights?
@@ -61,7 +59,6 @@ def calc_lstm_results(
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure
         h_bar_list.append(h_bar)
-        print("lstm results", h_bar.device.type)
 
     # Get mean of theta gradients
     theta_gradients = get_mean_theta_gradients(
