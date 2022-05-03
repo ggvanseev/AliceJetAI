@@ -144,7 +144,6 @@ def training_algorithm(
     )
     min_epochs_patience = training_params["min_epochs"]
 
-    print("To Calc lstm results")
     # obtain h_bar from the lstm with theta_0, given the data
     h_bar_list, theta, theta_gradients = calc_lstm_results(
         lstm_model,
