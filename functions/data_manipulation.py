@@ -248,7 +248,7 @@ def shuffle_batches(batches, track_jets_in_batch, device, shuffle=False):
     track_jets_shuffled = list() # ontains newly shuffled tracks
 
     for (batch, _), tracks in zip(batches, track_jets_in_batch):
-        print(batch.device.type, device.type)
+        print("shuffle", batch.device.type, device.type)
         # convert to cpu
         if device.type != "cpu":
             batch = batch.to(torch.device("cpu"))
