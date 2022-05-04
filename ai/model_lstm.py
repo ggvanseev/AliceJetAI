@@ -89,21 +89,21 @@ class LSTMModel(nn.Module):
         # Check if backpropogation is required
         if backpropagation_flag:
             # Do backward to get gradients with respect to hn (to get first part of chain rule, only take derivative of kappa later for algorithm Tolga)
-            h_bar.sum().backward()
+            hn.sum().backward()
 
             # Get parameters to update, save in dict for easy reference.
             if (
                 not theta
             ):  # Use this condition to only get theta once, it doens't change.
-                theta = get_weights(model=self.lstm, hidden_dim=h_bar.shape[2])
+                theta = get_weights(model=self.lstm, hidden_dim=hn.shape[2])
 
             theta_gradients = get_gradient_weights(
                 model=self.lstm,
-                hidden_dim=h_bar.shape[2],
+                hidden_dim=hn.shape[2],
                 theta_gradients=theta_gradients,
             )
 
-            return h_bar, theta, theta_gradients
+            return hn, theta, theta_gradients
 
         else:
-            return h_bar
+            return hn
