@@ -94,11 +94,11 @@ class LSTMModel(nn.Module):
             if (
                 not theta
             ):  # Use this condition to only get theta once, it doens't change.
-                theta = get_weights(model=self.lstm, hidden_dim=h_bar.shape[2])
+                theta = get_weights(model=self.lstm, hidden_dim=hn.shape[2])
 
             theta_gradients = get_gradient_weights(
                 model=self.lstm,
-                hidden_dim=h_bar.shape[2],
+                hidden_dim=hn.shape[2],
                 theta_gradients=theta_gradients,
             )
 
