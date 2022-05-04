@@ -127,15 +127,17 @@ if jewel == True:
     sample = load_n_filter_data_single(file_name, kt_cut=kt_cut)
 else:
     # Load and filter data for criteria eta and jetpt_cap
-    jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
+    g_jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
     print("Loading data complete")
 
     # Mix sample with e.g. 90% gluons and 10% quarks
-    sample = ak.concatenate((g_recur_jets[:1350],q_recur_jets[:150]))
-    # TODO first shuffle mixed_sample? nah, it's not really possible within awkward, you'd have to get it out first
+    # sample = ak.concatenate((g_jets_recur[:1350],q_jets_recur[:150]))
+    # # TODO first shuffle mixed_sample? nah, it's not really possible within awkward, you'd have to get it out first
 
-    # remove from memory
-    del g_recur_jets, q_recur_jets
+    # # remove from memory
+    # del g_jets_recur, q_jets_recur
+    
+    sample = g_jets_recur
 
 # split data
 _, split_dev_data, _ = train_dev_test_split(sample, split=[0.8, 0.1])
