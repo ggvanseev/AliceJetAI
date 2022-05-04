@@ -103,7 +103,7 @@ class LSTMModel(nn.Module):
                 theta_gradients=theta_gradients,
             )
 
-            return hn, theta, theta_gradients
+            return h_bar, theta, theta_gradients
 
         else:
-            return hn
+            return h_bar
