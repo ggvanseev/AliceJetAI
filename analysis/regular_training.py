@@ -31,7 +31,7 @@ file_name = "samples/time_cluster_10k.root"
 max_evals = 100
 patience = 10
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
-multicore_flag = False  # for using SparkTrials or Trials
+multicore_flag = True  # for using SparkTrials or Trials
 save_results_flag = True  # for saving trials and runtime
 plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
