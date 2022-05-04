@@ -65,6 +65,18 @@ def flatten_array(branches, step_size=2000):
     return ak.Array(new_branches)
 
 
+def flatten_array_old(branches):
+    """
+    returns a flattend array
+    """
+    new_branches = dict()
+
+    for field in branches.fields:
+        new_branches[field] = ak.concatenate(branches[field], axis=0)
+
+    return ak.Array(new_branches)
+
+
 def load_n_filter_data_single(
     file_name: str,
     tree_name: str = na.tree,
@@ -133,7 +145,7 @@ def load_n_filter_data_single(
         jets_recur, non_empty_key=jet_recur_branches[0]
     )
 
-    jets_recur = flatten_array(jets_recur)
+    jets_recur = flatten_array_old(jets_recur)
 
     return jets_recur
 
@@ -264,12 +276,12 @@ def load_n_filter_data(
         g_jets_recur, non_empty_key=jet_recur_branches[0]
     )
 
-    g_jets_recur = flatten_array(g_jets_recur)
+    g_jets_recur = flatten_array_old(g_jets_recur)
 
     q_jets_recur = select_non_empty_branches(
         q_jets_recur, non_empty_key=jet_recur_branches[0]
     )
 
-    q_jets_recur = flatten_array(q_jets_recur)
+    q_jets_recur = flatten_array_old(q_jets_recur)
 
     return g_jets_recur, q_jets_recur
