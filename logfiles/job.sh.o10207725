@@ -1,0 +1,1555 @@
+Number of jets in dataset:		21477
+Number of gluon jets in dataset:	3252
+Number of quark jets in dataset:	2885
+Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
+	gluon jets left after cuts:	1537
+	quark jets left after cuts:	1475 
+Loading data complete
+Splitting data complete
+  0%|          | 0/60 [00:00<?, ?trial/s, best loss=?]                                                      
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05512356758117676
+Dataprep done in: 0.07974767684936523
+Training done in: 35.27517580986023
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 2.5455351620265916e-06, vs epsilon: 1e-08 
+Training done in: 35.24524211883545
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 3.7972319785943794e-05, vs epsilon: 1e-08 
+Training done in: 35.288262367248535
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 4.0249258657803476e-05, vs epsilon: 1e-08 
+Training done in: 3.8860132694244385
+  Model done learning in 76 epochs
+  With cost condition: 2.2968678298337324e-09, vs epsilon: 1e-08 
+  With loss: 2.0942E-04
+Passed in: 00:01:49
+  0%|          | 0/60 [01:49<?, ?trial/s, best loss=?]  2%|▏         | 1/60 [01:49<1:47:57, 109.79s/trial, best loss: 0.000209420841617273]                                                                                     
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05574536323547363
+Dataprep done in: 0.057900190353393555
+Training done in: 2.8841121196746826
+  Model done learning in 56 epochs
+  With cost condition: 5.790386323819062e-10, vs epsilon: 1e-08 
+  With loss: 1.2176E-03
+Passed in: 2.94 s
+  2%|▏         | 1/60 [01:52<1:47:57, 109.79s/trial, best loss: 0.000209420841617273]  3%|▎         | 2/60 [01:52<45:22, 46.95s/trial, best loss: 0.000209420841617273]                                                                                     
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.054698944091796875
+Dataprep done in: 0.05682659149169922
+Training done in: 2.8834524154663086
+  Model done learning in 56 epochs
+  With cost condition: 2.3943317341579007e-09, vs epsilon: 1e-08 
+  With loss: 7.0050E-04
+Passed in: 2.94 s
+  3%|▎         | 2/60 [01:55<45:22, 46.95s/trial, best loss: 0.000209420841617273]  5%|▌         | 3/60 [01:55<25:30, 26.86s/trial, best loss: 0.000209420841617273]                                                                                  
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05526900291442871
+Dataprep done in: 0.05734729766845703
+Training done in: 6.571444034576416
+  Model done learning in 128 epochs
+  With cost condition: 1.2387879712378637e-09, vs epsilon: 1e-08 
+  With loss: 5.5992E-04
+Passed in: 6.63 s
+  5%|▌         | 3/60 [02:02<25:30, 26.86s/trial, best loss: 0.000209420841617273]  7%|▋         | 4/60 [02:02<17:36, 18.87s/trial, best loss: 0.000209420841617273]                                                                                  
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.055168867111206055
+Dataprep done in: 0.05725979804992676
+Training done in: 35.23996067047119
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.6789301972513016e-05, vs epsilon: 1e-08 
+Training done in: 35.256511211395264
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 5.747269748957792e-07, vs epsilon: 1e-08 
+Training done in: 35.270469665527344
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 8.45983157889961e-06, vs epsilon: 1e-08 
+Training done in: 35.329057455062866
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.6219518847085336e-06, vs epsilon: 1e-08 
+Failed in: 00:02:21
+  7%|▋         | 4/60 [04:23<17:36, 18.87s/trial, best loss: 0.000209420841617273]  8%|▊         | 5/60 [04:23<57:43, 62.97s/trial, best loss: 0.000209420841617273]                                                                                  
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.0556793212890625
+Dataprep done in: 0.05786418914794922
+Training done in: 6.013820171356201
+  Model done learning in 118 epochs
+  With cost condition: 2.5591860544341372e-11, vs epsilon: 1e-08 
+  With loss: 8.9230E-03
+Passed in: 6.07 s
+  8%|▊         | 5/60 [04:29<57:43, 62.97s/trial, best loss: 0.000209420841617273] 10%|█         | 6/60 [04:29<39:16, 43.63s/trial, best loss: 0.000209420841617273]                                                                                  
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.0554506778717041
+Dataprep done in: 0.05760931968688965
+Training done in: 5.670199394226074
+  Model done learning in 111 epochs
+  With cost condition: 7.745617303814823e-10, vs epsilon: 1e-08 
+  With loss: 1.6302E-03
+Passed in: 5.73 s
+ 10%|█         | 6/60 [04:35<39:16, 43.63s/trial, best loss: 0.000209420841617273] 12%|█▏        | 7/60 [04:35<27:35, 31.24s/trial, best loss: 0.000209420841617273]                                                                                  
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.055182695388793945
+Dataprep done in: 0.05730390548706055
+Training done in: 5.114643096923828
+  Model done learning in 100 epochs
+  With cost condition: 2.6243602165078044e-10, vs epsilon: 1e-08 
+  With loss: 3.3945E-03
+Passed in: 5.17 s
+ 12%|█▏        | 7/60 [04:40<27:35, 31.24s/trial, best loss: 0.000209420841617273] 13%|█▎        | 8/60 [04:40<19:53, 22.95s/trial, best loss: 0.000209420841617273]                                                                                  
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05581331253051758
+Dataprep done in: 0.05792498588562012
+Training done in: 4.9929115772247314
+  Model done learning in 98 epochs
+  With cost condition: 2.265953911492245e-09, vs epsilon: 1e-08 
+  With loss: 4.2349E-03
+Passed in: 5.05 s
+ 13%|█▎        | 8/60 [04:45<19:53, 22.95s/trial, best loss: 0.000209420841617273] 15%|█▌        | 9/60 [04:45<14:45, 17.35s/trial, best loss: 0.000209420841617273]                                                                                  
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05588531494140625
+Dataprep done in: 0.05804800987243652
+Training done in: 5.4906041622161865
+  Model done learning in 106 epochs
+  With cost condition: 8.471387500255036e-09, vs epsilon: 1e-08 
+  With loss: 3.3338E-03
+Passed in: 5.55 s
+ 15%|█▌        | 9/60 [04:51<14:45, 17.35s/trial, best loss: 0.000209420841617273] 17%|█▋        | 10/60 [04:51<11:25, 13.71s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.056284427642822266
+Dataprep done in: 0.0584871768951416
+Training done in: 5.029594898223877
+  Model done learning in 97 epochs
+  With cost condition: 3.0010894013830297e-09, vs epsilon: 1e-08 
+  With loss: 1.0099E-03
+Passed in: 5.09 s
+ 17%|█▋        | 10/60 [04:56<11:25, 13.71s/trial, best loss: 0.000209420841617273] 18%|█▊        | 11/60 [04:56<09:02, 11.08s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.055210113525390625
+Dataprep done in: 0.057366371154785156
+Training done in: 4.137897729873657
+  Model done learning in 81 epochs
+  With cost condition: 2.4571798852514966e-09, vs epsilon: 1e-08 
+  With loss: 1.2466E-03
+Passed in: 4.20 s
+ 18%|█▊        | 11/60 [05:00<09:02, 11.08s/trial, best loss: 0.000209420841617273] 20%|██        | 12/60 [05:00<07:11,  8.99s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.055114030838012695
+Dataprep done in: 0.05723738670349121
+Training done in: 3.3813300132751465
+  Model done learning in 66 epochs
+  With cost condition: 3.23688303376625e-09, vs epsilon: 1e-08 
+  With loss: 6.7077E-04
+Passed in: 3.44 s
+ 20%|██        | 12/60 [05:03<07:11,  8.99s/trial, best loss: 0.000209420841617273] 22%|██▏       | 13/60 [05:03<05:43,  7.31s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05487465858459473
+Dataprep done in: 0.05695772171020508
+Training done in: 35.252212047576904
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 3.7080623259000332e-06, vs epsilon: 1e-08 
+Training done in: 2.8389883041381836
+  Model done learning in 55 epochs
+  With cost condition: 2.0969176953891834e-10, vs epsilon: 1e-08 
+  With loss: 1.0553E-03
+Passed in: 38.15 s
+ 22%|██▏       | 13/60 [05:42<05:43,  7.31s/trial, best loss: 0.000209420841617273] 23%|██▎       | 14/60 [05:42<12:44, 16.63s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05569648742675781
+Dataprep done in: 0.057901620864868164
+Training done in: 35.30089354515076
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 7.780532589540324e-08, vs epsilon: 1e-08 
+Training done in: 11.321364164352417
+  Model done learning in 224 epochs
+  With cost condition: 4.4778081894563285e-10, vs epsilon: 1e-08 
+  With loss: 5.8003E-03
+Passed in: 46.68 s
+ 23%|██▎       | 14/60 [06:28<12:44, 16.63s/trial, best loss: 0.000209420841617273] 25%|██▌       | 15/60 [06:28<19:16, 25.69s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05585312843322754
+Dataprep done in: 0.0580289363861084
+Training done in: 3.585886001586914
+  Model done learning in 70 epochs
+  With cost condition: 6.169301145945297e-09, vs epsilon: 1e-08 
+  With loss: 1.2348E-03
+Passed in: 3.65 s
+ 25%|██▌       | 15/60 [06:32<19:16, 25.69s/trial, best loss: 0.000209420841617273] 27%|██▋       | 16/60 [06:32<13:58, 19.06s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.0550997257232666
+Dataprep done in: 0.05723237991333008
+Training done in: 5.530273914337158
+  Model done learning in 107 epochs
+  With cost condition: 6.160561604952093e-09, vs epsilon: 1e-08 
+  With loss: 3.6156E-03
+Passed in: 5.59 s
+ 27%|██▋       | 16/60 [06:37<13:58, 19.06s/trial, best loss: 0.000209420841617273] 28%|██▊       | 17/60 [06:37<10:45, 15.01s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05524849891662598
+Dataprep done in: 0.05732369422912598
+Training done in: 2.6831891536712646
+  Model done learning in 52 epochs
+  With cost condition: 1.8574828417138412e-09, vs epsilon: 1e-08 
+  With loss: 2.9583E-03
+Passed in: 2.74 s
+ 28%|██▊       | 17/60 [06:40<10:45, 15.01s/trial, best loss: 0.000209420841617273] 30%|███       | 18/60 [06:40<07:55, 11.33s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05525016784667969
+Dataprep done in: 0.05739903450012207
+Training done in: 35.26664209365845
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 8.575766853215638e-06, vs epsilon: 1e-08 
+Training done in: 2.933565139770508
+  Model done learning in 57 epochs
+  With cost condition: 8.412309520669739e-09, vs epsilon: 1e-08 
+  With loss: 3.5310E-03
+Passed in: 38.26 s
+ 30%|███       | 18/60 [07:18<07:55, 11.33s/trial, best loss: 0.000209420841617273] 32%|███▏      | 19/60 [07:18<13:16, 19.42s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.056209564208984375
+Dataprep done in: 0.05836296081542969
+Training done in: 35.2672278881073
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 7.008019990436188e-06, vs epsilon: 1e-08 
+Training done in: 35.28638577461243
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 8.670055961316064e-08, vs epsilon: 1e-08 
+Training done in: 7.5923168659210205
+  Model done learning in 150 epochs
+  With cost condition: 6.8310619472640885e-12, vs epsilon: 1e-08 
+  With loss: 6.3849E-03
+Passed in: 00:01:18
+ 32%|███▏      | 19/60 [08:37<13:16, 19.42s/trial, best loss: 0.000209420841617273] 33%|███▎      | 20/60 [08:37<24:42, 37.07s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05607867240905762
+Dataprep done in: 0.05823779106140137
+Training done in: 3.938347816467285
+  Model done learning in 77 epochs
+  With cost condition: 3.0602963324200503e-09, vs epsilon: 1e-08 
+  With loss: 2.8827E-03
+Passed in: 4.00 s
+ 33%|███▎      | 20/60 [08:41<24:42, 37.07s/trial, best loss: 0.000209420841617273] 35%|███▌      | 21/60 [08:41<17:38, 27.15s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05538439750671387
+Dataprep done in: 0.05747389793395996
+Training done in: 3.735196113586426
+  Model done learning in 73 epochs
+  With cost condition: 9.809551508919493e-10, vs epsilon: 1e-08 
+  With loss: 4.5393E-03
+Passed in: 3.79 s
+ 35%|███▌      | 21/60 [08:45<17:38, 27.15s/trial, best loss: 0.000209420841617273] 37%|███▋      | 22/60 [08:45<12:45, 20.14s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05503082275390625
+Dataprep done in: 0.05713963508605957
+Training done in: 35.26197028160095
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.5674160499972882e-06, vs epsilon: 1e-08 
+Training done in: 35.261739015579224
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.119139511772394e-05, vs epsilon: 1e-08 
+Training done in: 35.3043258190155
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 9.199303127172246e-06, vs epsilon: 1e-08 
+Training done in: 35.27961230278015
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.420702855633171e-05, vs epsilon: 1e-08 
+Failed in: 00:02:21
+ 37%|███▋      | 22/60 [11:06<12:45, 20.14s/trial, best loss: 0.000209420841617273] 38%|███▊      | 23/60 [11:06<34:49, 56.47s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.056180715560913086
+Dataprep done in: 0.05836987495422363
+Training done in: 13.172680377960205
+  Model done learning in 261 epochs
+  With cost condition: 5.828486011267183e-10, vs epsilon: 1e-08 
+  With loss: 7.0839E-03
+Passed in: 13.23 s
+ 38%|███▊      | 23/60 [11:19<34:49, 56.47s/trial, best loss: 0.000209420841617273] 40%|████      | 24/60 [11:19<26:05, 43.50s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.0562441349029541
+Dataprep done in: 0.05845355987548828
+Training done in: 10.540647983551025
+  Model done learning in 207 epochs
+  With cost condition: 5.060074280831524e-10, vs epsilon: 1e-08 
+  With loss: 3.0516E-03
+Passed in: 10.60 s
+ 40%|████      | 24/60 [11:30<26:05, 43.50s/trial, best loss: 0.000209420841617273] 42%|████▏     | 25/60 [11:30<19:37, 33.63s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05637550354003906
+Dataprep done in: 0.05847978591918945
+Training done in: 2.9373533725738525
+  Model done learning in 57 epochs
+  With cost condition: 4.061089492032749e-11, vs epsilon: 1e-08 
+  With loss: 5.4837E-04
+Passed in: 3.00 s
+ 42%|████▏     | 25/60 [11:33<19:37, 33.63s/trial, best loss: 0.000209420841617273] 43%|████▎     | 26/60 [11:33<13:51, 24.45s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.055405378341674805
+Dataprep done in: 0.05752444267272949
+Training done in: 6.245345830917358
+  Model done learning in 123 epochs
+  With cost condition: 8.04080655589856e-09, vs epsilon: 1e-08 
+  With loss: 5.4261E-03
+Passed in: 6.30 s
+ 43%|████▎     | 26/60 [11:39<13:51, 24.45s/trial, best loss: 0.000209420841617273] 45%|████▌     | 27/60 [11:39<10:27, 19.01s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.0551762580871582
+Dataprep done in: 0.05728745460510254
+Training done in: 3.0882256031036377
+  Model done learning in 60 epochs
+  With cost condition: 4.1532888310774365e-09, vs epsilon: 1e-08 
+  With loss: 1.6129E-03
+Passed in: 3.15 s
+ 45%|████▌     | 27/60 [11:42<10:27, 19.01s/trial, best loss: 0.000209420841617273] 47%|████▋     | 28/60 [11:42<07:36, 14.25s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.0555415153503418
+Dataprep done in: 0.05776333808898926
+Training done in: 3.1341288089752197
+  Model done learning in 61 epochs
+  With cost condition: 2.62806906968071e-09, vs epsilon: 1e-08 
+  With loss: 1.1327E-03
+Passed in: 3.19 s
+ 47%|████▋     | 28/60 [11:45<07:36, 14.25s/trial, best loss: 0.000209420841617273] 48%|████▊     | 29/60 [11:45<05:39, 10.94s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05550837516784668
+Dataprep done in: 0.057642221450805664
+Training done in: 14.207287788391113
+  Model done learning in 280 epochs
+  With cost condition: 1.4561653496157003e-09, vs epsilon: 1e-08 
+  With loss: 3.9875E-03
+Passed in: 14.27 s
+ 48%|████▊     | 29/60 [12:00<05:39, 10.94s/trial, best loss: 0.000209420841617273] 50%|█████     | 30/60 [12:00<05:58, 11.94s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05582547187805176
+Dataprep done in: 0.057935237884521484
+Training done in: 35.290491819381714
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.6724056982551634e-06, vs epsilon: 1e-08 
+Training done in: 3.685997247695923
+  Model done learning in 72 epochs
+  With cost condition: 1.3618121477168166e-09, vs epsilon: 1e-08 
+  With loss: 2.3920E-03
+Passed in: 39.04 s
+ 50%|█████     | 30/60 [12:39<05:58, 11.94s/trial, best loss: 0.000209420841617273] 52%|█████▏    | 31/60 [12:39<09:42, 20.08s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05617260932922363
+Dataprep done in: 0.058341264724731445
+Training done in: 9.001217365264893
+  Model done learning in 178 epochs
+  With cost condition: 9.993664311663651e-09, vs epsilon: 1e-08 
+  With loss: 5.3785E-03
+Passed in: 9.06 s
+ 52%|█████▏    | 31/60 [12:48<09:42, 20.08s/trial, best loss: 0.000209420841617273] 53%|█████▎    | 32/60 [12:48<07:49, 16.78s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05524086952209473
+Dataprep done in: 0.05736589431762695
+Training done in: 4.3371241092681885
+  Model done learning in 85 epochs
+  With cost condition: 1.0633735397751428e-09, vs epsilon: 1e-08 
+  With loss: 4.1855E-03
+Passed in: 4.40 s
+ 53%|█████▎    | 32/60 [12:52<07:49, 16.78s/trial, best loss: 0.000209420841617273] 55%|█████▌    | 33/60 [12:52<05:52, 13.07s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05540275573730469
+Dataprep done in: 0.05755949020385742
+Training done in: 35.28407597541809
+  Model done learning in 700 epochs
+  With cost condition: 1.7307839717773526e-09, vs epsilon: 1e-08 
+  With loss: 1.6753E-02
+Passed in: 35.34 s
+ 55%|█████▌    | 33/60 [13:27<05:52, 13.07s/trial, best loss: 0.000209420841617273] 57%|█████▋    | 34/60 [13:27<08:33, 19.75s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.0559847354888916
+Dataprep done in: 0.05818963050842285
+Training done in: 27.45166254043579
+  Model done learning in 544 epochs
+  With cost condition: 8.102881848428614e-09, vs epsilon: 1e-08 
+  With loss: 1.8278E-02
+Passed in: 27.51 s
+ 57%|█████▋    | 34/60 [13:55<08:33, 19.75s/trial, best loss: 0.000209420841617273] 58%|█████▊    | 35/60 [13:55<09:12, 22.09s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05585622787475586
+Dataprep done in: 0.05799746513366699
+Training done in: 6.700035095214844
+  Model done learning in 132 epochs
+  With cost condition: 3.0472452085758656e-10, vs epsilon: 1e-08 
+  With loss: 5.8730E-04
+Passed in: 6.76 s
+ 58%|█████▊    | 35/60 [14:02<09:12, 22.09s/trial, best loss: 0.000209420841617273] 60%|██████    | 36/60 [14:02<06:59, 17.49s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.055741071701049805
+Dataprep done in: 0.05791068077087402
+Training done in: 18.624704837799072
+  Model done learning in 368 epochs
+  With cost condition: 2.8048487315287803e-10, vs epsilon: 1e-08 
+  With loss: 5.9103E-03
+Passed in: 18.68 s
+ 60%|██████    | 36/60 [14:20<06:59, 17.49s/trial, best loss: 0.000209420841617273] 62%|██████▏   | 37/60 [14:20<06:50, 17.86s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05574464797973633
+Dataprep done in: 0.05784749984741211
+Training done in: 35.317543268203735
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 5.477724225519683e-06, vs epsilon: 1e-08 
+Training done in: 3.1891214847564697
+  Model done learning in 62 epochs
+  With cost condition: 3.868951274069182e-09, vs epsilon: 1e-08 
+  With loss: 7.0938E-04
+Passed in: 38.57 s
+ 62%|██████▏   | 37/60 [14:59<06:50, 17.86s/trial, best loss: 0.000209420841617273] 63%|██████▎   | 38/60 [14:59<08:49, 24.07s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05594348907470703
+Dataprep done in: 0.05808067321777344
+Training done in: 7.999943733215332
+  Model done learning in 158 epochs
+  With cost condition: 6.315323649836711e-09, vs epsilon: 1e-08 
+  With loss: 2.0816E-03
+Passed in: 8.06 s
+ 63%|██████▎   | 38/60 [15:07<08:49, 24.07s/trial, best loss: 0.000209420841617273] 65%|██████▌   | 39/60 [15:07<06:44, 19.27s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05535626411437988
+Dataprep done in: 0.057431697845458984
+Training done in: 9.811172723770142
+  Model done learning in 194 epochs
+  With cost condition: 7.824449390481297e-10, vs epsilon: 1e-08 
+  With loss: 6.7653E-04
+Passed in: 9.87 s
+ 65%|██████▌   | 39/60 [15:17<06:44, 19.27s/trial, best loss: 0.000209420841617273] 67%|██████▋   | 40/60 [15:17<05:29, 16.46s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05581378936767578
+Dataprep done in: 0.05795598030090332
+Training done in: 35.307021379470825
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.0062658944888043e-07, vs epsilon: 1e-08 
+Training done in: 7.682842969894409
+  Model done learning in 150 epochs
+  With cost condition: 6.91941257110182e-11, vs epsilon: 1e-08 
+  With loss: 1.6253E-03
+Passed in: 43.05 s
+ 67%|██████▋   | 40/60 [16:00<05:29, 16.46s/trial, best loss: 0.000209420841617273] 68%|██████▊   | 41/60 [16:00<07:44, 24.44s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.0559389591217041
+Dataprep done in: 0.058057546615600586
+Training done in: 35.336302280426025
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.5775882579102881e-06, vs epsilon: 1e-08 
+Training done in: 5.896064043045044
+  Model done learning in 116 epochs
+  With cost condition: 1.8030091713685785e-10, vs epsilon: 1e-08 
+  With loss: 3.5225E-03
+Passed in: 41.29 s
+ 68%|██████▊   | 41/60 [16:41<07:44, 24.44s/trial, best loss: 0.000209420841617273] 70%|███████   | 42/60 [16:41<08:51, 29.50s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05609536170959473
+Dataprep done in: 0.0582730770111084
+Training done in: 35.30059480667114
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 9.705045095708757e-06, vs epsilon: 1e-08 
+Training done in: 35.32014441490173
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 9.50570720761635e-07, vs epsilon: 1e-08 
+Training done in: 13.77204966545105
+  Model done learning in 273 epochs
+  With cost condition: 2.7801620468922456e-10, vs epsilon: 1e-08 
+  With loss: 6.8314E-03
+Passed in: 00:01:24
+ 70%|███████   | 42/60 [18:06<08:51, 29.50s/trial, best loss: 0.000209420841617273] 72%|███████▏  | 43/60 [18:06<13:01, 45.99s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.055951595306396484
+Dataprep done in: 0.058171749114990234
+Training done in: 2.589355230331421
+  Model done learning in 50 epochs
+  With cost condition: 6.233616483017279e-09, vs epsilon: 1e-08 
+  With loss: 5.3737E-04
+Passed in: 2.65 s
+ 72%|███████▏  | 43/60 [18:09<13:01, 45.99s/trial, best loss: 0.000209420841617273] 73%|███████▎  | 44/60 [18:09<08:47, 32.99s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05548286437988281
+Dataprep done in: 0.05754399299621582
+Training done in: 35.36693835258484
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.14636726075718e-06, vs epsilon: 1e-08 
+Training done in: 35.31177473068237
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.2473502053806142e-05, vs epsilon: 1e-08 
+Training done in: 35.38603639602661
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 4.815362818269934e-07, vs epsilon: 1e-08 
+Training done in: 3.4028069972991943
+  Model done learning in 66 epochs
+  With cost condition: 1.8697314615196954e-10, vs epsilon: 1e-08 
+  With loss: 5.8763E-03
+Passed in: 00:01:49
+ 73%|███████▎  | 44/60 [19:58<08:47, 32.99s/trial, best loss: 0.000209420841617273] 75%|███████▌  | 45/60 [19:58<13:59, 55.96s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05561113357543945
+Dataprep done in: 0.057761192321777344
+Training done in: 8.713951587677002
+  Model done learning in 172 epochs
+  With cost condition: 2.37024249566614e-11, vs epsilon: 1e-08 
+  With loss: 2.4618E-03
+Passed in: 8.77 s
+ 75%|███████▌  | 45/60 [20:07<13:59, 55.96s/trial, best loss: 0.000209420841617273] 77%|███████▋  | 46/60 [20:07<09:45, 41.81s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05547451972961426
+Dataprep done in: 0.05761432647705078
+Training done in: 35.32134819030762
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 2.6203736618272926e-07, vs epsilon: 1e-08 
+Training done in: 6.909763813018799
+  Model done learning in 134 epochs
+  With cost condition: 2.5837460384311253e-10, vs epsilon: 1e-08 
+  With loss: 9.8286E-03
+Passed in: 42.29 s
+ 77%|███████▋  | 46/60 [20:49<09:45, 41.81s/trial, best loss: 0.000209420841617273] 78%|███████▊  | 47/60 [20:49<09:05, 41.96s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05614733695983887
+Dataprep done in: 0.058272361755371094
+Training done in: 3.0873920917510986
+  Model done learning in 60 epochs
+  With cost condition: 3.0213624661186676e-09, vs epsilon: 1e-08 
+  With loss: 2.0727E-03
+Passed in: 3.15 s
+ 78%|███████▊  | 47/60 [20:52<09:05, 41.96s/trial, best loss: 0.000209420841617273] 80%|████████  | 48/60 [20:52<06:03, 30.32s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05526161193847656
+Dataprep done in: 0.05731630325317383
+Training done in: 4.195823431015015
+  Model done learning in 82 epochs
+  With cost condition: 9.444810504026089e-09, vs epsilon: 1e-08 
+  With loss: 7.5540E-03
+Passed in: 4.26 s
+ 80%|████████  | 48/60 [20:57<06:03, 30.32s/trial, best loss: 0.000209420841617273] 82%|████████▏ | 49/60 [20:57<04:07, 22.51s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05552935600280762
+Dataprep done in: 0.05763959884643555
+Training done in: 3.846479654312134
+  Model done learning in 75 epochs
+  With cost condition: 5.337919330785956e-11, vs epsilon: 1e-08 
+  With loss: 1.8524E-03
+Passed in: 3.91 s
+ 82%|████████▏ | 49/60 [21:01<04:07, 22.51s/trial, best loss: 0.000209420841617273] 83%|████████▎ | 50/60 [21:01<02:49, 16.93s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05595993995666504
+Dataprep done in: 0.0581364631652832
+Training done in: 3.3435187339782715
+  Model done learning in 65 epochs
+  With cost condition: 7.717822425576935e-09, vs epsilon: 1e-08 
+  With loss: 4.2053E-03
+Passed in: 3.40 s
+ 83%|████████▎ | 50/60 [21:04<02:49, 16.93s/trial, best loss: 0.000209420841617273] 85%|████████▌ | 51/60 [21:04<01:55, 12.88s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05553317070007324
+Dataprep done in: 0.05765509605407715
+Training done in: 35.37658739089966
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 5.172200274660216e-06, vs epsilon: 1e-08 
+Training done in: 35.322089195251465
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 4.813652867949349e-06, vs epsilon: 1e-08 
+Training done in: 35.40061163902283
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 1.1932091231655115e-06, vs epsilon: 1e-08 
+Training done in: 6.8124589920043945
+  Model done learning in 134 epochs
+  With cost condition: 4.174481411606898e-09, vs epsilon: 1e-08 
+  With loss: 2.2511E-03
+Passed in: 00:01:52
+ 85%|████████▌ | 51/60 [22:57<01:55, 12.88s/trial, best loss: 0.000209420841617273] 87%|████████▋ | 52/60 [22:57<05:43, 42.91s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05575156211853027
+Dataprep done in: 0.057942867279052734
+Training done in: 3.2908270359039307
+  Model done learning in 64 epochs
+  With cost condition: 5.635335810158057e-12, vs epsilon: 1e-08 
+  With loss: 4.2911E-04
+Passed in: 3.35 s
+ 87%|████████▋ | 52/60 [23:00<05:43, 42.91s/trial, best loss: 0.000209420841617273] 88%|████████▊ | 53/60 [23:00<03:37, 31.05s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05556368827819824
+Dataprep done in: 0.05766439437866211
+Training done in: 13.573669910430908
+  Model done learning in 267 epochs
+  With cost condition: 2.561963674408172e-09, vs epsilon: 1e-08 
+  With loss: 2.1441E-03
+Passed in: 13.63 s
+ 88%|████████▊ | 53/60 [23:14<03:37, 31.05s/trial, best loss: 0.000209420841617273] 90%|█████████ | 54/60 [23:14<02:34, 25.83s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05573534965515137
+Dataprep done in: 0.0579075813293457
+Training done in: 35.35420346260071
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 2.401654601271239e-06, vs epsilon: 1e-08 
+Training done in: 4.342690944671631
+  Model done learning in 85 epochs
+  With cost condition: 6.982076051223283e-11, vs epsilon: 1e-08 
+  With loss: 1.4839E-03
+Passed in: 39.76 s
+ 90%|█████████ | 54/60 [23:54<02:34, 25.83s/trial, best loss: 0.000209420841617273] 92%|█████████▏| 55/60 [23:54<02:30, 30.01s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05573415756225586
+Dataprep done in: 0.05788707733154297
+Training done in: 22.07671570777893
+  Model done learning in 439 epochs
+  With cost condition: 1.122862356374019e-10, vs epsilon: 1e-08 
+  With loss: 5.7626E-03
+Passed in: 22.14 s
+ 92%|█████████▏| 55/60 [24:16<02:30, 30.01s/trial, best loss: 0.000209420841617273] 93%|█████████▎| 56/60 [24:16<01:50, 27.65s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.056012630462646484
+Dataprep done in: 0.0581355094909668
+Training done in: 4.074516534805298
+  Model done learning in 78 epochs
+  With cost condition: 4.696125711722725e-13, vs epsilon: 1e-08 
+  With loss: 1.5314E-03
+Passed in: 4.13 s
+ 93%|█████████▎| 56/60 [24:20<01:50, 27.65s/trial, best loss: 0.000209420841617273] 95%|█████████▌| 57/60 [24:20<01:01, 20.60s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05530190467834473
+Dataprep done in: 0.05742239952087402
+Training done in: 12.047423362731934
+  Model done learning in 239 epochs
+  With cost condition: 3.256718912721248e-09, vs epsilon: 1e-08 
+  With loss: 1.9651E-03
+Passed in: 12.11 s
+ 95%|█████████▌| 57/60 [24:32<01:01, 20.60s/trial, best loss: 0.000209420841617273] 97%|█████████▋| 58/60 [24:32<00:36, 18.06s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.055791616439819336
+Dataprep done in: 0.05798077583312988
+Training done in: 35.32534432411194
+  Algorithm failed: not done learning in max = 700 epochs
+  With cost condition: 4.1008912776335235e-08, vs epsilon: 1e-08 
+Training done in: 5.934728384017944
+  Model done learning in 117 epochs
+  With cost condition: 8.892751763431043e-09, vs epsilon: 1e-08 
+  With loss: 1.9304E-03
+Passed in: 41.32 s
+ 97%|█████████▋| 58/60 [25:13<00:36, 18.06s/trial, best loss: 0.000209420841617273] 98%|█████████▊| 59/60 [25:13<00:25, 25.04s/trial, best loss: 0.000209420841617273]                                                                                   
+Device: cpu
+
+Hyper Parameters:
+  batch_size	  20
+  dropout   	  0
+  hidden_dim	  6
+  learning_rate	  0.001
+  min_epochs	  50
+  num_layers	  1
+  output_dim	  2
+  pooling   	  mean
+  scaler_id 	  std
+  svm_gamma 	  scale
+  svm_nu    	  0.9
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 31, out of max.: 38
+Branch filler done in: 0.05592775344848633
+Dataprep done in: 0.05809450149536133
+Training done in: 2.586742877960205
+  Model done learning in 50 epochs
+  With cost condition: 4.2941748079049546e-09, vs epsilon: 1e-08 
+  With loss: 2.8464E-03
+Passed in: 2.65 s
+ 98%|█████████▊| 59/60 [25:16<00:25, 25.04s/trial, best loss: 0.000209420841617273]100%|██████████| 60/60 [25:16<00:00, 18.33s/trial, best loss: 0.000209420841617273]100%|██████████| 60/60 [25:16<00:00, 25.28s/trial, best loss: 0.000209420841617273]
+
+Best Hyper Parameters:
+
+Model 0 from trial 0:
+  batch_size  	  20
+  dropout     	  0
+  hidden_dim  	  6
+  learning_rate	  0.001
+  min_epochs  	  50
+  num_layers  	  1
+  output_dim  	  2
+  pooling     	  mean
+  scaler_id   	  std
+  svm_gamma   	  scale
+  svm_nu      	  0.9
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss: 		0.000209420841617273
+with final cost:	0.000209420841617273
+
+Hypertuning completed on dataset:
+	samples/JetToyHIResultSoftDropSkinny.root

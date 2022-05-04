@@ -1,0 +1,16 @@
+Number of jets in dataset:		2121894
+Number of gluon jets in dataset:	330915
+Number of quark jets in dataset:	287288
+Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
+	gluon jets left after cuts:	150107
+	quark jets left after cuts:	147878 
+Traceback (most recent call last):
+  File "analysis/hyper_training.py", line 130, in <module>
+    g_jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_loader.py", line 267, in load_n_filter_data
+    # g_kts_flat = ak.flatten(ak.flatten(g_jets_kt)).to_list()
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_loader.py", line 61, in flatten_array
+    ak.concatenate(branches[field][steps[i] : steps[i + 1]], axis=0)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/awkward/operations/structure.py", line 1611, in concatenate
+    out = batch[0].mergemany(batch[1:])
+MemoryError: std::bad_alloc
