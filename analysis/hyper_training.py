@@ -25,14 +25,14 @@ import branch_names as na
 file_name = "samples/time_cluster_10k.root"
 
 # set run settings
-max_evals = 300
+max_evals = 200
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
 debug_flag = False  # for using debug space = only 1 configuration of hp
 multicore_flag = True  # for using SparkTrials or Trials, turns of when debugging
 save_results_flag = True  # for saving trials and runtime
 plot_flag = (
-    True  # for making cost condition plots, only works if save_results_flag is True
+    False  # for making cost condition plots, only works if save_results_flag is True
 )
 
 run_notes = ""  # Small comment on run, will be saved to save file.
@@ -45,15 +45,15 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.quniform("num_batch", 700, 1000, 100),
-            "hidden_dim": hp.choice("hidden_dim", [9, 12, 400, 1000]),
+            "batch_size": hp.quniform("num_batch", 100, 1000, 100),
+            "hidden_dim": hp.choice("hidden_dim", [9, 12, 50, 125, 250, 500]),
             "num_layers": hp.choice(
-                "num_layers", [1]
+                "num_layers", [1, 2]
             ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
             "min_epochs": hp.choice(
                 "min_epochs", [int(30), int(60), int(100)]
             ),  # lijkt niet heel veel te doen
-            "learning_rate": 10 ** hp.quniform("learning_rate", -4, -3, 1),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 1),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice(
                 "dropout", [0.1, 0]
