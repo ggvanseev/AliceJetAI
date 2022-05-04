@@ -10,7 +10,7 @@ completed on a number of trials equal to 'max_evals'.
 """
 from functions.training import run_full_training, HYPER_TRAINING
 from functions.data_manipulation import train_dev_test_split
-from functions.data_loader import load_n_filter_data
+from functions.data_loader import load_n_filter_data, load_n_filter_data_single
 
 from hyperopt import (
     hp,
@@ -22,9 +22,10 @@ import branch_names as na
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # jewel samples
+jewel = False
 #file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 #file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 
@@ -94,7 +95,7 @@ space_debug = hp.choice(
             "batch_size": hp.choice("num_batch", [20]),
             "hidden_dim": hp.choice("hidden_dim", [6]),
             "num_layers": hp.choice("num_layers", [1]),
-            "min_epochs": hp.choice("min_epochs", [int(25)]),
+            "min_epochs": hp.choice("min_epochs", [int(50)]),
             "learning_rate": hp.choice("learning_rate", [1e-3]),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]),
             "dropout": hp.choice("dropout", [0]),
@@ -122,12 +123,22 @@ if debug_flag:
     space = space_debug
     multicore_flag = False
 
-# Load and filter data for criteria eta and jetpt_cap
-jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
-print("Loading data complete")
+if jewel == True:
+    sample = load_n_filter_data_single(file_name, kt_cut=kt_cut)
+else:
+    # Load and filter data for criteria eta and jetpt_cap
+    jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
+    print("Loading data complete")
+
+    # Mix sample with e.g. 90% gluons and 10% quarks
+    sample = ak.concatenate((g_recur_jets[:1350],q_recur_jets[:150]))
+    # TODO first shuffle mixed_sample? nah, it's not really possible within awkward, you'd have to get it out first
+
+    # remove from memory
+    del g_recur_jets, q_recur_jets
 
 # split data
-_, split_dev_data, _ = train_dev_test_split(jets_recur, split=[0.8, 0.1])
+_, split_dev_data, _ = train_dev_test_split(sample, split=[0.8, 0.1])
 print("Splitting data complete")
 
 # do full training

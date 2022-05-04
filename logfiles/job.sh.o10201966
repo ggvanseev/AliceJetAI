@@ -1,0 +1,59 @@
+Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/uproot/source/file.py", line 112, in _open
+    self._file = numpy.memmap(self._file_path, dtype=self._dtype, mode="r")
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/numpy/core/memmap.py", line 228, in __new__
+    f_ctx = open(os_fspath(filename), ('r' if mode == 'c' else mode)+'b')
+FileNotFoundError: [Errno 2] No such file or directory: 'samples/time_cluster_10k.root'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/uproot/source/file.py", line 36, in __init__
+    self._file = open(self._file_path, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'samples/time_cluster_10k.root'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "analysis/hyper_training.py", line 122, in <module>
+    jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_loader.py", line 216, in load_n_filter_data
+    branches = uproot.open(file_name)[tree_name].arrays()
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/uproot/reading.py", line 148, in open
+    **options,  # NOTE: a comma after **options breaks Python 2
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/uproot/reading.py", line 581, in __init__
+    file_path, **self._options  # NOTE: a comma after **options breaks Python 2
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/uproot/source/file.py", line 108, in __init__
+    self._open()
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/uproot/source/file.py", line 119, in _open
+    self._file_path, **opts  # NOTE: a comma after **opts breaks Python 2
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/uproot/source/file.py", line 250, in __init__
+    self._open()
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/uproot/source/file.py", line 254, in _open
+    [FileResource(self._file_path) for x in range(self._num_workers)]
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/uproot/source/file.py", line 254, in <listcomp>
+    [FileResource(self._file_path) for x in range(self._num_workers)]
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/uproot/source/file.py", line 38, in __init__
+    raise uproot._util._file_not_found(file_path)
+FileNotFoundError: file not found
+
+    'samples/time_cluster_10k.root'
+
+Files may be specified as:
+   * str/bytes: relative or absolute filesystem path or URL, without any colons
+         other than Windows drive letter or URL schema.
+         Examples: "rel/file.root", "C:\abs\file.root", "http://where/what.root"
+   * str/bytes: same with an object-within-ROOT path, separated by a colon.
+         Example: "rel/file.root:tdirectory/ttree"
+   * pathlib.Path: always interpreted as a filesystem path or URL only (no
+         object-within-ROOT path), regardless of whether there are any colons.
+         Examples: Path("rel:/file.root"), Path("/abs/path:stuff.root")
+
+Functions that accept many files (uproot.iterate, etc.) also allow:
+   * glob syntax in str/bytes and pathlib.Path.
+         Examples: Path("rel/*.root"), "/abs/*.root:tdirectory/ttree"
+   * dict: keys are filesystem paths, values are objects-within-ROOT paths.
+         Example: {"/data_v1/*.root": "ttree_v1", "/data_v2/*.root": "ttree_v2"}
+   * already-open TTree objects.
+   * iterables of the above.
+

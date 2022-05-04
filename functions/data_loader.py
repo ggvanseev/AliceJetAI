@@ -85,7 +85,6 @@ def load_n_filter_data_single(
             na.jet_M,
             na.jet_area,
             na.recur_splits,
-            na.parton_match_id,
         ]
     ]
     jets_recur = branches[jet_recur_branches]

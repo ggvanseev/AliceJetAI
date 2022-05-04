@@ -165,6 +165,7 @@ def training_algorithm(
         k < min_epochs_patience or cost_condition_passed_flag == False
     ) and k < training_params["max_epochs"]:
         k += 1
+        print(k)
         # Copy ai-models to test for next alpha
         svm_model_next = copy(svm_model)
         lstm_model_next = copy(lstm_model)

@@ -25,10 +25,11 @@ from functions.training import REGULAR_TRAINING, run_full_training
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # JEWEL
-#file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
+jewel = True
+file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 #file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 #file_name = "samples/JetToyHIResultSoftDropTiny.root"
 
@@ -68,20 +69,23 @@ space = hp.choice(
     ],
 )
 
-# Load and filter data for criteria eta and jetpt_cap
-g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=kt_cut)
-print("Loading data complete")
+if jewel == True:
+    sample = load_n_filter_data_single(file_name, kt_cut=kt_cut)
+else:
+    # Load and filter data for criteria eta and jetpt_cap
+    g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=kt_cut)
+    print("Loading data complete")
 
-# Mix sample with e.g. 90% gluons and 10% quarks
-mixed_sample = ak.concatenate((g_recur_jets[:1350],q_recur_jets[:150]))
-# TODO first shuffle mixed_sample? nah, it's not really possible within awkward, you'd have to get it out first
+    # Mix sample with e.g. 90% gluons and 10% quarks
+    sample = ak.concatenate((g_recur_jets[:1350],q_recur_jets[:150]))
+    # TODO first shuffle mixed_sample? nah, it's not really possible within awkward, you'd have to get it out first
 
-# remove from memory
-del g_recur_jets, q_recur_jets
+    # remove from memory
+    del g_recur_jets, q_recur_jets
 
 # split data
 split_train_data, _, split_val_data = train_dev_test_split(
-    mixed_sample, split=[0.7, 0.1]
+    sample, split=[0.7, 0.1]
 )
 print("Splitting data complete")
 
