@@ -165,7 +165,7 @@ def training_algorithm(
         k < min_epochs_patience or cost_condition_passed_flag == False
     ) and k < training_params["max_epochs"]:
         k += 1
-        print(k)
+
         # Copy ai-models to test for next alpha
         svm_model_next = copy(svm_model)
         lstm_model_next = copy(lstm_model)
@@ -185,7 +185,7 @@ def training_algorithm(
 
         a_idx = svm_model_next.support_
 
-        # print("cost after ocsvm\t", kappa(alphas, a_idx, h_bar_list))
+        #print("cost after ocsvm\t", kappa(alphas, a_idx, h_bar_list))
 
         # obtain theta_k+1 using the optimization algorithm
         lstm_model_next, theta_next = optimization(
@@ -210,7 +210,7 @@ def training_algorithm(
         )
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
-        # print("cost after optim\t", kappa(alphas, a_idx, h_bar_list))
+        #print("cost after optim\t", kappa(alphas, a_idx, h_bar_list))
 
         # obtain the new cost and cost condition given theta_k+1 and alpha_k+1
         cost = kappa(alphas, a_idx, h_bar_list)
