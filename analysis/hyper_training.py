@@ -22,10 +22,10 @@ import branch_names as na
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_100k.root"
+file_name = "samples/time_cluster_10k.root"
 
 # set run settings
-max_evals = 200
+max_evals = 250
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
 debug_flag = True  # for using debug space = only 1 configuration of hp
@@ -35,7 +35,7 @@ plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = ""  # Small comment on run, will be saved to save file.
+run_notes = "Run 5, more variables from Bas and adjusted epsilon based on run 4"  # Small comment on run, will be saved to save file.
 
 ###-----------------------------------------------------------------------------###
 
@@ -48,7 +48,7 @@ space = hp.choice(
             "batch_size": hp.quniform("num_batch", 100, 1000, 100),
             "hidden_dim": hp.choice("hidden_dim", [9, 12, 50, 125, 250, 500]),
             "num_layers": hp.choice(
-                "num_layers", [1, 2]
+                "num_layers", [1]
             ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
             "min_epochs": hp.choice(
                 "min_epochs", [int(30), int(60), int(100)]
@@ -56,12 +56,10 @@ space = hp.choice(
             "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 1),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice(
-                "dropout", [0.1, 0]
+                "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice(
-                "svm_nu", [0.5, 0.3, 0.2, 0.1, 0.05]
-            ),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.5, 0.3, 0.2, 0.1]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
@@ -72,9 +70,44 @@ space = hp.choice(
                 "variables",
                 [
                     [na.recur_dr, na.recur_jetpt, na.recur_z],
-                    [na.recur_dr, na.recur_jetpt],
+                    # [na.recur_dr, na.recur_jetpt],
                     [na.recur_dr, na.recur_z],
-                    [na.recur_jetpt, na.recur_z],
+                    # [na.recur_jetpt, na.recur_z],
+                    [
+                        na.recur_dr,
+                        na.recur_jetpt,
+                        na.recur_z,
+                        na.tau1,
+                        na.tau2,
+                        na.tau2tau1,
+                        na.z2_theta1,
+                        na.z2_theta15,
+                    ],
+                    [
+                        na.recur_dr,
+                        na.recur_z,
+                        na.tau1,
+                        na.tau2,
+                        na.tau2tau1,
+                        na.z2_theta1,
+                        na.z2_theta15,
+                    ],
+                    [
+                        na.tau1,
+                        na.tau2,
+                        na.tau2tau1,
+                        na.z2_theta1,
+                        na.z2_theta15,
+                    ],
+                    [
+                        na.z2_theta1,
+                        na.z2_theta15,
+                    ],
+                    [
+                        na.tau1,
+                        na.tau2,
+                        na.tau2tau1,
+                    ],
                 ],
             ),
             "pooling": hp.choice("pooling", ["mean", "last"]),  # "last" , "mean"
