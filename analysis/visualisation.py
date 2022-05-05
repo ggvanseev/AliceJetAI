@@ -14,8 +14,8 @@ from plotting.comparison import (
 import awkward as ak
 import numpy as np
 
-job_id = 9792527
-jet_info = "quark"
+job_id = 10206558
+jet_info = "recur_jets"
 num = 0
 
 # load data

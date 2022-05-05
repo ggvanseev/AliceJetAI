@@ -242,28 +242,31 @@ def shuffle_batches(batches, track_jets_in_batch, shuffle=False):
     Returns:
         _type_: _description_
     """
-    batches_shuffled = list() # contains newly shuffled batches
-    track_jets_shuffled = list() # ontains newly shuffled tracks
+    batches_shuffled = list()  # contains newly shuffled batches
+    track_jets_shuffled = list()  # ontains newly shuffled tracks
 
     for (batch, _), tracks in zip(batches, track_jets_in_batch):
-        
+
         # rebuild batches in order to shuffle them
-        batch_rebuilt = [batch[tracks[i-1]+1 if i>0 else None:tracks[i]+1] for i in range(len(tracks))]
-        
+        batch_rebuilt = [
+            batch[tracks[i - 1] + 1 if i > 0 else None : tracks[i] + 1]
+            for i in range(len(tracks))
+        ]
+
         # shuffle batches
         random.shuffle(batch_rebuilt)
-        
-        # create new tracks  
+
+        # create new tracks
         current_pos = -1
         new_tracks = list()
         for length in [len(x) for x in batch_rebuilt]:
             current_pos += length
             new_tracks.append(current_pos)
-        
+
         # add to lists
         track_jets_shuffled.append(new_tracks)
-        batches_shuffled.extend([x for y in batch_rebuilt for x in y]) 
-    
+        batches_shuffled.extend([x for y in batch_rebuilt for x in y])
+
     # convert back to torch tensor
     data = torch.stack(batches_shuffled)
 
@@ -284,10 +287,10 @@ def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
         data = scaler.fit_transform(data)
     else:
         data = scaler.transform(data)
-    
+
     # Make data in tensor format
     data = torch.Tensor(data)
-    
+
     # Data loader needs labels, but isn't needed for unsupervised, thus fill in data for labels to run since it won't be used.
     data = TensorDataset(data, data)
 
@@ -552,9 +555,9 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     Note:
     learning rate must be of the form: 1e-x, where x is a number [0,99]
     """
-    epsilon = 1e-8  # * learning_rate  # 10 ** -3 #-(2 / 3 * int(format(learning_rate, ".1E")[-2:]))
-
     order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
+
+    epsilon = 10 ** -(5 + order_of_magnitude)
 
     more_epochs = 100 * (order_of_magnitude - 3) if order_of_magnitude > 3 else 0
     max_epochs = 700 + more_epochs  # order_of_magnitude * 50
@@ -587,13 +590,13 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
 
     Args:
         trials_results (dict): Dictionary containing the trials results
-        test_param (str, optional): Parameter which was tested. Can be loss or cost 
+        test_param (str, optional): Parameter which was tested. Can be loss or cost
                                     or something else. Defaults to "loss".
 
     Returns:
         Tuple[Pandas.Dataframe, float, Pandas.Dataframe, dict_keys]:
             - Pandas Dataframe of the trials results
-            - Minimum test_param value 
+            - Minimum test_param value
             - Pandas Dataframe of trials corresponding to minimum test_param
             - List of hyperparameter names
     """
@@ -609,7 +612,9 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
     parameters = trials_list[0]["result"]["hyper_parameters"].keys()
 
     # build DataFrame
-    df = pd.concat([pd.json_normalize(trial["result"]) for trial in trials_list]).reset_index()
+    df = pd.concat(
+        [pd.json_normalize(trial["result"]) for trial in trials_list]
+    ).reset_index()
     df = df[df["loss"] != 10]  # filter out bad model results
 
     # get minima

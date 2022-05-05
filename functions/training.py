@@ -322,8 +322,6 @@ class TRAINING:
         # output string for printing in terminal:
         print_out = ""
 
-        # TODO: FOR now only use CPU
-        device = torch.device("cpu")
         # Track device
         print_out += "\nDevice: {}".format(device)
 
