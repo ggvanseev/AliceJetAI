@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import os
 import seaborn as sns
 
+
 def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
     """Function that creates and stores violin plots. The function accepts
     a Pandas dataframe of all the trials of a training. The violin plots
@@ -18,9 +19,9 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
         min_df (pandas.DataFrame): Dataframe storing trial(s) with the minimum loss
         parameters (dict_keys): List of hyperparameter names
         job_ids (str): Ids given to this training/run
-        test_param (str, optional): Parameter which was tested. Can be loss or cost 
+        test_param (str, optional): Parameter which was tested. Can be loss or cost
                                     or something else. Defaults to "loss".
-    """    
+    """
     # store violin plots in designated directory
     out_dir = f"output/violin_plots"
     for job_id in job_ids:
@@ -38,7 +39,7 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
             p_name = df.keys()[[parameter in key for key in df.keys()]][0]
 
             # plot violin plot
-            fig, ax = plt.subplots(figsize=(9, 6))
+            fig, ax = plt.subplots(figsize=(7 * 1.618, 7))
             ax2 = sns.violinplot(x=p_name, y=test_param, cut=0, data=df)
 
             # plot minimum loss per parameter value
@@ -50,7 +51,10 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
                 ax2.plot(int(unique.index(p_val)), min_val, "o", label=label)
 
             # rotate x-ticks
-            _ = plt.xticks(rotation=45, ha="right")
+            if parameter != "variables":
+                _ = plt.xticks(rotation=45, ha="right")
+            else:
+                _ = plt.xticks(rotation=9, ha="right")
 
             # create appropriate title and x-label
             plt.title(
@@ -66,4 +70,4 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
 
             # save plot
             plt.savefig(out_dir + "/violin_plot_" + test_param + "_vs_" + parameter)
-            plt.close(fig) # close figure - clean memory
+            plt.close(fig)  # close figure - clean memory
