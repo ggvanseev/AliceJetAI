@@ -139,7 +139,7 @@ else:
     
     sample = g_jets_recur
 
-# split data
+# split data 
 _, split_dev_data, _ = train_dev_test_split(sample, split=[0.8, 0.1])
 print("Splitting data complete")
 
