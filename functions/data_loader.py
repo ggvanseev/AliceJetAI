@@ -45,7 +45,7 @@ def select_non_empty_branches(branches, non_empty_key):
     return branches
 
 
-def flatten_array(branches, step_size=10):
+def flatten_array(branches, step_size=3000):
     """
     returns a flattend array
     """
@@ -196,6 +196,9 @@ def load_n_filter_data(
         ]
     ]
     jets_recur = branches[jet_recur_branches]
+    
+    # delete branches to save memory
+    del(branches)
 
     # Print some info on dataset. Note: Nr of jets is significantly larger than nr of quark/gluon jets.
     # This is because we only know for sure which jets are quark or gluon jets from the Parton Initiator,
@@ -271,17 +274,21 @@ def load_n_filter_data(
         # q_kts_flat = ak.flatten(ak.flatten(q_jets_kt)).to_list()
         # q_kts_hist = np.histogram(q_kts_flat, bins=range(round(max(q_kts_flat))))
 
+    # delete jets to save memory
+    del(g_jets)
+    del(q_jets)
+    
     # remove empty additions from recursive jets and flatten them, i.e. take jet out of event nesting
     g_jets_recur = select_non_empty_branches(
         g_jets_recur, non_empty_key=jet_recur_branches[0]
     )
 
-    g_jets_recur = flatten_array(g_jets_recur)
+    g_jets_recur = flatten_array_old(g_jets_recur)
 
     q_jets_recur = select_non_empty_branches(
         q_jets_recur, non_empty_key=jet_recur_branches[0]
     )
 
-    q_jets_recur = flatten_array(q_jets_recur)
+    q_jets_recur = flatten_array_old(q_jets_recur)
 
     return g_jets_recur, q_jets_recur

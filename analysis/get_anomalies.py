@@ -9,18 +9,18 @@ from functions.data_loader import load_n_filter_data
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 
-job_id = 9792527
+job_id = "10214090"
 
 
 # Load and filter data for criteria eta and jetpt_cap
-g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=1)
+g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=False)
 
 # q_recur_jets = (np.zeros([500, 10, 3])).tolist()
 
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 trials_test_list = torch.load(
-    f"storing_results/old_24_03_2022/trials_test_{job_id}.p", map_location=device
+    f"storing_results/trials_test_{job_id}.p", map_location=device
 )
 
 trials = trials_test_list["_trials"]
