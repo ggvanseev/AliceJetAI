@@ -21,8 +21,8 @@ import branch_names as na
 ### ------------------------------- User Input ------------------------------- ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # jewel samples
 jewel = False
@@ -33,7 +33,7 @@ jewel = False
 max_evals = 60
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
-debug_flag = True  # for using debug space = only 1 configuration of hp
+debug_flag = False  # for using debug space = only 1 configuration of hp
 multicore_flag = True  # for using SparkTrials or Trials, turns of when debugging
 save_results_flag = True  # for saving trials and runtime
 plot_flag = (

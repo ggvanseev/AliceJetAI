@@ -45,7 +45,7 @@ def select_non_empty_branches(branches, non_empty_key):
     return branches
 
 
-def flatten_array(branches, step_size=6000):
+def flatten_array(branches, step_size=500):
     """
     returns a flattend array
     """
