@@ -25,17 +25,17 @@ import branch_names as na
 file_name = "samples/time_cluster_100k.root"
 
 # set run settings
-max_evals = 250
+max_evals = 200
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
-debug_flag = True  # for using debug space = only 1 configuration of hp
+debug_flag = False  # for using debug space = only 1 configuration of hp
 multicore_flag = True  # for using SparkTrials or Trials, turns of when debugging
-save_results_flag = False  # for saving trials and runtime
+save_results_flag = True  # for saving trials and runtime
 plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Run 5, more variables from Bas and adjusted epsilon based on run 4"  # Small comment on run, will be saved to save file.
+run_notes = "Run 6, added formation time and lightened epsilon requirements."  # Small comment on run, will be saved to save file.
 
 ###-----------------------------------------------------------------------------###
 
@@ -45,13 +45,13 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.quniform("num_batch", 100, 1000, 100),
+            "batch_size": hp.quniform("num_batch", 500, 1000, 100),
             "hidden_dim": hp.choice("hidden_dim", [9, 12, 50, 125, 250, 500]),
             "num_layers": hp.choice(
                 "num_layers", [1]
             ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
             "min_epochs": hp.choice(
-                "min_epochs", [int(30), int(60), int(100)]
+                "min_epochs", [int(80)]
             ),  # lijkt niet heel veel te doen
             "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 1),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
@@ -77,36 +77,16 @@ space = hp.choice(
                         na.recur_dr,
                         na.recur_jetpt,
                         na.recur_z,
-                        na.tau1,
-                        na.tau2,
-                        na.tau2tau1,
-                        na.z2_theta1,
-                        na.z2_theta15,
+                        na.recur_tf,
                     ],
                     [
                         na.recur_dr,
                         na.recur_z,
-                        na.tau1,
-                        na.tau2,
-                        na.tau2tau1,
-                        na.z2_theta1,
-                        na.z2_theta15,
+                        na.recur_tf,
                     ],
                     [
-                        na.tau1,
-                        na.tau2,
-                        na.tau2tau1,
-                        na.z2_theta1,
-                        na.z2_theta15,
-                    ],
-                    [
-                        na.z2_theta1,
-                        na.z2_theta15,
-                    ],
-                    [
-                        na.tau1,
-                        na.tau2,
-                        na.tau2tau1,
+                        na.recur_tf,
+                        na.recur_jetpt,
                     ],
                 ],
             ),

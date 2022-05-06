@@ -25,10 +25,10 @@ from functions.training import REGULAR_TRAINING, run_full_training
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_10k.root"
+file_name = "samples/time_cluster_100k.root"
 
 # set run settings
-max_evals = 20
+max_evals = 50
 patience = 10
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
 multicore_flag = True  # for using SparkTrials or Trials
@@ -37,7 +37,7 @@ plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Run 4, 10k hyper_tunning based on 10206558"  # Small command on run, will be save to save file.
+run_notes = "Run 6, 10k hyper_tunning based on 10206558"  # Small command on run, will be save to save file.
 
 ###-------------###
 
@@ -46,7 +46,7 @@ space = hp.choice(
     "hyper_parameters",
     [
         {
-            "batch_size": hp.choice("num_batch", [900]),
+            "batch_size": hp.choice("num_batch", [700]),
             "hidden_dim": hp.choice("hidden_dim", [9]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(30)]),
@@ -55,7 +55,7 @@ space = hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.3]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.5]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["auto"]
             ),  # "scale" or "auto"[ 0.23 was the defeault before], auto seems weird
