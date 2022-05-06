@@ -1,7 +1,8 @@
-
 import numpy as np
 import awkward as ak
 import matplotlib.pyplot as plt
+import branch_names as na
+
 
 def hist_comparison(
     anomaly: np,
@@ -32,10 +33,14 @@ def hist_comparison(
         histtype="step",
     )
 
+    percentage_anomalous = np.round(
+        len(anomaly) / (len(anomaly) + len(normal)) * 100, 2
+    )
+
     ax[0].hist(
         anomaly,
         bins,
-        label="anomaly",
+        label=f"anomaly ({percentage_anomalous}%)",
         density=True,
         color="red",
         histtype="step",
@@ -49,7 +54,7 @@ def hist_comparison(
         color="black",
         histtype="step",
     )
-    ax[0].set_ylabel("N")
+    ax[0].set_ylabel(na.axis_n_devide_njets_bandwith)
 
     # plot ratio
     dist_normal = np.histogram(normal, bins, density=True)[0]
@@ -80,26 +85,52 @@ def hist_comparison(
     ax[0].spines["left"].set_position(("data", 0.0))
     ax[1].spines["left"].set_position(("data", 0.0))
 
+    return fig
+
 
 def hist_comparison_first_entries(
-    anomaly: ak, normal: ak, feature: str, jet_info=None, n_bins=50
+    anomaly: ak,
+    normal: ak,
+    feature: str,
+    jet_info=None,
+    n_bins=50,
+    save_flag=False,
+    job_id: str = None,
+    num=None,
 ):
-    hist_comparison(
+    fig = hist_comparison(
         anomaly=ak.to_numpy(ak.firsts(anomaly[feature])),
         normal=ak.to_numpy(ak.firsts(normal[feature])),
         feature=feature,
         jet_info=jet_info,
         n_bins=n_bins,
     )
+    if save_flag:
+        origin_stamp = f"job_{job_id}_num_{num}"
+        plt.savefig(
+            f"output/comperative_hist_first_entries_{origin_stamp}__{feature}_{jet_info}.png"
+        )
 
 
 def hist_comparison_flatten_entries(
-    anomaly: ak, normal: ak, feature: str, jet_info=None, n_bins=50
+    anomaly: ak,
+    normal: ak,
+    feature: str,
+    jet_info=None,
+    n_bins=50,
+    save_flag=False,
+    job_id: str = None,
+    num=None,
 ):
-    hist_comparison(
+    fig = hist_comparison(
         anomaly=ak.to_numpy(ak.flatten(anomaly[feature])),
         normal=ak.to_numpy(ak.flatten(normal[feature])),
         feature=feature,
         jet_info=jet_info,
         n_bins=n_bins,
     )
+    if save_flag:
+        origin_stamp = f"job_{job_id}_num_{num}"
+        plt.savefig(
+            f"output/comperative_hist_flatten_entries_{origin_stamp}_{feature}_{jet_info}.png"
+        )

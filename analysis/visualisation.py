@@ -15,31 +15,36 @@ import awkward as ak
 import numpy as np
 
 job_id = 10206558
-jet_info = "recur_jets"
-num = 0
+jet_info = "pythia_5k"
+save_flag = True
+num = 21
+
+show_distribution_percentages_flag = False
+
 
 # load data
 anomalies_info = pickle.load(
-    open(f"storing_results_1/anomaly_classification_{jet_info}_{job_id}.pkl", "rb")
+    open(f"storing_results/anomaly_classification_{jet_info}_{job_id}.pkl", "rb")
 )
 
 
-g_recur_jets, q_recur_jets = load_n_filter_data(
+recur_jets, jets = load_n_filter_data(
     file_name=anomalies_info["file"],
     jet_recur_branches=[na.recur_dr, na.recur_jetpt, na.recur_z],
 )
 
 # get anomalies and normal out
-q_anomaly, q_normal = separate_anomalies_from_regular(
+anomaly, normal = separate_anomalies_from_regular(
     anomaly_track=anomalies_info["classification_annomaly"][num],
     jets_index=anomalies_info["jets_index"][num],
-    data=q_recur_jets,
+    data=recur_jets,
 )
 
-plt.figure(f"Distribution histogram anomalies {jet_info}", figsize=[1.36 * 8, 8])
-plt.hist(anomalies_info["percentage_anomalies"])
-plt.xlabel(f"Percentage (%) jets anomalies {jet_info}")
-plt.ylabel(f"N")
+if show_distribution_percentages_flag:
+    plt.figure(f"Distribution histogram anomalies {jet_info}", figsize=[1.36 * 8, 8])
+    plt.hist(anomalies_info["percentage_anomalies"])
+    plt.xlabel(f"Percentage (%) jets anomalies {jet_info}")
+    plt.ylabel(f"N")
 
 
 def set_axis_at_origin(ax):
@@ -63,7 +68,14 @@ def set_axis_at_origin(ax):
 
 
 hist_comparison_first_entries(
-    anomaly=q_anomaly, normal=q_normal, feature=na.recur_dr, jet_info=None, n_bins=50
+    anomaly=anomaly,
+    normal=normal,
+    feature=na.recur_dr,
+    jet_info=jet_info,
+    n_bins=50,
+    save_flag=save_flag,
+    job_id=job_id,
+    num=num,
 )
 plt.show()
 a = 1
