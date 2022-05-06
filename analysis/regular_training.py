@@ -61,7 +61,7 @@ space = hp.choice(
             "dropout": hp.choice("dropout", [0]),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default
-            "svm_gamma": hp.choice("svm_gamma", ["scale"]),  #"scale" or "auto"[ 0.23 was the defeault before], auto seems weird
+            "svm_gamma": hp.choice("svm_gamma", ["auto"]),  #"scale" or "auto"[ 0.23 was the defeault before], auto seems weird
             "scaler_id": hp.choice("scaler_id", ["minmax"]),  # "minmax" = MinMaxScaler or "std" = StandardScaler
             "variables": hp.choice("variables",[[na.recur_dr, na.recur_jetpt, na.recur_z]]),
             "pooling": hp.choice("pooling", ["mean"]),  # "last" , "mean"

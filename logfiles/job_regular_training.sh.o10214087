@@ -1,0 +1,170 @@
+Number of jets in dataset:		21477
+Number of gluon jets in dataset:	3252
+Number of quark jets in dataset:	2885
+Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
+	gluon jets left after cuts:	1537
+	quark jets left after cuts:	1475 
+Loading data complete
+Splitting data complete
+  0%|          | 0/4 [00:00<?, ?trial/s, best loss=?]                                                     
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  500
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  0.0001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  last
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 14, out of max.: 14
+Nr. of validation batches: 2, out of max.: 2
+Branch filler done in: 0.1659231185913086
+Dataprep done in: 0.18131041526794434
+Training done in: 93.16966032981873
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 3.298085341952037e-07, vs epsilon: 1e-08 
+Training done in: 95.08187937736511
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 4.7650652388527554e-07, vs epsilon: 1e-08 
+Training done in: 96.91982865333557
+  Model done learning in 800 epochs
+  With cost condition: 1.9789816206259957e-09, vs epsilon: 1e-08 
+Training done in: 76.48539686203003
+  Model done learning in 620 epochs
+  With cost condition: 5.096823887244324e-10, vs epsilon: 1e-08 
+Failed in: 00:06:06
+  0%|          | 0/4 [06:06<?, ?trial/s, best loss=?] 25%|██▌       | 1/4 [06:06<18:18, 366.28s/trial, best loss: 0.3464666283278644]                                                                                
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  500
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  0.0001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  last
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 14, out of max.: 14
+Nr. of validation batches: 2, out of max.: 2
+Branch filler done in: 0.2263343334197998
+Dataprep done in: 0.2368769645690918
+Training done in: 83.70968723297119
+  Model done learning in 669 epochs
+  With cost condition: 8.647617249010499e-11, vs epsilon: 1e-08 
+Training done in: 101.25062394142151
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.4772983464405082e-05, vs epsilon: 1e-08 
+Training done in: 102.45785093307495
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 5.710965803762578e-07, vs epsilon: 1e-08 
+Training done in: 103.45210480690002
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.1210342685404173e-06, vs epsilon: 1e-08 
+Failed in: 00:06:31
+ 25%|██▌       | 1/4 [12:37<18:18, 366.28s/trial, best loss: 0.3464666283278644] 50%|█████     | 2/4 [12:37<12:41, 380.93s/trial, best loss: 0.3464666283278644]                                                                                
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  500
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  0.0001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  last
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 14, out of max.: 14
+Nr. of validation batches: 2, out of max.: 2
+Branch filler done in: 0.16561412811279297
+Dataprep done in: 0.17612147331237793
+Training done in: 103.8282835483551
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 4.961791138687744e-07, vs epsilon: 1e-08 
+Training done in: 104.0807855129242
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 2.654666112813177e-06, vs epsilon: 1e-08 
+Training done in: 104.4686632156372
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 6.126879433548223e-05, vs epsilon: 1e-08 
+Training done in: 104.76360607147217
+  Model done learning in 800 epochs
+  With cost condition: 1.4936000264476273e-11, vs epsilon: 1e-08 
+Failed in: 00:06:57
+ 50%|█████     | 2/4 [19:34<12:41, 380.93s/trial, best loss: 0.3464666283278644] 75%|███████▌  | 3/4 [19:34<06:37, 397.58s/trial, best loss: 0.3464666283278644]                                                                                
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  500
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  0.0001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  last
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 14, out of max.: 14
+Nr. of validation batches: 2, out of max.: 2
+Branch filler done in: 0.16392731666564941
+Dataprep done in: 0.17443585395812988
+Training done in: 105.21216130256653
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 2.3765878561843942e-06, vs epsilon: 1e-08 
+Training done in: 105.53514647483826
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 3.478369955287629e-06, vs epsilon: 1e-08 
+Training done in: 105.79900360107422
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 2.1267431322826207e-06, vs epsilon: 1e-08 
+Training done in: 98.3093569278717
+  Model done learning in 740 epochs
+  With cost condition: 3.3289089078156416e-09, vs epsilon: 1e-08 
+Failed in: 00:06:55
+ 75%|███████▌  | 3/4 [26:29<06:37, 397.58s/trial, best loss: 0.3464666283278644]100%|██████████| 4/4 [26:29<00:00, 404.49s/trial, best loss: 0.05521802374750516]100%|██████████| 4/4 [26:29<00:00, 397.49s/trial, best loss: 0.05521802374750516]
+
+Best Hyper Parameters:
+
+Model 0 from trial 3:
+  batch_size  	  500
+  dropout     	  0
+  hidden_dim  	  20
+  learning_rate	  0.0001
+  min_epochs  	  100
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  scale
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss: 		0.05521802374750516
+with final cost:	0.01469206964958514
+
+Regular training completed on dataset:
+	samples/JetToyHIResultSoftDropSkinny.root
+Stored results in:
+	storing_results/trials_test_10214087.p
+Plotting complete, stored results at:
+	output/cost_condition_10214087/
+	output/violin_plots_10214087/
+
+Completed run in: 1590.72 seconds
+	on job: 10214087

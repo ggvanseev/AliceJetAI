@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/project/alice/users/wesselr/code/AliceJetAI/archive/qp_regular_training.py", line 12, in <module>
+    from hyperopt import (
+ModuleNotFoundError: No module named 'hyperopt'

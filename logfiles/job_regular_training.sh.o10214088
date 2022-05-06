@@ -1,0 +1,157 @@
+Number of jets in dataset:		21477
+Number of gluon jets in dataset:	3252
+Number of quark jets in dataset:	2885
+Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
+	gluon jets left after cuts:	1537
+	quark jets left after cuts:	1475 
+Loading data complete
+Splitting data complete
+  0%|          | 0/4 [00:00<?, ?trial/s, best loss=?]                                                     
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  500
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  0.0001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  last
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 14, out of max.: 14
+Nr. of validation batches: 2, out of max.: 2
+Branch filler done in: 0.15067410469055176
+Dataprep done in: 0.17298460006713867
+Training done in: 112.6645200252533
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 7.560528621208636e-06, vs epsilon: 1e-08 
+Training done in: 113.50150799751282
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.877437097989727e-07, vs epsilon: 1e-08 
+Training done in: 115.28933596611023
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.111584936170996e-06, vs epsilon: 1e-08 
+Training done in: 116.46276569366455
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 9.7271042160936e-08, vs epsilon: 1e-08 
+Failed in: 00:07:42
+  0%|          | 0/4 [07:42<?, ?trial/s, best loss=?] 25%|██▌       | 1/4 [07:42<23:08, 462.73s/trial, best loss: 10]                                                                
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  500
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  0.0001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  last
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 14, out of max.: 14
+Nr. of validation batches: 2, out of max.: 2
+Branch filler done in: 0.15262675285339355
+Dataprep done in: 0.1649610996246338
+Training done in: 118.43575024604797
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 6.150473123011376e-07, vs epsilon: 1e-08 
+Training done in: 119.19764518737793
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.3881495956792368e-05, vs epsilon: 1e-08 
+Training done in: 120.40640139579773
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 2.7191974146038556e-06, vs epsilon: 1e-08 
+Training done in: 121.13099431991577
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.2231540490736052e-05, vs epsilon: 1e-08 
+Failed in: 00:07:59
+ 25%|██▌       | 1/4 [15:42<23:08, 462.73s/trial, best loss: 10] 50%|█████     | 2/4 [15:42<15:45, 472.51s/trial, best loss: 10]                                                                
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  500
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  0.0001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  last
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 14, out of max.: 14
+Nr. of validation batches: 2, out of max.: 2
+Branch filler done in: 0.15420794486999512
+Dataprep done in: 0.1666555404663086
+Training done in: 121.45895409584045
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.9688123047961397e-07, vs epsilon: 1e-08 
+Training done in: 121.18387937545776
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 3.173682126329449e-05, vs epsilon: 1e-08 
+Training done in: 121.96319627761841
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.2857259373738622e-05, vs epsilon: 1e-08 
+Training done in: 122.00804257392883
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 5.8663037681996806e-06, vs epsilon: 1e-08 
+Failed in: 00:08:06
+ 50%|█████     | 2/4 [23:48<15:45, 472.51s/trial, best loss: 10] 75%|███████▌  | 3/4 [23:48<07:59, 479.03s/trial, best loss: 10]                                                                
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  500
+  dropout   	  0
+  hidden_dim	  20
+  learning_rate	  0.0001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  last
+  scaler_id 	  minmax
+  svm_gamma 	  scale
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 14, out of max.: 14
+Nr. of validation batches: 2, out of max.: 2
+Branch filler done in: 0.1557002067565918
+Dataprep done in: 0.16808223724365234
+Training done in: 122.30347943305969
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.31027350075659e-07, vs epsilon: 1e-08 
+Training done in: 122.82195019721985
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.4281654690189813e-07, vs epsilon: 1e-08 
+Training done in: 122.93347716331482
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 1.2083090880970637e-05, vs epsilon: 1e-08 
+Training done in: 122.89520525932312
+  Algorithm failed: not done learning in max = 800 epochs
+  With cost condition: 6.605825285565e-06, vs epsilon: 1e-08 
+Failed in: 00:08:11
+ 75%|███████▌  | 3/4 [32:00<07:59, 479.03s/trial, best loss: 10]100%|██████████| 4/4 [32:00<00:00, 483.81s/trial, best loss: 10]100%|██████████| 4/4 [32:00<00:00, 480.00s/trial, best loss: 10]
+Traceback (most recent call last):
+  File "archive/qp_regular_training.py", line 95, in <module>
+    run_notes=run_notes,
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 696, in run_full_training
+    trials=trials,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/fmin.py", line 555, in fmin
+    trials_save_file=trials_save_file,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 688, in fmin
+    trials_save_file=trials_save_file,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/fmin.py", line 593, in fmin
+    return trials.argmin
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 620, in argmin
+    best_trial = self.best_trial
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 611, in best_trial
+    raise AllTrialsFailed
+hyperopt.exceptions.AllTrialsFailed
