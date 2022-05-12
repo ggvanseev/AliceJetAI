@@ -37,7 +37,7 @@ plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Run 6, 10k hyper_tunning based on 10206558"  # Small command on run, will be save to save file.
+run_notes = "Run 7, 10k hyper_tunning based on 10206558"  # Small command on run, will be save to save file.
 
 ###-------------###
 
