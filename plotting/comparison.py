@@ -20,7 +20,7 @@ def hist_comparison(
         np.hstack((normal, anomaly)), bins=n_bins, density=True
     )
 
-    # set the spacing between subplots
+    # set the spacing between subplots.
     plt.subplots_adjust(left=0.1, bottom=0.1, right=0.9, top=0.99, wspace=0.4, hspace=0)
 
     # plot top picture, showing
