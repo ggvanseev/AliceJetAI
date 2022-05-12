@@ -45,7 +45,7 @@ def select_non_empty_branches(branches, non_empty_key):
     return branches
 
 
-def flatten_array(branches, step_size=3000):
+def flatten_array(branches, step_size=100):
     """
     returns a flattend array
     """
@@ -145,7 +145,7 @@ def load_n_filter_data_single(
         jets_recur, non_empty_key=jet_recur_branches[0]
     )
 
-    jets_recur = flatten_array_old(jets_recur)
+    jets_recur = flatten_array(jets_recur)
 
     return jets_recur
 
@@ -283,12 +283,12 @@ def load_n_filter_data(
         g_jets_recur, non_empty_key=jet_recur_branches[0]
     )
 
-    g_jets_recur = flatten_array_old(g_jets_recur)
+    #g_jets_recur = flatten_array(g_jets_recur)
 
     q_jets_recur = select_non_empty_branches(
         q_jets_recur, non_empty_key=jet_recur_branches[0]
     )
 
-    q_jets_recur = flatten_array_old(q_jets_recur)
+    #q_jets_recur = flatten_array(q_jets_recur)
 
     return g_jets_recur, q_jets_recur

@@ -25,8 +25,8 @@ file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 #file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # jewel samples
-jewel = False
-#file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
+jewel = True
+# file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 #file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 
 # set run settings

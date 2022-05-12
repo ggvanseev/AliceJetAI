@@ -13,3 +13,4 @@
 10214086	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 1635.91 s	notes: qg with new settings, check if it improves
 10214087	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 1590.72 s	notes: qg with new settings, check if it improves
 10214090	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 2208.11 s	notes: qg with new settings, check if it improves
+10219836	on: samples/SDTiny_jewelNR_120_simple-1.root	runtime: 70764.06 s
