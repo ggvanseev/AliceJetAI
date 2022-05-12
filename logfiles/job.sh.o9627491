@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "/project/alice/users/wesselr/code/AliceJetAI/analysis/qp_hyper_training_using_cost_codition_tolga.py", line 45, in <module>
-    from functions.data_manipulation import (
-ModuleNotFoundError: No module named 'functions'

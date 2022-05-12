@@ -1,437 +1,0 @@
-Loaded data
-Split data
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]                                                      
-Hyper Parameters:
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]                                                        batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]                                                      Device: cpu
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]                                                      Max number of batches: 130
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]                                                      Branch filler jit, done in: 0.4395334720611572
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]                                                      Dataprep, done in: 0.5337390899658203
-  0%|          | 0/15 [00:00<?, ?trial/s, best loss=?]                                                      0.06279498919425477
-  0%|          | 0/15 [08:26<?, ?trial/s, best loss=?]                                                      4.641588833612782e-08
-  0%|          | 0/15 [08:26<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/15 [08:26<?, ?trial/s, best loss=?]                                                      0.16985742826095795
-  0%|          | 0/15 [16:47<?, ?trial/s, best loss=?]                                                      4.641588833612782e-08
-  0%|          | 0/15 [16:47<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/15 [16:47<?, ?trial/s, best loss=?]                                                      0.010625113517643099
-  0%|          | 0/15 [25:03<?, ?trial/s, best loss=?]                                                      4.641588833612782e-08
-  0%|          | 0/15 [25:03<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/15 [25:03<?, ?trial/s, best loss=?]                                                      -3.598379853171851e-05
-  0%|          | 0/15 [33:19<?, ?trial/s, best loss=?]                                                      4.641588833612782e-08
-  0%|          | 0/15 [33:19<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/15 [33:19<?, ?trial/s, best loss=?]                                                      Failed in: 1999.5633208751678
-  0%|          | 0/15 [33:19<?, ?trial/s, best loss=?]  7%|▋         | 1/15 [33:19<7:46:33, 1999.57s/trial, best loss: 10]                                                                    
-Hyper Parameters:
-  7%|▋         | 1/15 [33:19<7:46:33, 1999.57s/trial, best loss: 10]                                                                      batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  7%|▋         | 1/15 [33:19<7:46:33, 1999.57s/trial, best loss: 10]                                                                    Device: cpu
-  7%|▋         | 1/15 [33:19<7:46:33, 1999.57s/trial, best loss: 10]                                                                    Max number of batches: 130
-  7%|▋         | 1/15 [33:19<7:46:33, 1999.57s/trial, best loss: 10]                                                                    Branch filler jit, done in: 0.4478907585144043
-  7%|▋         | 1/15 [33:20<7:46:33, 1999.57s/trial, best loss: 10]                                                                    Dataprep, done in: 0.5418353080749512
-  7%|▋         | 1/15 [33:20<7:46:33, 1999.57s/trial, best loss: 10]                                                                    -0.10441410271653791
-  7%|▋         | 1/15 [41:35<7:46:33, 1999.57s/trial, best loss: 10]                                                                    4.641588833612782e-08
-  7%|▋         | 1/15 [41:35<7:46:33, 1999.57s/trial, best loss: 10]                                                                    Algorithm failed: not done learning in max epochs.
-  7%|▋         | 1/15 [41:35<7:46:33, 1999.57s/trial, best loss: 10]                                                                    0.00926046887183892
-  7%|▋         | 1/15 [49:51<7:46:33, 1999.57s/trial, best loss: 10]                                                                    4.641588833612782e-08
-  7%|▋         | 1/15 [49:51<7:46:33, 1999.57s/trial, best loss: 10]                                                                    Algorithm failed: not done learning in max epochs.
-  7%|▋         | 1/15 [49:51<7:46:33, 1999.57s/trial, best loss: 10]                                                                    -0.09158845689056232
-  7%|▋         | 1/15 [58:08<7:46:33, 1999.57s/trial, best loss: 10]                                                                    4.641588833612782e-08
-  7%|▋         | 1/15 [58:08<7:46:33, 1999.57s/trial, best loss: 10]                                                                    Algorithm failed: not done learning in max epochs.
-  7%|▋         | 1/15 [58:08<7:46:33, 1999.57s/trial, best loss: 10]                                                                    0.1175471148063828
-  7%|▋         | 1/15 [1:06:24<7:46:33, 1999.57s/trial, best loss: 10]                                                                      4.641588833612782e-08
-  7%|▋         | 1/15 [1:06:24<7:46:33, 1999.57s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
-  7%|▋         | 1/15 [1:06:24<7:46:33, 1999.57s/trial, best loss: 10]                                                                      Failed in: 1984.5365753173828
-  7%|▋         | 1/15 [1:06:24<7:46:33, 1999.57s/trial, best loss: 10] 13%|█▎        | 2/15 [1:06:24<7:11:19, 1990.73s/trial, best loss: 10]                                                                      
-Hyper Parameters:
- 13%|█▎        | 2/15 [1:06:24<7:11:19, 1990.73s/trial, best loss: 10]                                                                        batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 13%|█▎        | 2/15 [1:06:24<7:11:19, 1990.73s/trial, best loss: 10]                                                                      Device: cpu
- 13%|█▎        | 2/15 [1:06:24<7:11:19, 1990.73s/trial, best loss: 10]                                                                      Max number of batches: 130
- 13%|█▎        | 2/15 [1:06:24<7:11:19, 1990.73s/trial, best loss: 10]                                                                      Branch filler jit, done in: 0.44668006896972656
- 13%|█▎        | 2/15 [1:06:24<7:11:19, 1990.73s/trial, best loss: 10]                                                                      Dataprep, done in: 0.5405266284942627
- 13%|█▎        | 2/15 [1:06:24<7:11:19, 1990.73s/trial, best loss: 10]                                                                      -0.1188078934375679
- 13%|█▎        | 2/15 [1:14:44<7:11:19, 1990.73s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 13%|█▎        | 2/15 [1:14:44<7:11:19, 1990.73s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 13%|█▎        | 2/15 [1:14:44<7:11:19, 1990.73s/trial, best loss: 10]                                                                      -0.00015493188661679823
- 13%|█▎        | 2/15 [1:23:00<7:11:19, 1990.73s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 13%|█▎        | 2/15 [1:23:00<7:11:19, 1990.73s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 13%|█▎        | 2/15 [1:23:00<7:11:19, 1990.73s/trial, best loss: 10]                                                                      -0.008859568047094916
- 13%|█▎        | 2/15 [1:31:15<7:11:19, 1990.73s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 13%|█▎        | 2/15 [1:31:15<7:11:19, 1990.73s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 13%|█▎        | 2/15 [1:31:15<7:11:19, 1990.73s/trial, best loss: 10]                                                                      0.0932274680186967
- 13%|█▎        | 2/15 [1:39:32<7:11:19, 1990.73s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 13%|█▎        | 2/15 [1:39:32<7:11:19, 1990.73s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 13%|█▎        | 2/15 [1:39:32<7:11:19, 1990.73s/trial, best loss: 10]                                                                      Failed in: 1988.2607114315033
- 13%|█▎        | 2/15 [1:39:32<7:11:19, 1990.73s/trial, best loss: 10] 20%|██        | 3/15 [1:39:32<6:37:55, 1989.60s/trial, best loss: 10]                                                                      
-Hyper Parameters:
- 20%|██        | 3/15 [1:39:32<6:37:55, 1989.60s/trial, best loss: 10]                                                                        batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 20%|██        | 3/15 [1:39:32<6:37:55, 1989.60s/trial, best loss: 10]                                                                      Device: cpu
- 20%|██        | 3/15 [1:39:32<6:37:55, 1989.60s/trial, best loss: 10]                                                                      Max number of batches: 130
- 20%|██        | 3/15 [1:39:32<6:37:55, 1989.60s/trial, best loss: 10]                                                                      Branch filler jit, done in: 0.4483916759490967
- 20%|██        | 3/15 [1:39:32<6:37:55, 1989.60s/trial, best loss: 10]                                                                      Dataprep, done in: 0.5426499843597412
- 20%|██        | 3/15 [1:39:32<6:37:55, 1989.60s/trial, best loss: 10]                                                                      0.03605650155766959
- 20%|██        | 3/15 [1:47:48<6:37:55, 1989.60s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 20%|██        | 3/15 [1:47:48<6:37:55, 1989.60s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 20%|██        | 3/15 [1:47:48<6:37:55, 1989.60s/trial, best loss: 10]                                                                      -0.002188770516591128
- 20%|██        | 3/15 [1:56:10<6:37:55, 1989.60s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 20%|██        | 3/15 [1:56:10<6:37:55, 1989.60s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 20%|██        | 3/15 [1:56:10<6:37:55, 1989.60s/trial, best loss: 10]                                                                      -0.018343672693069826
- 20%|██        | 3/15 [2:04:27<6:37:55, 1989.60s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 20%|██        | 3/15 [2:04:27<6:37:55, 1989.60s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 20%|██        | 3/15 [2:04:27<6:37:55, 1989.60s/trial, best loss: 10]                                                                      0.09660446522590323
- 20%|██        | 3/15 [2:12:44<6:37:55, 1989.60s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 20%|██        | 3/15 [2:12:44<6:37:55, 1989.60s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 20%|██        | 3/15 [2:12:44<6:37:55, 1989.60s/trial, best loss: 10]                                                                      Failed in: 1992.118477344513
- 20%|██        | 3/15 [2:12:44<6:37:55, 1989.60s/trial, best loss: 10] 27%|██▋       | 4/15 [2:12:44<6:04:56, 1990.60s/trial, best loss: 10]                                                                      
-Hyper Parameters:
- 27%|██▋       | 4/15 [2:12:44<6:04:56, 1990.60s/trial, best loss: 10]                                                                        batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 27%|██▋       | 4/15 [2:12:44<6:04:56, 1990.60s/trial, best loss: 10]                                                                      Device: cpu
- 27%|██▋       | 4/15 [2:12:44<6:04:56, 1990.60s/trial, best loss: 10]                                                                      Max number of batches: 130
- 27%|██▋       | 4/15 [2:12:44<6:04:56, 1990.60s/trial, best loss: 10]                                                                      Branch filler jit, done in: 0.4510538578033447
- 27%|██▋       | 4/15 [2:12:44<6:04:56, 1990.60s/trial, best loss: 10]                                                                      Dataprep, done in: 0.5456726551055908
- 27%|██▋       | 4/15 [2:12:45<6:04:56, 1990.60s/trial, best loss: 10]                                                                      0.014049502912351354
- 27%|██▋       | 4/15 [2:21:01<6:04:56, 1990.60s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 27%|██▋       | 4/15 [2:21:01<6:04:56, 1990.60s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 27%|██▋       | 4/15 [2:21:01<6:04:56, 1990.60s/trial, best loss: 10]                                                                      0.31397771594856405
- 27%|██▋       | 4/15 [2:29:20<6:04:56, 1990.60s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 27%|██▋       | 4/15 [2:29:20<6:04:56, 1990.60s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 27%|██▋       | 4/15 [2:29:20<6:04:56, 1990.60s/trial, best loss: 10]                                                                      0.13140348499988178
- 27%|██▋       | 4/15 [2:37:41<6:04:56, 1990.60s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 27%|██▋       | 4/15 [2:37:41<6:04:56, 1990.60s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 27%|██▋       | 4/15 [2:37:41<6:04:56, 1990.60s/trial, best loss: 10]                                                                      7.65150236023132e-05
- 27%|██▋       | 4/15 [2:45:57<6:04:56, 1990.60s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 27%|██▋       | 4/15 [2:45:57<6:04:56, 1990.60s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 27%|██▋       | 4/15 [2:45:57<6:04:56, 1990.60s/trial, best loss: 10]                                                                      Failed in: 1993.2066638469696
- 27%|██▋       | 4/15 [2:45:57<6:04:56, 1990.60s/trial, best loss: 10] 33%|███▎      | 5/15 [2:45:57<5:31:55, 1991.54s/trial, best loss: 10]                                                                      
-Hyper Parameters:
- 33%|███▎      | 5/15 [2:45:57<5:31:55, 1991.54s/trial, best loss: 10]                                                                        batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 33%|███▎      | 5/15 [2:45:57<5:31:55, 1991.54s/trial, best loss: 10]                                                                      Device: cpu
- 33%|███▎      | 5/15 [2:45:57<5:31:55, 1991.54s/trial, best loss: 10]                                                                      Max number of batches: 130
- 33%|███▎      | 5/15 [2:45:57<5:31:55, 1991.54s/trial, best loss: 10]                                                                      Branch filler jit, done in: 0.4494771957397461
- 33%|███▎      | 5/15 [2:45:58<5:31:55, 1991.54s/trial, best loss: 10]                                                                      Dataprep, done in: 0.5443429946899414
- 33%|███▎      | 5/15 [2:45:58<5:31:55, 1991.54s/trial, best loss: 10]                                                                      0.0016174968624993375
- 33%|███▎      | 5/15 [2:54:13<5:31:55, 1991.54s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 33%|███▎      | 5/15 [2:54:13<5:31:55, 1991.54s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 33%|███▎      | 5/15 [2:54:13<5:31:55, 1991.54s/trial, best loss: 10]                                                                      0.04589891485504349
- 33%|███▎      | 5/15 [3:02:29<5:31:55, 1991.54s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 33%|███▎      | 5/15 [3:02:29<5:31:55, 1991.54s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 33%|███▎      | 5/15 [3:02:29<5:31:55, 1991.54s/trial, best loss: 10]                                                                      0.11852918868731577
- 33%|███▎      | 5/15 [3:10:52<5:31:55, 1991.54s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 33%|███▎      | 5/15 [3:10:52<5:31:55, 1991.54s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 33%|███▎      | 5/15 [3:10:52<5:31:55, 1991.54s/trial, best loss: 10]                                                                      -0.07978312034419438
- 33%|███▎      | 5/15 [3:19:13<5:31:55, 1991.54s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 33%|███▎      | 5/15 [3:19:13<5:31:55, 1991.54s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 33%|███▎      | 5/15 [3:19:13<5:31:55, 1991.54s/trial, best loss: 10]                                                                      Failed in: 1995.315230846405
- 33%|███▎      | 5/15 [3:19:13<5:31:55, 1991.54s/trial, best loss: 10] 40%|████      | 6/15 [3:19:13<4:58:55, 1992.83s/trial, best loss: 10]                                                                      
-Hyper Parameters:
- 40%|████      | 6/15 [3:19:13<4:58:55, 1992.83s/trial, best loss: 10]                                                                        batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 40%|████      | 6/15 [3:19:13<4:58:55, 1992.83s/trial, best loss: 10]                                                                      Device: cpu
- 40%|████      | 6/15 [3:19:13<4:58:55, 1992.83s/trial, best loss: 10]                                                                      Max number of batches: 130
- 40%|████      | 6/15 [3:19:13<4:58:55, 1992.83s/trial, best loss: 10]                                                                      Branch filler jit, done in: 0.4488811492919922
- 40%|████      | 6/15 [3:19:13<4:58:55, 1992.83s/trial, best loss: 10]                                                                      Dataprep, done in: 0.5436792373657227
- 40%|████      | 6/15 [3:19:13<4:58:55, 1992.83s/trial, best loss: 10]                                                                      -3.5533096078286935e-05
- 40%|████      | 6/15 [3:27:31<4:58:55, 1992.83s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 40%|████      | 6/15 [3:27:31<4:58:55, 1992.83s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 40%|████      | 6/15 [3:27:31<4:58:55, 1992.83s/trial, best loss: 10]                                                                      -0.07413002396928092
- 40%|████      | 6/15 [3:35:47<4:58:55, 1992.83s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 40%|████      | 6/15 [3:35:47<4:58:55, 1992.83s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 40%|████      | 6/15 [3:35:47<4:58:55, 1992.83s/trial, best loss: 10]                                                                      -0.03821760608619709
- 40%|████      | 6/15 [3:44:03<4:58:55, 1992.83s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 40%|████      | 6/15 [3:44:03<4:58:55, 1992.83s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 40%|████      | 6/15 [3:44:03<4:58:55, 1992.83s/trial, best loss: 10]                                                                      -0.06341119142594162
- 40%|████      | 6/15 [3:52:19<4:58:55, 1992.83s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 40%|████      | 6/15 [3:52:19<4:58:55, 1992.83s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 40%|████      | 6/15 [3:52:19<4:58:55, 1992.83s/trial, best loss: 10]                                                                      Failed in: 1986.3939340114594
- 40%|████      | 6/15 [3:52:19<4:58:55, 1992.83s/trial, best loss: 10] 47%|████▋     | 7/15 [3:52:19<4:25:25, 1990.72s/trial, best loss: 10]                                                                      
-Hyper Parameters:
- 47%|████▋     | 7/15 [3:52:19<4:25:25, 1990.72s/trial, best loss: 10]                                                                        batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 47%|████▋     | 7/15 [3:52:19<4:25:25, 1990.72s/trial, best loss: 10]                                                                      Device: cpu
- 47%|████▋     | 7/15 [3:52:19<4:25:25, 1990.72s/trial, best loss: 10]                                                                      Max number of batches: 130
- 47%|████▋     | 7/15 [3:52:19<4:25:25, 1990.72s/trial, best loss: 10]                                                                      Branch filler jit, done in: 0.4481544494628906
- 47%|████▋     | 7/15 [3:52:19<4:25:25, 1990.72s/trial, best loss: 10]                                                                      Dataprep, done in: 0.5430028438568115
- 47%|████▋     | 7/15 [3:52:19<4:25:25, 1990.72s/trial, best loss: 10]                                                                      -0.0017953976433460405
- 47%|████▋     | 7/15 [4:00:43<4:25:25, 1990.72s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 47%|████▋     | 7/15 [4:00:43<4:25:25, 1990.72s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 47%|████▋     | 7/15 [4:00:43<4:25:25, 1990.72s/trial, best loss: 10]                                                                      0.03943401171023083
- 47%|████▋     | 7/15 [4:08:59<4:25:25, 1990.72s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 47%|████▋     | 7/15 [4:08:59<4:25:25, 1990.72s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 47%|████▋     | 7/15 [4:08:59<4:25:25, 1990.72s/trial, best loss: 10]                                                                      0.1023103157097545
- 47%|████▋     | 7/15 [4:17:15<4:25:25, 1990.72s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 47%|████▋     | 7/15 [4:17:15<4:25:25, 1990.72s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 47%|████▋     | 7/15 [4:17:15<4:25:25, 1990.72s/trial, best loss: 10]                                                                      0.038455288967350655
- 47%|████▋     | 7/15 [4:25:32<4:25:25, 1990.72s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 47%|████▋     | 7/15 [4:25:32<4:25:25, 1990.72s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 47%|████▋     | 7/15 [4:25:32<4:25:25, 1990.72s/trial, best loss: 10]                                                                      Failed in: 1992.7147879600525
- 47%|████▋     | 7/15 [4:25:32<4:25:25, 1990.72s/trial, best loss: 10] 53%|█████▎    | 8/15 [4:25:32<3:52:19, 1991.36s/trial, best loss: 10]                                                                      
-Hyper Parameters:
- 53%|█████▎    | 8/15 [4:25:32<3:52:19, 1991.36s/trial, best loss: 10]                                                                        batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 53%|█████▎    | 8/15 [4:25:32<3:52:19, 1991.36s/trial, best loss: 10]                                                                      Device: cpu
- 53%|█████▎    | 8/15 [4:25:32<3:52:19, 1991.36s/trial, best loss: 10]                                                                      Max number of batches: 130
- 53%|█████▎    | 8/15 [4:25:32<3:52:19, 1991.36s/trial, best loss: 10]                                                                      Branch filler jit, done in: 0.4482533931732178
- 53%|█████▎    | 8/15 [4:25:32<3:52:19, 1991.36s/trial, best loss: 10]                                                                      Dataprep, done in: 0.5437641143798828
- 53%|█████▎    | 8/15 [4:25:32<3:52:19, 1991.36s/trial, best loss: 10]                                                                      0.18259372869082569
- 53%|█████▎    | 8/15 [4:33:55<3:52:19, 1991.36s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 53%|█████▎    | 8/15 [4:33:55<3:52:19, 1991.36s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 53%|█████▎    | 8/15 [4:33:55<3:52:19, 1991.36s/trial, best loss: 10]                                                                      -0.0026834370869978836
- 53%|█████▎    | 8/15 [4:42:10<3:52:19, 1991.36s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 53%|█████▎    | 8/15 [4:42:10<3:52:19, 1991.36s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 53%|█████▎    | 8/15 [4:42:10<3:52:19, 1991.36s/trial, best loss: 10]                                                                      -0.07970735498104396
- 53%|█████▎    | 8/15 [4:50:26<3:52:19, 1991.36s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 53%|█████▎    | 8/15 [4:50:26<3:52:19, 1991.36s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 53%|█████▎    | 8/15 [4:50:26<3:52:19, 1991.36s/trial, best loss: 10]                                                                      -1.0770954354736058
- 53%|█████▎    | 8/15 [4:58:42<3:52:19, 1991.36s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 53%|█████▎    | 8/15 [4:58:42<3:52:19, 1991.36s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 53%|█████▎    | 8/15 [4:58:42<3:52:19, 1991.36s/trial, best loss: 10]                                                                      Failed in: 1990.008902311325
- 53%|█████▎    | 8/15 [4:58:42<3:52:19, 1991.36s/trial, best loss: 10] 60%|██████    | 9/15 [4:58:42<3:19:05, 1990.94s/trial, best loss: 10]                                                                      
-Hyper Parameters:
- 60%|██████    | 9/15 [4:58:42<3:19:05, 1990.94s/trial, best loss: 10]                                                                        batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 60%|██████    | 9/15 [4:58:42<3:19:05, 1990.94s/trial, best loss: 10]                                                                      Device: cpu
- 60%|██████    | 9/15 [4:58:42<3:19:05, 1990.94s/trial, best loss: 10]                                                                      Max number of batches: 130
- 60%|██████    | 9/15 [4:58:42<3:19:05, 1990.94s/trial, best loss: 10]                                                                      Branch filler jit, done in: 0.44947004318237305
- 60%|██████    | 9/15 [4:58:42<3:19:05, 1990.94s/trial, best loss: 10]                                                                      Dataprep, done in: 0.5445399284362793
- 60%|██████    | 9/15 [4:58:42<3:19:05, 1990.94s/trial, best loss: 10]                                                                      0.012561728241345747
- 60%|██████    | 9/15 [5:06:59<3:19:05, 1990.94s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 60%|██████    | 9/15 [5:06:59<3:19:05, 1990.94s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 60%|██████    | 9/15 [5:06:59<3:19:05, 1990.94s/trial, best loss: 10]                                                                      0.0030201927110433302
- 60%|██████    | 9/15 [5:15:16<3:19:05, 1990.94s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 60%|██████    | 9/15 [5:15:16<3:19:05, 1990.94s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 60%|██████    | 9/15 [5:15:16<3:19:05, 1990.94s/trial, best loss: 10]                                                                      -0.02246693060138983
- 60%|██████    | 9/15 [5:23:47<3:19:05, 1990.94s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 60%|██████    | 9/15 [5:23:47<3:19:05, 1990.94s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 60%|██████    | 9/15 [5:23:47<3:19:05, 1990.94s/trial, best loss: 10]                                                                      0.09780203357990028
- 60%|██████    | 9/15 [5:32:08<3:19:05, 1990.94s/trial, best loss: 10]                                                                      4.641588833612782e-08
- 60%|██████    | 9/15 [5:32:08<3:19:05, 1990.94s/trial, best loss: 10]                                                                      Algorithm failed: not done learning in max epochs.
- 60%|██████    | 9/15 [5:32:08<3:19:05, 1990.94s/trial, best loss: 10]                                                                      Failed in: 2006.4829776287079
- 60%|██████    | 9/15 [5:32:08<3:19:05, 1990.94s/trial, best loss: 10] 67%|██████▋   | 10/15 [5:32:08<2:46:18, 1995.74s/trial, best loss: 10]                                                                       
-Hyper Parameters:
- 67%|██████▋   | 10/15 [5:32:08<2:46:18, 1995.74s/trial, best loss: 10]                                                                         batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 67%|██████▋   | 10/15 [5:32:08<2:46:18, 1995.74s/trial, best loss: 10]                                                                       Device: cpu
- 67%|██████▋   | 10/15 [5:32:08<2:46:18, 1995.74s/trial, best loss: 10]                                                                       Max number of batches: 130
- 67%|██████▋   | 10/15 [5:32:08<2:46:18, 1995.74s/trial, best loss: 10]                                                                       Branch filler jit, done in: 0.45081281661987305
- 67%|██████▋   | 10/15 [5:32:09<2:46:18, 1995.74s/trial, best loss: 10]                                                                       Dataprep, done in: 0.5462300777435303
- 67%|██████▋   | 10/15 [5:32:09<2:46:18, 1995.74s/trial, best loss: 10]                                                                       -0.0004559653477186822
- 67%|██████▋   | 10/15 [5:40:25<2:46:18, 1995.74s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 67%|██████▋   | 10/15 [5:40:25<2:46:18, 1995.74s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 67%|██████▋   | 10/15 [5:40:25<2:46:18, 1995.74s/trial, best loss: 10]                                                                       0.024486929285289113
- 67%|██████▋   | 10/15 [5:48:41<2:46:18, 1995.74s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 67%|██████▋   | 10/15 [5:48:41<2:46:18, 1995.74s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 67%|██████▋   | 10/15 [5:48:41<2:46:18, 1995.74s/trial, best loss: 10]                                                                       0.10476730295625562
- 67%|██████▋   | 10/15 [5:56:59<2:46:18, 1995.74s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 67%|██████▋   | 10/15 [5:56:59<2:46:18, 1995.74s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 67%|██████▋   | 10/15 [5:56:59<2:46:18, 1995.74s/trial, best loss: 10]                                                                       -0.02742352569690019
- 67%|██████▋   | 10/15 [6:05:17<2:46:18, 1995.74s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 67%|██████▋   | 10/15 [6:05:17<2:46:18, 1995.74s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 67%|██████▋   | 10/15 [6:05:17<2:46:18, 1995.74s/trial, best loss: 10]                                                                       Failed in: 1988.8556888103485
- 67%|██████▋   | 10/15 [6:05:17<2:46:18, 1995.74s/trial, best loss: 10] 73%|███████▎  | 11/15 [6:05:17<2:12:54, 1993.63s/trial, best loss: 10]                                                                       
-Hyper Parameters:
- 73%|███████▎  | 11/15 [6:05:17<2:12:54, 1993.63s/trial, best loss: 10]                                                                         batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 73%|███████▎  | 11/15 [6:05:17<2:12:54, 1993.63s/trial, best loss: 10]                                                                       Device: cpu
- 73%|███████▎  | 11/15 [6:05:17<2:12:54, 1993.63s/trial, best loss: 10]                                                                       Max number of batches: 130
- 73%|███████▎  | 11/15 [6:05:17<2:12:54, 1993.63s/trial, best loss: 10]                                                                       Branch filler jit, done in: 0.4514646530151367
- 73%|███████▎  | 11/15 [6:05:17<2:12:54, 1993.63s/trial, best loss: 10]                                                                       Dataprep, done in: 0.5465469360351562
- 73%|███████▎  | 11/15 [6:05:18<2:12:54, 1993.63s/trial, best loss: 10]                                                                       0.1507861869792606
- 73%|███████▎  | 11/15 [6:13:37<2:12:54, 1993.63s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 73%|███████▎  | 11/15 [6:13:37<2:12:54, 1993.63s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 73%|███████▎  | 11/15 [6:13:37<2:12:54, 1993.63s/trial, best loss: 10]                                                                       0.4387824600441796
- 73%|███████▎  | 11/15 [6:22:03<2:12:54, 1993.63s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 73%|███████▎  | 11/15 [6:22:03<2:12:54, 1993.63s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 73%|███████▎  | 11/15 [6:22:03<2:12:54, 1993.63s/trial, best loss: 10]                                                                       -0.08883368894008961
- 73%|███████▎  | 11/15 [6:30:19<2:12:54, 1993.63s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 73%|███████▎  | 11/15 [6:30:19<2:12:54, 1993.63s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 73%|███████▎  | 11/15 [6:30:19<2:12:54, 1993.63s/trial, best loss: 10]                                                                       0.0134005418549732
- 73%|███████▎  | 11/15 [6:38:36<2:12:54, 1993.63s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 73%|███████▎  | 11/15 [6:38:36<2:12:54, 1993.63s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 73%|███████▎  | 11/15 [6:38:36<2:12:54, 1993.63s/trial, best loss: 10]                                                                       Failed in: 1998.5926644802094
- 73%|███████▎  | 11/15 [6:38:36<2:12:54, 1993.63s/trial, best loss: 10] 80%|████████  | 12/15 [6:38:36<1:39:45, 1995.14s/trial, best loss: 10]                                                                       
-Hyper Parameters:
- 80%|████████  | 12/15 [6:38:36<1:39:45, 1995.14s/trial, best loss: 10]                                                                         batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 80%|████████  | 12/15 [6:38:36<1:39:45, 1995.14s/trial, best loss: 10]                                                                       Device: cpu
- 80%|████████  | 12/15 [6:38:36<1:39:45, 1995.14s/trial, best loss: 10]                                                                       Max number of batches: 130
- 80%|████████  | 12/15 [6:38:36<1:39:45, 1995.14s/trial, best loss: 10]                                                                       Branch filler jit, done in: 0.4511733055114746
- 80%|████████  | 12/15 [6:38:36<1:39:45, 1995.14s/trial, best loss: 10]                                                                       Dataprep, done in: 0.5465381145477295
- 80%|████████  | 12/15 [6:38:36<1:39:45, 1995.14s/trial, best loss: 10]                                                                       0.05891646096317529
- 80%|████████  | 12/15 [6:46:52<1:39:45, 1995.14s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 80%|████████  | 12/15 [6:46:52<1:39:45, 1995.14s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 80%|████████  | 12/15 [6:46:52<1:39:45, 1995.14s/trial, best loss: 10]                                                                       0.2390549274194058
- 80%|████████  | 12/15 [6:55:14<1:39:45, 1995.14s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 80%|████████  | 12/15 [6:55:14<1:39:45, 1995.14s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 80%|████████  | 12/15 [6:55:14<1:39:45, 1995.14s/trial, best loss: 10]                                                                       -0.15737216888611386
- 80%|████████  | 12/15 [7:03:33<1:39:45, 1995.14s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 80%|████████  | 12/15 [7:03:33<1:39:45, 1995.14s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 80%|████████  | 12/15 [7:03:33<1:39:45, 1995.14s/trial, best loss: 10]                                                                       0.08670997382487247
- 80%|████████  | 12/15 [7:11:59<1:39:45, 1995.14s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 80%|████████  | 12/15 [7:11:59<1:39:45, 1995.14s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 80%|████████  | 12/15 [7:11:59<1:39:45, 1995.14s/trial, best loss: 10]                                                                       Failed in: 2003.253030538559
- 80%|████████  | 12/15 [7:11:59<1:39:45, 1995.14s/trial, best loss: 10] 87%|████████▋ | 13/15 [7:11:59<1:06:35, 1997.60s/trial, best loss: 10]                                                                       
-Hyper Parameters:
- 87%|████████▋ | 13/15 [7:11:59<1:06:35, 1997.60s/trial, best loss: 10]                                                                         batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 87%|████████▋ | 13/15 [7:11:59<1:06:35, 1997.60s/trial, best loss: 10]                                                                       Device: cpu
- 87%|████████▋ | 13/15 [7:11:59<1:06:35, 1997.60s/trial, best loss: 10]                                                                       Max number of batches: 130
- 87%|████████▋ | 13/15 [7:11:59<1:06:35, 1997.60s/trial, best loss: 10]                                                                       Branch filler jit, done in: 0.4506199359893799
- 87%|████████▋ | 13/15 [7:11:59<1:06:35, 1997.60s/trial, best loss: 10]                                                                       Dataprep, done in: 0.5460875034332275
- 87%|████████▋ | 13/15 [7:11:59<1:06:35, 1997.60s/trial, best loss: 10]                                                                       -0.03528002236141431
- 87%|████████▋ | 13/15 [7:20:15<1:06:35, 1997.60s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 87%|████████▋ | 13/15 [7:20:15<1:06:35, 1997.60s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 87%|████████▋ | 13/15 [7:20:15<1:06:35, 1997.60s/trial, best loss: 10]                                                                       0.001900774945029875
- 87%|████████▋ | 13/15 [7:28:34<1:06:35, 1997.60s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 87%|████████▋ | 13/15 [7:28:34<1:06:35, 1997.60s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 87%|████████▋ | 13/15 [7:28:34<1:06:35, 1997.60s/trial, best loss: 10]                                                                       0.05714232164248409
- 87%|████████▋ | 13/15 [7:36:50<1:06:35, 1997.60s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 87%|████████▋ | 13/15 [7:36:50<1:06:35, 1997.60s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 87%|████████▋ | 13/15 [7:36:50<1:06:35, 1997.60s/trial, best loss: 10]                                                                       0.07825162614103506
- 87%|████████▋ | 13/15 [7:45:22<1:06:35, 1997.60s/trial, best loss: 10]                                                                       4.641588833612782e-08
- 87%|████████▋ | 13/15 [7:45:22<1:06:35, 1997.60s/trial, best loss: 10]                                                                       Algorithm failed: not done learning in max epochs.
- 87%|████████▋ | 13/15 [7:45:22<1:06:35, 1997.60s/trial, best loss: 10]                                                                       Failed in: 2003.4210577011108
- 87%|████████▋ | 13/15 [7:45:22<1:06:35, 1997.60s/trial, best loss: 10] 93%|█████████▎| 14/15 [7:45:22<33:19, 1999.36s/trial, best loss: 10]                                                                       
-Hyper Parameters:
- 93%|█████████▎| 14/15 [7:45:22<33:19, 1999.36s/trial, best loss: 10]                                                                       batch_size	  500
-  dropout   	  0
-  hidden_dim	  21
-  learning_rate	  1e-11
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
- 93%|█████████▎| 14/15 [7:45:22<33:19, 1999.36s/trial, best loss: 10]                                                                     Device: cpu
- 93%|█████████▎| 14/15 [7:45:22<33:19, 1999.36s/trial, best loss: 10]                                                                     Max number of batches: 130
- 93%|█████████▎| 14/15 [7:45:22<33:19, 1999.36s/trial, best loss: 10]                                                                     Branch filler jit, done in: 0.4506511688232422
- 93%|█████████▎| 14/15 [7:45:23<33:19, 1999.36s/trial, best loss: 10]                                                                     Dataprep, done in: 0.5461471080780029
- 93%|█████████▎| 14/15 [7:45:23<33:19, 1999.36s/trial, best loss: 10]                                                                     -0.10445389997528995
- 93%|█████████▎| 14/15 [7:53:44<33:19, 1999.36s/trial, best loss: 10]                                                                     4.641588833612782e-08
- 93%|█████████▎| 14/15 [7:53:44<33:19, 1999.36s/trial, best loss: 10]                                                                     Algorithm failed: not done learning in max epochs.
- 93%|█████████▎| 14/15 [7:53:44<33:19, 1999.36s/trial, best loss: 10]                                                                     -0.07528263833739648
- 93%|█████████▎| 14/15 [8:02:00<33:19, 1999.36s/trial, best loss: 10]                                                                     4.641588833612782e-08
- 93%|█████████▎| 14/15 [8:02:00<33:19, 1999.36s/trial, best loss: 10]                                                                     Algorithm failed: not done learning in max epochs.
- 93%|█████████▎| 14/15 [8:02:00<33:19, 1999.36s/trial, best loss: 10]                                                                     -2.345073936165731e-05
- 93%|█████████▎| 14/15 [8:10:16<33:19, 1999.36s/trial, best loss: 10]                                                                     4.641588833612782e-08
- 93%|█████████▎| 14/15 [8:10:16<33:19, 1999.36s/trial, best loss: 10]                                                                     Algorithm failed: not done learning in max epochs.
- 93%|█████████▎| 14/15 [8:10:16<33:19, 1999.36s/trial, best loss: 10]                                                                     3.8131764485390643e-06
- 93%|█████████▎| 14/15 [8:18:32<33:19, 1999.36s/trial, best loss: 10]                                                                     4.641588833612782e-08
- 93%|█████████▎| 14/15 [8:18:32<33:19, 1999.36s/trial, best loss: 10]                                                                     Algorithm failed: not done learning in max epochs.
- 93%|█████████▎| 14/15 [8:18:32<33:19, 1999.36s/trial, best loss: 10]                                                                     Failed in: 1989.311240196228
- 93%|█████████▎| 14/15 [8:18:32<33:19, 1999.36s/trial, best loss: 10]100%|██████████| 15/15 [8:18:32<00:00, 1996.33s/trial, best loss: 10]100%|██████████| 15/15 [8:18:32<00:00, 1994.14s/trial, best loss: 10]
-Traceback (most recent call last):
-  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 142, in <module>
-    trials=trials,
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/fmin.py", line 555, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 688, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/fmin.py", line 593, in fmin
-    return trials.argmin
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 620, in argmin
-    best_trial = self.best_trial
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37/lib/python3.7/site-packages/hyperopt/base.py", line 611, in best_trial
-    raise AllTrialsFailed
-hyperopt.exceptions.AllTrialsFailed

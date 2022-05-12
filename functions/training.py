@@ -322,6 +322,7 @@ class TRAINING:
 
         # output string for printing in terminal:
         print_out = ""
+
         # Track device
         print_out += "\nDevice: {}".format(device)
 
@@ -338,6 +339,7 @@ class TRAINING:
             train_data,
             val_data,
             track_jets_train_data,
+            track_jets_val_data,
             bf_out_txt,
         ) = self.data_prep_branch_filler(
             train_data, val_data, batch_size, input_variables
@@ -434,6 +436,7 @@ class TRAINING:
                     train_loader,
                     val_loader,
                     track_jets_train_data,
+                    track_jets_val_data,
                     input_dim,
                     lstm_model,
                     svm_model,
@@ -480,6 +483,7 @@ class TRAINING:
         train_loader,
         val_loader,
         track_jets_train_data,
+        track_jets_val_data,
         input_dim,
         lstm_model,
         svm_model,
@@ -507,6 +511,7 @@ class HYPER_TRAINING(TRAINING):
         train_loader,
         val_loader,
         track_jets_train_data,
+        track_jets_val_data,
         input_dim,
         lstm_model,
         svm_model,
@@ -514,7 +519,22 @@ class HYPER_TRAINING(TRAINING):
         device,
         track_cost,
     ):
-        return track_cost[-1], True
+        percentage_anomaly_train = calc_percentage_anomalies(
+            train_loader,
+            track_jets_train_data,
+            input_dim,
+            lstm_model,
+            svm_model,
+            pooling=pooling,
+            device=device,
+        )
+
+        if percentage_anomaly_train < 0.33:
+            passed = True
+        else:
+            passed = False
+
+        return track_cost[-1], passed
 
     def data_prep_scaling(self, train_data, val_data, scaler, batch_size):
         train_loader = lstm_data_prep(
@@ -536,7 +556,16 @@ class HYPER_TRAINING(TRAINING):
         )
         bf_out_txt = f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_batches}"
 
-        return train_data, val_data, track_jets_train_data, bf_out_txt
+        # assign unused data
+        track_jets_val_data = None
+
+        return (
+            train_data,
+            val_data,
+            track_jets_train_data,
+            track_jets_val_data,
+            bf_out_txt,
+        )
 
 
 class REGULAR_TRAINING(TRAINING):
@@ -548,6 +577,7 @@ class REGULAR_TRAINING(TRAINING):
         train_loader,
         val_loader,
         track_jets_train_data,
+        track_jets_val_data,
         input_dim,
         lstm_model,
         svm_model,
@@ -557,7 +587,7 @@ class REGULAR_TRAINING(TRAINING):
     ):
         percentage_anomaly_validation = calc_percentage_anomalies(
             val_loader,
-            track_jets_train_data,
+            track_jets_val_data,
             input_dim,
             lstm_model,
             svm_model,
@@ -619,7 +649,13 @@ class REGULAR_TRAINING(TRAINING):
         )
         bf_out_txt += f"\nNr. of validation batches: {int(len(val_data) / batch_size)}, out of max.: {max_n_val_batches}"
 
-        return train_data, val_data, track_jets_train_data, bf_out_txt
+        return (
+            train_data,
+            val_data,
+            track_jets_train_data,
+            track_jets_val_data,
+            bf_out_txt,
+        )
 
 
 def run_full_training(

@@ -1,4 +1,0 @@
-  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 242
-    cores = 6 # os.cpu_count()
-    ^
-IndentationError: unexpected indent

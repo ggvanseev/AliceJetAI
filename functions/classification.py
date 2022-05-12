@@ -128,7 +128,7 @@ class CLASSIFICATION_CHECK:
                 scaler=scaler,
             )
 
-            _, anomaly_tracker[i], _ = classifier.anomaly_classification(
+            _, anomaly_tracker[i], _, _ = classifier.anomaly_classification(
                 data=input_variables,
                 zeros_test_flag=zeros_flag,
                 nines_test_flag=nines_test_flag,

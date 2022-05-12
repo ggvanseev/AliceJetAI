@@ -20,6 +20,9 @@ def kappa(alphas, a_idx, h_list):
     """
     # Use torch.no_grad to not record changes in this section
     with torch.no_grad():
+        # Due to memmory issues decrease alphas from float64 to float32 , toll
+        alphas = alphas.astype(np.float32)
+
         h_matrix = (
             h_list[a_idx] @ h_list[a_idx].T
         ).cpu()  # Matrix multiplication is time consuming, thus to do this as least as possbile do this
@@ -62,17 +65,15 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
     
     # seems this one is correct after all...
     out = (d_kappa * gradient_hi.T).T
-    
-    #out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T)
-    
+
+    # out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T)
+
     # a = 0
     # for i, idx1 in enumerate(a_idx):
     #     for j, idx2 in enumerate(a_idx):
     #         #a += 0.5 * alphas[i] * alphas[j] * (gradient_hi.T * h_bar_list[idx2] + h_bar_list[idx1].T * gradient_hi)
     #         a += 0.5 * alphas[i] * alphas[j] * (h_bar_list[idx2] + h_bar_list[idx1].T) * gradient_hi
 
-
-    
     return out
 
 
@@ -121,11 +122,11 @@ def updating_theta(
             g = calc_g(gradient_weight, h_bar_list, alphas, a_idx)
 
             # Deviation from Tolga, normalize to number of h_bar_list TODO
-            #g = g / (len(h_bar_list) * 1e-3)
+            # g = g / (len(h_bar_list) * 1e-3)
             # normalize g to sum of g?
-            #g = g / torch.sum(g)
+            # g = g / torch.sum(g)
             # remove nan
-            #g[g != g] = 0
+            # g[g != g] = 0
 
             a = g @ weight.T - weight @ g.T
             i = torch.eye(weight.shape[0], device=device)

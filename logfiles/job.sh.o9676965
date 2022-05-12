@@ -1,190 +1,0 @@
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-22/02/17 21:46:31 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Loaded data
-Split data
-Hypertuning on 6 cores:
-
-  0%|          | 0/8 [00:00<?, ?trial/s, best loss=?][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                  (0 + 1) / 1][Stage 1:>                  (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  120.0
-  dropout   	  0.4
-  hidden_dim	  15.0
-  learning_rate	  1e-07
-  min_epochs	  10
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 5
-Branch filler jit, done in: 0.002730131149291992
-Dataprep, done in: 0.004197120666503906
-frac diff: -2.2145831050273366e-05,  eps: 0.00021544346900318867 
-Model done learning in 10 epochs.
-Passed in: 0.13 s	with loss: 3.1915E-03
-                                                                                 12%|█▎        | 1/8 [00:07<00:49,  7.12s/trial, best loss: 0.0031914893617021253][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  250.0
-  dropout   	  0.2
-  hidden_dim	  6.0
-  learning_rate	  1e-06
-  min_epochs	  10
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 2
-Branch filler jit, done in: 0.0015344619750976562
-Dataprep, done in: 0.0026712417602539062
-frac diff: -2.684299725775204e-05,  eps: 0.001 
-Model done learning in 10 epochs.
-frac diff: -0.0003156071528823476,  eps: 0.001 
-Model done learning in 10 epochs.
-Passed in: 0.13 s	with loss: 1.2500E-02
-                                                                                 25%|██▌       | 2/8 [00:10<00:28,  4.70s/trial, best loss: 0.0031914893617021253][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  280.0
-  dropout   	  0.4
-  hidden_dim	  15.0
-  learning_rate	  1e-06
-  min_epochs	  10
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 2
-Branch filler jit, done in: 0.001617431640625
-Dataprep, done in: 0.0028100013732910156
-frac diff: 0.07255019303116454,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.050165329172896234,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.021908686673940053,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.0944225544691208,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 24.07 s
-                                                                                 38%|███▊      | 3/8 [00:37<01:14, 14.89s/trial, best loss: 0.0031914893617021253][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  140.0
-  dropout   	  0.2
-  hidden_dim	  21.0
-  learning_rate	  1e-06
-  min_epochs	  5
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 4
-Branch filler jit, done in: 0.004425525665283203
-Dataprep, done in: 0.005779743194580078
-frac diff: -0.00012423540778831927,  eps: 0.001 
-Model done learning in 6 epochs.
-Passed in: 0.12 s	with loss: 1.2195E-03
-                                                                                [Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1] 50%|█████     | 4/8 [00:41<00:42, 10.59s/trial, best loss: 0.0012195121951219523]
-
-Hyper Parameters:
-  batch_size	  120.0
-  dropout   	  0.4
-  hidden_dim	  3.0
-  learning_rate	  1e-05
-  min_epochs	  10
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 5
-Branch filler jit, done in: 0.0027315616607666016
-Dataprep, done in: 0.0042040348052978516
-frac diff: -9.158318050193163e-05,  eps: 0.004641588833612782 
-Model done learning in 10 epochs.
-Passed in: 0.11 s	with loss: 1.3830E-02
-                                                                                [Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1] 62%|██████▎   | 5/8 [00:44<00:23,  7.86s/trial, best loss: 0.0012195121951219523]
-
-Hyper Parameters:
-  batch_size	  180.0
-  dropout   	  0.6
-  hidden_dim	  3.0
-  learning_rate	  1e-08
-  min_epochs	  5
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 3
-Branch filler jit, done in: 0.004429340362548828
-Dataprep, done in: 0.005712032318115234
-frac diff: -6.948271343800077e-07,  eps: 4.641588833612782e-05 
-Model done learning in 6 epochs.
-Passed in: 0.06 s	with loss: 7.9710E-03
-                                                                                [Stage 6:>                  (0 + 1) / 1][Stage 7:>                  (0 + 0) / 1] 75%|███████▌  | 6/8 [00:47<00:12,  6.21s/trial, best loss: 0.0012195121951219523]
-
-Hyper Parameters:
-  batch_size	  250.0
-  dropout   	  0.4
-  hidden_dim	  12.0
-  learning_rate	  1e-07
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 2
-Branch filler jit, done in: 0.0015289783477783203
-Dataprep, done in: 0.00266265869140625
-frac diff: -2.29738572592672e-05,  eps: 0.00021544346900318867 
-Model done learning in 20 epochs.
-frac diff: -3.485145069716374e-06,  eps: 0.00021544346900318867 
-Model done learning in 20 epochs.
-Passed in: 0.26 s	with loss: 2.9167E-02
-                                                                                [Stage 7:>                                                          (0 + 1) / 1] 88%|████████▊ | 7/8 [00:50<00:05,  5.16s/trial, best loss: 0.0012195121951219523]
-
-Hyper Parameters:
-  batch_size	  150.0
-  dropout   	  0.4
-  hidden_dim	  18.0
-  learning_rate	  1e-08
-  min_epochs	  5
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 4
-Branch filler jit, done in: 0.0024247169494628906
-Dataprep, done in: 0.0038292407989501953
-frac diff: 0.05296104487028773,  eps: 4.641588833612782e-05 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.031099571550594545,  eps: 4.641588833612782e-05 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.06191835792080691,  eps: 4.641588833612782e-05 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.007813166577565912,  eps: 4.641588833612782e-05 
-Algorithm failed: not done learning in max epochs.
-Failed in: 43.04 s
-                                                                                100%|██████████| 8/8 [01:36<00:00, 18.18s/trial, best loss: 0.0012195121951219523]100%|██████████| 8/8 [01:36<00:00, 12.03s/trial, best loss: 0.0012195121951219523]Total Trials: 8: 8 succeeded, 0 failed, 0 cancelled.
-
-
-Best Hyper Parameters:
-  batch_size	  140.0
-  dropout   	  0.2
-  hidden_dim	  21.0
-  learning_rate	  1e-06
-  min_epochs	  5
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-with loss: 0.0012195121951219523

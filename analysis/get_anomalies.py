@@ -6,7 +6,7 @@ from functions.data_loader import load_n_filter_data
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/time_cluster_5k.root"
 
 
 job_id = "10214090"
@@ -27,9 +27,9 @@ trials = trials_test_list["_trials"]
 
 # from run excluded files:
 classifaction_check = CLASSIFICATION_CHECK()
-# indices_zero_per_anomaly_nine_flag = classifaction_check.classifaction_all_nines_test(
-#     trials=trials
-# )
+indices_zero_per_anomaly_nine_flag = classifaction_check.classification_all_nines_test(
+    trials=trials
+)
 
 # remove unwanted results:
 track_unwanted = list()
@@ -38,18 +38,10 @@ for i in range(len(trials)):
         trials[i]["result"]["loss"] == 10
         or trials[i]["result"]["hyper_parameters"]["num_layers"] == 2
         # or trials[i]["result"]["hyper_parameters"]["scaler_id"] == "minmax"
-        # or i in indices_zero_per_anomaly_nine_flag
+        or i in indices_zero_per_anomaly_nine_flag
     ):
         track_unwanted = track_unwanted + [i]
 
 trials = [i for j, i in enumerate(trials) if j not in track_unwanted]
 
-for i in range(2):
-    if i == 0:
-        jets = q_recur_jets
-        type_jets = "quark"
-    else:
-        jets = g_recur_jets
-        type_jets = "gluon"
-
-    get_anomalies(jets, job_id, trials, file_name, jet_info=type_jets)
+get_anomalies(recur_jets, job_id, trials, file_name, jet_info)

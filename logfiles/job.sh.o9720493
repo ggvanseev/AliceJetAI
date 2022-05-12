@@ -1,690 +1,0 @@
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-22/02/23 19:46:23 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Loading data complete
-Splitting data complete
-Hypertuning 30 evaluations, on 6 cores:
-
-  0%|          | 0/30 [00:00<?, ?trial/s, best loss=?][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                  (0 + 1) / 1][Stage 1:>                  (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0.6
-  hidden_dim	  6.0
-  learning_rate	  1e-12
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 93
-Branch filler jit, done in: 0.3428061008453369
-Dataprep, done in: 0.43276047706604004
-frac diff: 0.0013414078164269063,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.04550734516568223,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.010181642096571242,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.0063664201475951915,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:25:08
-                                                                                  3%|▎         | 1/30 [25:17<12:13:41, 1517.98s/trial, best loss: 10.0][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0.2
-  hidden_dim	  9.0
-  learning_rate	  1e-12
-  min_epochs	  40
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 130
-Branch filler jit, done in: 0.43717074394226074
-Dataprep, done in: 0.5247900485992432
-frac diff: 0.2907006776155775,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.0009222030615121665,  eps: 0.001 
-Model done learning in 221 epochs.
-Passed in: 00:09:46	with loss: 3.2307E-04
-                                                                                [Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1]  7%|▋         | 2/30 [35:08<7:33:48, 972.46s/trial, best loss: 0.000323071075636637][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0.4
-  hidden_dim	  18.0
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 72
-Branch filler jit, done in: 0.30103397369384766
-Dataprep, done in: 0.38773250579833984
-frac diff: -0.05509360122277861,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.0035946638939001263,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.026772695828117084,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.024437325555441914,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:19:20
-                                                                                 10%|█         | 3/30 [54:32<7:56:59, 1060.00s/trial, best loss: 0.000323071075636637][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0
-  hidden_dim	  12.0
-  learning_rate	  1e-11
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 108
-Branch filler jit, done in: 0.384124755859375
-Dataprep, done in: 0.47801971435546875
-frac diff: -0.0011406657202232,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.01762369348407668,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -6.202087998771164e-05,  eps: 0.001 
-Model done learning in 182 epochs.
-Passed in: 00:12:03	with loss: 5.3460E-05
-                                                                                 13%|█▎        | 4/30 [1:06:39<6:42:21, 928.53s/trial, best loss: 5.3459599816715886e-05][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0.4
-  hidden_dim	  18.0
-  learning_rate	  1e-11
-  min_epochs	  40
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 217
-Branch filler jit, done in: 0.7251384258270264
-Dataprep, done in: 0.8131697177886963
-frac diff: -0.009882163186224051,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.020544285059835115,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.0029897048073064254,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.004189754372561772,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:22:22
-                                                                                 17%|█▋        | 5/30 [1:29:06<7:29:39, 1079.20s/trial, best loss: 5.3459599816715886e-05][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0.6
-  hidden_dim	  12.0
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  30
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 108
-Branch filler jit, done in: 0.3716709613800049
-Dataprep, done in: 0.4612274169921875
-frac diff: -0.02589554591226711,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.012029090392214926,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.023072547703925996,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.02125285988624352,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:19:49
-                                                                                 20%|██        | 6/30 [1:48:59<7:27:11, 1117.96s/trial, best loss: 5.3459599816715886e-05][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  9.0
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 163
-Branch filler jit, done in: 0.5171289443969727
-Dataprep, done in: 0.6076979637145996
-frac diff: -6.201458338669871e-05,  eps: 0.001 
-Model done learning in 44 epochs.
-Passed in: 48.75 s	with loss: 1.8165E-04
-                                                                                [Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1] 23%|██▎       | 7/30 [1:49:52<4:55:08, 769.94s/trial, best loss: 5.3459599816715886e-05] [Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0.6
-  hidden_dim	  6.0
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 163
-Branch filler jit, done in: 0.5174248218536377
-Dataprep, done in: 0.6078240871429443
-frac diff: -0.13528259380916735,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.0002703740326548025,  eps: 0.001 
-Model done learning in 300 epochs.
-Passed in: 00:10:21	with loss: 2.5734E-04
-                                                                                 27%|██▋       | 8/30 [2:00:17<4:25:21, 723.68s/trial, best loss: 5.3459599816715886e-05][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  3.0
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 93
-Branch filler jit, done in: 0.3393862247467041
-Dataprep, done in: 0.42932939529418945
-frac diff: 0.0008158063310661767,  eps: 0.001 
-Model done learning in 234 epochs.
-Passed in: 00:03:38	with loss: 5.3297E-05
-                                                                                 30%|███       | 9/30 [2:03:59<3:18:25, 566.92s/trial, best loss: 5.3296786965133236e-05][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0.2
-  hidden_dim	  6.0
-  learning_rate	  1e-11
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 72
-Branch filler jit, done in: 0.2971491813659668
-Dataprep, done in: 0.3862345218658447
-frac diff: -0.001994710399219792,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.0009650353797583766,  eps: 0.001 
-Model done learning in 291 epochs.
-Passed in: 00:08:37	with loss: 5.7559E-04
-                                                                                [Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1] 33%|███▎      | 10/30 [2:12:41<3:04:18, 552.91s/trial, best loss: 5.3296786965133236e-05][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0.2
-  hidden_dim	  9.0
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 130
-Branch filler jit, done in: 0.4317600727081299
-Dataprep, done in: 0.519425630569458
-frac diff: -0.0039241287419771766,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.0039061920841908155,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.0030245904042362033,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.011169437127225406,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:20:13
-                                                                                 37%|███▋      | 11/30 [2:32:58<3:59:29, 756.30s/trial, best loss: 5.3296786965133236e-05][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0.6
-  hidden_dim	  6.0
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  25
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 217
-Branch filler jit, done in: 0.7340633869171143
-Dataprep, done in: 0.8220813274383545
-frac diff: 0.17551238437845088,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.037877037462634704,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.011581441751349512,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.03160185439809349,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:21:34
-                                                                                [Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1] 40%|████      | 12/30 [2:54:36<4:36:21, 921.19s/trial, best loss: 5.3296786965133236e-05][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0.2
-  hidden_dim	  3.0
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 81
-Branch filler jit, done in: 0.3334834575653076
-Dataprep, done in: 0.4203917980194092
-frac diff: -0.007217490324394993,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.00859639652918349,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.004996459562936379,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.0002847222683679025,  eps: 0.001 
-Model done learning in 400 epochs.
-Passed in: 00:23:53	with loss: 1.7928E-03
-                                                                                 43%|████▎     | 13/30 [3:18:33<5:05:13, 1077.27s/trial, best loss: 5.3296786965133236e-05][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0.4
-  hidden_dim	  12.0
-  learning_rate	  1e-11
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 163
-Branch filler jit, done in: 0.517535924911499
-Dataprep, done in: 0.6054930686950684
-frac diff: -0.0009598825588941329,  eps: 0.001 
-Model done learning in 300 epochs.
-Passed in: 00:05:19	with loss: 6.9331E-03
-                                                                                 47%|████▋     | 14/30 [3:23:56<3:46:33, 849.57s/trial, best loss: 5.3296786965133236e-05] [Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0.6
-  hidden_dim	  6.0
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 130
-Branch filler jit, done in: 0.4320058822631836
-Dataprep, done in: 0.5220024585723877
-frac diff: -0.051870032622506834,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.002510492602376801,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.02585725497949688,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.020520442066133147,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:19:39
-                                                                                [Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1] 50%|█████     | 15/30 [3:43:40<3:57:36, 950.44s/trial, best loss: 5.3296786965133236e-05]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  12.0
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  25
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 72
-Branch filler jit, done in: 0.30037856101989746
-Dataprep, done in: 0.38938093185424805
-frac diff: -0.00031629559770769174,  eps: 0.001 
-Model done learning in 49 epochs.
-Passed in: 48.63 s	with loss: 8.4804E-03
-                                                                                 53%|█████▎    | 16/30 [3:44:33<2:38:40, 680.03s/trial, best loss: 5.3296786965133236e-05][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  6.0
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 72
-Branch filler jit, done in: 0.2972145080566406
-Dataprep, done in: 0.38397908210754395
-frac diff: -0.0009399331045911461,  eps: 0.001 
-Model done learning in 207 epochs.
-Passed in: 00:02:57	with loss: 2.6861E-04
-                                                                                 57%|█████▋    | 17/30 [3:47:34<1:54:50, 530.04s/trial, best loss: 5.3296786965133236e-05][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0.2
-  hidden_dim	  18.0
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  40
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 65
-Branch filler jit, done in: 0.2840871810913086
-Dataprep, done in: 0.3710930347442627
-frac diff: -0.0009553376914552002,  eps: 0.001 
-Model done learning in 287 epochs.
-Passed in: 00:04:09	with loss: 4.9808E-04
-                                                                                 60%|██████    | 18/30 [3:51:48<1:29:26, 447.18s/trial, best loss: 5.3296786965133236e-05][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0.2
-  hidden_dim	  18.0
-  learning_rate	  3.1622776601683794e-11
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 163
-Branch filler jit, done in: 0.5169677734375
-Dataprep, done in: 0.6051058769226074
-frac diff: -0.0007724264163048894,  eps: 0.001 
-Model done learning in 93 epochs.
-Passed in: 00:01:30	with loss: 6.3579E-04
-                                                                                [Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1] 63%|██████▎   | 19/30 [3:53:23<1:02:35, 341.44s/trial, best loss: 5.3296786965133236e-05][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0.6
-  hidden_dim	  9.0
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 93
-Branch filler jit, done in: 0.33989787101745605
-Dataprep, done in: 0.4298245906829834
-frac diff: 0.007938574301402984,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.04180421407946022,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: 0.015081618691375554,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-frac diff: -0.001977666887186171,  eps: 0.001 
-Algorithm failed: not done learning in max epochs.
-Failed in: 00:25:52
-                                                                                [Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1] 67%|██████▋   | 20/30 [4:19:20<1:57:42, 706.28s/trial, best loss: 5.3296786965133236e-05][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0
-  hidden_dim	  15.0
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 108
-Branch filler jit, done in: 0.36653947830200195
-Dataprep, done in: 0.45598745346069336
-frac diff: -0.0005451768099180629,  eps: 0.001 
-Model done learning in 111 epochs.
-Passed in: 00:01:44	with loss: 4.0477E-04
-                                                                                 70%|███████   | 21/30 [4:21:08<1:19:00, 526.74s/trial, best loss: 5.3296786965133236e-05][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  15.0
-  learning_rate	  1e-11
-  min_epochs	  25
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 93
-Branch filler jit, done in: 0.339857816696167
-Dataprep, done in: 0.4296133518218994
-frac diff: -0.0008830755901263786,  eps: 0.001 
-Model done learning in 178 epochs.
-Passed in: 00:02:43	with loss: 5.3297E-05
-                                                                                 73%|███████▎  | 22/30 [4:23:55<55:50, 418.83s/trial, best loss: 5.3296786965133236e-05]  [Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  3.0
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 81
-Branch filler jit, done in: 0.3337972164154053
-Dataprep, done in: 0.423264741897583
-frac diff: -0.00022795520019276895,  eps: 0.001 
-Model done learning in 85 epochs.
-Passed in: 00:01:13	with loss: 5.0567E-04
-                                                                                 77%|███████▋  | 23/30 [4:25:13<36:56, 316.59s/trial, best loss: 5.3296786965133236e-05][Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1][Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1][Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1][Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0
-  hidden_dim	  15.0
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 108
-Branch filler jit, done in: 0.36664295196533203
-Dataprep, done in: 0.45630431175231934
-frac diff: -0.0007846524929436861,  eps: 0.001 
-Model done learning in 235 epochs.
-Passed in: 00:03:42	with loss: 2.5202E-04
-                                                                                [Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1] 80%|████████  | 24/30 [4:28:59<28:56, 289.48s/trial, best loss: 5.3296786965133236e-05][Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1][Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1][Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  15.0
-  learning_rate	  1e-11
-  min_epochs	  40
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 81
-Branch filler jit, done in: 0.3364102840423584
-Dataprep, done in: 0.4256715774536133
-frac diff: -0.0008736594028248626,  eps: 0.001 
-Model done learning in 261 epochs.
-Passed in: 00:03:54	with loss: 1.0726E-04
-                                                                                 83%|████████▎ | 25/30 [4:32:58<22:50, 274.11s/trial, best loss: 5.3296786965133236e-05][Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1][Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1][Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1][Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  12.0
-  learning_rate	  3.1622776601683794e-12
-  min_epochs	  25
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 93
-Branch filler jit, done in: 0.34365105628967285
-Dataprep, done in: 0.43356919288635254
-frac diff: -0.0009731922116918027,  eps: 0.001 
-Model done learning in 215 epochs.
-Passed in: 00:03:11	with loss: 2.5126E-04
-                                                                                 87%|████████▋ | 26/30 [4:36:14<16:42, 250.73s/trial, best loss: 5.3296786965133236e-05][Stage 26:>   (0 + 1) / 1][Stage 27:>   (0 + 0) / 1][Stage 28:>   (0 + 0) / 1][Stage 26:>   (0 + 1) / 1][Stage 27:>   (0 + 0) / 1][Stage 28:>   (0 + 0) / 1][Stage 26:>   (0 + 1) / 1][Stage 27:>   (0 + 0) / 1][Stage 28:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0
-  hidden_dim	  3.0
-  learning_rate	  1e-12
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 108
-Branch filler jit, done in: 0.3708839416503906
-Dataprep, done in: 0.46028733253479004
-frac diff: 0.0008228575782201645,  eps: 0.001 
-Model done learning in 200 epochs.
-Passed in: 00:02:54	with loss: 1.2983E-04
-                                                                                [Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1] 90%|█████████ | 27/30 [4:39:13<11:27, 229.26s/trial, best loss: 5.3296786965133236e-05][Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1][Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  9.0
-  learning_rate	  1e-10
-  min_epochs	  30
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 81
-Branch filler jit, done in: 0.33635973930358887
-Dataprep, done in: 0.4256918430328369
-frac diff: 0.0005319379856216542,  eps: 0.001 
-Model done learning in 154 epochs.
-Passed in: 00:02:16	with loss: 1.0726E-04
-                                                                                 93%|█████████▎| 28/30 [4:41:33<06:45, 202.53s/trial, best loss: 5.3296786965133236e-05][Stage 28:>                 (0 + 1) / 1][Stage 29:>                 (0 + 0) / 1][Stage 28:>                 (0 + 1) / 1][Stage 29:>                 (0 + 0) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  21.0
-  learning_rate	  1e-11
-  min_epochs	  25
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 93
-Branch filler jit, done in: 0.3435840606689453
-Dataprep, done in: 0.4333503246307373
-frac diff: 0.0009384828147243972,  eps: 0.001 
-Model done learning in 55 epochs.
-Passed in: 58.62 s	with loss: 3.1750E-03
-                                                                                 97%|█████████▋| 29/30 [4:42:36<02:40, 160.69s/trial, best loss: 5.3296786965133236e-05][Stage 29:>                                                         (0 + 1) / 1][Stage 29:>                                                         (0 + 1) / 1][Stage 29:>                                                         (0 + 1) / 1]
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0.4
-  hidden_dim	  15.0
-  learning_rate	  1e-12
-  min_epochs	  25
-  num_layers	  1
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-Device: cpu
-Max number of batches: 93
-Branch filler jit, done in: 0.34363865852355957
-Dataprep, done in: 0.43338727951049805
-frac diff: -0.00045731199917891085,  eps: 0.001 
-Model done learning in 158 epochs.
-Passed in: 00:02:25	with loss: 1.1192E-03
-                                                                                100%|██████████| 30/30 [4:45:05<00:00, 157.22s/trial, best loss: 5.3296786965133236e-05]100%|██████████| 30/30 [4:45:05<00:00, 570.20s/trial, best loss: 5.3296786965133236e-05]Total Trials: 30: 30 succeeded, 0 failed, 0 cancelled.
-
-
-Hypertuning completed on dataset:
-/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root
-
-Best Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  3.0
-  learning_rate	  1e-11
-  min_epochs	  30
-  num_layers	  2
-  output_dim	  1
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-with loss: 5.3296786965133236e-05

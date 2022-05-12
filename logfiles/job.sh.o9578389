@@ -1,95 +1,0 @@
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      
-Hyper Parameters:
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                        batch_size	  150
-  decay_factor	  0.8
-  dropout   	  0.4
-  hidden_dim	  3.0
-  learning_rate	  1e-06
-  min_epochs	  20
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Device: cuda
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Max number of batches: 435
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Branch filler jit, done in: 19.0849666595459
-  0%|          | 0/55 [00:19<?, ?trial/s, best loss=?]                                                      Dataprep, done in: 19.245431423187256
-  0%|          | 0/55 [00:19<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/55 [07:08<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/55 [13:58<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/55 [20:50<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/55 [27:50<?, ?trial/s, best loss=?]                                                      Failed in: 1671.269937992096
-  0%|          | 0/55 [27:51<?, ?trial/s, best loss=?]  2%|▏         | 1/55 [27:51<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                       
-Hyper Parameters:
-  2%|▏         | 1/55 [27:51<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                         batch_size	  150
-  decay_factor	  0.8
-  dropout   	  0.6
-  hidden_dim	  6.0
-  learning_rate	  1e-07
-  min_epochs	  20
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  2%|▏         | 1/55 [27:51<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                       Device: cuda
-  2%|▏         | 1/55 [27:51<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                       Max number of batches: 435
-  2%|▏         | 1/55 [27:51<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                       Branch filler jit, done in: 19.069242477416992
-  2%|▏         | 1/55 [28:10<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                       Dataprep, done in: 19.228737831115723
-  2%|▏         | 1/55 [28:10<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                       Algorithm failed: not done learning in max epochs.
-  2%|▏         | 1/55 [36:15<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                       Algorithm failed: not done learning in max epochs.
-  2%|▏         | 1/55 [44:21<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                       Algorithm failed: not done learning in max epochs.
-  2%|▏         | 1/55 [52:31<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                       Algorithm failed: not done learning in max epochs.
-  2%|▏         | 1/55 [1:00:39<25:04:09, 1671.28s/trial, best loss: 10.0]                                                                         Failed in: 1969.0958514213562
-  2%|▏         | 1/55 [1:00:40<25:04:09, 1671.28s/trial, best loss: 10.0]  4%|▎         | 2/55 [1:00:40<27:11:02, 1846.47s/trial, best loss: 10.0]                                                                         
-Hyper Parameters:
-  4%|▎         | 2/55 [1:00:40<27:11:02, 1846.47s/trial, best loss: 10.0]                                                                           batch_size	  150
-  decay_factor	  0.1
-  dropout   	  0
-  hidden_dim	  12.0
-  learning_rate	  1e-05
-  min_epochs	  10
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  4%|▎         | 2/55 [1:00:40<27:11:02, 1846.47s/trial, best loss: 10.0]                                                                         Device: cuda
-  4%|▎         | 2/55 [1:00:40<27:11:02, 1846.47s/trial, best loss: 10.0]                                                                         Max number of batches: 435
-  4%|▎         | 2/55 [1:00:40<27:11:02, 1846.47s/trial, best loss: 10.0]                                                                         Branch filler jit, done in: 19.00519561767578
-  4%|▎         | 2/55 [1:00:59<27:11:02, 1846.47s/trial, best loss: 10.0]                                                                         Dataprep, done in: 19.16545009613037
-  4%|▎         | 2/55 [1:00:59<27:11:02, 1846.47s/trial, best loss: 10.0]                                                                         Broke, for given hyper parameters
-  4%|▎         | 2/55 [1:05:34<27:11:02, 1846.47s/trial, best loss: 10.0]job exception: Input contains NaN, infinity or a value too large for dtype('float64').
-  4%|▎         | 2/55 [1:05:34<28:57:49, 1967.35s/trial, best loss: 10.0]
-Traceback (most recent call last):
-  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 119, in <module>
-    trials=trials,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 555, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 688, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 586, in fmin
-    rval.exhaust()
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 364, in exhaust
-    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 300, in run
-    self.serial_evaluate()
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 178, in serial_evaluate
-    result = self.domain.evaluate(spec, ctrl)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 337, in try_hyperparameters
-    device,
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/validation.py", line 47, in validation_distance_nu
-    h_predicted = svm_model.predict(h_bar_list_np)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/sklearn/svm/_classes.py", line 1431, in predict
-    y = super().predict(X)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/sklearn/svm/_base.py", line 342, in predict
-    X = self._validate_for_predict(X)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/sklearn/svm/_base.py", line 475, in _validate_for_predict
-    order="C", accept_large_sparse=False)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/sklearn/utils/validation.py", line 63, in inner_f
-    return f(*args, **kwargs)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/sklearn/utils/validation.py", line 721, in check_array
-    allow_nan=force_all_finite == 'allow-nan')
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/sklearn/utils/validation.py", line 106, in _assert_all_finite
-    msg_dtype if msg_dtype is not None else X.dtype)
-ValueError: Input contains NaN, infinity or a value too large for dtype('float64').

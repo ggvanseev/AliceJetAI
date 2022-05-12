@@ -1,59 +1,0 @@
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      
-Hyper Parameters:
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                        batch_size	  200
-  decay_factor	  0.4
-  dropout   	  0
-  hidden_dim	  12.0
-  learning_rate	  1e-07
-  min_epochs	  20
-  num_layers	  1
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Device: cuda
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Max number of batches: 326
-  0%|          | 0/55 [00:00<?, ?trial/s, best loss=?]                                                      Branch filler jit, done in: 13.147559404373169
-  0%|          | 0/55 [00:13<?, ?trial/s, best loss=?]                                                      Dataprep, done in: 13.300371646881104
-  0%|          | 0/55 [00:13<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/55 [06:25<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/55 [12:47<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/55 [19:06<?, ?trial/s, best loss=?]                                                      Algorithm failed: not done learning in max epochs.
-  0%|          | 0/55 [25:25<?, ?trial/s, best loss=?]                                                      Failed in: 1526.1901514530182
-  0%|          | 0/55 [25:26<?, ?trial/s, best loss=?]  2%|▏         | 1/55 [25:26<22:53:34, 1526.20s/trial, best loss: 10.0]                                                                       
-Hyper Parameters:
-  2%|▏         | 1/55 [25:26<22:53:34, 1526.20s/trial, best loss: 10.0]                                                                         batch_size	  50
-  decay_factor	  0.5
-  dropout   	  0.4
-  hidden_dim	  15.0
-  learning_rate	  1e-07
-  min_epochs	  20
-  num_layers	  2
-  output_dim	  1
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  2%|▏         | 1/55 [25:26<22:53:34, 1526.20s/trial, best loss: 10.0]                                                                       Device: cuda
-  2%|▏         | 1/55 [25:26<22:53:34, 1526.20s/trial, best loss: 10.0]                                                                       Max number of batches: 1306
-  2%|▏         | 1/55 [25:26<22:53:34, 1526.20s/trial, best loss: 10.0]job exception: list.remove(x): x not in list
-  2%|▏         | 1/55 [26:38<23:58:49, 1598.69s/trial, best loss: 10.0]
-Traceback (most recent call last):
-  File "analysis/qp_hyper_training_using_cost_codition_tolga.py", line 119, in <module>
-    trials=trials,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 555, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 688, in fmin
-    trials_save_file=trials_save_file,
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 586, in fmin
-    rval.exhaust()
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 364, in exhaust
-    self.run(self.max_evals - n_done, block_until_done=self.asynchronous)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 300, in run
-    self.serial_evaluate()
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/fmin.py", line 178, in serial_evaluate
-    result = self.domain.evaluate(spec, ctrl)
-  File "/project/alice/users/wesselr/venvs/gpu_venv/lib/python3.6/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 266, in try_hyperparameters
-    dev_data, track_jets_dev_data = branch_filler(dev_data, batch_size=batch_size)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 131, in branch_filler
-    temp_dataset2.remove(jet)
-ValueError: list.remove(x): x not in list

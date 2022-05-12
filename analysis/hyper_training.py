@@ -37,10 +37,10 @@ debug_flag = False  # for using debug space = only 1 configuration of hp
 multicore_flag = True  # for using SparkTrials or Trials, turns of when debugging
 save_results_flag = True  # for saving trials and runtime
 plot_flag = (
-    True  # for making cost condition plots, only works if save_results_flag is True
+    False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = ""  # Small comment on run, will be saved to save file.
+run_notes = "Run 7, same as run 6, but lower number of trials per job given time needed."  # Small comment on run, will be saved to save file.
 
 ###-----------------------------------------------------------------------------###
 
@@ -53,20 +53,18 @@ space = hp.choice(
             "batch_size": hp.quniform("num_batch", 300, 1000, 100),
             "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20, 50, 100]),
             "num_layers": hp.choice(
-                "num_layers", [1, 2]
+                "num_layers", [1]
             ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
             "min_epochs": hp.choice(
-                "min_epochs", [int(50)]
+                "min_epochs", [int(80)]
             ),  # lijkt niet heel veel te doen
             "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 0.5),
             # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice(
-                "dropout", [0.1, 0]
+                "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice(
-                "svm_nu", [0.5, 0.3, 0.2, 0.1, 0.05]
-            ),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.5, 0.3, 0.2, 0.1]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]
@@ -78,8 +76,23 @@ space = hp.choice(
                 [
                     [na.recur_dr, na.recur_jetpt, na.recur_z],
                     # [na.recur_dr, na.recur_jetpt],
-                    # [na.recur_dr, na.recur_z],
+                    [na.recur_dr, na.recur_z],
                     # [na.recur_jetpt, na.recur_z],
+                    [
+                        na.recur_dr,
+                        na.recur_jetpt,
+                        na.recur_z,
+                        na.recur_tf,
+                    ],
+                    [
+                        na.recur_dr,
+                        na.recur_z,
+                        na.recur_tf,
+                    ],
+                    [
+                        na.recur_tf,
+                        na.recur_jetpt,
+                    ],
                 ],
             ),
             "pooling": hp.choice("pooling", ["mean", "last"]),  # "last" , "mean"

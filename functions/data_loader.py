@@ -14,14 +14,14 @@ import branch_names as na
 from typing import Tuple
 import branch_names as na
 import numpy as np
-import random
+from copy import copy
 
 
 def select_non_empty_branches(branches, non_empty_key):
     """
     non_empty_key: give along a recur, because due to zcut a branch might have become empty
     """
-    # First filter all completely empty branches
+    # First filter all comp letely empty branches
     branch_reference = branches[non_empty_key]
     non_empty = list()
     for i in range(len(branch_reference)):
@@ -45,22 +45,19 @@ def select_non_empty_branches(branches, non_empty_key):
     return branches
 
 
-def flatten_array(branches, step_size=100):
+def concatenate_function(value):
+    concatenated_value = ak.concatenate(value, axis=0)
+    return concatenated_value
+
+
+def flatten_array(branches, step_size=1000):
     """
     returns a flattend array
     """
     new_branches = dict()
 
     for field in branches.fields:
-        # Use this work around to avoid memory issues with ak.concatenate.
-        temp_array = ak.ArrayBuilder()
-        n_steps = len(branches[field]) // step_size + 1
-        steps = np.append(np.arange(n_steps) * step_size, None)
-        for i in np.arange(n_steps):
-            temp_array.append(
-                ak.concatenate(branches[field][steps[i] : steps[i + 1]], axis=0)
-            )
-        new_branches[field] = ak.flatten(temp_array, axis=1)
+        new_branches[field] = ak.flatten(branches[field])
 
     return ak.Array(new_branches)
 
@@ -158,7 +155,8 @@ def load_n_filter_data(
     kt_cut: float = None,
     eta_max: float = 2.0,
     pt_min: int = 130,
-    jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z],
+    jet_branches: list = None,
+    jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z, na.recur_tf],
 ) -> Tuple[ak.Array, ak.Array, ak.Array, ak.Array]:
     """Load in dataset from ROOT file of jet data. Subsequently, the jet data will be
     split into sets for quarks and gluons as well as sets with recursive jet data for
@@ -184,15 +182,10 @@ def load_n_filter_data(
 
     # open file and select jet data and recursive jet data
     branches = uproot.open(file_name)[tree_name].arrays()
-    jets = branches[
+    jets_eta_pt_cut = branches[
         [
             na.jetpt,
             na.jet_eta,
-            na.jet_phi,
-            na.jet_M,
-            na.jet_area,
-            na.recur_splits,
-            na.parton_match_id,
         ]
     ]
     jets_recur = branches[jet_recur_branches]
@@ -200,71 +193,56 @@ def load_n_filter_data(
     # delete branches to save memory
     del(branches)
 
+    if jet_branches:
+        jets = branches[jet_branches]
+    else:
+        jets = None
+
+    # delete unnesecary use
+    del branches
+
     # Print some info on dataset. Note: Nr of jets is significantly larger than nr of quark/gluon jets.
     # This is because we only know for sure which jets are quark or gluon jets from the Parton Initiator,
     # which in turn means that we can at most obtain 1 quark or gluon jet per event.
-    print(f"Number of jets in dataset:\t\t{np.count_nonzero(jets[na.jetpt])}")
     print(
-        f"Number of gluon jets in dataset:\t{np.count_nonzero(jets[na.parton_match_id] == 21)}"
+        f"Number of splits in dataset:\t\t{np.count_nonzero(jets_eta_pt_cut[na.jetpt])}"
     )
-    print(
-        f"Number of quark jets in dataset:\t{np.count_nonzero(abs(jets[na.parton_match_id]) < 7)}"
-    )
-
-    # select quark and gluon jet data
-    g_jets = jets[jets[na.parton_match_id] == 21]
-    q_jets = jets[abs(jets[na.parton_match_id]) < 7]
-
-    # select recursive quark and gluon jet data
-    g_jets_recur = jets_recur[jets[na.parton_match_id] == 21]
-    q_jets_recur = jets_recur[abs(jets[na.parton_match_id]) < 7]
 
     # apply cuts: -2 < eta < 2 and jet_pt > 130 GeV
     if cut:
         print("Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV")
-        g_jets_recur = g_jets_recur[
-            (abs(g_jets[na.jet_eta]) < eta_max) & (g_jets[na.jetpt] > pt_min)
+        jets_recur = jets_recur[
+            (abs(jets_eta_pt_cut[na.jet_eta]) < eta_max)
+            & (jets_eta_pt_cut[na.jetpt] > pt_min)
         ]
-        q_jets_recur = q_jets_recur[
-            (abs(q_jets[na.jet_eta]) < eta_max) & (q_jets[na.jetpt] > pt_min)
-        ]
-        g_jets = g_jets[
-            (abs(g_jets[na.jet_eta]) < eta_max) & (g_jets[na.jetpt] > pt_min)
-        ]
-        q_jets = q_jets[
-            (abs(q_jets[na.jet_eta]) < eta_max) & (q_jets[na.jetpt] > pt_min)
-        ]
+        if jets:
+            jets = jets[
+                (abs(jets_eta_pt_cut[na.jet_eta]) < eta_max)
+                & (jets_eta_pt_cut[na.jetpt] > pt_min)
+            ]
+
         print(
-            f"\tgluon jets left after cuts:\t{np.count_nonzero(g_jets[na.parton_match_id] == 21)}"
+            f"\tNumber of splits left after cuts:\t{np.count_nonzero(jets_recur[jet_recur_branches[0]])}"
         )
-        print(
-            f"\tquark jets left after cuts:\t{np.count_nonzero(abs(q_jets[na.parton_match_id] < 7))} "
-        )
+
+        # Avoid putting to much in memmory
+        del jets_eta_pt_cut
 
     # apply kt_cut of kt > 1.0 GeV
     if kt_cut:
         print(f"Applying cut: kt > {kt_cut} GeV on all splittings")
         # get kt values
-        g_jets_kt = (
-            g_jets_recur.sigJetRecur_jetpt
-            * g_jets_recur.sigJetRecur_dr12
-            * g_jets_recur.sigJetRecur_z
-        )
-        q_jets_kt = (
-            q_jets_recur.sigJetRecur_jetpt
-            * q_jets_recur.sigJetRecur_dr12
-            * q_jets_recur.sigJetRecur_z
+        jets_recur_kt = (
+            jets_recur.sigJetRecur_jetpt
+            * jets_recur.sigJetRecur_dr12
+            * jets_recur.sigJetRecur_z
         )
 
         # cut kts
-        g_jets_recur = g_jets_recur[g_jets_kt > kt_cut]
-        q_jets_recur = q_jets_recur[q_jets_kt > kt_cut]
-        print(
-            f"\tgluon splittings cut:\t\t{1 - np.count_nonzero(g_jets_kt[g_jets_kt > kt_cut]) / np.count_nonzero(g_jets_kt):.2%}"
-        )
-        print(
-            f"\tquark splittings cut:\t\t{1 - np.count_nonzero(q_jets_kt[q_jets_kt > kt_cut]) / np.count_nonzero(q_jets_kt):.2%}"
-        )
+        jets_recur = jets_recur[jets_recur_kt > kt_cut]
+
+        if jets:
+            jets = jets[jets_recur_kt > kt_cut]
 
         # hist gluons TODO keep for possible later analysis: histograms
         # g_kts_flat = ak.flatten(ak.flatten(g_jets_kt)).to_list()
@@ -279,16 +257,16 @@ def load_n_filter_data(
     del(q_jets)
     
     # remove empty additions from recursive jets and flatten them, i.e. take jet out of event nesting
-    g_jets_recur = select_non_empty_branches(
-        g_jets_recur, non_empty_key=jet_recur_branches[0]
+    jets_recur = select_non_empty_branches(
+        jets_recur, non_empty_key=jet_recur_branches[0]
     )
 
-    #g_jets_recur = flatten_array(g_jets_recur)
+    jets_recur = flatten_array(jets_recur)
 
-    q_jets_recur = select_non_empty_branches(
-        q_jets_recur, non_empty_key=jet_recur_branches[0]
-    )
+    if jets:
+        jets = select_non_empty_branches(jets, non_empty_key=jet_branches[0])
+        jets = flatten_array(jets)
 
-    #q_jets_recur = flatten_array(q_jets_recur)
+    print(f"Number of jets in dataset:\t\t{len(jets_recur)}")
 
-    return g_jets_recur, q_jets_recur
+    return jets_recur, jets
