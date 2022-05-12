@@ -25,7 +25,7 @@ file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 #file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # jewel samples
-jewel = True
+jewel = False
 # file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 #file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 
@@ -50,7 +50,7 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.quniform("num_batch", 300, 1000, 100),
+            "batch_size": hp.quniform("num_batch", 1000, 5000, 200),
             "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20, 50, 100]),
             "num_layers": hp.choice(
                 "num_layers", [1]
