@@ -28,11 +28,11 @@ from functions.training import REGULAR_TRAINING, run_full_training
 file_name = "samples/time_cluster_100k.root"
 
 # set run settings
-max_evals = 50
+max_evals = 10
 patience = 10
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
-multicore_flag = True  # for using SparkTrials or Trials
-save_results_flag = True  # for saving trials and runtime
+multicore_flag = True  # for using SparkTrials or Trials, turn of for debuging
+save_results_flag = False  # for saving trials and runtime
 plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
