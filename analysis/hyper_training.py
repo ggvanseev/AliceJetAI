@@ -22,20 +22,20 @@ import branch_names as na
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_jewel_5k.root"
+file_name = "samples/time_cluster_jewel_400k_n14.root"
 
 # set run settings
 max_evals = 1
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
-debug_flag = True  # for using debug space = only 1 configuration of hp
+debug_flag = False  # for using debug space = only 1 configuration of hp
 multicore_flag = True  # for using SparkTrials or Trials, turns of when debugging
 save_results_flag = True  # for saving trials and runtime
 plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Run 7, same as run 6, but lower number of trials per job given time needed."  # Small comment on run, will be saved to save file.
+run_notes = "Run 9, run on jewel, with large dataset."  # Small comment on run, will be saved to save file.
 
 ###-----------------------------------------------------------------------------###
 
