@@ -82,7 +82,7 @@ def load_n_filter_data(
     eta_max: float = 2.0,
     pt_min: int = 130,
     jet_branches: list = None,
-    jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z, na.recur_tf],
+    jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z],
 ) -> Tuple[ak.Array, ak.Array, ak.Array, ak.Array]:
     """Load in dataset from ROOT file of jet data. Subsequently, the jet data will be
     split into sets for quarks and gluons as well as sets with recursive jet data for
@@ -203,7 +203,7 @@ def load_n_filter_data_qg(
     eta_max: float = 2.0,
     pt_min: int = 130,
     jet_branches: list = None,
-    jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z, na.recur_tf],
+    jet_recur_branches: list = [na.recur_dr, na.recur_jetpt, na.recur_z],
 ) -> Tuple[ak.Array, ak.Array, ak.Array, ak.Array]:
     """Load in dataset from ROOT file of jet data. Subsequently, the jet data will be
     split into sets for quarks and gluons as well as sets with recursive jet data for

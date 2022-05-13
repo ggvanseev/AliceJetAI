@@ -10,7 +10,7 @@ completed on a number of trials equal to 'max_evals'.
 """
 from functions.training import run_full_training, HYPER_TRAINING
 from functions.data_manipulation import train_dev_test_split
-from functions.data_loader import load_n_filter_data, load_n_filter_data_single
+from functions.data_loader import load_n_filter_data, load_n_filter_data_qg
 
 from hyperopt import (
     hp,
@@ -75,24 +75,9 @@ space = hp.choice(
                 "variables",
                 [
                     [na.recur_dr, na.recur_jetpt, na.recur_z],
-                    # [na.recur_dr, na.recur_jetpt],
+                    [na.recur_dr, na.recur_jetpt],
                     [na.recur_dr, na.recur_z],
-                    # [na.recur_jetpt, na.recur_z],
-                    [
-                        na.recur_dr,
-                        na.recur_jetpt,
-                        na.recur_z,
-                        na.recur_tf,
-                    ],
-                    [
-                        na.recur_dr,
-                        na.recur_z,
-                        na.recur_tf,
-                    ],
-                    [
-                        na.recur_tf,
-                        na.recur_jetpt,
-                    ],
+                    [na.recur_jetpt, na.recur_z],
                 ],
             ),
             "pooling": hp.choice("pooling", ["mean", "last"]),  # "last" , "mean"
@@ -140,7 +125,7 @@ if jewel == True:
     sample = load_n_filter_data_single(file_name, kt_cut=kt_cut)
 else:
     # Load and filter data for criteria eta and jetpt_cap
-    g_jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
+    g_jets_recur, _ = load_n_filter_data_qg(file_name, kt_cut=kt_cut)
     print("Loading data complete")
 
     # Mix sample with e.g. 90% gluons and 10% quarks
