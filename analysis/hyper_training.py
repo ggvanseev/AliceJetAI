@@ -122,7 +122,7 @@ if debug_flag:
     multicore_flag = False
 
 if jewel == True:
-    sample = load_n_filter_data_single(file_name, kt_cut=kt_cut)
+    sample = load_n_filter_data(file_name, kt_cut=kt_cut)
 else:
     # Load and filter data for criteria eta and jetpt_cap
     g_jets_recur, _ = load_n_filter_data_qg(file_name, kt_cut=kt_cut)

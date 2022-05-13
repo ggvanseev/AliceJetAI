@@ -234,6 +234,7 @@ def load_n_filter_data_qg(
         [
             na.jetpt,
             na.jet_eta,
+            na.parton_match_id,
         ]
     ]
     jets_recur = branches[jet_recur_branches]
@@ -242,6 +243,8 @@ def load_n_filter_data_qg(
         jets = branches[jet_branches]
     else:
         jets = None
+        g_jets = None
+        q_jets = None
 
     # delete branches to save memory
     del(branches)
@@ -249,9 +252,6 @@ def load_n_filter_data_qg(
     # Print some info on dataset. Note: Nr of jets is significantly larger than nr of quark/gluon jets.
     # This is because we only know for sure which jets are quark or gluon jets from the Parton Initiator,
     # which in turn means that we can at most obtain 1 quark or gluon jet per event.
-    print(
-        f"Number of splits in dataset:\t\t{np.count_nonzero(jets_eta_pt_cut[na.jetpt])}"
-    )
     print(f"Number of jets in dataset:\t\t{np.count_nonzero(jets_eta_pt_cut[na.jetpt])}")
     print(
         f"Number of gluon jets in dataset:\t{np.count_nonzero(jets_eta_pt_cut[na.parton_match_id] == 21)}"
@@ -264,41 +264,46 @@ def load_n_filter_data_qg(
         # select quark and gluon jet data
         g_jets = jets[jets_eta_pt_cut[na.parton_match_id] == 21]
         q_jets = jets[abs(jets_eta_pt_cut[na.parton_match_id]) < 7]
+        jets = True
 
     # select recursive quark and gluon jet data
     g_jets_recur = jets_recur[jets_eta_pt_cut[na.parton_match_id] == 21]
     q_jets_recur = jets_recur[abs(jets_eta_pt_cut[na.parton_match_id]) < 7]
+    g_jets_eta_pt_cut = jets_eta_pt_cut[jets_eta_pt_cut[na.parton_match_id] == 21]
+    q_jets_eta_pt_cut = jets_eta_pt_cut[abs(jets_eta_pt_cut[na.parton_match_id]) < 7]
+    del(jets_eta_pt_cut)
 
     # apply cuts: -2 < eta < 2 and jet_pt > 130 GeV
     if cut:
         print("Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV")
         g_jets_recur = g_jets_recur[
-            (abs(jets_eta_pt_cut[na.jet_eta]) < eta_max)
-            & (jets_eta_pt_cut[na.jetpt] > pt_min)
+            (abs(g_jets_eta_pt_cut[na.jet_eta]) < eta_max)
+            & (g_jets_eta_pt_cut[na.jetpt] > pt_min)
         ]
-        g_jets_recur = g_jets_recur[
-            (abs(jets_eta_pt_cut[na.jet_eta]) < eta_max)
-            & (jets_eta_pt_cut[na.jetpt] > pt_min)
+        q_jets_recur = q_jets_recur[
+            (abs(q_jets_eta_pt_cut[na.jet_eta]) < eta_max)
+            & (q_jets_eta_pt_cut[na.jetpt] > pt_min)
         ]
         if jets:
             g_jets = g_jets[
-                (abs(jets_eta_pt_cut[na.jet_eta]) < eta_max)
-                & (jets_eta_pt_cut[na.jetpt] > pt_min)
+                (abs(g_jets_eta_pt_cut[na.jet_eta]) < eta_max)
+                & (g_jets_eta_pt_cut[na.jetpt] > pt_min)
             ]
             q_jets = q_jets[
-                (abs(jets_eta_pt_cut[na.jet_eta]) < eta_max)
-                & (jets_eta_pt_cut[na.jetpt] > pt_min)
+                (abs(q_jets_eta_pt_cut[na.jet_eta]) < eta_max)
+                & (q_jets_eta_pt_cut[na.jetpt] > pt_min)
             ]
 
         print(
-            f"\tgluon jets left after cuts:\t{np.count_nonzero(g_jets[na.parton_match_id] == 21)}"
+            f"\tgluon jets left after cuts:\t{np.count_nonzero(g_jets_eta_pt_cut[na.parton_match_id] == 21)}"
         )
         print(
-            f"\tquark jets left after cuts:\t{np.count_nonzero(abs(q_jets[na.parton_match_id] < 7))} "
+            f"\tquark jets left after cuts:\t{np.count_nonzero(abs(q_jets_eta_pt_cut[na.parton_match_id] < 7))} "
         )
 
         # Avoid putting to much in memmory
-        del jets_eta_pt_cut
+        del(g_jets_eta_pt_cut)
+        del(q_jets_eta_pt_cut)
 
     # apply kt_cut of kt > 1.0 GeV
     if kt_cut:
