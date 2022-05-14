@@ -28,7 +28,7 @@ from functions.training import REGULAR_TRAINING, run_full_training
 file_name = "samples/time_cluster_100k.root"
 
 # set run settings
-max_evals = 4
+max_evals = 8
 patience = 10
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
 multicore_flag = True  # for using SparkTrials or Trials, turn of for debuging
@@ -37,7 +37,7 @@ plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Run 8, 10k hyper_tunning based on 10206558. Try with float32"  # Small command on run, will be save to save file.
+run_notes = "Run 10, 100k hyper_tunning based on 10240832-41 (not 33), pythia."  # Small command on run, will be save to save file.
 
 ###-------------###
 
@@ -46,10 +46,10 @@ space = hp.choice(
     "hyper_parameters",
     [
         {
-            "batch_size": hp.choice("num_batch", [700]),
+            "batch_size": hp.choice("num_batch", [500]),
             "hidden_dim": hp.choice("hidden_dim", [9]),
             "num_layers": hp.choice("num_layers", [1]),
-            "min_epochs": hp.choice("min_epochs", [int(30)]),
+            "min_epochs": hp.choice("min_epochs", [int(80)]),
             "learning_rate": 10 ** hp.choice("learning_rate", [-5]),
             "dropout": hp.choice(
                 "dropout", [0]
@@ -63,9 +63,10 @@ space = hp.choice(
                 "scaler_id", ["minmax"]
             ),  # "minmax" = MinMaxScaler or "std" = StandardScaler
             "variables": hp.choice(
-                "variables", [[na.recur_dr, na.recur_z]]  # , na.recur_jetpt
+                "variables",
+                [[na.recur_dr, na.recur_z, na.recur_tf]],  # , na.recur_jetpt
             ),
-            "pooling": hp.choice("pooling", ["last"]),  # "last" , "mean"
+            "pooling": hp.choice("pooling", ["mean"]),  # "last" , "mean"
         }
     ],
 )

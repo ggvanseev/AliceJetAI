@@ -7,7 +7,17 @@ from functions.data_manipulation import trials_df_and_minimum
 from plotting.violin import violin_plots
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
-job_ids = ["10206558"]
+job_ids = [
+    "10240832",
+    "10240834",
+    "10240835",
+    "10240836",
+    "10240837",
+    "10240838",
+    "10240839",
+    "10240840",
+    "10240841",
+]
 
 # select test parameter: e.g. "loss" or "final_cost"
 test_param = "loss"
@@ -17,7 +27,7 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 trials_test_list = [
     torch.load(
-        f"storing_results/trials_test_manual_filter_{job_id}.p", map_location=device
+        f"storing_results/manual_selected/trials_test_manual_filter_{job_id}.p", map_location=device
     )
     for job_id in job_ids
 ]
