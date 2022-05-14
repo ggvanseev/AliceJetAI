@@ -25,7 +25,7 @@ import branch_names as na
 file_name = "samples/time_cluster_jewel_400k_n14.root"
 
 # set run settings
-max_evals = 1
+max_evals = 35
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
 debug_flag = False  # for using debug space = only 1 configuration of hp
@@ -35,7 +35,7 @@ plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Run 9, run on jewel, with large dataset."  # Small comment on run, will be saved to save file.
+run_notes = "Run 10, run on jewel, with large dataset."  # Small comment on run, will be saved to save file.
 
 ###-----------------------------------------------------------------------------###
 
