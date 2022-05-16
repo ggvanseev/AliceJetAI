@@ -31,11 +31,11 @@ def kappa(alphas, a_idx, h_list):
         out = 0  # use for trackking summation
         n_alphas = len(a_idx)
 
-        alphas_matrix = np.outer(alphas, alphas).T
+        # alphas_matrix = np.outer(alphas, alphas).T  # removed since to much memmory consumption
 
         for i in range(n_alphas):
-            # Slight difference compared to taking for loops (probably due to numerical solution in numpy), but this is a systematic error that cancels out (?) when comparing two kappas.
-            out += 0.5 * np.dot(alphas_matrix[i], h_matrix[i])
+            # out += 0.5 * np.dot(alphas_matrix[i], h_matrix[i])
+            out += 0.5 * np.dot(alphas[i] * alphas, h_matrix[i])
 
     return out
 
