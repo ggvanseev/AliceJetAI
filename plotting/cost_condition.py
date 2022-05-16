@@ -31,12 +31,12 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     # plot cost condition and cost function
     fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
     fig.suptitle(title_plot, y=1.08)
-    ax1.plot(track_cost_condition[1:], label="Cost Condition")
+    ax1.plot(track_cost_condition[1:], linewidth=1.0,alpha=0.85, label="Cost Condition")
     ax1.set_xlabel("Epochs")
     ax1.set_ylabel("Cost Condition")
 
     ax2 = ax1.twinx()
-    ax2.plot(track_cost[1:], "--", linewidth=0.5, alpha=0.7, label="Cost")
+    ax2.plot(track_cost[1:], color="red", linewidth=1.0, alpha=0.85, label="Cost")
     ax2.set_ylabel("Cost")
 
     fig.legend()

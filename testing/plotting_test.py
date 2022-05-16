@@ -79,7 +79,7 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
         # plot data and decision function
         ax.contour(xx1, yy1, Z1, levels=(-1,0,1), linewidths=(0.5, 0.75, 0.5),
                     linestyles=('--', '-', '--'), colors=['k','k','k'])
-        ax.contourf(xx1, yy1, Z1, cmap=cm.get_cmap("coolwarm_r"), alpha=0.5, linestyles="None")
+        ax.contourf(xx1, yy1, Z1, cmap=cm.get_cmap("coolwarm_r"), alpha=0.3, linestyles="None")
         
         
         # plot support vectors

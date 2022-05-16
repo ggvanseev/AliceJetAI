@@ -1,12 +1,12 @@
 """
-Make file to generate cost condition and cost plots from a list of job ids.
+Make file to generate boundary plots from a list of job ids (digits data).
 """
 
 import torch
 from plotting.cost_condition import cost_condition_plots
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
-job_ids = ["10214090"]
+job_ids = ["22_04_28_1438"]
 # select "test" or "train"
 trial_type = "test"
 

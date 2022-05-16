@@ -40,7 +40,7 @@ except FileExistsError:
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 trials_test_list = torch.load(
-    f"storing_results/trials_test_{job_id}.p", map_location=device
+    f"storing_results_old_wessel/trials_test_{job_id}.p", map_location=device
 )
 
 trials = trials_test_list["_trials"] # TODO new!

@@ -1,5 +1,5 @@
 import pickle
-from functions.data_loader import load_n_filter_data
+from functions.data_loader import load_n_filter_data_qg
 import branch_names as na
 import matplotlib.pyplot as plt
 from functions.data_manipulation import (
@@ -14,10 +14,10 @@ from plotting.comparison import (
 import awkward as ak
 import numpy as np
 
-job_id = 10206558
-jet_info = "pythia_5k"
+job_id = 10214090
+jet_info = "g_jets"
 save_flag = True
-num = 21
+num = 1
 
 show_distribution_percentages_flag = False
 
@@ -28,7 +28,7 @@ anomalies_info = pickle.load(
 )
 
 
-recur_jets, jets = load_n_filter_data(
+g_recur_jets, q_recur_jets, _, _ = load_n_filter_data_qg(
     file_name=anomalies_info["file"],
     jet_recur_branches=[na.recur_dr, na.recur_jetpt, na.recur_z],
 )
@@ -38,7 +38,7 @@ recur_jets, jets = load_n_filter_data(
 anomaly, normal = separate_anomalies_from_regular(
     anomaly_track=anomalies_info["classification_annomaly"][num],
     jets_index=anomalies_info["jets_index"][num],
-    data=recur_jets,
+    data=g_recur_jets,
 )
 
 if show_distribution_percentages_flag:

@@ -2,18 +2,19 @@ import pickle
 import numpy as np
 import torch
 from functions.classification import get_anomalies, CLASSIFICATION_CHECK
-from functions.data_loader import load_n_filter_data
+from functions.data_loader import load_n_filter_data, load_n_filter_data_qg
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_5k.root"
+#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+#file_name = "samples/time_cluster_5k.root"
 
 
 job_id = "10214090"
-
+type_jets = "q_jets"
 
 # Load and filter data for criteria eta and jetpt_cap
-g_recur_jets, q_recur_jets = load_n_filter_data(file_name, kt_cut=False)
+g_recur_jets, q_recur_jets, _, _ = load_n_filter_data_qg(file_name, kt_cut=False)
 
 # q_recur_jets = (np.zeros([500, 10, 3])).tolist()
 
@@ -44,4 +45,4 @@ for i in range(len(trials)):
 
 trials = [i for j, i in enumerate(trials) if j not in track_unwanted]
 
-get_anomalies(recur_jets, job_id, trials, file_name, jet_info)
+get_anomalies(q_recur_jets, job_id, trials, file_name, jet_info=type_jets)
