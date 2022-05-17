@@ -84,8 +84,8 @@ def svm_boundary_train_plot(model, X1, out_file, title=r"$\overline{h_i}$", y=No
     # plot data and decision function
     ax.scatter(X1[:, 0], X1[:, 1], c=pred, cmap=plt.cm.viridis, alpha=0.5, label="Training Data")
     ax.contour(xx1, yy1, Z1, levels=(-1,0,1), linewidths=(0.5, 0.75, 0.5),
-                linestyles=('--', '-', '--'), colors=['k','k','k'])
-    ax.contourf(xx1, yy1, Z1, cmap=cm.get_cmap("coolwarm_r"), alpha=0.5, linestyles="None")
+                linestyles=('--', '-', '--'), colors=['r','k','b'])
+    #ax.contourf(xx1, yy1, Z1, cmap=cm.get_cmap("coolwarm_r"), alpha=0.5, linestyles="None")
     
 
     # Plot support vectors (non-zero alphas)

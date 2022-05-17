@@ -432,7 +432,7 @@ class TRAINING:
             if passed:
                 # Calc loss
                 # For regular training also checks if diff_percentage anomalies is small enough.
-                loss, train_success = self.calc_loss(
+                loss, train_success, print_out = self.calc_loss(
                     train_loader,
                     val_loader,
                     track_jets_train_data,
@@ -440,6 +440,7 @@ class TRAINING:
                     input_dim,
                     lstm_model,
                     svm_model,
+                    print_out,
                     pooling=pooling,
                     device=device,
                     track_cost=track_cost,
@@ -487,6 +488,7 @@ class TRAINING:
         input_dim,
         lstm_model,
         svm_model,
+        print_out,
         pooling,
         device,
         track_cost,
@@ -515,6 +517,7 @@ class HYPER_TRAINING(TRAINING):
         input_dim,
         lstm_model,
         svm_model,
+        print_out,
         pooling,
         device,
         track_cost,
@@ -534,7 +537,8 @@ class HYPER_TRAINING(TRAINING):
         else:
             passed = False
 
-        return track_cost[-1], passed
+        print_out += f"\n\t\t{'Passed' if passed else 'Failed'} consistency check with: {percentage_anomaly_train*100}% anomalies"
+        return track_cost[-1], passed, print_out
 
     def data_prep_scaling(self, train_data, val_data, scaler, batch_size):
         train_loader = lstm_data_prep(
@@ -581,6 +585,7 @@ class REGULAR_TRAINING(TRAINING):
         input_dim,
         lstm_model,
         svm_model,
+        print_out,
         pooling,
         device,
         track_cost,
@@ -617,8 +622,10 @@ class REGULAR_TRAINING(TRAINING):
             succes = True
         else:
             succes = False
+        
+        print_out += f"\n  {'Passed' if succes else 'Failed'} consistency check with {diff_percentage_anomalies*100:.2f}% anomaly difference"
 
-        return diff_percentage_anomalies, succes
+        return diff_percentage_anomalies, succes, print_out
 
     def data_prep_scaling(self, train_data, val_data, scaler, batch_size):
         train_loader = lstm_data_prep(
