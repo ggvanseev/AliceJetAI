@@ -570,7 +570,7 @@ class HYPER_TRAINING(TRAINING):
 
 class REGULAR_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=0.03)
+        super().__init__(max_distance=0.01)
 
     def calc_loss(
         self,
