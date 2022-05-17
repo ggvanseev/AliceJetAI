@@ -54,7 +54,7 @@ from hyperopt import (
 
 ### --- User input --- ###
 # Set hyper space and variables
-max_evals = 4
+max_evals = 10
 patience = 10
 multicore_flag = False
 print_dataset_info = False
@@ -63,8 +63,8 @@ plot_flag = True
 plot_sample = False
 random.seed(0) # for shuffling of data sequences
 
-# notes on run, added to run_info.p, keep short or leave empty
-run_notes = "0:0.9 9:0.1[75:150],bs=2000, nu=0.1, lr=1e-4, eps=1e-9, epchs=100->700, backward on h bar, old cost condition"
+# notes onrrun, added to run_info.p, keep short or leave empty
+run_notes = "0:0.9 9:0.1[75:150],bs=2000, nu=0.1, 10 evals, max_distance=0.03"
 
 # ---------------------- #
 
