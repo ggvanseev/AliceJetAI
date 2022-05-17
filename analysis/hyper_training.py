@@ -21,7 +21,7 @@ import branch_names as na
 ### ------------------------------- User Input ------------------------------- ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 #file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # jewel samples
