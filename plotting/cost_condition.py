@@ -2,7 +2,12 @@
 Contains all the cost condition and cost functions used in plotting.
 """
 
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+
+import matplotlib as mpl
+mpl.rcParams.update(mpl.rcParamsDefault)
+import matplotlib.pylab as plt
+
 import os
 
 def cost_condition_plot(result: dict, title_plot: str, out_file: str):
@@ -31,15 +36,20 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     # plot cost condition and cost function
     fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
     fig.suptitle(title_plot, y=1.08)
-    ax1.plot(track_cost_condition[1:], linewidth=1.0,alpha=0.85, label="Cost Condition")
-    ax1.set_xlabel("Epochs")
-    ax1.set_ylabel("Cost Condition")
+    ax1.plot(track_cost_condition[1:], linewidth=1.3,alpha=0.85, label=r"Cost Condition: $(\kappa(\mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1}) - \kappa(\mathbf{ \theta }_k, \mathbf{ \alpha }_k))^2$")
+    ax1.set_xlabel(r"Epoch: $k$")
+    ax1.set_ylabel(r"Cost Condition")
+    ax1.set_ylim(bottom=0)
 
     ax2 = ax1.twinx()
-    ax2.plot(track_cost[1:], color="red", linewidth=1.0, alpha=0.85, label="Cost")
-    ax2.set_ylabel("Cost")
+    ax2.plot(track_cost[1:], color="red", linewidth=1.3, alpha=0.85, label=r"Cost: $\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
+    ax2.set_ylabel(r"Cost")
+    ax2.set_ylim(bottom=0)
 
     fig.legend()
+    plt.tight_layout()
+    plt.subplots_adjust(left=0.1, bottom=0.1, right=0.87, top=0.86)
+
 
     # save and close the plot
     fig.savefig(out_file)
@@ -84,6 +94,9 @@ def cost_condition_plots(trials: dict, job_id):
         out_txt += f"\n{'with loss:':18}{result['loss']}"
         out_txt += f"\n{'with final cost:':18}{result['final_cost']}"
         
+        # set matplotlib font settings
+        plt.rcParams.update({'font.size': 13.5})
+                
         # generate the plot
         fig = cost_condition_plot(result, title_plot, out_file=out_dir+ "/" f"trial_{i}.png")
         if fig == -1:

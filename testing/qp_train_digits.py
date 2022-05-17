@@ -101,7 +101,7 @@ test_dict = load_digits_data(test_file)
 # mix "0" = 90% as normal data with "9" = 10% as anomalous data
 train_data = train_dict["0"][:675] + train_dict["9"][75:150]
 #print('Mixed "9": 675 = 90% of normal data with "0": 75 = 10% as anomalous data for a train set of 750 samples')
-test_data = test_dict["9"][:360] + test_dict["0"][:40]
+test_data = test_dict["0"][:360] + test_dict["9"][:40]
 #print('Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples')
 
 # plot random sample
