@@ -317,7 +317,7 @@ class TRAINING:
         pooling = hyper_parameters["pooling"]
 
         # set epsilon and max_epochs
-        eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
+        eps, max_epochs = self.scaled_epsilon_n_max_epochs(learning_rate)
 
         # output string for printing in terminal:
         print_out = ""
@@ -500,6 +500,39 @@ class TRAINING:
     ):
         pass
 
+    def scaled_epsilon_n_max_epochs(self, learning_rate):
+        """
+        Returns an epsilon and max_epochs based on the learning rate.
+
+        Epsilon:
+        The learning rate determines how quickly the model learns,
+        and thus what we deem a good mach epoch. In addition the learning rate
+        determines how much the model changes per time step, and thus determines
+        the order of size of the cost_condition, determing when the model has stopped learning.
+
+        In case of Tolga's cost condition: epsilon is chosen as 1/1000 of learning rate
+        In case of taking cost condition as a percentage difference of the current cost
+        with the previous cost, epsilon is chosen as 10 x learning rate TODO debatable
+
+        Max_epochs:
+        The learning rate determines how quickly the model learns,
+        and thus what we deem a good max epoch with respect to time management.
+
+        Max_epoch is chosen as the order of size, times a hundred and devided by two, ie
+        learning rate = 1e-x, then max epochs = x*100/2=x*50
+
+        Note:
+        learning rate must be of the form: 1e-x, where x is a number [0,99]
+        """
+        order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
+
+        epsilon = 10 ** -(3 + order_of_magnitude)
+
+        more_epochs = 100 * (order_of_magnitude - 3) if order_of_magnitude > 3 else 0
+        max_epochs = 700 + more_epochs  # order_of_magnitude * 50
+
+        return epsilon, max_epochs
+
 
 class HYPER_TRAINING(TRAINING):
     def __init__(self) -> None:
@@ -565,6 +598,39 @@ class HYPER_TRAINING(TRAINING):
             track_jets_val_data,
             bf_out_txt,
         )
+
+    def scaled_epsilon_n_max_epochs(self, learning_rate):
+        """
+        Returns an epsilon and max_epochs based on the learning rate.
+
+        Epsilon:
+        The learning rate determines how quickly the model learns,
+        and thus what we deem a good mach epoch. In addition the learning rate
+        determines how much the model changes per time step, and thus determines
+        the order of size of the cost_condition, determing when the model has stopped learning.
+
+        In case of Tolga's cost condition: epsilon is chosen as 1/1000 of learning rate
+        In case of taking cost condition as a percentage difference of the current cost
+        with the previous cost, epsilon is chosen as 10 x learning rate TODO debatable
+
+        Max_epochs:
+        The learning rate determines how quickly the model learns,
+        and thus what we deem a good max epoch with respect to time management.
+
+        Max_epoch is chosen as the order of size, times a hundred and devided by two, ie
+        learning rate = 1e-x, then max epochs = x*100/2=x*50
+
+        Note:
+        learning rate must be of the form: 1e-x, where x is a number [0,99]
+        """
+        order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
+
+        epsilon = 10 ** -(3 + order_of_magnitude)
+
+        more_epochs = 100 * (order_of_magnitude - 3) if order_of_magnitude > 3 else 0
+        max_epochs = 700 + more_epochs  # order_of_magnitude * 50
+
+        return epsilon, max_epochs
 
 
 class REGULAR_TRAINING(TRAINING):
@@ -655,6 +721,39 @@ class REGULAR_TRAINING(TRAINING):
             track_jets_val_data,
             bf_out_txt,
         )
+
+    def scaled_epsilon_n_max_epochs(self, learning_rate):
+        """
+        Returns an epsilon and max_epochs based on the learning rate.
+
+        Epsilon:
+        The learning rate determines how quickly the model learns,
+        and thus what we deem a good mach epoch. In addition the learning rate
+        determines how much the model changes per time step, and thus determines
+        the order of size of the cost_condition, determing when the model has stopped learning.
+
+        In case of Tolga's cost condition: epsilon is chosen as 1/1000 of learning rate
+        In case of taking cost condition as a percentage difference of the current cost
+        with the previous cost, epsilon is chosen as 10 x learning rate TODO debatable
+
+        Max_epochs:
+        The learning rate determines how quickly the model learns,
+        and thus what we deem a good max epoch with respect to time management.
+
+        Max_epoch is chosen as the order of size, times a hundred and devided by two, ie
+        learning rate = 1e-x, then max epochs = x*100/2=x*50
+
+        Note:
+        learning rate must be of the form: 1e-x, where x is a number [0,99]
+        """
+        order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
+
+        epsilon = 10 ** -(3 + order_of_magnitude)
+
+        more_epochs = 10 * (order_of_magnitude - 3) if order_of_magnitude > 3 else 0
+        max_epochs = 120 + more_epochs  # order_of_magnitude * 50
+
+        return epsilon, max_epochs
 
 
 def run_full_training(
