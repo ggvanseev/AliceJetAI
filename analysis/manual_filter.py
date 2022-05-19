@@ -6,15 +6,16 @@ from win32gui import GetForegroundWindow
 import win32com.client
 
 job_ids = [
-    "10240832",
-    "10240834",
-    "10240835",
-    "10240836",
-    "10240837",
-    "10240838",
-    "10240839",
-    "10240840",
-    "10240841",
+    "10254514",
+    "10254515",
+    "10254516",
+    "10254517",
+    "10254518",
+    "10254519",
+    "10254520",
+    "10254521",
+    "10254522",
+    "10254523",
 ]
 # If list left empty, will give visual options using terminal
 selected_list = []
