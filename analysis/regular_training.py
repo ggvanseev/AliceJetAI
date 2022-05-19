@@ -28,7 +28,7 @@ from functions.training import REGULAR_TRAINING, run_full_training
 file_name = "samples/time_cluster_100k.root"
 
 # set run settings
-max_evals = 8
+max_evals = 1
 patience = 10
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
 multicore_flag = True  # for using SparkTrials or Trials, turn of for debuging
@@ -37,7 +37,7 @@ plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Run 10, 100k hyper_tunning based on 10240832-41 (not 33), pythia."  # Small command on run, will be save to save file.
+run_notes = "Run 11, 100k hyper_tunning based on 10240832-41 (not 33), pythia. Lower epochs."  # Small command on run, will be save to save file.
 
 ###-------------###
 
