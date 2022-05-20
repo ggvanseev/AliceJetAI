@@ -22,15 +22,15 @@ import branch_names as na
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_jewel_400k_n14.root"
+file_name = "samples/time_cluster_100k.root"
 
 # set run settings
 max_evals = 35
 patience = 5
 kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
-debug_flag = False  # for using debug space = only 1 configuration of hp
+debug_flag = True  # for using debug space = only 1 configuration of hp
 multicore_flag = True  # for using SparkTrials or Trials, turns of when debugging
-save_results_flag = True  # for saving trials and runtime
+save_results_flag = False  # for saving trials and runtime
 plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
@@ -91,7 +91,9 @@ space = hp.choice(
                 ],
             ),
             "pooling": hp.choice("pooling", ["mean", "last"]),  # "last" , "mean"
-            "max_epochs": hp.choice("max_epochs", [None]), # If giving none, will use automatic function
+            "max_epochs": hp.choice(
+                "max_epochs", [None]
+            ),  # If giving none, will use automatic function
         }
     ],
 )
@@ -124,6 +126,7 @@ space_debug = hp.choice(
                 ],
             ),
             "pooling": hp.choice("pooling", ["mean"]),
+            "max_epochs": hp.choice("max_epochs", [None]),
         }
     ],
 )

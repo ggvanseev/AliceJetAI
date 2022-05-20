@@ -68,7 +68,7 @@ space = hp.choice(
             ),
             "pooling": hp.choice("pooling", ["last"]),  # "last" , "mean"
             "max_epochs": hp.choice(
-                "max_epochs", [None]
+                "max_epochs", [200]
             ),  # If giving none, will use automatic function
         }
     ],

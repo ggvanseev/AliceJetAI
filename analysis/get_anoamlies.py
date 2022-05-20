@@ -6,11 +6,11 @@ from functions.data_loader import load_n_filter_data
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_5k.root"
+file_name = "samples/time_cluster_jewel_5k.root"
 
 
-job_id = 10206558
-jet_info = "pythia_5k"
+job_id = 10290603
+jet_info = "jewel_5k"
 kt_cut = None
 
 
@@ -22,7 +22,8 @@ recur_jets, jets = load_n_filter_data(file_name, kt_cut=kt_cut)
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 trials_test_list = torch.load(
-    f"storing_results/trials_test_manual_filter_{job_id}.p", map_location=device
+    f"storing_results/manual_selected/trials_test_manual_filter_{job_id}.p",
+    map_location=device,
 )
 
 trials = trials_test_list["_trials"]

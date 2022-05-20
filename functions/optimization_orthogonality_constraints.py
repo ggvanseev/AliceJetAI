@@ -4,6 +4,25 @@ from functions.data_manipulation import get_full_pytorch_weight
 
 import numpy as np
 
+from numba import njit
+
+
+@njit
+def kappa_loop_njit(n_alphas, alphas, h_list_adjusted):
+    """
+    Us njit for speed
+    """
+    out = 0  # use for trackking summation
+
+    # alphas_matrix = np.outer(alphas, alphas).T  # removed since to much memmory consumption
+
+    for i in range(n_alphas):
+        # out += 0.5 * np.dot(alphas_matrix[i], h_matrix[i])
+        h_matrix = np.dot(h_list_adjusted, h_list_adjusted[i])
+        out += 0.5 * np.dot(alphas[i] * alphas, h_matrix)
+
+    return out
+
 
 def kappa(alphas, a_idx, h_list):
     """Cost function to be minimized. Follows from the definitions of the OC-SVM.
@@ -23,21 +42,31 @@ def kappa(alphas, a_idx, h_list):
         # Due to memmory issues decrease alphas from float64 to float32 , toll
         alphas = alphas.astype(np.float32)
 
-        h_matrix = (
-            h_list[a_idx] @ h_list[a_idx].T
-        ).cpu()  # Matrix multiplication is time consuming, thus to do this as least as possbile do this
+        # h_matrix = (
+        #     (h_list[a_idx] @ h_list[a_idx].T).cpu().detach().numpy()
+        # )  # Matrix multiplication is time consuming, thus to do this as least as possbile do this
         # once and create a matrix with the results
 
-        out = 0  # use for trackking summation
-        n_alphas = len(a_idx)
+        # out = 0  # use for trackking summation
+        # n_alphas = len(a_idx)
 
         # alphas_matrix = np.outer(alphas, alphas).T  # removed since to much memmory consumption
 
-        for i in range(n_alphas):
-            # out += 0.5 * np.dot(alphas_matrix[i], h_matrix[i])
-            out += 0.5 * np.dot(alphas[i] * alphas, h_matrix[i])
+        # for i in range(n_alphas):
+        #     # out += 0.5 * np.dot(alphas_matrix[i], h_matrix[i])
+        #     out += 0.5 * np.dot(alphas[i] * alphas, h_matrix[i])
+
+        out = kappa_loop_njit(
+            n_alphas=len(a_idx),
+            alphas=alphas,
+            h_list_adjusted=h_list[a_idx].cpu().detach().numpy(),
+        )
 
     return out
+
+
+def time_it():
+    time_start = time
 
 
 def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
