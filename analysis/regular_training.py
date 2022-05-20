@@ -67,6 +67,9 @@ space = hp.choice(
                 [[na.recur_dr, na.recur_z, na.recur_tf]],  # , na.recur_jetpt
             ),
             "pooling": hp.choice("pooling", ["last"]),  # "last" , "mean"
+            "max_epochs": hp.choice(
+                "max_epochs", [None]
+            ),  # If giving none, will use automatic function
         }
     ],
 )

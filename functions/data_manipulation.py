@@ -531,7 +531,7 @@ def h_bar_list_to_numpy(h_bar_list, device):
     return h_bar_list_np
 
 
-def scaled_epsilon_n_max_epochs(learning_rate):
+def scaled_epsilon_n_max_epochs(learning_rate, max_epochs=None):
     """
     Returns an epsilon and max_epochs based on the learning rate.
 
@@ -559,8 +559,10 @@ def scaled_epsilon_n_max_epochs(learning_rate):
 
     epsilon = 10 ** -(3 + order_of_magnitude)
 
-    more_epochs = 100 * (order_of_magnitude - 3) if order_of_magnitude > 3 else 0
-    max_epochs = 700 + more_epochs  # order_of_magnitude * 50
+    # If no max_epochs, use standard calculation.
+    if not max_epochs:
+        more_epochs = 100 * (order_of_magnitude - 3) if order_of_magnitude > 3 else 0
+        max_epochs = 700 + more_epochs  # order_of_magnitude * 50
 
     return epsilon, max_epochs
 
