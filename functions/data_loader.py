@@ -17,7 +17,7 @@ import numpy as np
 from copy import copy
 
 
-def select_non_empty_branches(branches, non_empty_key):
+def select_non_empty_branches(branches, non_empty_key, branches_non_recur=False):
     """
     non_empty_key: give along a recur, because due to zcut a branch might have become empty
     """
@@ -29,6 +29,9 @@ def select_non_empty_branches(branches, non_empty_key):
             non_empty.append(i)
 
     branches = branches[non_empty]
+    branches_non_recur = (
+        branches_non_recur[non_empty] if branches_non_recur is not False else False
+    )
     branch_reference = branches[non_empty_key]
 
     # empty partially empty entries
@@ -42,7 +45,14 @@ def select_non_empty_branches(branches, non_empty_key):
 
     for field in branches.fields:
         branches[field] = branches[field][mask]
-    return branches
+
+    if branches_non_recur is not False:
+        for field in branches_non_recur.fields:
+            branches_non_recur[field] = branches_non_recur[field][mask]
+    else:
+        branches_non_recur = None
+
+    return branches, branches_non_recur
 
 
 def concatenate_function(value):
@@ -164,15 +174,20 @@ def load_n_filter_data(
         # q_kts_hist = np.histogram(q_kts_flat, bins=range(round(max(q_kts_flat))))
 
     # remove empty additions from recursive jets and flatten them, i.e. take jet out of event nesting
-    jets_recur = select_non_empty_branches(
-        jets_recur, non_empty_key=jet_recur_branches[0]
-    )
+    if jets:
+        jets_recur, jets = select_non_empty_branches(
+            jets_recur,
+            non_empty_key=jet_recur_branches[0],
+            branches_non_recur=jets,
+        )
+        jets = flatten_array(jets)
+    else:
+        jets_recur, _ = select_non_empty_branches(
+            jets_recur,
+            non_empty_key=jet_recur_branches[0],
+        )
 
     jets_recur = flatten_array(jets_recur)
-
-    if jets:
-        jets = select_non_empty_branches(jets, non_empty_key=jet_branches[0])
-        jets = flatten_array(jets)
 
     print(f"Number of jets in dataset:\t\t{len(jets_recur)}")
 
