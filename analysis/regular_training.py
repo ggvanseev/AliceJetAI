@@ -25,7 +25,7 @@ from functions.training import REGULAR_TRAINING, run_full_training
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_jewel_100k.root"
+file_name = "samples/time_cluster_100k.root"
 
 # set run settings
 max_evals = 1
