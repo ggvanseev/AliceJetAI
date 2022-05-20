@@ -29,7 +29,7 @@ def normal_vs_anomaly_2D(data, classification, file_name):
     normal = data[classification == 1]
     anomalous = data[classification == -1]
 
-    plt.figure()
+    plt.figure(figsize=[6 * 1.36, 8 * 1.36], dpi=160)
 
     # plot normal
     x = [i[0] for i in normal]
@@ -47,6 +47,10 @@ def normal_vs_anomaly_2D(data, classification, file_name):
 
 
 def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_name, y=None):
+    
+    # set matplotlib font settings
+    plt.rcParams.update({'font.size': 12})
+    
     first_key = list(data_dict.keys())[0]
     nr_trials = len(data_dict[first_key])
     nr_digits = len(data_dict.keys())
@@ -55,7 +59,7 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
     
     for i in range(nr_trials):
         
-        fig = plt.figure()
+        fig = plt.figure(figsize=[6 * 1.36, 6], dpi=160)
         ax = plt.subplot(111)
         model = ocsvm_list[i]
         
@@ -78,15 +82,15 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
         
         # plot data and decision function
         ax.contour(xx1, yy1, Z1, levels=(-1,0,1), linewidths=(0.5, 0.75, 0.5),
-                    linestyles=('--', '-', '--'), colors=['k','k','k'])
-        ax.contourf(xx1, yy1, Z1, cmap=cm.get_cmap("coolwarm_r"), alpha=0.3, linestyles="None")
+                    linestyles=('--', '-', '--'), colors=['r','k','b'])
+        #ax.contourf(xx1, yy1, Z1, cmap=cm.get_cmap("coolwarm_r"), alpha=0.3, linestyles="None")
         
         
         # plot support vectors
         # plt.scatter(model.support_vectors_[:,0], model.support_vectors_[:,1], c=y[model.support_] if y else model.predict(model.support_vectors_),
         #        cmap=plt.cm.viridis, lw=1, edgecolors='k', label="Support Vectors")
         
-        color = plt.cm.viridis(np.linspace(0,1,2*len(data_dict))) # since I won't put 10 digits in one plot
+        color = ['b', 'tab:orange', 'c', 'm', 'k', 'b1', 'c1', 'm1', 'k1']#plt.cm.(np.linspace(0,1,2*len(data_dict))) # since I won't put 10 digits in one plot
         for j, key in enumerate(data_dict):
             data = data_dict[key][i]
             classification = classification_dict[key][i]
@@ -94,15 +98,18 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
             normal = data[classification == 1]
             anomalous = data[classification == -1]
             
+            # set color
+            #color = next(ax._get_lines.prop_cycler)['color']
+            
             # plot normal
             x = [i[0] for i in normal]
             y = [i[1] for i in normal]
-            plt.scatter(x, y, color=color[2*j], s=15, linewidths=0.7, alpha=0.7, label=key+'_normal', edgecolors="k") # , marker=markers[j]
+            plt.scatter(x, y, color=color[j], s=30, linewidths=1.0, marker=markers[j], alpha=0.7, label=key+'_normal', edgecolors="k") # , marker=markers[j]
 
             # plot anomalous
             x = [i[0] for i in anomalous]
             y = [i[1] for i in anomalous]
-            plt.scatter(x, y, color=color[2*j], s=15, linewidths=0.7, alpha=0.7, label=key+'_anomalous', edgecolors="r")
+            plt.scatter(x, y, color=color[j], s=30, linewidths=1.0, marker=markers[j], alpha=0.7, label=key+'_anomalous', edgecolors="r")
         
         # Shrink current axis's height by 10% on the bottom
         box = ax.get_position()
@@ -112,11 +119,13 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
         plt.xlabel(r"$\overline{h_{i,1}}$")
         plt.ylabel(r"$\overline{h_{i,2}}$")
         lgd = ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), 
-                  fancybox=True, shadow=True, ncol=nr_digits, prop={'size': 8})
+                  fancybox=True, shadow=True, ncol=nr_digits) # , prop={'size': 8}
+        plt.subplots_adjust(left=0.1, bottom=0.2, right=0.87, top=0.86)
+
         plt.savefig(f"{file_name}/trial_{i}_all", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
 
 
-def sk_train_plot(model, X1,y=None, fit=False, ax=plt):
+def sk_train_plot(model, X1, y=None, fit=False, ax=plt):
     if fit:
         # fit (train) and predict the data, if y
         model.fit(X1, y, sample_weight=None) # TODO figure out sample_weight

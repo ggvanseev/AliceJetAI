@@ -15,19 +15,22 @@ from functions.data_loader import load_n_filter_data, load_n_filter_data_qg
 from hyperopt import (
     hp,
 )  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
-
+import torch
 import branch_names as na
 
 ### ------------------------------- User Input ------------------------------- ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
+#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 #file_name = "samples/JetToyHIResultSoftDropSkinny.root"
-
-# jewel samples
-jewel = False
 # file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 #file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
+file_name = "samples/mixed_90pct_g_jets_10pct_q_jets.p"
+
+# data settings
+pre_made = True  # set to true if you are using a dataset that has been mixed and edited and put in a pickle file
+single = True  # set to true if you just want the complete sample and not quark/gluon split
+
 
 # set run settings
 max_evals = 60
@@ -40,7 +43,7 @@ plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Run 10, run on jewel, with large dataset."  # Small comment on run, will be saved to save file.
+run_notes = "Hyper Training, 100k quark gluons"  # Small comment on run, will be saved to save file.
 
 ###-----------------------------------------------------------------------------###
 
@@ -121,24 +124,26 @@ if debug_flag:
     space = space_debug
     multicore_flag = False
 
-if jewel == True:
-    sample = load_n_filter_data(file_name, kt_cut=kt_cut)
+if pre_made:
+    jets_recur = torch.load(file_name)
 else:
-    # Load and filter data for criteria eta and jetpt_cap
-    g_jets_recur, _, _, _ = load_n_filter_data_qg(file_name, kt_cut=kt_cut)
-    print("Loading data complete")
+    if single == True:
+        jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
+    else:
+        # Load and filter data for criteria eta and jetpt_cap
+        jets_recur, _, _, _ = load_n_filter_data_qg(file_name, kt_cut=kt_cut)
+        print("Loading data complete")
 
-    # Mix sample with e.g. 90% gluons and 10% quarks
-    # sample = ak.concatenate((g_jets_recur[:1350],q_jets_recur[:150]))
-    # # TODO first shuffle mixed_sample? nah, it's not really possible within awkward, you'd have to get it out first
+        # Mix sample with e.g. 90% gluons and 10% quarks
+        # sample = ak.concatenate((g_jets_recur[:1350],q_jets_recur[:150]))
+        # # TODO first shuffle mixed_sample? nah, it's not really possible within awkward, you'd have to get it out first
 
-    # # remove from memory
-    # del g_jets_recur, q_jets_recur
+        # # remove from memory
+        # del g_jets_recur, q_jets_recur
     
-    sample = g_jets_recur
 
 # split data 
-_, split_dev_data, _ = train_dev_test_split(sample, split=[0.8, 0.1])
+_, split_dev_data, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1])
 print("Splitting data complete")
 
 # do full training

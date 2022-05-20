@@ -23,6 +23,9 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     Returns:
         int: -1 is bad model
     """    
+        
+    # set matplotlib font settings
+    plt.rcParams.update({'font.size': 13.5})
     
     # extract cost data from the results
     cost_data = result["cost_data"]
@@ -93,9 +96,6 @@ def cost_condition_plots(trials: dict, job_id):
         # add final loss and cost to the info
         out_txt += f"\n{'with loss:':18}{result['loss']}"
         out_txt += f"\n{'with final cost:':18}{result['final_cost']}"
-        
-        # set matplotlib font settings
-        plt.rcParams.update({'font.size': 13.5})
                 
         # generate the plot
         fig = cost_condition_plot(result, title_plot, out_file=out_dir+ "/" f"trial_{i}.png")

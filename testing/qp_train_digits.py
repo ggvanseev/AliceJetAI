@@ -55,7 +55,7 @@ from hyperopt import (
 ### --- User input --- ###
 # Set hyper space and variables
 max_evals = 10
-patience = 10
+patience = 5
 multicore_flag = False
 print_dataset_info = False
 save_results_flag = True
@@ -64,7 +64,7 @@ plot_sample = False
 random.seed(0) # for shuffling of data sequences
 
 # notes onrrun, added to run_info.p, keep short or leave empty
-run_notes = "0:0.9 9:0.1[75:150],bs=2000, 10 evals, nu=0.3"
+run_notes = "0:0.9 9:0.1[75:150],bs=2000, 10 evals, nu=0.1, mean pool, consistency 0.03, last results?"
 
 # ---------------------- #
 
@@ -80,7 +80,7 @@ space = hp.choice(
             "learning_rate": 10 ** hp.choice("learning_rate", [-4]),
             "dropout": hp.choice("dropout", [0]),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.3]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default
             "svm_gamma": hp.choice("svm_gamma", ["scale"]),  #"scale" or "auto"[ 0.23 was the defeault before], auto seems weird
             "scaler_id": hp.choice("scaler_id", ["minmax"]),  # "minmax" = MinMaxScaler or "std" = StandardScaler
             "pooling": hp.choice("pooling", ["mean"]),  # "last" , "mean"

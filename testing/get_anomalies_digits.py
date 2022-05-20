@@ -1,4 +1,5 @@
 import os
+import sys
 import numpy as np
 import torch
 from functions.classification import get_anomalies, CLASSIFICATION_CHECK
@@ -7,7 +8,7 @@ from testing_functions import load_digits_data
 from  testing.plotting_test import *
 
 
-job_id = "22_05_17_1008"
+job_id = "22_05_19_2315"
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 train_file = "samples/pendigits/pendigits-orig.tra"
@@ -70,7 +71,12 @@ trials_h_bars = dict()
 trials_classifications = dict()
 trials_ocsvms = [trials[i]['result']['model']['ocsvm'] for i in range(len(trials))]
 
-for i in range(4):
+
+orig_stdout = sys.stdout
+f = open(out_dir+'/print_out.txt', 'w')
+sys.stdout = f
+
+for i in range(2):
     if i == 0:
         jets = test_dict["0"][:700]
         type_jets = "0_digits"
@@ -86,9 +92,12 @@ for i in range(4):
     
     out_txt = f"Anomalies for data of type: {type_jets}"
     print(out_txt)
-    trials_h_bars[type_jets], trials_classifications[type_jets] = get_anomalies(jets, job_id, trials, file_name, jet_info=type_jets)
+    trials_h_bars[type_jets], _, trials_classifications[type_jets] = get_anomalies(jets, job_id, trials, file_name, jet_info=type_jets)
     
     print("\n")
     
 
-normal_vs_anomaly_2D_all(trials_h_bars, trials_classifications, trials_ocsvms, f"testing/output/{job_id}")
+normal_vs_anomaly_2D_all(trials_h_bars, trials_classifications, trials_ocsvms, out_dir)
+
+sys.stdout = orig_stdout
+f.close()
