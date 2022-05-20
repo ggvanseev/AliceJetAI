@@ -50,7 +50,7 @@ def concatenate_function(value):
     return concatenated_value
 
 
-def flatten_array(branches, step_size=1000):
+def flatten_array(branches):
     """
     returns a flattend array
     """
