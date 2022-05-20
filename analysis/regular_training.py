@@ -25,7 +25,7 @@ from functions.training import REGULAR_TRAINING, run_full_training
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_jewel_500k.root"
+file_name = "samples/time_cluster_jewel_100k.root"
 
 # set run settings
 max_evals = 1
@@ -37,7 +37,7 @@ plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Run 12, 500k hyper_tunning based on 10254514-23, jewel. Lower epochs."  # Small command on run, will be save to save file.
+run_notes = "Run 12, 100k hyper_tunning based on 10240832-41 (not 33), pythia. Lower epochs."  # Small command on run, will be save to save file.
 
 ###-------------###
 
@@ -50,14 +50,14 @@ space = hp.choice(
             "hidden_dim": hp.choice("hidden_dim", [9]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(80)]),
-            "learning_rate": 10 ** hp.choice("learning_rate", [-6]),
+            "learning_rate": 10 ** hp.choice("learning_rate", [-5]),
             "dropout": hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.2]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.5]),  # 0.5 was the default
             "svm_gamma": hp.choice(
-                "svm_gamma", ["scale"]
+                "svm_gamma", ["auto"]
             ),  # "scale" or "auto"[ 0.23 was the defeault before], auto seems weird
             "scaler_id": hp.choice(
                 "scaler_id", ["minmax"]
@@ -66,7 +66,7 @@ space = hp.choice(
                 "variables",
                 [[na.recur_dr, na.recur_z, na.recur_tf]],  # , na.recur_jetpt
             ),
-            "pooling": hp.choice("pooling", ["last"]),  # "last" , "mean"
+            "pooling": hp.choice("pooling", ["mean"]),  # "last" , "mean"
             "max_epochs": hp.choice(
                 "max_epochs", [200]
             ),  # If giving none, will use automatic function
