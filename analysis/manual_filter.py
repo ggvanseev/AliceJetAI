@@ -5,7 +5,7 @@ import win32gui as wg
 from win32gui import GetForegroundWindow
 import win32com.client
 
-job_ids = ["10268572"]
+job_ids = ["10290605"]
 # If list left empty, will give visual options using terminal
 selected_list = []
 

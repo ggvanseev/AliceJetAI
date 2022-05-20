@@ -635,6 +635,9 @@ class REGULAR_TRAINING(TRAINING):
     def data_prep_branch_filler(
         self, train_data, val_data, batch_size, input_variables
     ):
+        train_data = train_data[input_variables]
+        val_data = val_data[input_variables]
+
         if type(train_data) is not list:
             train_data = format_ak_to_list(train_data)
         if type(val_data) is not list:
@@ -642,7 +645,7 @@ class REGULAR_TRAINING(TRAINING):
 
         bf_out_txt = ""
         train_data, track_jets_train_data, max_n_train_batches, _ = branch_filler(
-            train_data, batch_size=batch_size
+            train_data, batch_size=batch_size, n_features=len(input_variables)
         )
         bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_train_batches}"
         val_data, track_jets_val_data, max_n_val_batches, _ = branch_filler(
