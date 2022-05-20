@@ -37,7 +37,7 @@ plot_flag = (
     False  # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Run 11, 500k hyper_tunning based on 10254514-23, jewel. Lower epochs."  # Small command on run, will be save to save file.
+run_notes = "Run 12, 500k hyper_tunning based on 10254514-23, jewel. Lower epochs."  # Small command on run, will be save to save file.
 
 ###-------------###
 
