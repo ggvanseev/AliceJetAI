@@ -269,8 +269,9 @@ def training_algorithm(
 
 
 class TRAINING:
-    def __init__(self, max_distance) -> None:
+    def __init__(self, max_distance, max_attempts) -> None:
         self.max_distance_percentage_anomalies = max_distance
+        self.max_attempts = max_attempts
 
     def run_training(
         self,
@@ -281,7 +282,6 @@ class TRAINING:
         else torch.device("cpu"),
         val_data=None,
         patience=5,
-        max_attempts=4,
     ):
         """
         This function searches for the correct hyperparameters.
@@ -389,7 +389,7 @@ class TRAINING:
 
         # loop for n attempts: if training fails, it attempts more trainings
         n_attempt = 0
-        while n_attempt < max_attempts:
+        while n_attempt < self.max_attempts:
             n_attempt += 1
 
             # declare models
@@ -447,7 +447,7 @@ class TRAINING:
                 )
 
                 if train_success:
-                    n_attempt = max_attempts
+                    n_attempt = self.max_attempts
 
         # track training time and print statement
         dt = time.time() - time_track
@@ -505,7 +505,7 @@ class TRAINING:
 
 class HYPER_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=1)
+        super().__init__(max_distance=1, max_attempts=4)
 
     def calc_loss(
         self,
@@ -571,7 +571,7 @@ class HYPER_TRAINING(TRAINING):
 
 class REGULAR_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=0.01)
+        super().__init__(max_distance=0.01, max_attempts=1)
 
     def calc_loss(
         self,
