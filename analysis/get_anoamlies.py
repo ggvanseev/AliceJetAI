@@ -9,7 +9,14 @@ from functions.data_loader import load_n_filter_data
 file_name = "samples/time_cluster_jewel_5k.root"
 
 
-job_id = 10290605
+job_ids = [
+    "10298990",
+    "10298991",
+    "10298992",
+    "10298994",
+    "10298995",
+    "10298996",
+]
 jet_info = "jewel_5k"
 kt_cut = None
 
@@ -21,30 +28,35 @@ recur_jets, jets = load_n_filter_data(file_name, kt_cut=kt_cut)
 
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-trials_test_list = torch.load(
-    f"storing_results/manual_selected/trials_test_manual_filter_{job_id}.p",
-    map_location=device,
-)
 
-trials = trials_test_list["_trials"]
+trials_test_list = [
+    torch.load(
+        f"storing_results/manual_selected/trials_test_manual_filter_{job_id}.p",
+        map_location=device,
+    )
+    for job_id in job_ids
+]
+for job_id, trials in zip(job_ids, trials_test_list):
 
-# from run excluded files:
-classifaction_check = CLASSIFICATION_CHECK()
-indices_zero_per_anomaly_nine_flag = classifaction_check.classification_all_nines_test(
-    trials=trials
-)
+    trials = trials["_trials"]
 
-# remove unwanted results:
-track_unwanted = list()
-for i in range(len(trials)):
-    if (
-        trials[i]["result"]["loss"] == 10
-        or trials[i]["result"]["hyper_parameters"]["num_layers"] == 2
-        # or trials[i]["result"]["hyper_parameters"]["scaler_id"] == "minmax"
-        or i in indices_zero_per_anomaly_nine_flag
-    ):
-        track_unwanted = track_unwanted + [i]
+    # from run excluded files:
+    classifaction_check = CLASSIFICATION_CHECK()
+    indices_zero_per_anomaly_nine_flag = (
+        classifaction_check.classification_all_nines_test(trials=trials)
+    )
 
-trials = [i for j, i in enumerate(trials) if j not in track_unwanted]
+    # remove unwanted results:
+    track_unwanted = list()
+    for i in range(len(trials)):
+        if (
+            trials[i]["result"]["loss"] == 10
+            or trials[i]["result"]["hyper_parameters"]["num_layers"] == 2
+            # or trials[i]["result"]["hyper_parameters"]["scaler_id"] == "minmax"
+            or i in indices_zero_per_anomaly_nine_flag
+        ):
+            track_unwanted = track_unwanted + [i]
 
-get_anomalies(recur_jets, job_id, trials, file_name, jet_info)
+    trials = [i for j, i in enumerate(trials) if j not in track_unwanted]
+
+    get_anomalies(recur_jets, job_id, trials, file_name, jet_info)
