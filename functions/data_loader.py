@@ -15,6 +15,7 @@ from typing import Tuple
 import branch_names as na
 import numpy as np
 from copy import copy
+import pickle
 
 
 def select_non_empty_branches(branches, non_empty_key, branches_non_recur=False):
@@ -136,7 +137,7 @@ def load_n_filter_data(
             (abs(jets_eta_pt_cut[na.jet_eta]) < eta_max)
             & (jets_eta_pt_cut[na.jetpt] > pt_min)
         ]
-        if jets:
+        if jet_branches:
             jets = jets[
                 (abs(jets_eta_pt_cut[na.jet_eta]) < eta_max)
                 & (jets_eta_pt_cut[na.jetpt] > pt_min)
@@ -162,7 +163,7 @@ def load_n_filter_data(
         # cut kts
         jets_recur = jets_recur[jets_recur_kt > kt_cut]
 
-        if jets:
+        if jet_branches:
             jets = jets[jets_recur_kt > kt_cut]
 
         # hist gluons TODO keep for possible later analysis: histograms
@@ -174,7 +175,7 @@ def load_n_filter_data(
         # q_kts_hist = np.histogram(q_kts_flat, bins=range(round(max(q_kts_flat))))
 
     # remove empty additions from recursive jets and flatten them, i.e. take jet out of event nesting
-    if jets:
+    if jet_branches:
         jets_recur, jets = select_non_empty_branches(
             jets_recur,
             non_empty_key=jet_recur_branches[0],
@@ -192,3 +193,42 @@ def load_n_filter_data(
     print(f"Number of jets in dataset:\t\t{len(jets_recur)}")
 
     return jets_recur, jets
+
+
+def load_anomalies(job_ids: list, jet_info: str):
+    for job_id in job_ids:
+        if "anomalies_info" in locals():
+            anomalies_info_temp = pickle.load(
+                open(
+                    f"storing_results/anomaly_classification_{jet_info}_{job_id}.pkl",
+                    "rb",
+                )
+            )
+            # check if data is the same
+            if anomalies_info["file"] == anomalies_info_temp["file"]:
+                new_first_key = list(anomalies_info["jets_index"].keys())[-1] + 1
+                for key in anomalies_info_temp["jets_index"].keys():
+                    anomalies_info["jets_index"][
+                        new_first_key + key
+                    ] = anomalies_info_temp["jets_index"][key]
+                    anomalies_info["percentage_anomalies"] = np.append(
+                        anomalies_info["percentage_anomalies"],
+                        anomalies_info_temp["percentage_anomalies"][key],
+                    )
+                    anomalies_info["classification_annomaly"][
+                        new_first_key + key
+                    ] = anomalies_info_temp["classification_annomaly"][key]
+            else:
+                print(
+                    f"Job id: {job_id} didnot have the same underlying data as the original job {job_ids[0]}"
+                )
+
+        else:
+            anomalies_info = pickle.load(
+                open(
+                    f"storing_results/anomaly_classification_{jet_info}_{job_id}.pkl",
+                    "rb",
+                )
+            )
+
+    return anomalies_info

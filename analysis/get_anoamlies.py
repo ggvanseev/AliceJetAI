@@ -6,20 +6,25 @@ from functions.data_loader import load_n_filter_data
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_jewel_5k.root"
+file_name = "samples/pythia_50k_testing.root"
 
 
 job_ids = [
-    "10298990",
-    "10298991",
-    "10298992",
-    "10298994",
-    "10298995",
-    "10298996",
+    "10299081",
+    "10299082",
+    "10299083",
+    "10299084",
+    "10299085",
+    "10299086",
+    "10299087",
+    "10299088",
+    "10299089",
+    "10299090",
 ]
-jet_info = "jewel_5k"
+jet_info = "pythia_50k"
 kt_cut = None
 
+print(jet_info, "\n", job_ids)
 
 # Load and filter data for criteria eta and jetpt_cap
 recur_jets, jets = load_n_filter_data(file_name, kt_cut=kt_cut)

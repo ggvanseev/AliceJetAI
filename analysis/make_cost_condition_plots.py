@@ -7,12 +7,16 @@ from plotting.cost_condition import cost_condition_plots
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
-    "10298990",
-    "10298991",
-    "10298992",
-    "10298994",
-    "10298995",
-    "10298996",
+    "10299081",
+    "10299082",
+    "10299083",
+    "10299084",
+    "10299085",
+    "10299086",
+    "10299087",
+    "10299088",
+    "10299089",
+    "10299090",
 ]
 # select "test" or "train"
 trial_type = "test"
