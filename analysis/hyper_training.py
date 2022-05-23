@@ -22,7 +22,7 @@ import branch_names as na
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/time_cluster_10k.root"
+file_name = "samples/time_cluster_1k.root"
 
 # set run settings
 max_evals = 35
