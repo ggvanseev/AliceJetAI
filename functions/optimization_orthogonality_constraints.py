@@ -64,7 +64,7 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
     d_kappa = alphas_tensor @ h_bar_list[a_idx] # * alphas_sum
     
     # seems this one is correct after all...
-    out = (d_kappa * gradient_hi.T).T
+    out = np.mean(alphas)*(d_kappa * gradient_hi.T).T
 
     # out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T)
 

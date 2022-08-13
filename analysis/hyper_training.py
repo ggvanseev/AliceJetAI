@@ -10,7 +10,7 @@ completed on a number of trials equal to 'max_evals'.
 """
 from functions.training import run_full_training, HYPER_TRAINING
 from functions.data_manipulation import train_dev_test_split
-from functions.data_loader import load_n_filter_data, load_n_filter_data_qg
+from functions.data_loader import load_n_filter_data, load_n_filter_data_qg, mix_quark_gluon_samples
 
 from hyperopt import (
     hp,
@@ -18,29 +18,29 @@ from hyperopt import (
 import torch
 import branch_names as na
 
+
 ### ------------------------------- User Input ------------------------------- ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
-#file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
-file_name = "samples/mixed_90pct_g_jets_10pct_q_jets.p"
+# file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 
-# data settings
-pre_made = True  # set to true if you are using a dataset that has been mixed and edited and put in a pickle file
-single = True  # set to true if you just want the complete sample and not quark/gluon split
-
+# set data sample settings
+out_file = ""               # if previously created a specific sample, otherwise leave empty
+mix = True                  # set to true if you want a mixture of quark and gluon jets
+g_percentage = 90           # percentage gluon jets of mixture
 
 # set run settings
 max_evals = 60
 patience = 5
-kt_cut = None  # for dataset, splittings kt > 1.0 GeV, assign None if not using
-debug_flag = False  # for using debug space = only 1 configuration of hp
-multicore_flag = True  # for using SparkTrials or Trials, turns of when debugging
-save_results_flag = True  # for saving trials and runtime
+kt_cut = None               # for dataset, splittings kt > 1.0 GeV, assign None if not using
+debug_flag = False          # for using debug space = only 1 configuration of hp
+multicore_flag = True       # for using SparkTrials or Trials, turns of when debugging
+save_results_flag = True    # for saving trials and runtime
 plot_flag = (
-    False  # for making cost condition plots, only works if save_results_flag is True
+    False                   # for making cost condition plots, only works if save_results_flag is True
 )
 
 run_notes = "Hyper Training, 100k quark gluons"  # Small comment on run, will be saved to save file.
@@ -62,7 +62,6 @@ space = hp.choice(
                 "min_epochs", [int(80)]
             ),  # lijkt niet heel veel te doen
             "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 0.5),
-            # "decay_factor": hp.choice("decay_factor", [0.1, 0.4, 0.5, 0.8, 0.9]), #TODO
             "dropout": hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
@@ -124,23 +123,15 @@ if debug_flag:
     space = space_debug
     multicore_flag = False
 
-if pre_made:
-    jets_recur = torch.load(file_name)
+# Load and filter data for criteria eta and jetpt_cap
+# You can load your premade mix here: pickled file w q/g mix
+if out_file:
+    jets_recur, jets = torch.load(file_name)
+elif mix:
+    jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut, dr_cut=dr_cut)
 else:
-    if single == True:
-        jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
-    else:
-        # Load and filter data for criteria eta and jetpt_cap
-        jets_recur, _, _, _ = load_n_filter_data_qg(file_name, kt_cut=kt_cut)
-        print("Loading data complete")
-
-        # Mix sample with e.g. 90% gluons and 10% quarks
-        # sample = ak.concatenate((g_jets_recur[:1350],q_jets_recur[:150]))
-        # # TODO first shuffle mixed_sample? nah, it's not really possible within awkward, you'd have to get it out first
-
-        # # remove from memory
-        # del g_jets_recur, q_jets_recur
-    
+    jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
+print("Loading data complete")     
 
 # split data 
 _, split_dev_data, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1])

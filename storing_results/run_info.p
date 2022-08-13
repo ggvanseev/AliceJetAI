@@ -25,7 +25,66 @@
 22_05_18_1024	on: samples/mixed_1500jets_pct:90g_10q.p	runtime: 60.62 s	notes: regular training mixed 90g 10q, nu = 0.3, hidden dim = 3
 22_05_18_1026	on: samples/mixed_1500jets_pct:90g_10q.p	runtime: 48.00 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3
 22_05_19_1534	on: samples/mixed_1500jets_pct:90g_10q.p	runtime: 30.53 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, last pool
-22_05_19_1549	on: samples/mixed_1500jets_pct:90g_10q.p	runtime: 430.68 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3
+22_05_19_1549	on: samples/mixed_1500jets_pct:90g_10q.p	runtime: 430.68 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, last pool
 22_05_19_2009	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1834.76 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 10 evals, nu=0.5, mean pool, consistency 0.03, last results?
 22_05_19_2129	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1966.82 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 10 evals, nu=0.3, mean pool, consistency 0.03, last results?
 22_05_19_2315	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 3181.77 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 10 evals, nu=0.1, mean pool, consistency 0.03, last results?
+22_05_24_1331	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 3450.78 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 10 evals, nu=0.1, mean pool, consistency 0.03, last results?
+22_05_24_1750	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 807.91 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 4? evals, nu=0.1, mean pool, consistency 0.03, last results?
+22_05_24_2042	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 10031.35 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 4 evals, nu=0.1, mean pool, consistency 0.03, new tests, Gijs
+22_06_02_2140	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 670.20 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 4 evals, nu=0.3, mean pool, consistency 0.03, new tests Gijs
+22_06_02_2159	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 798.59 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 4 evals, nu=0.5, mean pool, consistency 0.03, new tests Gijs
+22_06_02_2226	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1124.58 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 4 evals, nu=0.5, mean pool, consistency 0.03, new tests Gijs
+22_06_02_2349	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 1026.59 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 4 evals, nu=0.5, mean pool, consistency 0.03, new tests Gijs
+22_07_15_0028	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 655.74 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.02
+22_07_15_0134	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 395.28 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.02
+22_07_15_0147	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 746.32 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.04
+22_07_15_0201	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 856.57 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.06
+22_07_15_0218	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 947.84 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.08
+22_07_15_0220	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 145.89 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.1
+22_07_15_0236	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 909.59 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.12
+22_07_15_0308	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 699.90 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.16
+22_07_15_0323	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 844.66 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.18
+22_07_15_0340	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 1043.87 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.2
+22_07_15_0351	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 642.39 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.22
+22_07_15_0408	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 984.97 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.24
+22_07_15_0428	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 1161.53 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.26
+22_07_15_0446	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 1056.93 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.28
+22_07_15_0507	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 1242.96 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.3
+22_07_15_0525	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 1054.14 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.32
+22_07_15_0543	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 1070.14 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.34
+22_07_15_1026	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 1138.93 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.36000000000000004
+22_07_15_1029	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 186.98 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.38
+22_07_15_1440	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 15023.42 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.4
+22_07_15_1809	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 664.61 s	notes: regular training mixed 90g 10q, nu = 0.1, hidden dim = 3, dr_cut = 0.14
+22_07_18_1234	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 541.94 s	notes: regular training mixed 90g 10q, mean_pooled, nu = 0.1, hidden dim = 3, dr_cut = 0.02
+22_07_18_1321	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 233.43 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3 0.02
+22_07_18_1327	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 240.42 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.02
+22_07_18_1334	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 362.53 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.04
+22_07_18_1340	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 312.66 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.06
+22_07_18_1345	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 336.63 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.08
+22_07_18_1348	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 161.53 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.1
+22_07_18_1357	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 523.63 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.12
+22_07_18_1404	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 367.38 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.14
+22_07_18_1410	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 366.57 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.16
+22_07_18_1414	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 264.89 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.18
+22_07_18_1417	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 130.51 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.2
+22_07_18_1424	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 425.51 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.22
+22_07_18_1432	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 454.24 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.24
+22_07_18_1435	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 146.26 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.26
+22_07_18_1440	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 295.92 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.28
+22_07_18_1445	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 281.95 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.3
+22_07_18_1452	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 409.41 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.32
+22_07_18_1502	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 633.60 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.34
+22_07_18_1508	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 298.63 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.36
+22_07_18_1514	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 394.06 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.38
+22_07_18_1520	on: samples/JetToyHIResultSoftDropSkinny.root	runtime: 319.30 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, dr_cut = 0.4
+22_08_09_1909	on: samples/mixed/1500jets_pct90g10q.p	runtime: 314.60 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 0/4
+22_08_09_1934	on: samples/mixed/1500jets_pct90g10q.p	runtime: 125.06 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 1/4
+22_08_09_1939	on: samples/mixed/1500jets_pct90g10q.p	runtime: 264.43 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 2/4
+22_08_09_1941	on: samples/mixed/1500jets_pct90g10q.p	runtime: 101.52 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 3/4
+22_08_11_1520	on: samples/mixed/1500jets_pct90g10q.p	runtime: 157144.85 s	notes: regular training mixed 90g 10q, mean_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 4/4
+22_08_12_1302	on: samples/mixed/1500jets_pct90g10q.p	runtime: 203.82 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 1/4
+22_08_12_1306	on: samples/mixed/1500jets_pct90g10q.p	runtime: 227.54 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 2/4
+22_08_12_1311	on: samples/mixed/1500jets_pct90g10q.p	runtime: 261.56 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 2/4
+22_08_12_1313	on: samples/mixed/1500jets_pct90g10q.p	runtime: 120.70 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 3/4

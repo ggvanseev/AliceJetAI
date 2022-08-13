@@ -71,6 +71,7 @@ from hyperopt import (
     Trials,
     SparkTrials,
 )  # Cite: Bergstra, J., Yamins, D., Cox, D. D. (2013) Making a Science of Model Search: Hyperparameter Optimization in Hundreds of Dimensions for Vision Architectures. To appear in Proc. of the 30th International Conference on Machine Learning (ICML 2013).
+from hyperopt.exceptions import AllTrialsFailed
 from functools import partial
 
 
@@ -281,8 +282,8 @@ class TRAINING:
         if torch.cuda.is_available()
         else torch.device("cpu"),
         val_data=None,
-        patience=5,
         max_attempts=4,
+        patience=5,
     ):
         """
         This function searches for the correct hyperparameters.
@@ -448,6 +449,10 @@ class TRAINING:
 
                 if train_success:
                     n_attempt = max_attempts
+            
+            if n_attempt%2 == 0:
+                eps = eps * 10
+                training_params["epsilon"] = eps
 
         # track training time and print statement
         dt = time.time() - time_track
@@ -574,7 +579,7 @@ class HYPER_TRAINING(TRAINING):
 
 class REGULAR_TRAINING(TRAINING):
     def __init__(self) -> None:
-        super().__init__(max_distance=0.01)
+        super().__init__(max_distance=0.03)
 
     def calc_loss(
         self,
@@ -647,9 +652,20 @@ class REGULAR_TRAINING(TRAINING):
             val_data = format_ak_to_list(val_data)
 
         bf_out_txt = ""
-        train_data, track_jets_train_data, max_n_train_batches, _ = branch_filler(
-            train_data, batch_size=batch_size
-        )
+        
+        #TODO check if this works
+        bf_success = False
+        while(bf_success == False):
+            try:
+                train_data, track_jets_train_data, max_n_train_batches, _ = branch_filler(
+                train_data, batch_size=batch_size
+                )
+                bf_success=True
+            except ValueError as e:
+                print(str(e))
+                print("Branch Filler failed -> lowering batch-size to try to circumvent the issue")
+                batch_size = batch_size - 10
+        
         bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_train_batches}"
         val_data, track_jets_val_data, max_n_val_batches, _ = branch_filler(
             val_data, batch_size=batch_size
@@ -674,6 +690,7 @@ def run_full_training(
     val_data=None,
     max_evals: int = 4,
     patience: int = 10,
+    max_attempts: int = 4,
     kt_cut: float = None,  # for dataset, splittings kt > 1.0 GeV
     multicore_flag: bool = False,
     save_results_flag: bool = True,
@@ -725,19 +742,25 @@ def run_full_training(
         )
 
     # hyper tuning and evaluation
-    best = fmin(
-        partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
-            training.run_training,
-            train_data=train_data,
-            val_data=val_data,
-            patience=patience,
-            device=device,
-        ),
-        space,
-        algo=tpe.suggest,
-        max_evals=max_evals,
-        trials=trials,
-    )
+    try:
+        best = fmin(
+            partial(  # Use partial, to assign only part of the variables, and leave only the desired (args, unassiged)
+                training.run_training,
+                train_data=train_data,
+                val_data=val_data,
+                max_attempts=max_attempts,
+                patience=patience,
+                device=device,
+            ),
+            space,
+            algo=tpe.suggest,
+            max_evals=max_evals,
+            trials=trials,
+        )
+    except AllTrialsFailed as e:
+        print("All trials failed for this run and settings")
+        return -1
+        
 
     # saving spark_trials as dictionaries
     # source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials

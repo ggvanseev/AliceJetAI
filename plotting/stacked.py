@@ -188,6 +188,64 @@ def stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_
         plt.savefig(out_dir + "/normalised_first_entries_qg_" + feature)
         plt.close()  # close figure - clean memory
 
+def stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id):
+    # store stacked plots in designated directory
+    out_dir = f"output/stacked_plots"
+    out_dir += f"_{job_id}"
+    try:
+        os.mkdir(out_dir)
+    except FileExistsError:
+        pass
+        
+    for feature in features:
+        title = f"Distribution histogram anomalies quarks and gluons for {feature}, mean jet"
+        plt.figure(
+            title,
+            figsize=[1.36 * 8, 8],
+        )
+        plt.title(title)
+        plt.hist(
+            [[ak.mean(x) for x in g_normal[feature]], [ak.mean(x) for x in g_anomaly[feature]], [ak.mean(x) for x in q_normal[feature]], [ak.mean(x) for x in q_anomaly[feature]]],
+            stacked=True,
+            label=["g_normal", "g_anomalous", "q_normal", "q_anomalous"],
+            bins=50
+        )
+        plt.xlabel(feature)
+        plt.ylabel("N")
+        plt.legend()
+        # save plot
+        plt.savefig(out_dir + "/mean_qg_" + feature)
+        plt.close()  # close figure - clean memory
+    
+def stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id):
+    # store stacked plots in designated directory
+    out_dir = f"output/stacked_plots"
+    out_dir += f"_{job_id}"
+    try:
+        os.mkdir(out_dir)
+    except FileExistsError:
+        pass
+        
+    for feature in features:
+        title = f"Distribution histogram anomalies quarks and gluons for {feature}, splittings of jet"
+        plt.figure(
+            title,
+            figsize=[1.36 * 8, 8],
+        )
+        plt.title(title)
+        plt.hist(
+            [[ak.count(x) for x in g_normal[feature]], [ak.count(x) for x in g_anomaly[feature]], [ak.count(x) for x in q_normal[feature]], [ak.count(x) for x in q_anomaly[feature]]],
+            stacked=True,
+            label=["g_normal", "g_anomalous", "q_normal", "q_anomalous"],
+            histtype = 'stepfilled',
+        )
+        plt.xlabel(feature)
+        plt.ylabel("N")
+        plt.legend()
+        # save plot
+        plt.savefig(out_dir + "/splittings_qg_" + feature)
+        plt.close()  # close figure - clean memory
+
 
 def stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id):
     # store stacked plots in designated directory
@@ -234,7 +292,7 @@ def stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_norma
         fig, ax = plt.subplots(1, 2,
             sharex=True,
             sharey=True,
-            figsize=[1.36 * 8, 8],
+            figsize=[1.36 * 8, 6],
         )
         fig.suptitle(title)
         
@@ -276,7 +334,7 @@ def stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal
         fig, ax = plt.subplots(1, 2,
             sharex=True,
             sharey=True,
-            figsize=[1.36 * 8, 8],
+            figsize=[1.36 * 8, 6],
         )
         fig.suptitle(title)
         
@@ -303,6 +361,134 @@ def stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal
         # save plot
         plt.savefig(out_dir + "/last_entries_qg_sided_" + feature)
         plt.close()  # close figure - clean memory
+        
+def stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id):
+    # store stacked plots in designated directory
+    out_dir = f"output/stacked_plots"
+    out_dir += f"_{job_id}"
+    try:
+        os.mkdir(out_dir)
+    except FileExistsError:
+        pass
+        
+    for feature in features:
+        title = f"Distribution histograms anomalies quarks and gluons for {feature} - mean of jets"
+        fig, ax = plt.subplots(1, 2,
+            sharex=True,
+            sharey=True,
+            figsize=[1.36 * 8, 6],
+        )
+        fig.suptitle(title)
+        
+        ax[0].hist(
+            [ak.mean(g_normal[feature]), ak.mean(g_anomaly[feature])],
+            stacked=True,
+            label=["g_normal", "g_anomalous"],
+            bins=50
+        )
+        ax[0].set_xlabel(feature)
+        ax[0].set_ylabel("N")
+        ax[0].legend(loc="upper right")
+        
+        ax[1].hist(
+            [ak.mean(q_normal[feature]), ak.mean(q_anomaly[feature])],
+            stacked=True,
+            label=["q_normal", "q_anomalous"],
+            bins=50
+        )
+        ax[1].set_xlabel(feature)
+        ax[1].set_ylabel("N")
+        ax[1].legend(loc="upper right")
+        
+        # save plot
+        plt.savefig(out_dir + "/mean_qg_sided_" + feature)
+        plt.close()  # close figure - clean memory
+    
+def stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id):
+    # store stacked plots in designated directory
+    out_dir = f"output/stacked_plots"
+    out_dir += f"_{job_id}"
+    try:
+        os.mkdir(out_dir)
+    except FileExistsError:
+        pass
+        
+    for feature in features:
+        title = f"Distribution histograms anomalies quarks and gluons for {feature} - mean of jets"
+        fig, ax = plt.subplots(1, 2,
+            sharex=True,
+            sharey=True,
+            figsize=[1.36 * 8, 6],
+        )
+        fig.suptitle(title)
+        
+        ax[0].hist(
+            [[ak.mean(x) for x in g_normal[feature]], [ak.mean(x) for x in g_anomaly[feature]]],
+            stacked=True,
+            label=["g_normal", "g_anomalous"],
+            bins=50
+        )
+        ax[0].set_xlabel(feature)
+        ax[0].set_ylabel("N")
+        ax[0].legend(loc="upper right")
+        
+        ax[1].hist(
+            [[ak.mean(x) for x in q_normal[feature]], [ak.mean(x) for x in q_anomaly[feature]]],
+            stacked=True,
+            label=["q_normal", "q_anomalous"],
+            bins=50
+        )
+        ax[1].set_xlabel(feature)
+        ax[1].set_ylabel("N")
+        ax[1].legend(loc="upper right")
+        
+        # save plot
+        plt.savefig(out_dir + "/mean_qg_sided_" + feature)
+        plt.close()  # close figure - clean memory
+
+def stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id):
+    # store stacked plots in designated directory
+    out_dir = f"output/stacked_plots"
+    out_dir += f"_{job_id}"
+    try:
+        os.mkdir(out_dir)
+    except FileExistsError:
+        pass
+        
+    for feature in features:
+        title = f"Distribution histograms anomalies quarks and gluons for {feature} - splittings of jets"
+        fig, ax = plt.subplots(1, 2,
+            sharex=True,
+            sharey=True,
+            figsize=[1.36 * 8, 6],
+        )
+        fig.suptitle(title)
+        
+        g = [[ak.count(x) for x in g_normal[feature]], [ak.count(x) for x in g_anomaly[feature]]]
+        ax[0].hist(
+            g,
+            stacked=True,
+            label=["g_normal", "g_anomalous"],
+            bins = ak.max(g)
+        )
+        ax[0].set_xlabel(feature)
+        ax[0].set_ylabel("N")
+        ax[0].legend(loc="upper right")
+
+        q = [[ak.count(x) for x in q_normal[feature]], [ak.count(x) for x in q_anomaly[feature]]]
+        ax[1].hist(
+            q,
+            stacked=True,
+            label=["q_normal", "q_anomalous"],
+            bins = ak.max(q) 
+        )
+        ax[1].set_xlabel(feature)
+        ax[1].set_ylabel("N")
+        ax[1].legend(loc="upper right")
+        
+        # save plot
+        plt.savefig(out_dir + "/splittings_qg_sided_" + feature)
+        plt.close()  # close figure - clean memory
 
 def stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id):
     # store stacked plots in designated directory
@@ -318,7 +504,7 @@ def stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anoma
         fig, ax = plt.subplots(1, 2,
             sharex=True,
             sharey=True,
-            figsize=[1.36 * 8, 8],
+            figsize=[1.36 * 8, 6],
         )
         fig.suptitle(title)
         
@@ -362,7 +548,7 @@ def stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         fig, ax = plt.subplots(1, 2,
             sharex=True,
             sharey=True,
-            figsize=[1.36 * 8, 8],
+            figsize=[1.36 * 8, 6],
         )
         fig.suptitle(title)
         

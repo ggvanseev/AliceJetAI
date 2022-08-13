@@ -7,6 +7,8 @@ import pandas as pd
 from torch.utils.data import TensorDataset, DataLoader
 from itertools import compress
 
+import branch_names as na
+
 # from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
 # import warnings
 
@@ -231,6 +233,27 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
     return batches, track_jets_in_batch, max_n_batches, track_index
 
 
+def single_branch(data):
+    """Create one single branch from all data, uses are for classification.
+    Reason for a single branch is that branch filler removes jets from 
+    original dataset in order to successfully fill branches of a specific size.
+    During testing, especially, losing numerous jets is not desirable."""
+    
+    # create new tracks
+    current_pos = -1
+    track_jets_in_batch = list()
+    for length in [len(x) for x in data]:
+        current_pos += length
+        track_jets_in_batch.append(current_pos)
+    
+    track_index = [x for x in range(len(data))] # simple list of 1 -> total
+    track_jets_in_batch = [track_jets_in_batch] # put in list for "batches"
+    data = [x for y in data for x in y] # flatten = single batch
+    batch_size = len(data) # size of the single batch
+    
+    return data, batch_size, track_jets_in_batch, track_index
+    
+    
 def shuffle_batches(batches, track_jets_in_batch, device, shuffle=False):
     """Function that shuffles batches according to batch structure
     built by the branch_filler
@@ -279,7 +302,7 @@ def shuffle_batches(batches, track_jets_in_batch, device, shuffle=False):
     data = TensorDataset(data, data)
     data = DataLoader(data, batch_size=len(batch), shuffle=shuffle)
 
-    return data, track_jets_shuffled
+    return data, track_jets_shuffled # TODO indices as well?
 
 
 def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
@@ -513,7 +536,7 @@ def get_full_pytorch_weight(weights, device):
     return pytorch_weights
 
 
-def h_bar_list_to_numpy(h_bar_list, device):
+def h_bar_list_to_numpy(h_bar_list, device=torch.device("cpu")):
     """Function that converts a list type object filled
     with h_bar's to a numpy object. If device was cuda,
     the data is returned to device: cpu first.
@@ -562,10 +585,10 @@ def scaled_epsilon_n_max_epochs(learning_rate):
     """
     order_of_magnitude = int(format(learning_rate, ".1E")[-2:])
 
-    epsilon = 10 ** -(5 + order_of_magnitude)
+    epsilon = 10 ** -(6 + order_of_magnitude)
 
     more_epochs = 100 * (order_of_magnitude - 3) if order_of_magnitude > 3 else 0
-    max_epochs = 300 + more_epochs  # order_of_magnitude * 50
+    max_epochs = 400 + more_epochs  # order_of_magnitude * 50
 
     return epsilon, max_epochs
 
@@ -640,3 +663,13 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
         print(f"with final cost:\t{min_df['final_cost'].iloc[index]}")
 
     return df, min_val, min_df, parameters
+
+
+def cut_on_length(data, length, features=[na.recur_jetpt, na.recur_dr, na.recur_z]):
+    """Select jets from recursive set with only specific jet length"""
+    a = []
+    for i in range(len(data)):
+        if len(data[i][features[0]]) == length:
+            a.append(data[i])
+    a = ak.Array(a)
+    return a

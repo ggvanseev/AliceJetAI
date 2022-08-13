@@ -29,7 +29,7 @@ def normal_vs_anomaly_2D(data, classification, file_name):
     normal = data[classification == 1]
     anomalous = data[classification == -1]
 
-    plt.figure(figsize=[6 * 1.36, 8 * 1.36], dpi=160)
+    plt.figure(figsize=[6 * 1.36, 10 * 1.36], dpi=160)
 
     # plot normal
     x = [i[0] for i in normal]
@@ -81,8 +81,8 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
         Z1 = Z1.reshape(xx1.shape)
         
         # plot data and decision function
-        ax.contour(xx1, yy1, Z1, levels=(-1,0,1), linewidths=(0.5, 0.75, 0.5),
-                    linestyles=('--', '-', '--'), colors=['r','k','b'])
+        ax.contour(xx1, yy1, Z1, levels=(0), linewidths=(1.0),
+                    linestyles=('-'), colors=['r','k','b'])
         #ax.contourf(xx1, yy1, Z1, cmap=cm.get_cmap("coolwarm_r"), alpha=0.3, linestyles="None")
         
         

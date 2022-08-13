@@ -7,6 +7,7 @@ from functions.data_manipulation import (
     branch_filler,
     h_bar_list_to_numpy,
     format_ak_to_list,
+    single_branch,
 )
 
 from functions.run_lstm import calc_lstm_results
@@ -22,7 +23,7 @@ class LSTM_OCSVM_CLASSIFIER:
         lstm,
         batch_size,
         scaler,
-        pooling="last",
+        pooling,
         device=torch.device("cuda")
         if torch.cuda.is_available()
         else torch.device("cpu"),
@@ -52,9 +53,11 @@ class LSTM_OCSVM_CLASSIFIER:
                 data = format_ak_to_list(data)
 
         try:
-            data_in_branches, track_jets_data, _, jets_index = branch_filler(
-                data, batch_size=self.batch_size
-            )
+            # TODO use only a single branch for classification? -> test if this works adequately for larger datasets
+            data_in_branches, batch_size, track_jets_data, jets_index = single_branch(data)
+            # data_in_branches, track_jets_data, _, jets_index = branch_filler(
+            #     data, batch_size=self.batch_size
+            # )
         except TypeError:
             print(
                 "LSTM_OCSVM_CLASSIFIER: TypeError 'cannot unpack non-iterable int object'\nBranch filler failed"
@@ -66,7 +69,7 @@ class LSTM_OCSVM_CLASSIFIER:
         data_loader = lstm_data_prep(
             data=data_in_branches,
             scaler=self.scaler,
-            batch_size=self.batch_size,
+            batch_size=batch_size,
         )
 
         input_dim = len(data_in_branches[0])
@@ -119,6 +122,7 @@ class CLASSIFICATION_CHECK:
 
             # get hyper parameters
             batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
+            pooling = str(trials[i]["result"]["hyper_parameters"]["pooling"])
             input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
 
             classifier = LSTM_OCSVM_CLASSIFIER(
@@ -126,6 +130,7 @@ class CLASSIFICATION_CHECK:
                 lstm=lstm_model,
                 batch_size=batch_size,
                 scaler=scaler,
+                pooling=pooling
             )
 
             _, anomaly_tracker[i], _, _ = classifier.anomaly_classification(
@@ -171,6 +176,7 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
 
         # get hyper parameters
         batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
+        pooling = trials[i]['result']['hyper_parameters']['pooling']
         if "variables" in trials[i]["result"]["hyper_parameters"]:
             input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
             data = jets[input_variables]
@@ -179,7 +185,7 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
             data = jets
 
         classifier = LSTM_OCSVM_CLASSIFIER(
-            oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler
+            oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler, pooling=pooling
         )
 
         (

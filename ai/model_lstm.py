@@ -67,7 +67,11 @@ class LSTMModel(nn.Module):
         # We need to detach as we are doing truncated backpropagation through time (BPTT)
         # If we don't, we'll backprop all the way to the start even after going through another batch
         # Forward propagation by passing in the input, hidden state, and cell state into the model
-        _, (hn, cn) = self.lstm(x, (self.set_h0.detach(), self.set_c0.detach()))
+        try:
+            _, (hn, cn) = self.lstm(x, (self.set_h0.detach(), self.set_c0.detach()))
+        except RuntimeError:
+            # h0/c0 wrong dim -> torch doc: "Defaults to zeros if (h_0, c_0) is not provided."
+            _, (hn, cn) = self.lstm(x)
         # TODO of mean pooling hier?
         # out = F.avg_pool2d(out)
         # self.mp(out)
