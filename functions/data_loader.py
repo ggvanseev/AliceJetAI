@@ -13,6 +13,7 @@ import awkward as ak
 import numpy as np
 import random
 import torch
+import os
 from typing import Tuple
 
 import branch_names as na
@@ -260,7 +261,13 @@ def mix_quark_gluon_samples(file_name, jet_branches=None, g_percentage = 90, kt_
         
         # reform to awkward array
         data = ak.Array(data), sd
-
+    
+    # make mixed folder if not already there
+    try:
+        os.mkdir("samples/mixed")
+    except FileExistsError:
+        pass 
+    
     # save mixed sample for easy load next time
     torch.save(
         data,
