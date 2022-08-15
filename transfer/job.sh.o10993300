@@ -1,0 +1,19 @@
+Number of jets in dataset:		425179
+Number of gluon jets in dataset:	66307
+Number of quark jets in dataset:	57253
+Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
+	gluon jets left after cuts:	30092
+	quark jets left after cuts:	29126 
+Mixed sample: 27090 gluon jets and 3010 quark jets
+Traceback (most recent call last):
+  File "analysis/hyper_training.py", line 131, in <module>
+    jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut)
+  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_loader.py", line 267, in mix_quark_gluon_samples
+    out_file,
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/torch/serialization.py", line 376, in save
+    with _open_file_like(f, 'wb') as opened_file:
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/torch/serialization.py", line 230, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/torch/serialization.py", line 211, in __init__
+    super(_open_file, self).__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: 'samples/mixed/30100jets_pct90g10q.p'
