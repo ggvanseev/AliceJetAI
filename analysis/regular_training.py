@@ -88,7 +88,7 @@ for i in range(runs):
                 "variables": hp.choice(
                     "variables", [[na.recur_dr, na.recur_jetpt, na.recur_z]]
                 ),
-                "pooling": hp.choice("pooling", ["last"]),  # "last" , "mean"
+                "pooling": hp.choice("pooling", ["mean"]),  # "last" , "mean"
             }
         ],
     )

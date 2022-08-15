@@ -88,3 +88,13 @@
 22_08_12_1306	on: samples/mixed/1500jets_pct90g10q.p	runtime: 227.54 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 2/4
 22_08_12_1311	on: samples/mixed/1500jets_pct90g10q.p	runtime: 261.56 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 2/4
 22_08_12_1313	on: samples/mixed/1500jets_pct90g10q.p	runtime: 120.70 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 3/4
+10993305	on: samples/mixed/30100jets_pct90g10q.p	runtime: 708.58 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 1/4
+10993304	on: samples/mixed/30100jets_pct90g10q.p	runtime: 4202.43 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 1/4
+10993304	on: samples/mixed/30100jets_pct90g10q.p	runtime: 2233.00 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 2/4
+10993305	on: samples/mixed/30100jets_pct90g10q.p	runtime: 5915.76 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 2/4
+10993304	on: samples/mixed/30100jets_pct90g10q.p	runtime: 1522.86 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 3/4
+10993305	on: samples/mixed/30100jets_pct90g10q.p	runtime: 1376.48 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 3/4
+10993304	on: samples/mixed/30100jets_pct90g10q.p	runtime: 4235.54 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 4/4
+10993305	on: samples/mixed/30100jets_pct90g10q.p	runtime: 5006.54 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 4/4
+10993302	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 40563.84 s	notes: Hyper Training, 100k quark gluons
+10993303	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 76971.14 s	notes: Hyper Training, 100k quark gluons
