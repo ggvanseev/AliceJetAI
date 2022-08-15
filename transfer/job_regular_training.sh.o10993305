@@ -1,0 +1,285 @@
+
+Starting run: 0, with notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 1/4
+Number of jets in dataset:		425179
+Number of gluon jets in dataset:	66307
+Number of quark jets in dataset:	57253
+Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
+	gluon jets left after cuts:	30092
+	quark jets left after cuts:	29126 
+Mixed sample: 27090 gluon jets and 3010 quark jets
+Using file found at:
+	samples/mixed/30100jets_pct90g10q.p
+Loading data complete
+Splitting data complete
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  300
+  dropout   	  0
+  hidden_dim	  3
+  learning_rate	  0.001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 337, out of max.: 337
+Nr. of validation batches: 96, out of max.: 96
+Branch filler done in: 4.14737343788147
+Dataprep done in: 4.3932507038116455
+Training done in: 694.9340283870697
+  Model done learning in 115 epochs
+  With cost condition: 2.5789391523068603e-10, vs epsilon: 1e-09 
+  Passed consistency check with 0.34% anomaly difference
+  With loss: 3.4244E-03
+Passed in: 00:11:48
+  0%|          | 0/1 [11:48<?, ?trial/s, best loss=?]100%|██████████| 1/1 [11:48<00:00, 708.08s/trial, best loss: 0.0034243818333498377]100%|██████████| 1/1 [11:48<00:00, 708.08s/trial, best loss: 0.0034243818333498377]
+
+Best Hyper Parameters:
+
+Model 0 from trial 0:
+  batch_size  	  300
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  100
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  mean
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss: 		0.0034243818333498377
+with final cost:	0.0024593743737000295
+
+Regular training completed on dataset:
+	samples/mixed/30100jets_pct90g10q.p
+Stored results in:
+	storing_results/trials_test_10993305.p
+Plotting complete, stored results at:
+	output/cost_condition_10993305/
+	output/violin_plots_10993305/
+
+Completed run in: 708.58 seconds
+	on job: 10993305
+
+Starting run: 1, with notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 2/4
+Number of jets in dataset:		425179
+Number of gluon jets in dataset:	66307
+Number of quark jets in dataset:	57253
+Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
+	gluon jets left after cuts:	30092
+	quark jets left after cuts:	29126 
+Mixed sample: 27090 gluon jets and 3010 quark jets
+Using file found at:
+	samples/mixed/30100jets_pct90g10q.p
+Loading data complete
+Splitting data complete
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  300
+  dropout   	  0
+  hidden_dim	  3
+  learning_rate	  0.001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 337, out of max.: 337
+Nr. of validation batches: 96, out of max.: 96
+Branch filler done in: 4.091724634170532
+Dataprep done in: 4.333292007446289
+Training done in: 2444.77476477623
+  Algorithm failed: not done learning in max = 400 epochs
+  With cost condition: 8.932085978170479e-08, vs epsilon: 1e-09 
+Training done in: 2458.4888610839844
+  Algorithm failed: not done learning in max = 400 epochs
+  With cost condition: 9.23098327703893e-09, vs epsilon: 1e-09 
+Training done in: 1003.1656901836395
+  Model done learning in 160 epochs
+  With cost condition: 6.320489050781616e-09, vs epsilon: 1e-08 
+  Passed consistency check with 0.66% anomaly difference
+  With loss: 6.6092E-03
+Passed in: 01:38:35
+  0%|          | 0/1 [1:38:35<?, ?trial/s, best loss=?]100%|██████████| 1/1 [1:38:35<00:00, 5915.48s/trial, best loss: 0.0066092213208555906]100%|██████████| 1/1 [1:38:35<00:00, 5915.49s/trial, best loss: 0.0066092213208555906]
+
+Best Hyper Parameters:
+
+Model 0 from trial 0:
+  batch_size  	  300
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  100
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  mean
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss: 		0.0066092213208555906
+with final cost:	0.005920392668997465
+
+Regular training completed on dataset:
+	samples/mixed/30100jets_pct90g10q.p
+Stored results in:
+	storing_results/trials_test_10993305.p
+Plotting complete, stored results at:
+	output/cost_condition_10993305/
+	output/violin_plots_10993305/
+
+Completed run in: 5915.76 seconds
+	on job: 10993305
+
+Starting run: 2, with notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 3/4
+Number of jets in dataset:		425179
+Number of gluon jets in dataset:	66307
+Number of quark jets in dataset:	57253
+Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
+	gluon jets left after cuts:	30092
+	quark jets left after cuts:	29126 
+Mixed sample: 27090 gluon jets and 3010 quark jets
+Using file found at:
+	samples/mixed/30100jets_pct90g10q.p
+Loading data complete
+Splitting data complete
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  300
+  dropout   	  0
+  hidden_dim	  3
+  learning_rate	  0.001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 337, out of max.: 337
+Nr. of validation batches: 96, out of max.: 96
+Branch filler done in: 4.1345438957214355
+Dataprep done in: 4.378708362579346
+Training done in: 1367.6815402507782
+  Model done learning in 221 epochs
+  With cost condition: 3.3731509892181114e-10, vs epsilon: 1e-09 
+  Passed consistency check with 0.64% anomaly difference
+  With loss: 6.3793E-03
+Passed in: 00:22:56
+  0%|          | 0/1 [22:56<?, ?trial/s, best loss=?]100%|██████████| 1/1 [22:56<00:00, 1376.19s/trial, best loss: 0.006379260035386747]100%|██████████| 1/1 [22:56<00:00, 1376.20s/trial, best loss: 0.006379260035386747]
+
+Best Hyper Parameters:
+
+Model 0 from trial 0:
+  batch_size  	  300
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  100
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  mean
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss: 		0.006379260035386747
+with final cost:	0.003021185484385569
+
+Regular training completed on dataset:
+	samples/mixed/30100jets_pct90g10q.p
+Stored results in:
+	storing_results/trials_test_10993305.p
+Plotting complete, stored results at:
+	output/cost_condition_10993305/
+	output/violin_plots_10993305/
+
+Completed run in: 1376.48 seconds
+	on job: 10993305
+
+Starting run: 3, with notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 4/4
+Number of jets in dataset:		425179
+Number of gluon jets in dataset:	66307
+Number of quark jets in dataset:	57253
+Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
+	gluon jets left after cuts:	30092
+	quark jets left after cuts:	29126 
+Mixed sample: 27090 gluon jets and 3010 quark jets
+Using file found at:
+	samples/mixed/30100jets_pct90g10q.p
+Loading data complete
+Splitting data complete
+  0%|          | 0/1 [00:00<?, ?trial/s, best loss=?]                                                     
+Device: cuda
+
+Hyper Parameters:
+  batch_size	  300
+  dropout   	  0
+  hidden_dim	  3
+  learning_rate	  0.001
+  min_epochs	  100
+  num_layers	  1
+  output_dim	  1
+  pooling   	  mean
+  scaler_id 	  minmax
+  svm_gamma 	  auto
+  svm_nu    	  0.1
+  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+Nr. of train batches: 337, out of max.: 337
+Nr. of validation batches: 96, out of max.: 96
+Branch filler done in: 4.111272096633911
+Dataprep done in: 4.347095489501953
+Training done in: 2511.4079961776733
+  Algorithm failed: not done learning in max = 400 epochs
+  With cost condition: 3.1205093869327316e-09, vs epsilon: 1e-09 
+Training done in: 2485.984253168106
+  Model done learning in 400 epochs
+  With cost condition: 4.047093950309619e-10, vs epsilon: 1e-09 
+  Passed consistency check with 0.77% anomaly difference
+  With loss: 7.7158E-03
+Passed in: 01:23:26
+  0%|          | 0/1 [1:23:26<?, ?trial/s, best loss=?]100%|██████████| 1/1 [1:23:26<00:00, 5006.24s/trial, best loss: 0.00771577836657221]100%|██████████| 1/1 [1:23:26<00:00, 5006.25s/trial, best loss: 0.00771577836657221]
+
+Best Hyper Parameters:
+
+Model 0 from trial 0:
+  batch_size  	  300
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  100
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  mean
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss: 		0.00771577836657221
+with final cost:	0.007374880021757235
+
+Regular training completed on dataset:
+	samples/mixed/30100jets_pct90g10q.p
+Stored results in:
+	storing_results/trials_test_10993305.p
+Plotting complete, stored results at:
+	output/cost_condition_10993305/
+	output/violin_plots_10993305/
+
+Completed run in: 5006.54 seconds
+	on job: 10993305
