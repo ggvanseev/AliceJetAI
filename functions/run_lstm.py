@@ -37,6 +37,11 @@ def calc_lstm_results(
     # make sure theta is only generetad once.
     theta = None
     theta_gradients = None
+    
+    # set correct device to LSTM model
+    if device != lstm_model.set_device:
+        print(f"LSTM model device set to: {device}")
+        lstm_model.set_device = device
 
     i = 0
     for x_batch, y_batch in data_loader:

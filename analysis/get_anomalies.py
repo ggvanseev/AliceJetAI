@@ -14,7 +14,7 @@ from functions.data_manipulation import (
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 #file_name = "samples/time_cluster_5k.root"
 #file_name = "samples/mixed_1500jets_pct:90g_10q.p"
@@ -45,11 +45,7 @@ job_ids = [
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
 job_ids = [
-    "22_08_09_1909",
-    "22_08_09_1934",
-    "22_08_09_1939",
-    "22_08_09_1941",
-    "22_08_11_1520",
+    "10993305",
 ]
 # file names made for the above jobs, if mixed files are made
 

@@ -6,7 +6,8 @@ import torch
 from plotting.cost_condition import cost_condition_plots
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
-job_ids = ["22_05_17_1700"]
+job_ids = ["10993304",
+           "10993305"]
 # select "test" or "train"
 trial_type = "test"
 
