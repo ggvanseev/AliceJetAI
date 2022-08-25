@@ -84,14 +84,15 @@ ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_dr)
 ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_z)
 ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_jetpt)
 
-
-# Test hand cuts from LSTM results
+"""# Test hand cuts from LSTM results
 job_ids = [
     "22_08_09_1909",
     "22_08_09_1934",
     "22_08_09_1939",
     "22_08_09_1941",
     "22_08_11_1520",
+    "10993304",
+    "10993305"
     
 ]
 for job_id in job_ids:
@@ -106,3 +107,4 @@ for job_id in job_ids:
     print("Loading trials complete")
     
     ROC_anomalies_hand_cut_lstm(g_jets_recur, q_jets_recur, job_id, trials)
+"""

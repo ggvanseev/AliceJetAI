@@ -2,10 +2,26 @@
 Contains all the cost condition and cost functions used in plotting.
 """
 
-import matplotlib.pyplot as plt
+import matplotlib as mpl
+mpl.rcParams.update(mpl.rcParamsDefault)
+import matplotlib.pylab as plt
 import os
 import seaborn as sns
 
+parameter_names ={
+    "batch_size" : "Batch Size",
+    "dropout" : "Dropout",
+    "hidden_dim" : "Hidden Dimensions",
+    "learning_rate" : "Learning Rate",
+    "min_epochs" : "Minimum Epochs",
+    "num_layers" : "Number of Layers",
+    "output_dim" : "Output Dimension",
+    "pooling" : "Pooling Type",
+    "scaler_id" : "Scaler Type",
+    "svm_gamma" : r"SVM $\gamma$",
+    "svm_nu" : f"SVM $\nu$",
+    "variables" : "Variables Used",
+}
 
 def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
     """Function that creates and stores violin plots. The function accepts
@@ -22,6 +38,9 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
         test_param (str, optional): Parameter which was tested. Can be loss or cost
                                     or something else. Defaults to "loss".
     """
+    # set matplotlib font settings
+    plt.rcParams.update({'font.size': 13.5})
+    
     # store violin plots in designated directory
     out_dir = f"output/violin_plots"
     for job_id in job_ids:
@@ -54,20 +73,30 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
             if parameter != "variables":
                 _ = plt.xticks(rotation=45, ha="right")
             else:
+                a = 1
                 _ = plt.xticks(rotation=9, ha="right")
+                
 
             # create appropriate title and x-label
+            plt.xlabel(parameter_names[parameter])
+            plt.ylabel("Loss" if test_param == "loss" else "Final Cost")
+            # plt.yscale("log") TODO
+            plt.legend()
+            plt.tight_layout()
+            
+            out_file = out_dir + "/violin_plot_" + test_param + "_vs_" + parameter
+            
+            # save version without title
+            fig.savefig(out_file+"_no_title")
             plt.title(
                 parameter.replace("_", " ").title()
                 + " vs "
                 + test_param.replace("_", " ").title()
                 + " - job(s): "
                 + ",".join(job_ids)
-            )
-            plt.xlabel(parameter)
-            # plt.yscale("log") TODO
-            plt.legend()
+            ) # save title afterwards
+            plt.tight_layout()
 
             # save plot
-            plt.savefig(out_dir + "/violin_plot_" + test_param + "_vs_" + parameter)
+            plt.savefig(out_file)
             plt.close(fig)  # close figure - clean memory

@@ -1,5 +1,7 @@
 import awkward as ak
-import matplotlib.pyplot as plt
+import matplotlib as mpl
+import matplotlib.pylab as plt
+mpl.rcParams.update(mpl.rcParamsDefault)
 from sklearn.metrics import roc_curve, auc
 import numpy as np
 import os
@@ -14,6 +16,7 @@ from functions.data_manipulation import (
     format_ak_to_list,
     single_branch,
 )
+import branch_names as na
 
 def ROC_zero_division(pos, neg):
     """Check if positive is 0, otherwise return ratio"""
@@ -21,18 +24,84 @@ def ROC_zero_division(pos, neg):
         return 0
     return pos / (pos + neg)
 
+
+def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str) -> plt.figure:
+    """Function that plots a ROC curve from true and predicted 
+    labels for data
+
+    Args:
+        y_true (list): true labels
+        y_predict (list): predicted labels
+        plot_title (str): title for the ROC curve plot
+        out_file (str): output file name
+
+    Returns:
+        plt.figure: ROC curve plot
+    """    
+    
+    # set font size
+    plt.rcParams.update({'font.size': 13.5})
+    
+    # get minimum and maximum values
+    minimum = min(y_predict)
+    maximum = max(y_predict)
+    
+    tpr = list() # True Positive Rate
+    fpr = list() # False Positive Rate
+    results = np.array([y_true, y_predict]).T
+    for j in np.linspace(minimum, maximum, 10000):
+        false_neg_under_th = np.count_nonzero(results[(results[:,0] == 1) & (results[:,1] < j)])
+        true_pos_under_th = np.count_nonzero(results[(results[:,0] == 1) & (results[:,1] >= j)])
+        
+        true_neg_under_th = np.count_nonzero(results[(results[:,0] == 0) & (results[:,1] < j)])
+        false_pos_under_th = np.count_nonzero(results[(results[:,0] == 0) & (results[:,1] >= j)])
+    
+        tpr.append(ROC_zero_division(true_pos_under_th, false_neg_under_th))
+        fpr.append(ROC_zero_division(false_pos_under_th, true_neg_under_th))
+            
+    # make plot
+    fig, ax = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
+    #ax.plot(fpr, tpr, label="Own Code") TODO
+    
+    # TODO using sklearn metrics    
+    fpr, tpr, _ = roc_curve(y_true, y_predict)
+    roc_auc = auc(fpr, tpr)
+    print(f"ROC Area under curve: {roc_auc:.2f}")
+    
+    ax.set_title(plot_title)
+    ax.plot(fpr, tpr, color="C1", label="Sklearn Metrics") 
+    ax.plot([0,1],[0,1],color='k')
+    
+    # plot textbox
+    if roc_auc <= 0.5:
+        x = 0.35
+        y = 0.7
+    else:
+        x = 0.7
+        y = 0.35
+    bbox_props = dict(boxstyle="round,pad=0.3", fc="w", ec="0.5", alpha=0.8)
+    ax.text(x, y, f"Area Under Curve: {roc_auc:.2f}", ha="center", va="center", size=17, bbox=bbox_props)
+    
+    # set plot values
+    ax.set_xlabel("False Positive Rate")
+    ax.set_ylabel("True Positive Rate")
+    ax.set_xlabel("Normal Fraction Gluons")
+    ax.set_ylabel("Normal Fraction Quarks")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.grid(alpha=0.4)
+    #ax.legend() TODO
+    
+    # save plot
+    plt.savefig(out_file)
+    print(f"ROC curve stored at:\n\t{out_file}")
+    
+    return fig
+    #plt.close()  # close figure - clean memory
+
+
 # roc curve function
 def ROC_curve_qg(g_recur, q_recur, trials, job_id):
-    
-    # combine g en q recurs to 1 set -> jets_recur = full set of jets with y_true as q/g moniker
-    # get decision values y_predict from decision function for the complete set
-    # sort set by decision values
-    # split into histogram with 100 bars
-    # make ROC plot of decision value vs q/g moniker
-    
-    # check if needed later! TODO
-    #g_recur = format_ak_to_list(g_recur)
-    #q_recur = format_ak_to_list(g_recur)
     
     # variable list - store for input
     variables = g_recur.fields
@@ -96,54 +165,22 @@ def ROC_curve_qg(g_recur, q_recur, trials, job_id):
         data_list = [ {**item, "y_predict":y} for item, y in zip(data_list, y_predict)]
         
         # sort by y_predict
-        data_list = sorted(data_list, key=lambda d: d['y_predict']) 
-        results = np.array([[x["y_true"] for x in data_list],[x["y_predict"] for x in data_list]]).T
-        false_neg = results[(results[:,0] == 1) & (results[:,1] < 0)]  # g anomaly
-        true_pos =  results[(results[:,0] == 1) & (results[:,1] >= 0)] # g normal
-        true_neg =  results[(results[:,0] == 0) & (results[:,1] < 0)]  # q anomaly
-        false_pos = results[(results[:,0] == 0) & (results[:,1] >= 0)] # q normal
+        data_list = sorted(data_list, key=lambda d: d['y_predict'])
         
-        ### plot ROC curve ###
-        # get minimum and maximum values
-        minimum = min(y_predict)
-        maximum = max(y_predict)
-        
-        tpr = list() # True Positive Rate
-        fpr = list() # False Positive Rate
-        for j in np.linspace(minimum, maximum, 100):
-            false_neg_under_th = ak.count_nonzero(false_neg[false_neg < j]) # false negative
-            true_pos_under_th = ak.count_nonzero(true_pos[true_pos < j]) # true positive
-            
-            true_neg_under_th = ak.count_nonzero(true_neg[true_neg < j]) # true negative
-            false_pos_under_th = ak.count_nonzero(false_pos[false_pos < j]) # false positive
-            
-            tpr.append(ROC_zero_division(true_pos_under_th, false_neg_under_th))
-            fpr.append(ROC_zero_division(false_pos_under_th, true_neg_under_th))
-        
-        # TODO using sklearn metrics    
-        fpr, tpr, _ = roc_curve([d['y_true'] for d in data_list], [d['y_predict'] for d in data_list])
-        roc_auc = auc(fpr, tpr)
-        print(f"ROC: Area under curve: {roc_auc:.2f}")
-        
-        plt.title(f"ROC curve Gluon vs Quark trial {i} - {job_id}")
-        plt.plot(fpr, tpr)
-        plt.plot([0,1],[0,1],color='k')
-        plt.xlabel("False Positive Rate")
-        plt.ylabel("True Positive Rate")
-        plt.xlabel("Normal Fraction Gluons")
-        plt.ylabel("Normal Fraction Quarks")
-        plt.xlim(0, 1)
-        plt.ylim(0, 1)
-        
-        # save plot
-        plt.savefig(out_dir + "/ROC_curve_trial" + str(i))
-        plt.close()  # close figure - clean memory
-    
+        y_predict = [x["y_predict"] for x in data_list]
+        y_true = [d['y_true'] for d in data_list]
+        plot_title = f"ROC Curve Gluon vs Quark Jets - Job: {job_id} - Trial {i}"
+        out_file = out_dir + "/ROC_curve_trial" + str(i)
+        ROC_plot_curve(y_true, y_predict, plot_title, out_file) 
     
     return
+
     
 def ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, samples=None):
-    """Make ROC curve for given features for quarks and gluons"""
+    """Make ROC curve for given features for quarks and gluons
+    
+    TODO I cannot wrap my head around why I made this, it does
+    not make any sense to me anymore, leave it for now, but it's not good"""
     
     # store stacked plots in designated directory
     out_dir = f"output/ROC_curves"
@@ -208,6 +245,9 @@ def ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job
 
 def ROC_anomalies_hand_cut(g_recur, q_recur, cut_variable):
     
+    # print text
+    print(f"\nFor variable {na.variable_names[cut_variable]}:")
+    
     # store stacked plots in designated directory
     out_dir = f"output/ROC_curves_hand_cuts"
     try:
@@ -226,28 +266,12 @@ def ROC_anomalies_hand_cut(g_recur, q_recur, cut_variable):
     #y_predict = [y - min(y_predict) for y in y_predict]     # move set s.t. lowest value is at 0
     #y_predict = [y / max(y_predict) for y in y_predict] # stretch set s.t. highest value is at 1
     data_list = [ {**item, "y_predict":y} for item, y in zip(data_list, y_predict)]
+    y_true = [d['y_true'] for d in data_list]
     
-    fpr, tpr, _ = roc_curve([d['y_true'] for d in data_list], [d['y_predict'] for d in data_list])
-    roc_auc = auc(fpr, tpr)
-        
-    plt.title(f"ROC Curve - Manually Cut Variable {cut_variable}")
-    plt.plot(fpr, tpr)
-    plt.plot([0,1],[0,1],color='k')
-    plt.xlabel("False Positive Rate")
-    plt.ylabel("True Positive Rate")
-    plt.xlabel("Normal Fraction Quark Jets")
-    plt.ylabel("Normal Fraction Gluon Jets")
-    plt.xlim(0, 1)
-    plt.ylim(0, 1)
-    
-    # save plot
+    plot_title = f"ROC Curve Quark & Gluon Jets - Cuts On Variable {na.variable_names[cut_variable]}"
     out_file = f"{out_dir}/on_variable_{cut_variable}"
-    plt.savefig(out_file)
-    plt.close()  # close figure - clean memory
-    
-    # print text
-    print(f"For variable {cut_variable}, ROC curve stored at:\n\t{out_file}")
-    print(f"ROC: Area under curve: {roc_auc:.2f}")
+
+    ROC_plot_curve(y_true, y_predict, plot_title, out_file)
 
     return 
 
@@ -314,34 +338,19 @@ def ROC_anomalies_hand_cut_lstm(g_recur, q_recur, job_id, trials):
         
         # make ROC curve for each dimension
         for j in range(dimensions):
+            
+            # print text
+            print(f"For trial {i} and dimension {j}:")
         
             # 1st splitting of the recursive jet data is the SoftDrop splitting -> make cuts on this splitting
             y_predict = h_bar_list_np[:, j]
         
             # TODO cut variable is mean pooled/last pooled -> already happened in calc_lstm_results
             data_list = [ {**item, "y_predict":y} for item, y in zip(data_list, y_predict)]
-    
-            fpr, tpr, _ = roc_curve([d['y_true'] for d in data_list], [d['y_predict'] for d in data_list])
-            roc_auc = auc(fpr, tpr)
-                
-            plt.title(f"ROC Curve on LSTM results - Manually Cut Dimension {j}")
-            plt.plot(fpr, tpr)
-            plt.plot([0,1],[0,1],color='k')
-            plt.xlabel("False Positive Rate")
-            plt.ylabel("True Positive Rate")
-            plt.xlabel("Normal Fraction Quark Jets")
-            plt.ylabel("Normal Fraction Gluon Jets")
-            plt.xlim(0, 1)
-            plt.ylim(0, 1)
+            y_true = [d['y_true'] for d in data_list]
 
-            # save plot
+            plot_title = f"ROC Curve on LSTM results - Manually Cut Dimension {j}"
             out_file = f"{out_dir}/on_dimension_{j}"
-            plt.savefig(out_file)
-            plt.close()  # close figure - clean memory
+            ROC_plot_curve(y_true, y_predict, plot_title, out_file)
 
-            # print text
-            print(f"For dimension {j}, ROC curve stored at:\n\t{out_file}")
-            print(f"ROC: Area under curve: {roc_auc:.2f}")
-
-     
     return 

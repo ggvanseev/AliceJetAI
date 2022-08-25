@@ -37,7 +37,7 @@ max_evals = 60
 patience = 5
 kt_cut = None               # for dataset, splittings kt > 1.0 GeV, assign None if not using
 debug_flag = False          # for using debug space = only 1 configuration of hp
-multicore_flag = True       # for using SparkTrials or Trials, turns of when debugging
+multicore_flag = True       # for using SparkTrials or Trials, turns off when debugging
 save_results_flag = True    # for saving trials and runtime
 plot_flag = (
     False                   # for making cost condition plots, only works if save_results_flag is True
@@ -53,20 +53,20 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.quniform("num_batch", 1000, 5000, 200),
-            "hidden_dim": hp.choice("hidden_dim", [6, 9, 12, 20, 50, 100]),
+            "batch_size": hp.quniform("num_batch", 1000, 6000, 1000),
+            "hidden_dim": hp.choice("hidden_dim", [3, 6, 8, 9, 10, 12, 20, 100]),
             "num_layers": hp.choice(
                 "num_layers", [1]
             ),  # 2 layers geeft vreemde resultaten bij cross check met fake jets, en in violin plots blijkt het niks toe te voegen
             "min_epochs": hp.choice(
-                "min_epochs", [int(80)]
+                "min_epochs", [int(80),int(100), int(120), int(150)]
             ),  # lijkt niet heel veel te doen
-            "learning_rate": 10 ** hp.quniform("learning_rate", -6, -3, 0.5),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -5, -2, 0.5),
             "dropout": hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.5, 0.3, 0.2, 0.1]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.5, 0.3, 0.2, 0.15, 0.1]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
             ),  # , "scale", , "auto"[ 0.23 was the defeault before]

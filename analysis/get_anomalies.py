@@ -41,12 +41,21 @@ job_ids = [
     "22_07_18_1508",
     "22_07_18_1514",
     "22_07_18_1520",
-]
+    "22_08_09_1909",
+    "22_08_09_1934",
+    "22_08_09_1939",
+    "22_08_09_1941",
+    "22_08_11_1520",
+    "10993304",
+    "10993305"]
+
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
-job_ids = [
-    "10993305",
-]
+# job_ids = [
+#     "22_07_18_1520",
+# ]
+
+
 # file names made for the above jobs, if mixed files are made
 
 g_percentage = 90
@@ -84,7 +93,6 @@ for i, job_id in enumerate(job_ids):
         jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut, dr_cut=dr_cut)
     else:
         jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
-    print("Loading data complete")  
     
     # split data TODO see if it works -> test set too small for small dataset!!! -> using full set
     _, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.0, 0.99999])
@@ -92,11 +100,9 @@ for i, job_id in enumerate(job_ids):
     # split_test_data_recur = jets_recur
     # split_test_data= jets
     
-    
     # # split data into quark and gluon jets
     g_jets_recur = split_test_data_recur[split_test_data[na.parton_match_id] == 21]
     q_jets_recur = split_test_data_recur[abs(split_test_data[na.parton_match_id]) < 7]
-    
     
     print("Loading data complete")       
     
@@ -148,9 +154,9 @@ for i, job_id in enumerate(job_ids):
         pass
 
 
-    # ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, samples="first")
-    # ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, samples="last")
+    #ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id)
+    #ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="first")
+    #ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="last")
     ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
     # stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)

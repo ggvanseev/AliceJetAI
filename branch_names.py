@@ -16,6 +16,21 @@ jet_phi = "sigJetPhi"
 jet_M = "sigJetM"
 jet_area = "sigJetArea"
 
+# variable names from JetToyHI monickers
+variable_names = {
+    "sigJetRecur_kts" : r"Recursive $k_T$",
+    "sigJetRecur_dr12" : r"Recursive $R_g$",
+    "sigJetRecur_tf" : "Recursive ",
+    "sigJetRecur_jetpt" : r"Recursive $p_T$",
+    "sigJetRecur_omegas" : "Recursive $\omega_s$",
+    "sigJetRecur_nSD" : "Nr. SD Splittings",
+    "sigJetRecur_z" : r"Recursive $z$",
+    "sigJetPt" : r"$p_T$",
+    "sigJetEta" : r"$\eta$",
+    "sigJetPhi" : r"$\phi$",
+    "sigJetM" : "Mass",
+    "sigJetArea" : "Area",
+}
 
 # TODO: also CA, but different names, discuss which ./runSoftDrop to use
 parton_match_id = "jetInitPDG"
