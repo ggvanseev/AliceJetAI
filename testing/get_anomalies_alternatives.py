@@ -95,6 +95,10 @@ job_ids = [
     "10993305"
     
 ]
+job_ids = [
+    "10993304",
+    "10993305",
+]
 for job_id in job_ids:
     
     print(f"\nFor job: {job_id}")
