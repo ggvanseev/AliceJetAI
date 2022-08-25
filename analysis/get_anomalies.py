@@ -14,8 +14,8 @@ from functions.data_manipulation import (
 )
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
+#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 #file_name = "samples/time_cluster_5k.root"
 #file_name = "samples/mixed_1500jets_pct:90g_10q.p"
 
@@ -45,6 +45,7 @@ job_ids = [
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
 job_ids = [
+    "10993304",
     "10993305",
 ]
 # file names made for the above jobs, if mixed files are made
@@ -148,21 +149,21 @@ for i, job_id in enumerate(job_ids):
         pass
 
 
-    # ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, samples="first")
-    # ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, samples="last")
+    ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, samples="first")
+    ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, samples="last")
     ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
-    # stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
 
 

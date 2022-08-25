@@ -549,6 +549,8 @@ def h_bar_list_to_numpy(h_bar_list, device=torch.device("cpu")):
         numpy.Array: Numpy array containing h_bar objects
     """
     if device.type == "cpu":
+        # still make sure that the device is indeed cpu
+        h_bar_list = h_bar_list.cpu()
         h_bar_list_np = np.array(
             [h_bar.detach().numpy() for h_bar in h_bar_list], dtype=object
         )
