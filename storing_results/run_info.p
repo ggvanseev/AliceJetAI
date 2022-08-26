@@ -98,3 +98,6 @@
 10993305	on: samples/mixed/30100jets_pct90g10q.p	runtime: 5006.54 s	notes: regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3, run 4/4
 10993302	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 40563.84 s	notes: Hyper Training, 100k quark gluons
 10993303	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 76971.14 s	notes: Hyper Training, 100k quark gluons
+11120653	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 24225.36 s	notes: Hyper Training, 100k quark gluons
+11120654	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 28382.85 s	notes: Hyper Training, 100k quark gluons
+11120655	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 26031.56 s	notes: Hyper Training, 100k quark gluons

@@ -8,8 +8,9 @@ from plotting.violin import violin_plots
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
 job_ids = [
-    "10993302",
-    "10993303",
+    "11120653",
+    "11120654",
+    "11120655",
 ]
 
 # select test parameter: e.g. "loss" or "final_cost"

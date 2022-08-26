@@ -52,8 +52,9 @@ job_ids = [
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
 job_ids = [
-    "10993304",
-    "10993305",
+    "11120653",
+    "11120654",
+    "11120655",
 ]
 # file names made for the above jobs, if mixed files are made
 
