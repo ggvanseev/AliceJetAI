@@ -27,7 +27,7 @@ from functions.training import REGULAR_TRAINING, run_full_training
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 # file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 # file_name = "samples/JetToyHIResultSoftDropTiny.root"

@@ -15,48 +15,45 @@ from functions.data_manipulation import (
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 #file_name = "samples/time_cluster_5k.root"
 #file_name = "samples/mixed_1500jets_pct:90g_10q.p"
 
 # put in order of cuts/changes -> check if you had to redo a test and place the job_id in the correct spot
 job_ids = [
-    "22_07_18_1327",
-    "22_07_18_1334",
-    "22_07_18_1340",
-    "22_07_18_1345",
-    "22_07_18_1348",
-    "22_07_18_1357",
-    "22_07_18_1404",
-    "22_07_18_1410",
-    "22_07_18_1414",
-    "22_07_18_1417",
-    "22_07_18_1424",
-    "22_07_18_1432",
-    "22_07_18_1435",
-    "22_07_18_1440",
-    "22_07_18_1445",
-    "22_07_18_1452",
-    "22_07_18_1502",
-    "22_07_18_1508",
-    "22_07_18_1514",
-    "22_07_18_1520",
-    "22_08_09_1909",
-    "22_08_09_1934",
-    "22_08_09_1939",
-    "22_08_09_1941",
-    "22_08_11_1520",
-    "10993304",
-    "10993305"]
+    # "22_07_18_1327",
+    # "22_07_18_1334",
+    # "22_07_18_1340",
+    # "22_07_18_1345",
+    # "22_07_18_1348",
+    # "22_07_18_1357",
+    # "22_07_18_1404",
+    # "22_07_18_1410",
+    # "22_07_18_1414",
+    # "22_07_18_1417",
+    # "22_07_18_1424",
+    # "22_07_18_1432",
+    # "22_07_18_1435",
+    # "22_07_18_1440",
+    # "22_07_18_1445",
+    # "22_07_18_1452",
+    # "22_07_18_1502",
+    # "22_07_18_1508",
+    # "22_07_18_1514",
+    # "22_07_18_1520",
+    # "22_08_09_1909",
+    # "22_08_09_1934",
+    # "22_08_09_1939",
+    # "22_08_09_1941",
+    # "22_08_11_1520",
+    # "10993304",
+    # "10993305",
+    "11120653",
+    # "11120654",
+    # "11120655",
+]
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
-
-job_ids = [
-    "11120653",
-    "11120654",
-    "11120655",
-]
-# file names made for the above jobs, if mixed files are made
 
 g_percentage = 90
 num = 0 # trial nr.
@@ -70,6 +67,9 @@ kt_cut = None         # for dataset, splittings kt > 1.0 GeV, assign None if not
 
 # set current device
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+
+# collect all auc values from ROC curves
+all_aucs = {}
 
 for i, job_id in enumerate(job_ids):
     
@@ -95,8 +95,8 @@ for i, job_id in enumerate(job_ids):
         jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
     
     # split data TODO see if it works -> test set too small for small dataset!!! -> using full set
-    _, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.0, 0.99999])
-    _, split_test_data, _ = train_dev_test_split(jets, split=[0.0, 0.99999])
+    _, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.0, 1.0])
+    _, split_test_data, _ = train_dev_test_split(jets, split=[0.0, 1.0])
     # split_test_data_recur = jets_recur
     # split_test_data= jets
     
@@ -107,7 +107,7 @@ for i, job_id in enumerate(job_ids):
     print("Loading data complete")       
     
     # load trials
-    trials = load_trials(job_id)
+    trials = load_trials(job_id, remove_unwanted=False)
     if not trials:
         print(f"No succesful trial for job: {job_id}. Try to complete a new training with same settings.")
         continue
@@ -157,18 +157,19 @@ for i, job_id in enumerate(job_ids):
     #ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id)
     #ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="first")
     #ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="last")
-    ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
-    stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
+    all_aucs[job_id] = collect_aucs
+    # stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    # stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
 
-
+print(f"All AUC values for these jobs:\n{all_aucs}")

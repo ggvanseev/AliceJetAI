@@ -8,6 +8,7 @@ from torch.utils.data import TensorDataset, DataLoader
 from itertools import compress
 
 import branch_names as na
+from functions.run_lstm import calc_lstm_results
 
 # from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
 # import warnings
@@ -631,14 +632,11 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
             - List of hyperparameter names
     """
     # reform to complete list of trials
-    try:
-        trials_list = [trial for trial in trials_results["_trials"]]
-    except:
-        trials_list = [
-            trial
-            for trials in [trials["_trials"] for trials in trials_results]
-            for trial in trials
-        ]
+    trials_list = [
+        {"jid": job_id, **trial}
+        for job_id, trials in zip(trials_results.keys(), [trials["_trials"] for trials in trials_results.values()])
+        for trial in trials
+    ]
     parameters = trials_list[0]["result"]["hyper_parameters"].keys()
 
     # build DataFrame
@@ -647,18 +645,18 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
     ).reset_index()
     df = df[df["loss"] != 10]  # filter out bad model results
 
-    # get minima
+    # get minima & corresponding
     min_val = df[test_param].min()
     min_idxs = df.index[df[test_param] == min_val].to_list()
     min_df = df[df[test_param] == min_val].reset_index()
-
+    
     # print best model(s) hyperparameters:
     print("\nBest Hyper Parameters:")
     hyper_parameters_df = min_df.loc[
         :, min_df.columns.str.startswith("hyper_parameters")
     ]
     for index, row in hyper_parameters_df.iterrows():
-        print(f"\nModel {index} from trial {min_idxs[index]}:")
+        print(f"\nFrom job {trials_list[min_idxs[index]]['jid']} - trial {trials_list[min_idxs[index]]['tid']}:")
         for key in hyper_parameters_df.keys():
             print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
         print(f"with loss: \t\t{min_df['loss'].iloc[index]}")
@@ -675,3 +673,68 @@ def cut_on_length(data, length, features=[na.recur_jetpt, na.recur_dr, na.recur_
             a.append(data[i])
     a = ak.Array(a)
     return a
+
+
+def get_h_results_from_trial(data_list: list, trial: list):
+    
+    # select model
+    result = trial["result"]
+
+    # get models
+    lstm_model = result["model"]["lstm"]  # note in some old files it is lstm:
+    ocsvm_model = result["model"]["ocsvm"]
+    scaler = result["model"]["scaler"]
+
+    # get important parameters
+    pooling = result['hyper_parameters']['pooling']
+    input_variables = list(result['hyper_parameters']["variables"])
+
+    # reformat data to go into lstm
+    data = format_ak_to_list([{ key: d[key] for key in input_variables } for d in data_list])
+    data = [x for x in data if len(x[0]) > 0] # remove empty stuff
+
+    ### build a single branch from all test data ###
+    data, batch_size, track_jets_data, _ = single_branch(data)
+    ###########
+
+    data_loader = lstm_data_prep(
+        data=data,
+        scaler=scaler,
+        batch_size=batch_size,
+    )
+
+    input_dim = len(data[0])
+
+    # get h_bar states
+    h_bar_list, _, _ = calc_lstm_results(
+        lstm_model,
+        input_dim,
+        data_loader,
+        track_jets_data,
+        pooling=pooling,
+    )
+    h_bar_list_np = h_bar_list_to_numpy(h_bar_list)
+    return h_bar_list_np, ocsvm_model
+    
+
+def get_y_results_from_trial(data_list: list, trial: list):
+    
+    h_bar_list_np, ocsvm_model = get_h_results_from_trial(data_list, trial)
+    
+    # get decision function results
+    y_predict = ocsvm_model.decision_function(h_bar_list_np)
+    data_list = [ {**item, "y_predict":y} for item, y in zip(data_list, y_predict)]
+    
+    # sort by y_predict
+    data_list = sorted(data_list, key=lambda d: d['y_predict'])
+    
+    y_predict = [x["y_predict"] for x in data_list]
+    y_true = [d['y_true'] for d in data_list]
+    return y_true, y_predict
+
+def get_y_results_from_trial_h(data_list: list, trial: list, dim: int):
+    
+    h_bar_list_np, ocsvm_model = get_h_results_from_trial(data_list, trial)
+    y_predict = h_bar_list_np[:, dim]
+    y_true = [d['y_true'] for d in data_list]
+    return y_true, y_predict

@@ -24,6 +24,19 @@ def ROC_zero_division(pos, neg):
         return 0
     return pos / (pos + neg)
 
+def ROC_plot_ax(y_true:list, y_predict:list):
+    
+    # set font size
+    plt.rcParams.update({'font.size': 13.5})
+    
+    fpr, tpr, _ = roc_curve(y_true, y_predict)
+    roc_auc = auc(fpr, tpr)
+    print(f"ROC Area under curve: {roc_auc:.2f}")
+    
+    ax.plot(fpr, tpr, color="C1", label="Sklearn Metrics") 
+    ax.plot([0,1],[0,1],color='k')
+    return ax
+
 
 def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str) -> plt.figure:
     """Function that plots a ROC curve from true and predicted 
@@ -63,12 +76,11 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str) ->
     fig, ax = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
     #ax.plot(fpr, tpr, label="Own Code") TODO
     
-    # TODO using sklearn metrics    
+    # TODO using sklearn metrics -> Tested to be same as above, but requires less points for ROC curve
     fpr, tpr, _ = roc_curve(y_true, y_predict)
     roc_auc = auc(fpr, tpr)
     print(f"ROC Area under curve: {roc_auc:.2f}")
     
-    ax.set_title(plot_title)
     ax.plot(fpr, tpr, color="C1", label="Sklearn Metrics") 
     ax.plot([0,1],[0,1],color='k')
     
@@ -85,18 +97,22 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str) ->
     # set plot values
     ax.set_xlabel("False Positive Rate")
     ax.set_ylabel("True Positive Rate")
-    ax.set_xlabel("Normal Fraction Gluons")
-    ax.set_ylabel("Normal Fraction Quarks")
+    ax.set_xlabel("Normal Fraction Quarks")
+    ax.set_ylabel("Normal Fraction Gluons")
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.grid(alpha=0.4)
     #ax.legend() TODO
     
-    # save plot
+    # save plot without title
+    plt.savefig(out_file+"_no_title")
+    
+    # save plot with title
+    plt.title(plot_title, y=1.04)
     plt.savefig(out_file)
     print(f"ROC curve stored at:\n\t{out_file}")
     
-    return fig
+    return fig, roc_auc
     #plt.close()  # close figure - clean memory
 
 
@@ -118,6 +134,8 @@ def ROC_curve_qg(g_recur, q_recur, trials, job_id):
     g_true = ak.Array([{"y_true": 1} for i in range(len(g_recur))])
     q_true = ak.Array([{"y_true": 0} for i in range(len(q_recur))])
     
+    collect_aucs = []
+    
     for i in range(len(trials)):
         # mix 90% g vs 10% q of 1500
         data_list = [{**item, **y} for item, y in zip(g_recur.to_list(), g_true.to_list())] + [{**item, **y} for item, y in zip(q_recur.to_list(), q_true.to_list())]
@@ -133,9 +151,11 @@ def ROC_curve_qg(g_recur, q_recur, trials, job_id):
         # get important parameters
         batch_size = result['hyper_parameters']['batch_size']
         pooling = result['hyper_parameters']['pooling']
+        input_variables = list(result['hyper_parameters']["variables"])
+        final_cost = result['final_cost']
     
         # reformat data to go into lstm
-        data = format_ak_to_list([{ key: d[key] for key in variables } for d in data_list])
+        data = format_ak_to_list([{ key: d[key] for key in input_variables } for d in data_list])
         data = [x for x in data if len(x[0]) > 0] # remove empty stuff
         
         ### build a single branch from all test data ###
@@ -169,11 +189,15 @@ def ROC_curve_qg(g_recur, q_recur, trials, job_id):
         
         y_predict = [x["y_predict"] for x in data_list]
         y_true = [d['y_true'] for d in data_list]
-        plot_title = f"ROC Curve Gluon vs Quark Jets - Job: {job_id} - Trial {i}"
+        plot_title = f"ROC Curve Gluon vs Quark Jets - Job: {job_id}"
+        if len(trials) > 1:
+            print(f"\nTrial {i}:\nWith final cost: {final_cost:.2E}")
+            plot_title += f"- Trial {i}"
         out_file = out_dir + "/ROC_curve_trial" + str(i)
-        ROC_plot_curve(y_true, y_predict, plot_title, out_file) 
+        _, auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file)
+        collect_aucs.append(auc)
     
-    return
+    return collect_aucs
 
     
 def ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, samples=None):
@@ -350,7 +374,9 @@ def ROC_anomalies_hand_cut_lstm(g_recur, q_recur, job_id, trials):
             y_true = [d['y_true'] for d in data_list]
 
             plot_title = f"ROC Curve on LSTM results - Manually Cut Dimension {j}"
-            out_file = f"{out_dir}/on_dimension_{j}"
-            ROC_plot_curve(y_true, y_predict, plot_title, out_file)
+            if len(trials) > 1:
+                plot_title += f" - Trial {i}"
+            out_file = f"{out_dir}/trial_{i}_on_dimension_{j}"
+            _, collect_aucs = ROC_plot_curve(y_true, y_predict, plot_title, out_file)
 
     return 

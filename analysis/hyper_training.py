@@ -23,7 +23,7 @@ import branch_names as na
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 # file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 
@@ -65,7 +65,7 @@ space = hp.choice(
             "dropout": hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
-            "output_dim": hp.choice("output_dim", [1]),
+            "output_dim": hp.choice("output_dim", [1]), # gebruiken we niet? we gebruiken hidden dim
             "svm_nu": hp.choice("svm_nu", [0.5, 0.3, 0.2, 0.15, 0.1]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
