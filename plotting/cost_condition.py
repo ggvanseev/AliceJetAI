@@ -36,27 +36,30 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
         out_txt += "\n *** FAILED MODEL *** \n"
         return -1, out_txt # No success
 
-    # plot cost condition and cost function
-    fig, ax1 = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
-    cost_con = ax1.plot(track_cost_condition[1:], linewidth=1.3,alpha=0.85, label="Cost Condition:\n"+r"$(\kappa(\mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1}) - \kappa(\mathbf{ \theta }_k, \mathbf{ \alpha }_k))^2$")
+    # plot cost condition function
+    fig, ax1 = plt.subplots(sharex=True, figsize=[6 * 1.36, 6], dpi=160)
+    final_cost = ax1.scatter(len(track_cost[1:])-1,track_cost[1:][-1], color="k", zorder=3, label=f"Final Cost: {track_cost[1:][-1]:.2E}")
+    final_cost.set_clip_on(False) # so the marker can overlap the axis
+    cost = ax1.plot([x for x in range(len(track_cost[1:]))], track_cost[1:], color="red", linewidth=1.3, alpha=0.85, label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
     ax1.set_xlabel(r"Epoch: $k$")
-    ax1.set_ylabel(r"Cost Condition")
+    ax1.set_ylabel(r"Cost")
     ax1.set_ylim(bottom=0)
-    ax1.set_xlim(left=0, right=len(track_cost_condition[1:]))
+    ax1.set_xlim(left=0, right=len(track_cost_condition[1:])-1)
 
+    # plot cost function and final cost
     ax2 = ax1.twinx()
-    cost = ax2.plot(track_cost[1:], color="red", linewidth=1.3, alpha=0.85, label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
-    ax2.set_ylabel(r"Cost")
+    cost_con = ax2.plot(track_cost_condition[1:], linewidth=1.3,alpha=0.85, label="Cost Condition:\n"+r"$(\kappa(\mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1}) - \kappa(\mathbf{ \theta }_k, \mathbf{ \alpha }_k))^2$")
+    ax2.set_ylabel(r"Cost Condition")
     ax2.set_ylim(bottom=0)
-    ax2.set_xlim(left=0, right=len(track_cost_condition[1:]))
+    ax2.set_xlim(left=0, right=len(track_cost_condition[1:])-1)
     
     # figure setup
-    legend = cost + cost_con
+    legend = cost + cost_con + [final_cost]
     labels = [l.get_label() for l in legend]
-    ax2.legend(legend, labels, loc=0) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
-    ax2.grid(alpha=0.4) # add grid
-    plt.tight_layout()
-    #plt.subplots_adjust(left=0.1, bottom=0.2, right=0.87, top=0.86)
+    ax1.legend(legend, labels, loc=0) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
+    ax1.grid(axis="both", alpha=0.4) # add grid
+    #plt.tight_layout()
+    plt.subplots_adjust(left=0.15, bottom=0.1, right=0.9, top=0.9)
 
     # save version without title
     fig.savefig(out_file+"_no_title")
@@ -85,12 +88,13 @@ def cost_condition_plots(trials: dict, job_id):
     except FileExistsError:
         pass
 
-    # store trial parameters
-    out_txt = ""
-
+    # store trial parameters in out_txt
+    out_txt = "For "+job_id+":"
+    print(out_txt)
+    
     # build plots for each trial
     for i, trial in enumerate(trials["_trials"]):
-        out_txt += f"trial: {i}"
+        out_txt_trial = f"trial: {i}"
 
         # obtain results from the trial
         result = trial["result"]
@@ -98,22 +102,26 @@ def cost_condition_plots(trials: dict, job_id):
         # extract hyper parameters from the results
         h_parm = result["hyper_parameters"]
         title_plot = f"Training Results - Job: {job_id}"
+        if len(trials["_trials"]) > 1:
+            title_plot += f" - Trial: {i}"
         for key in h_parm:
-            out_txt += "\n  {:12}\t  {}".format(key, h_parm[key])
+            out_txt_trial += "\n  {:12}\t  {}".format(key, h_parm[key])
 
         # add final loss and cost to the info
-        out_txt += f"\n{'with loss:':18}{result['loss']}"
-        out_txt += f"\n{'with final cost:':18}{result['final_cost']}"
+        out_txt_trial += f"\n{'with loss:':18}{result['loss']}"
+        out_txt_trial += f"\n{'with final cost:':18}{result['final_cost']}"
                 
         # generate the plot
         fig_out = cost_condition_plot(result, title_plot, out_file=out_dir+ "/" f"trial_{i}")
         if fig_out == -1:
             break
-        out_txt += "\n\n"
+        out_txt_trial += "\n\n"
+        print(out_txt_trial)
+        out_txt += out_txt_trial
 
     # save info on all trials
     txt_file = open(out_dir + "/info.txt", "w")
     txt_file.write(out_txt)
     txt_file.close()
-    print("For "+job_id+":\n"+out_txt)
+    print("")
 

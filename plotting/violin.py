@@ -19,7 +19,7 @@ parameter_names ={
     "pooling" : "Pooling Type",
     "scaler_id" : "Scaler Type",
     "svm_gamma" : r"SVM $\gamma$",
-    "svm_nu" : f"SVM $\nu$",
+    "svm_nu" : r"SVM $\nu$",
     "variables" : "Variables Used",
 }
 
@@ -67,7 +67,7 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
                 label = "Minimum:\n{} = {}\n{} = {:.2E}".format(
                     parameter, p_val, test_param, min_val
                 )
-                ax2.plot(int(unique.index(p_val)), min_val, "o", label=label)
+                ax2.scatter(int([lab.get_text() for lab in ax2.get_xticklabels()].index(str(p_val))), min_val, s=120, marker="x", c="r", linewidth=2, zorder=3, label=label)
 
             # rotate x-ticks
             if parameter != "variables":

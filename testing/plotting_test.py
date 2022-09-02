@@ -13,8 +13,8 @@ def sample_plot(data, idx=None, label=""):
     x = [i[0] for i in sample]
     y = [i[1] for i in sample]
     plt.scatter(x, y, label=label)
-    plt.xlim(min(sample),max(sample))
-    plt.ylim(min(sample),max(sample))
+    plt.xlim(np.min(sample),np.max(sample))
+    plt.ylim(np.min(sample),np.max(sample))
 
 
 def create_sample_plot(data, idx=None):

@@ -54,7 +54,9 @@ from hyperopt import (
 
 ### --- User input --- ###
 # Set hyper space and variables
-max_evals = 4
+runs = 10
+max_evals = 10
+max_attempts = 8
 patience = 5
 multicore_flag = False
 print_dataset_info = False
@@ -64,7 +66,7 @@ plot_sample = False
 random.seed(0) # for shuffling of data sequences
 
 # notes onrrun, added to run_info.p, keep short or leave empty
-run_notes = "0:0.9 9:0.1[75:150],bs=2000, 4 evals, nu=0.5, mean pool, consistency 0.03, new tests Gijs"
+run_notes = "0:0.9 9:0.1[75:150],bs=2000, 4 evals, nu=0.5, mean pool"
 
 # ---------------------- #
 
@@ -78,6 +80,7 @@ space = hp.choice(
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(150)]),
             "learning_rate": 10 ** hp.choice("learning_rate", [-3]),
+            "epsilon": 10 ** hp.choice("epsilon", [-9]),
             "dropout": hp.choice("dropout", [0]),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
             "svm_nu": hp.choice("svm_nu", [0.5]),  # 0.5 was the default
@@ -124,6 +127,7 @@ run_full_training(
     train_data=train_data,
     val_data=test_data,
     max_evals=max_evals,
+    max_attempts=max_attempts,
     patience=patience,
     multicore_flag=multicore_flag,
     save_results_flag=save_results_flag,

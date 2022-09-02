@@ -319,7 +319,11 @@ class TRAINING:
         pooling = hyper_parameters["pooling"]
 
         # set epsilon and max_epochs
-        eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
+        if "epsilon" in hyper_parameters:
+            eps = hyper_parameters["epsilon"]
+            _, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
+        else:
+            eps, max_epochs = scaled_epsilon_n_max_epochs(learning_rate)
 
         # output string for printing in terminal:
         print_out = ""
