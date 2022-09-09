@@ -11,7 +11,6 @@ from functions.data_manipulation import (
 )
 
 from functions.run_lstm import calc_lstm_results
-from testing.plotting_test import normal_vs_anomaly_2D  # TODO testing
 
 import pickle
 

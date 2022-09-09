@@ -16,7 +16,7 @@ from functions.data_manipulation import (
 best_dict = {'11120653': 3, '22_07_18_1520': 0, '22_08_11_1520': (0, 0), 'sigJetRecur_dr12': 0} # hand cut lstm: (trial nr, hidden dim nr.)
 
 # Setup to make multiple roc plot
-labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM", "Hand Cut LSTM Hidden State", "Hand Cut Variables"]
+labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM", "Hand Cut LSTM Hidden State", r"Cut Counting On $R_G$"]
 colors = ["C1", "C2", "C3", "C4"]
 
 # file setup
@@ -87,8 +87,8 @@ trials = load_trials(job_id, remove_unwanted=True) # do not remove unwanted, oth
 y_true, y_predict = get_y_results_from_trial(data_list, trials[trial])
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
-print(f"ROC Area under curve: {roc_auc:.2f}")
-ax.plot(fpr, tpr, color=colors[0], label=labels[0]+"\n"+f" AUC: {roc_auc:.2F}")     
+print(f"ROC Area under curve: {roc_auc:.4f}")
+ax.plot(fpr, tpr, color=colors[0], label=labels[0]+"\n"+f" AUC: {roc_auc:.4F}")     
 
 # Second plot
 job_id, trial = list(best_dict.items())[1]
@@ -96,8 +96,8 @@ trials = load_trials(job_id, remove_unwanted=False) # do not remove unwanted, ot
 y_true, y_predict = get_y_results_from_trial(data_list, trials[trial])
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
-print(f"ROC Area under curve: {roc_auc:.2f}")
-ax.plot(fpr, tpr, color=colors[1], label=labels[1]+"\n"+f" AUC: {roc_auc:.2F}") 
+print(f"ROC Area under curve: {roc_auc:.4f}")
+ax.plot(fpr, tpr, color=colors[1], label=labels[1]+"\n"+f" AUC: {roc_auc:.4F}") 
 
 # Third plot - Hand cut on lstm hidden dims
 job_id, (trial, dim) = list(best_dict.items())[2]
@@ -105,8 +105,8 @@ trials = load_trials(job_id, remove_unwanted=False) # do not remove unwanted, ot
 y_true, y_predict = get_y_results_from_trial_h(data_list, trials[trial], dim)
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
-print(f"ROC Area under curve: {roc_auc:.2f}")
-ax.plot(fpr, tpr, color=colors[2], label=labels[2]+"\n"+f" AUC: {roc_auc:.2F}") 
+print(f"ROC Area under curve: {roc_auc:.4f}")
+ax.plot(fpr, tpr, color=colors[2], label=labels[2]+"\n"+f" AUC: {roc_auc:.4F}") 
 
 # Fourth plot - Hand cut on variable
 job_id, trial = list(best_dict.items())[3]
@@ -114,8 +114,8 @@ y_predict = [d[job_id][0] for d  in data_list]
 y_true = [d['y_true'] for d in data_list]
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
-print(f"ROC Area under curve: {roc_auc:.2f}")
-ax.plot(fpr, tpr, color=colors[3], label=labels[3]+"\n"+f" AUC: {roc_auc:.2F}") 
+print(f"ROC Area under curve: {roc_auc:.4f}")
+ax.plot(fpr, tpr, color=colors[3], label=labels[3]+"\n"+f" AUC: {roc_auc:.4F}") 
 ax.set_xlabel("Normal Fraction Quarks")
 ax.set_ylabel("Normal Fraction Gluons")
 ax.set_xlim(0, 1)

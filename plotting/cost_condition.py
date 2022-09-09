@@ -56,7 +56,7 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     # figure setup
     legend = cost + cost_con + [final_cost]
     labels = [l.get_label() for l in legend]
-    ax1.legend(legend, labels, loc=0) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
+    plt.legend(legend, labels, loc=5) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
     ax1.grid(axis="both", alpha=0.4) # add grid
     #plt.tight_layout()
     plt.subplots_adjust(left=0.15, bottom=0.1, right=0.9, top=0.9)
@@ -64,6 +64,44 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     # save version without title
     fig.savefig(out_file+"_no_title")
     fig.suptitle(title_plot) # save title afterwards
+    
+    # save and close the plot
+    fig.savefig(out_file)
+    plt.close(fig)  # close figure - clean memory
+    return 
+
+
+def cost_auc_plot(result: dict, title_plot: str, out_file: str):
+    
+    # set matplotlib font settings
+    plt.rcParams.update({'font.size': 13.5})
+    
+    # exctract cost & roc auc data
+    track_roc_auc = result["cost_data"]["roc_auc"]
+    track_cost = result["cost_data"]["cost"]
+    
+    # plot roc auc & figure setup
+    fig = plt.figure()
+    roc = plt.plot(track_roc_auc, label="ROC AUC")
+    plt.xlabel("Epoch $k$")
+    plt.ylabel("Area Under Curve")
+    plt.grid( alpha=0.4)
+    
+    # plot cost 
+    ax1 = plt.twinx()
+    cost = ax1.plot(track_cost, color='r', label="Cost")
+    ax1.set_ylabel("Cost")
+    
+    # create legend & figure setup
+    legend = roc + cost
+    labels = [l.get_label() for l in legend]
+    ax1.legend(legend, labels) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
+    plt.tight_layout()
+    
+    # save version without title
+    fig.savefig(out_file+"_no_title")
+    fig.suptitle(title_plot) # save title afterwards
+    plt.tight_layout()
     
     # save and close the plot
     fig.savefig(out_file)
@@ -111,14 +149,13 @@ def cost_condition_plots(trials: dict, job_id):
         out_txt_trial += f"\n{'with loss:':18}{result['loss']}"
         out_txt_trial += f"\n{'with final cost:':18}{result['final_cost']}"
                 
-        # generate the plot
-        fig_out = cost_condition_plot(result, title_plot, out_file=out_dir+ "/" f"trial_{i}")
-        if fig_out == -1:
-            break
+        # generate the plots
+        cost_condition_plot(result, title_plot, out_file=out_dir+ "/"+ f"trial_{i}")
+        cost_auc_plot(result, title_plot, out_file=out_dir+ "/cost_auc_"+ f"trial_{i}") if "roc_auc" in result["cost_data"] else None
         out_txt_trial += "\n\n"
         print(out_txt_trial)
         out_txt += out_txt_trial
-
+        
     # save info on all trials
     txt_file = open(out_dir + "/info.txt", "w")
     txt_file.write(out_txt)

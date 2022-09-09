@@ -63,6 +63,7 @@ import torch
 from sklearn.svm import OneClassSVM
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import roc_curve, auc
 from hyperopt import (
     fmin,
     tpe,
@@ -74,7 +75,6 @@ from hyperopt import (
 from hyperopt.exceptions import AllTrialsFailed
 from functools import partial
 
-
 from functions.data_manipulation import (
     branch_filler,
     lstm_data_prep,
@@ -82,6 +82,7 @@ from functions.data_manipulation import (
     scaled_epsilon_n_max_epochs,
     format_ak_to_list,
     shuffle_batches,
+    single_branch,
     trials_df_and_minimum,
 )
 from functions.optimization_orthogonality_constraints import (
@@ -106,6 +107,7 @@ def training_algorithm(
     model_params,
     training_params,
     device,
+    roc_data=None,
     print_out="",
     pooling="last",
 ):
@@ -159,6 +161,10 @@ def training_algorithm(
     # list to track cost
     track_cost = []
     track_cost_condition = []
+    track_roc_auc = []
+    track_cost2 = [] # TODO remove later, after evaluation -> expected to not change much
+    track_cost_condition2 = []
+    track_roc_auc2 = []
 
     # loop over k (epochs) for nr. set epochs and unsatisfied cost condition
     k = -1
@@ -166,6 +172,7 @@ def training_algorithm(
         k < min_epochs_patience or cost_condition_passed_flag == False
     ) and k < training_params["max_epochs"]:
         k += 1
+        
 
         # Copy ai-models to test for next alpha
         svm_model_next = copy(svm_model)
@@ -185,8 +192,32 @@ def training_algorithm(
         alphas = alphas / np.sum(alphas)  # NOTE: equation 14, sum alphas = 1
 
         a_idx = svm_model_next.support_
+        
+        # calculate ROC curves and their AUC values
+        if roc_data is not None:
+            # get h_bar states
+            h_bar_list_roc, _, _ = calc_lstm_results(
+                lstm_model,
+                roc_data[1],
+                roc_data[0],
+                roc_data[2],
+                pooling=pooling,
+            )
+            h_bar_list_np_roc = h_bar_list_to_numpy(h_bar_list_roc)
+            y_predict = svm_model_next.decision_function(h_bar_list_np_roc)
+            y_true = roc_data[3]
+            fpr, tpr, _ = roc_curve(y_true, y_predict)
+            roc_auc = auc(fpr, tpr)
+            print(roc_auc)
+            track_roc_auc.append(roc_auc)
 
-        #print("cost after ocsvm\t", kappa(alphas, a_idx, h_bar_list))
+        # obtain the new cost and cost condition given theta_k+1 and alpha_k+1
+        cost = kappa(alphas, a_idx, h_bar_list)
+        cost_condition = (cost - cost_prev) ** 2
+
+        # track cost and cost_condition
+        track_cost2.append(cost)
+        track_cost_condition2.append(cost_condition)
 
         # obtain theta_k+1 using the optimization algorithm
         lstm_model_next, theta_next = optimization(
@@ -211,8 +242,6 @@ def training_algorithm(
         )
         h_bar_list_np = h_bar_list_to_numpy(h_bar_list, device)
 
-        #print("cost after optim\t", kappa(alphas, a_idx, h_bar_list))
-
         # obtain the new cost and cost condition given theta_k+1 and alpha_k+1
         cost = kappa(alphas, a_idx, h_bar_list)
         cost_condition = (cost - cost_prev) ** 2
@@ -220,6 +249,24 @@ def training_algorithm(
         # track cost and cost_condition
         track_cost.append(cost)
         track_cost_condition.append(cost_condition)
+        
+        # calculate ROC curves and their AUC values
+        if roc_data is not None:
+            # get h_bar states
+            h_bar_list_roc, _, _ = calc_lstm_results(
+                lstm_model,
+                roc_data[1],
+                roc_data[0],
+                roc_data[2],
+                pooling=pooling,
+            )
+            h_bar_list_np_roc = h_bar_list_to_numpy(h_bar_list_roc)
+            y_predict = svm_model_next.decision_function(h_bar_list_np_roc)
+            y_true = roc_data[3]
+            fpr, tpr, _ = roc_curve(y_true, y_predict)
+            roc_auc = auc(fpr, tpr)
+            print(roc_auc)
+            track_roc_auc2.append(roc_auc)
 
         # check condition algorithm 1, paper Tolga
         if cost_condition < training_params["epsilon"]:
@@ -241,6 +288,10 @@ def training_algorithm(
                 svm_model_next,
                 track_cost,
                 track_cost_condition,
+                track_roc_auc,
+                track_cost2,
+                track_cost_condition2,
+                track_roc_auc2,
                 False,
                 print_out,
             )  # immediately return passed = False
@@ -267,7 +318,7 @@ def training_algorithm(
     # print_out += f"\n  With cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
     print_out += f"\n  With cost condition: {cost_condition}, vs epsilon: {training_params['epsilon']} "
 
-    return lstm_model, svm_model, track_cost, track_cost_condition, passed, print_out
+    return lstm_model, svm_model, track_cost, track_cost_condition, track_roc_auc, passed, print_out
 
 
 class TRAINING:
@@ -282,6 +333,7 @@ class TRAINING:
         if torch.cuda.is_available()
         else torch.device("cpu"),
         val_data=None,
+        roc_data=None,
         max_attempts=4,
         patience=5,
     ):
@@ -349,6 +401,7 @@ class TRAINING:
         ) = self.data_prep_branch_filler(
             train_data, val_data, batch_size, input_variables
         )
+        input_dim = len(train_data[0])
         print_out += bf_out_txt
 
         # track time branch filler
@@ -365,9 +418,35 @@ class TRAINING:
         train_loader, val_loader = self.data_prep_scaling(
             train_data, val_data, scaler, batch_size
         )
+        
+        # prepare roc data, now to: (roc loader, input dim, jet tracks)
+        if roc_data is not None:
+            # extract y_true
+            y_true = [d['y_true'] for d in roc_data]
+            
+            # i.o. jets/objects with input variables and awkward frame
+            try: 
+                # reformat data to go into lstm
+                roc_data = format_ak_to_list([{ key: d[key] for key in input_variables } for d in roc_data])
+                roc_data = [x for x in roc_data if len(x[0]) > 0] # remove empty stuff
+            except:
+                roc_data = [d["data"] for d in roc_data]
+                
+            # build a single branch from all test data
+            roc_data, batch_size_roc, track_jets_data_roc, _ = single_branch(roc_data)
+            input_dim_roc = len(roc_data[0])
+            
+            # data scaling
+            roc_data_loader = lstm_data_prep(
+                data=roc_data,
+                scaler=scaler,
+                batch_size=batch_size_roc,
+            )
+
+            roc_data = roc_data_loader, input_dim_roc, track_jets_data_roc, y_true
+
 
         # set model parameters
-        input_dim = len(train_data[0])
         model_params = {
             "input_dim": input_dim,
             "hidden_dim": hidden_dim,
@@ -410,6 +489,10 @@ class TRAINING:
                 svm_model,
                 track_cost,
                 track_cost_condition,
+                track_roc_auc,
+                track_cost2,
+                track_cost_condition2,
+                track_roc_auc2,
                 passed,
                 print_out,
             ) = training_algorithm(
@@ -420,6 +503,7 @@ class TRAINING:
                 model_params,
                 training_params,
                 device,
+                roc_data,
                 print_out,
                 pooling,
             )
@@ -472,7 +556,14 @@ class TRAINING:
 
         # save plot data
         cost_data = dict(
-            {"cost": track_cost[1:], "cost_condition": track_cost_condition[1:]}
+            {
+                "cost": track_cost[1:], 
+                "cost_condition": track_cost_condition[1:], 
+                "roc_auc": track_roc_auc,
+                "cost2": track_cost2,
+                "cost_condition2": track_cost_condition2,
+                "roc_auc2": track_roc_auc2,
+            }
         )
 
         # print output string
@@ -692,6 +783,7 @@ def run_full_training(
     space,
     train_data,
     val_data=None,
+    roc_data=None,
     max_evals: int = 4,
     patience: int = 10,
     max_attempts: int = 4,
@@ -723,6 +815,7 @@ def run_full_training(
             "ERROR: Regular training requires validation data which has not been provided.\nPlease provide this or switch training type."
         )
         return -1
+        
 
     # set trials or sparktrials
     if multicore_flag:
@@ -752,6 +845,7 @@ def run_full_training(
                 training.run_training,
                 train_data=train_data,
                 val_data=val_data,
+                roc_data=roc_data,
                 max_attempts=max_attempts,
                 patience=patience,
                 device=device,

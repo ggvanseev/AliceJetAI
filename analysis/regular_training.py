@@ -72,7 +72,7 @@ for i in range(runs):
                 "batch_size": hp.choice("num_batch", [300]),
                 "hidden_dim": hp.choice("hidden_dim", [3]),
                 "num_layers": hp.choice("num_layers", [1]),
-                "min_epochs": hp.choice("min_epochs", [int(100)]),
+                "min_epochs": hp.choice("min_epochs", [int(0)]),
                 "learning_rate": 10 ** hp.choice("learning_rate", [-3]),
                 "dropout": hp.choice(
                     "dropout", [0]
@@ -81,7 +81,7 @@ for i in range(runs):
                 "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default
                 "svm_gamma": hp.choice(
                     "svm_gamma", ["auto"]
-                ),  # "scale" or "auto"[ 0.23 was the defeault before], auto seems weird
+                ),  # "scale" or "auto"[ 0.23 was the defeault before], auto seems weird -> this should not do anything!
                 "scaler_id": hp.choice(
                     "scaler_id", ["minmax"]
                 ),  # "minmax" = MinMaxScaler or "std" = StandardScaler
@@ -100,12 +100,24 @@ for i in range(runs):
     elif mix:
         jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut, dr_cut=dr_cut)
     else:
-        jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
+        jets_recur, jets = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
     print("Loading data complete")       
 
     # split data
-    split_train_data, _, split_val_data = train_dev_test_split(jets_recur, split=[0.7, 0.1])
+    split_train_data, split_dev_data, split_val_data = train_dev_test_split(jets_recur, split=[0.7, 0.1])
+    _, jets, _ = train_dev_test_split(jets, split=[0.7, 0.1])
     print("Splitting data complete")
+    
+    # split data into quark and gluon jets
+    g_recur = split_dev_data[jets[na.parton_match_id] == 21]
+    q_recur = split_dev_data[abs(jets[na.parton_match_id]) < 7]
+            
+    # mock arrays for moniker 1 or 0 if gluon or quark
+    g_true = ak.Array([{"y_true": 1} for i in range(len(g_recur))])
+    q_true = ak.Array([{"y_true": 0} for i in range(len(q_recur))])
+    
+    # make ROC data
+    roc_data = [{**item, **y} for item, y in zip(g_recur.to_list(), g_true.to_list())] + [{**item, **y} for item, y in zip(q_recur.to_list(), q_true.to_list())]
 
     # do full training
     run_full_training(
@@ -114,6 +126,7 @@ for i in range(runs):
         space=space,
         train_data=split_train_data,
         val_data=split_val_data,
+        roc_data=roc_data,
         max_evals=max_evals,
         max_attempts=max_attempts,
         patience=patience,

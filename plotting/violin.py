@@ -21,6 +21,8 @@ parameter_names ={
     "svm_gamma" : r"SVM $\gamma$",
     "svm_nu" : r"SVM $\nu$",
     "variables" : "Variables Used",
+    "loss": "Loss",
+    "final_cost": "Cost",
 }
 
 def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
@@ -65,7 +67,7 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
             unique = sorted(df[p_name].unique())
             for p_val in min_df[p_name].unique():
                 label = "Minimum:\n{} = {}\n{} = {:.2E}".format(
-                    parameter, p_val, test_param, min_val
+                    parameter_names[parameter], p_val, parameter_names[test_param], min_val
                 )
                 ax2.scatter(int([lab.get_text() for lab in ax2.get_xticklabels()].index(str(p_val))), min_val, s=120, marker="x", c="r", linewidth=2, zorder=3, label=label)
 

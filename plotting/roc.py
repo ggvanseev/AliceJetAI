@@ -31,14 +31,14 @@ def ROC_plot_ax(y_true:list, y_predict:list):
     
     fpr, tpr, _ = roc_curve(y_true, y_predict)
     roc_auc = auc(fpr, tpr)
-    print(f"ROC Area under curve: {roc_auc:.2f}")
+    print(f"ROC Area under curve: {roc_auc:.4f}")
     
     ax.plot(fpr, tpr, color="C1", label="Sklearn Metrics") 
     ax.plot([0,1],[0,1],color='k')
     return ax
 
 
-def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str) -> plt.figure:
+def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str, xlabel="False Positive Rate", ylabel="True Positive Rate") -> plt.figure:
     """Function that plots a ROC curve from true and predicted 
     labels for data
 
@@ -79,7 +79,7 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str) ->
     # TODO using sklearn metrics -> Tested to be same as above, but requires less points for ROC curve
     fpr, tpr, _ = roc_curve(y_true, y_predict)
     roc_auc = auc(fpr, tpr)
-    print(f"ROC Area under curve: {roc_auc:.2f}")
+    print(f"ROC Area under curve: {roc_auc:.4f}")
     
     ax.plot(fpr, tpr, color="C1", label="Sklearn Metrics") 
     ax.plot([0,1],[0,1],color='k')
@@ -92,13 +92,11 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str) ->
         x = 0.7
         y = 0.35
     bbox_props = dict(boxstyle="round,pad=0.3", fc="w", ec="0.5", alpha=0.8)
-    ax.text(x, y, f"Area Under Curve: {roc_auc:.2f}", ha="center", va="center", size=17, bbox=bbox_props)
+    ax.text(x, y, f"Area Under Curve: {roc_auc:.4f}", ha="center", va="center", size=17, bbox=bbox_props)
     
     # set plot values
-    ax.set_xlabel("False Positive Rate")
-    ax.set_ylabel("True Positive Rate")
-    ax.set_xlabel("Normal Fraction Quarks")
-    ax.set_ylabel("Normal Fraction Gluons")
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.grid(alpha=0.4)
@@ -119,9 +117,6 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str) ->
 # roc curve function
 def ROC_curve_qg(g_recur, q_recur, trials, job_id):
     
-    # variable list - store for input
-    variables = g_recur.fields
-    
     # store roc curve plots in designated directory
     out_dir = f"output/ROC_curves"
     out_dir += f"_{job_id}"
@@ -131,13 +126,13 @@ def ROC_curve_qg(g_recur, q_recur, trials, job_id):
         pass
     
     # mock arrays for moniker 1 or 0 if gluon or quark
-    g_true = ak.Array([{"y_true": 1} for i in range(len(g_recur))])
-    q_true = ak.Array([{"y_true": 0} for i in range(len(q_recur))])
+    g_true = ak.Array([{"y_true": 1} for _ in range(len(g_recur))])
+    q_true = ak.Array([{"y_true": 0} for _ in range(len(q_recur))])
     
     collect_aucs = []
     
     for i in range(len(trials)):
-        # mix 90% g vs 10% q of 1500
+        # mix recur dataset with labels
         data_list = [{**item, **y} for item, y in zip(g_recur.to_list(), g_true.to_list())] + [{**item, **y} for item, y in zip(q_recur.to_list(), q_true.to_list())]
     
         # select model
@@ -194,7 +189,7 @@ def ROC_curve_qg(g_recur, q_recur, trials, job_id):
             print(f"\nTrial {i}:\nWith final cost: {final_cost:.2E}")
             plot_title += f"- Trial {i}"
         out_file = out_dir + "/ROC_curve_trial" + str(i)
-        _, auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file)
+        _, auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file, xlabel="Normal Fraction Quarks", ylabel="Normal Fraction Gluons")
         collect_aucs.append(auc)
     
     return collect_aucs

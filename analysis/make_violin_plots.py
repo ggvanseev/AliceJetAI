@@ -16,7 +16,7 @@ job_ids = [
 ]
 
 # select test parameter: e.g. "loss" or "final_cost"
-test_param = "loss"
+test_param = "final_cost"
 
 # load trials results from file and store in dict with their job_id
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")

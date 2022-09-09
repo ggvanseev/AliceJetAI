@@ -1,12 +1,15 @@
 import matplotlib.pyplot as plt
+# set font size
+plt.rcParams.update({'font.size': 13.5})
 import awkward as ak
 import numpy as np
 import os
 
+from branch_names import variable_names as vn
 
 def stacked_plot_first_entries(anomaly, normal, feature, jet_info=None):
     plt.figure(
-        f"Distribution histogram anomalies {jet_info} for {feature}",
+        f"Distribution histogram anomalies {jet_info} for {vn[feature]}",
         figsize=[1.36 * 8, 8],
     )
     plt.hist(
@@ -14,7 +17,7 @@ def stacked_plot_first_entries(anomaly, normal, feature, jet_info=None):
         stacked=True,
         label=[f"normal", "anomalous"],
     )
-    plt.xlabel(feature)
+    plt.xlabel(vn[feature])
     plt.ylabel("N")
     plt.legend()
 
@@ -26,7 +29,7 @@ def stacked_plot_normalised_to_max_first_entries(
     norm_anomaly = ak.firsts(anomaly[feature]) / np.max(ak.firsts(anomaly[feature]))
 
     plt.figure(
-        f"Distribution histogram normalised to max anomalies {jet_info} for {feature}",
+        f"Distribution histogram normalised to max anomalies {jet_info} for {vn[feature]}",
         figsize=[1.36 * 8, 8],
     )
     plt.hist(
@@ -35,14 +38,14 @@ def stacked_plot_normalised_to_max_first_entries(
         label=[f"normal", "anomalous"],
         density=True,
     )
-    plt.xlabel(feature)
+    plt.xlabel(vn[feature])
     plt.ylabel("sigma")
     plt.legend()
 
 
 def stacked_plot_same_n_entries_first_entries(anomaly, normal, feature, jet_info=None):
     plt.figure(
-        f"Distribution histogram anomalies {jet_info} for {feature}",
+        f"Distribution histogram anomalies {jet_info} for {vn[feature]}",
         figsize=[1.36 * 8, 8],
     )
     plt.hist(
@@ -53,7 +56,7 @@ def stacked_plot_same_n_entries_first_entries(anomaly, normal, feature, jet_info
         stacked=True,
         label=[f"normal", "anomalous"],
     )
-    plt.xlabel(feature)
+    plt.xlabel(vn[feature])
     plt.ylabel("sigma")
     plt.legend()
 
@@ -62,7 +65,7 @@ def stacked_plot_same_n_entries_normalised_first_entries(
     anomaly, normal, feature, jet_info=None
 ):
     plt.figure(
-        f"Distribution histogram normalised anomalies {jet_info} for {feature}",
+        f"Distribution histogram normalised anomalies {jet_info} for {vn[feature]}",
         figsize=[1.36 * 8, 8],
     )
     plt.hist(
@@ -74,14 +77,14 @@ def stacked_plot_same_n_entries_normalised_first_entries(
         label=[f"normal", "anomalous"],
         density=True,
     )
-    plt.xlabel(feature)
+    plt.xlabel(vn[feature])
     plt.ylabel("sigma")
     plt.legend()
 
 
 def stacked_plot_normalised_first_entries(anomaly, normal, feature, jet_info=None):
     plt.figure(
-        f"Distribution histogram normalised to max anomalies {jet_info} for {feature}",
+        f"Distribution histogram normalised to max anomalies {jet_info} for {vn[feature]}",
         figsize=[1.36 * 8, 8],
     )
     plt.hist(
@@ -90,7 +93,7 @@ def stacked_plot_normalised_first_entries(anomaly, normal, feature, jet_info=Non
         label=[f"normal", "anomalous"],
         density=True,
     )
-    plt.xlabel(feature)
+    plt.xlabel(vn[feature])
     plt.ylabel("sigma")
     plt.legend()
 
@@ -106,22 +109,24 @@ def stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, fea
         pass
         
     for feature in features:
-        title = f"Distribution histogram anomalies quarks and gluons for {feature}"
+        title = f"Distribution histogram anomalies quarks and gluons for {vn[feature]}"
         plt.figure(
             title,
             figsize=[1.36 * 8, 8],
         )
-        plt.title(title)
         plt.hist(
             [ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature]), ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])],
             stacked=True,
-            label=["g_normal", "g_anomalous", "q_normal", "q_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly", "Quark - Normal", "Quark - Anomaly"],
             bins=50
         )
-        plt.xlabel(feature)
+        plt.xlabel(vn[feature])
         plt.ylabel("N")
         plt.legend()
+        
         # save plot
+        plt.savefig(out_dir + "/first_entries_qg_" + feature+"_no_title")
+        plt.title(title)
         plt.savefig(out_dir + "/first_entries_qg_" + feature)
         plt.close()  # close figure - clean memory
 
@@ -135,12 +140,11 @@ def stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, feat
         pass
         
     for feature in features:
-        title = f"Distribution histogram anomalies quarks and gluons for {feature}"
+        title = f"Distribution histogram anomalies quarks and gluons for {vn[feature]}"
         plt.figure(
             title,
             figsize=[1.36 * 8, 8],
         )
-        plt.title(title)
         plt.hist(
             [[g_normal[feature][i][-1] for i in range(len(g_normal[feature]))],
             [g_anomaly[feature][i][-1] for i in range(len(g_anomaly[feature]))],
@@ -148,13 +152,16 @@ def stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, feat
             [q_anomaly[feature][i][-1] for i in range(len(q_anomaly[feature]))]],
 
             stacked=True,
-            label=["g_normal", "g_anomalous", "q_normal", "q_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly", "Quark - Normal", "Quark - Anomaly"],
             bins=50
         )
-        plt.xlabel(feature)
+        plt.xlabel(vn[feature])
         plt.ylabel("N")
         plt.legend()
+        
         # save plot
+        plt.savefig(out_dir + "/last_entries_qg_" + feature+"_no_title")
+        plt.title(title)
         plt.savefig(out_dir + "/last_entries_qg_" + feature)
         plt.close()  # close figure - clean memory
 
@@ -168,23 +175,25 @@ def stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_
         pass
         
     for feature in features:
-        title = f"Distribution histogram anomalies quarks and gluons for {feature}"
+        title = f"Distribution histogram anomalies quarks and gluons for {vn[feature]}"
         plt.figure(
             title,
             figsize=[1.36 * 8, 8],
         )
-        plt.title(title)
         plt.hist(
             [ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature]), ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])],
             stacked=True,
             density=True,
-            label=["g_normal", "g_anomalous", "q_normal", "q_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly", "Quark - Normal", "Quark - Anomaly"],
             bins=50
         )
-        plt.xlabel(feature)
+        plt.xlabel(vn[feature])
         plt.ylabel("N")
         plt.legend()
+        
         # save plot
+        plt.savefig(out_dir + "/normalised_first_entries_qg_" + feature + "_no_title")
+        plt.title(title)
         plt.savefig(out_dir + "/normalised_first_entries_qg_" + feature)
         plt.close()  # close figure - clean memory
 
@@ -198,22 +207,24 @@ def stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, jo
         pass
         
     for feature in features:
-        title = f"Distribution histogram anomalies quarks and gluons for {feature}, mean jet"
+        title = f"Distribution histogram anomalies quarks and gluons for {vn[feature]}, mean jet"
         plt.figure(
             title,
             figsize=[1.36 * 8, 8],
         )
-        plt.title(title)
         plt.hist(
             [[ak.mean(x) for x in g_normal[feature]], [ak.mean(x) for x in g_anomaly[feature]], [ak.mean(x) for x in q_normal[feature]], [ak.mean(x) for x in q_anomaly[feature]]],
             stacked=True,
-            label=["g_normal", "g_anomalous", "q_normal", "q_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly", "Quark - Normal", "Quark - Anomaly"],
             bins=50
         )
-        plt.xlabel(feature)
+        plt.xlabel(vn[feature])
         plt.ylabel("N")
         plt.legend()
+        
         # save plot
+        plt.savefig(out_dir + "/mean_qg_" + feature+"_no_title")
+        plt.title(title)
         plt.savefig(out_dir + "/mean_qg_" + feature)
         plt.close()  # close figure - clean memory
     
@@ -227,22 +238,24 @@ def stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, featur
         pass
         
     for feature in features:
-        title = f"Distribution histogram anomalies quarks and gluons for {feature}, splittings of jet"
+        title = f"Distribution histogram anomalies quarks and gluons for {vn[feature]}, splittings of jet"
         plt.figure(
             title,
             figsize=[1.36 * 8, 8],
         )
-        plt.title(title)
         plt.hist(
             [[ak.count(x) for x in g_normal[feature]], [ak.count(x) for x in g_anomaly[feature]], [ak.count(x) for x in q_normal[feature]], [ak.count(x) for x in q_anomaly[feature]]],
             stacked=True,
-            label=["g_normal", "g_anomalous", "q_normal", "q_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly", "Quark - Normal", "Quark - Anomaly"],
             histtype = 'stepfilled',
         )
-        plt.xlabel(feature)
+        plt.xlabel(vn[feature])
         plt.ylabel("N")
         plt.legend()
-        # save plot
+        
+        # save plot        
+        plt.savefig(out_dir + "/splittings_qg_" + feature +"_no_title")
+        plt.title(title)
         plt.savefig(out_dir + "/splittings_qg_" + feature)
         plt.close()  # close figure - clean memory
 
@@ -257,7 +270,7 @@ def stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, featur
         pass
         
     for feature in features:
-        title = f"Distribution histogram anomalies quarks and gluons for {feature}, all splittings"
+        title = f"Distribution histogram anomalies quarks and gluons for {vn[feature]}, all splittings"
         plt.figure(
             title,
             figsize=[1.36 * 8, 8],
@@ -266,13 +279,16 @@ def stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, featur
         plt.hist(
             [ak.flatten(g_normal[feature]), ak.flatten(g_anomaly[feature]), ak.flatten(q_normal[feature]), ak.flatten(q_anomaly[feature])],
             stacked=True,
-            label=["g_normal", "g_anomalous", "q_normal", "q_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly", "Quark - Normal", "Quark - Anomaly"],
             bins=50
         )
-        plt.xlabel(feature)
+        plt.xlabel(vn[feature])
         plt.ylabel("N")
         plt.legend()
+        
         # save plot
+        plt.savefig(out_dir + "/all_splits_qg_" + feature+ "_no_title")        
+        plt.title(title)
         plt.savefig(out_dir + "/all_splits_qg_" + feature)
         plt.close()  # close figure - clean memory
         
@@ -288,7 +304,7 @@ def stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_norma
         pass
         
     for feature in features:
-        title = f"Distribution histogram anomalies quarks and gluons for {feature}"
+        title = f"Distribution histogram anomalies quarks and gluons for {vn[feature]}"
         fig, ax = plt.subplots(1, 2,
             sharex=True,
             sharey=True,
@@ -299,24 +315,26 @@ def stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_norma
         ax[0].hist(
             [ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature])],
             stacked=True,
-            label=["g_normal", "g_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly"],
             bins=50
         )
-        ax[0].set_xlabel(feature)
+        ax[0].set_xlabel(vn[feature])
         ax[0].set_ylabel("N")
         ax[0].legend(loc="upper right")
         
         ax[1].hist(
             [ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])],
             stacked=True,
-            label=["q_normal", "q_anomalous"],
+            label=["Quark - Normal", "Quark - Anomaly"],
             bins=50
         )
-        ax[1].set_xlabel(feature)
+        ax[1].set_xlabel(vn[feature])
         ax[1].set_ylabel("N")
         ax[1].legend(loc="upper right")
         
         # save plot
+        plt.savefig(out_dir + "/first_entries_qg_sided_" + feature +"_no_title")
+        plt.title(title)
         plt.savefig(out_dir + "/first_entries_qg_sided_" + feature)
         plt.close()  # close figure - clean memory
 
@@ -330,79 +348,39 @@ def stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal
         pass
         
     for feature in features:
-        title = f"Distribution histogram anomalies quarks and gluons for {feature}"
+        title = f"Distribution histogram anomalies quarks and gluons for {vn[feature]}"
         fig, ax = plt.subplots(1, 2,
             sharex=True,
             sharey=True,
             figsize=[1.36 * 8, 6],
         )
-        fig.suptitle(title)
         
         ax[0].hist(
             [[g_normal[feature][i][-1] for i in range(len(g_normal[feature]))], [g_anomaly[feature][i][-1] for i in range(len(g_anomaly[feature]))]],
             stacked=True,
-            label=["g_normal", "g_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly"],
             bins=50
         )
-        ax[0].set_xlabel(feature)
+        ax[0].set_xlabel(vn[feature])
         ax[0].set_ylabel("N")
         ax[0].legend(loc="upper right")
         
         ax[1].hist(
             [[q_normal[feature][i][-1] for i in range(len(q_normal[feature]))], [q_anomaly[feature][i][-1] for i in range(len(q_anomaly[feature]))]],
             stacked=True,
-            label=["q_normal", "q_anomalous"],
+            label=["Quark - Normal", "Quark - Anomaly"],
             bins=50
         )
-        ax[1].set_xlabel(feature)
+        ax[1].set_xlabel(vn[feature])
         ax[1].set_ylabel("N")
         ax[1].legend(loc="upper right")
         
         # save plot
+        plt.savefig(out_dir + "/last_entries_qg_sided_" + feature + "_no_title")
+        fig.suptitle(title)
         plt.savefig(out_dir + "/last_entries_qg_sided_" + feature)
         plt.close()  # close figure - clean memory
         
-def stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id):
-    # store stacked plots in designated directory
-    out_dir = f"output/stacked_plots"
-    out_dir += f"_{job_id}"
-    try:
-        os.mkdir(out_dir)
-    except FileExistsError:
-        pass
-        
-    for feature in features:
-        title = f"Distribution histograms anomalies quarks and gluons for {feature} - mean of jets"
-        fig, ax = plt.subplots(1, 2,
-            sharex=True,
-            sharey=True,
-            figsize=[1.36 * 8, 6],
-        )
-        fig.suptitle(title)
-        
-        ax[0].hist(
-            [ak.mean(g_normal[feature]), ak.mean(g_anomaly[feature])],
-            stacked=True,
-            label=["g_normal", "g_anomalous"],
-            bins=50
-        )
-        ax[0].set_xlabel(feature)
-        ax[0].set_ylabel("N")
-        ax[0].legend(loc="upper right")
-        
-        ax[1].hist(
-            [ak.mean(q_normal[feature]), ak.mean(q_anomaly[feature])],
-            stacked=True,
-            label=["q_normal", "q_anomalous"],
-            bins=50
-        )
-        ax[1].set_xlabel(feature)
-        ax[1].set_ylabel("N")
-        ax[1].legend(loc="upper right")
-        
-        # save plot
-        plt.savefig(out_dir + "/mean_qg_sided_" + feature)
-        plt.close()  # close figure - clean memory
     
 def stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id):
     # store stacked plots in designated directory
@@ -414,35 +392,46 @@ def stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, featur
         pass
         
     for feature in features:
-        title = f"Distribution histograms anomalies quarks and gluons for {feature} - mean of jets"
+        title = f"Distribution Histograms Anomalies Quarks and Gluons for {vn[feature]} - Mean of Jets"
         fig, ax = plt.subplots(1, 2,
             sharex=True,
             sharey=True,
             figsize=[1.36 * 8, 6],
         )
-        fig.suptitle(title)
         
         ax[0].hist(
             [[ak.mean(x) for x in g_normal[feature]], [ak.mean(x) for x in g_anomaly[feature]]],
             stacked=True,
-            label=["g_normal", "g_anomalous"],
-            bins=50
+            density=True,
+            alpha=0.8,
+            label=["Normal", "Anomaly"],
+            bins=50,            
+            zorder=3,
         )
-        ax[0].set_xlabel(feature)
+        ax[0].set_title("Gluons")
+        ax[0].set_xlabel("Mean " + vn[feature])
         ax[0].set_ylabel("N")
+        ax[0].grid(alpha=0.4)
         ax[0].legend(loc="upper right")
         
         ax[1].hist(
             [[ak.mean(x) for x in q_normal[feature]], [ak.mean(x) for x in q_anomaly[feature]]],
             stacked=True,
-            label=["q_normal", "q_anomalous"],
-            bins=50
+            density=True,
+            alpha=0.8,
+            label=["Normal", "Anomaly"],
+            bins=50,
+            zorder=3,
         )
-        ax[1].set_xlabel(feature)
+        ax[1].set_title("Quarks")
+        ax[1].set_xlabel("Mean " + vn[feature])
         ax[1].set_ylabel("N")
+        ax[1].grid(alpha=0.4)
         ax[1].legend(loc="upper right")
         
         # save plot
+        plt.savefig(out_dir + "/mean_qg_sided_" + feature + "_no_title")
+        fig.suptitle(title)
         plt.savefig(out_dir + "/mean_qg_sided_" + feature)
         plt.close()  # close figure - clean memory
 
@@ -456,7 +445,7 @@ def stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         pass
         
     for feature in features:
-        title = f"Distribution histograms anomalies quarks and gluons for {feature} - splittings of jets"
+        title = f"Distribution histograms anomalies quarks and gluons for {vn[feature]} - splittings of jets"
         fig, ax = plt.subplots(1, 2,
             sharex=True,
             sharey=True,
@@ -468,10 +457,10 @@ def stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         ax[0].hist(
             g,
             stacked=True,
-            label=["g_normal", "g_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly"],
             bins = ak.max(g)
         )
-        ax[0].set_xlabel(feature)
+        ax[0].set_xlabel(vn[feature])
         ax[0].set_ylabel("N")
         ax[0].legend(loc="upper right")
 
@@ -479,10 +468,10 @@ def stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         ax[1].hist(
             q,
             stacked=True,
-            label=["q_normal", "q_anomalous"],
+            label=["Quark - Normal", "Quark - Anomaly"],
             bins = ak.max(q) 
         )
-        ax[1].set_xlabel(feature)
+        ax[1].set_xlabel(vn[feature])
         ax[1].set_ylabel("N")
         ax[1].legend(loc="upper right")
         
@@ -500,7 +489,7 @@ def stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anoma
         pass
         
     for feature in features:
-        title = f"Distribution histogram anomalies quarks and gluons for {feature}"
+        title = f"Distribution histogram anomalies quarks and gluons for {vn[feature]}"
         fig, ax = plt.subplots(1, 2,
             sharex=True,
             sharey=True,
@@ -512,10 +501,10 @@ def stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anoma
             [ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature])],
             stacked=True,
             density=True,
-            label=["g_normal", "g_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly"],
             bins=50
         )
-        ax[0].set_xlabel(feature)
+        ax[0].set_xlabel(vn[feature])
         ax[0].set_ylabel("N")
         ax[0].legend(loc="upper right")
         
@@ -523,10 +512,10 @@ def stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anoma
             [ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])],
             stacked=True,
             density=True,
-            label=["q_normal", "q_anomalous"],
+            label=["Quark - Normal", "Quark - Anomaly"],
             bins=50
         )
-        ax[1].set_xlabel(feature)
+        ax[1].set_xlabel(vn[feature])
         ax[1].set_ylabel("N")
         ax[1].legend(loc="upper right")
         
@@ -544,7 +533,7 @@ def stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         pass
         
     for feature in features:
-        title = f"Distribution histogram anomalies quarks and gluons for {feature}"
+        title = f"Distribution histogram anomalies quarks and gluons for {vn[feature]}"
         fig, ax = plt.subplots(1, 2,
             sharex=True,
             sharey=True,
@@ -555,20 +544,20 @@ def stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         ax[0].hist(
             [ak.flatten(g_normal[feature]), ak.flatten(g_anomaly[feature])],
             stacked=True,
-            label=["g_normal", "g_anomalous"],
+            label=["Gluon - Normal", "Gluon - Anomaly"],
             bins=50
         )
-        ax[0].set_xlabel(feature)
+        ax[0].set_xlabel(vn[feature])
         ax[0].set_ylabel("N")
         ax[0].legend(loc="upper right")
         
         ax[1].hist(
             [ak.flatten(q_normal[feature]), ak.flatten(q_anomaly[feature])],
             stacked=True,
-            label=["q_normal", "q_anomalous"],
+            label=["Quark - Normal", "Quark - Anomaly"],
             bins=50
         )
-        ax[1].set_xlabel(feature)
+        ax[1].set_xlabel(vn[feature])
         ax[1].set_ylabel("N")
         ax[1].legend(loc="upper right")
         

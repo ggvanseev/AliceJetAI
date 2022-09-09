@@ -57,7 +57,7 @@ from hyperopt import (
 runs = 10
 max_evals = 10
 max_attempts = 8
-patience = 5
+patience = 10
 multicore_flag = False
 print_dataset_info = False
 save_results_flag = True
@@ -107,6 +107,11 @@ train_data = train_dict["0"][:675] + train_dict["9"][75:150]
 test_data = test_dict["0"][:360] + test_dict["9"][:40]
 #print('Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples')
 
+# make roc data
+zeros = test_dict["0"][360:720]
+nines = test_dict["9"][40:80]
+roc_data = [{"data": item, "y_true": 1} for item in zeros] + [{"data": item, "y_true": 0} for item in nines]
+
 # plot random sample
 if plot_sample:
     index = 49
@@ -120,17 +125,43 @@ if plot_sample:
 random.shuffle(train_data)
 random.shuffle(test_data)
 
-run_full_training(
-    TRAINING_TYPE=REGULAR_TRAINING,
-    file_name=file_name,
-    space=space,
-    train_data=train_data,
-    val_data=test_data,
-    max_evals=max_evals,
-    max_attempts=max_attempts,
-    patience=patience,
-    multicore_flag=multicore_flag,
-    save_results_flag=save_results_flag,
-    plot_flag=plot_flag,
-    run_notes=run_notes,
-)
+runs=1
+for i in range(runs):
+    
+    # change nu value after 10 runs
+    if i == 0:
+        space = hp.choice(
+            "hyper_parameters",
+            [
+                {  
+                    "batch_size": hp.choice("num_batch", [2000]),
+                    "hidden_dim": hp.choice("hidden_dim", [2]),
+                    "num_layers": hp.choice("num_layers", [1]),
+                    "min_epochs": hp.choice("min_epochs", [int(150)]),
+                    "learning_rate": 10 ** hp.choice("learning_rate", [-3]),
+                    "epsilon": 10 ** hp.choice("epsilon", [-9]),
+                    "dropout": hp.choice("dropout", [0]),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
+                    "output_dim": hp.choice("output_dim", [1]),
+                    "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default
+                    "svm_gamma": hp.choice("svm_gamma", ["scale"]),  #"scale" or "auto"[ 0.23 was the defeault before], auto seems weird
+                    "scaler_id": hp.choice("scaler_id", ["minmax"]),  # "minmax" = MinMaxScaler or "std" = StandardScaler
+                    "pooling": hp.choice("pooling", ["mean"]),  # "last" , "mean"
+                }
+            ],
+        )
+    
+    run_full_training(
+        TRAINING_TYPE=REGULAR_TRAINING,
+        file_name=file_name,
+        space=space,
+        train_data=train_data,
+        val_data=test_data,
+        roc_data=roc_data,
+        max_evals=max_evals,
+        max_attempts=max_attempts,
+        patience=patience,
+        multicore_flag=multicore_flag,
+        save_results_flag=save_results_flag,
+        plot_flag=plot_flag,
+        run_notes=run_notes,
+    )

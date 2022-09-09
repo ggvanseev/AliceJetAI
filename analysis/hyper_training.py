@@ -53,7 +53,7 @@ space = hp.choice(
     "hyper_parameters",
     [
         {  # TODO change to quniform -> larger search space (min, max, stepsize (= called q))
-            "batch_size": hp.quniform("num_batch", 1000, 6000, 1000),
+            "batch_size": hp.choice("num_batch", [2000, 3000, 4000, 5000, 6000]),
             "hidden_dim": hp.choice("hidden_dim", [3, 6, 8, 9, 10, 12, 20, 100]),
             "num_layers": hp.choice(
                 "num_layers", [1]
@@ -61,7 +61,7 @@ space = hp.choice(
             "min_epochs": hp.choice(
                 "min_epochs", [int(80),int(100), int(120), int(150)]
             ),  # lijkt niet heel veel te doen
-            "learning_rate": 10 ** hp.quniform("learning_rate", -5, -2, 0.5),
+            "learning_rate": 10 ** hp.quniform("learning_rate", -4, -2, 0.5),
             "dropout": hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
@@ -69,7 +69,7 @@ space = hp.choice(
             "svm_nu": hp.choice("svm_nu", [0.5, 0.3, 0.2, 0.15, 0.1]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["scale", "auto"]  # Auto seems to give weird results
-            ),  # , "scale", , "auto"[ 0.23 was the defeault before]
+            ),  # , "scale", , "auto"[ 0.23 was the defeault before] -> svm_gamma is only used in rbf, poly & sigmoid
             "scaler_id": hp.choice(
                 "scaler_id", ["minmax", "std"]
             ),  # MinMaxScaler or StandardScaler

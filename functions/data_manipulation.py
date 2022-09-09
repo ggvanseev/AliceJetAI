@@ -631,12 +631,15 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
             - Pandas Dataframe of trials corresponding to minimum test_param
             - List of hyperparameter names
     """
-    # reform to complete list of trials
-    trials_list = [
-        {"jid": job_id, **trial}
-        for job_id, trials in zip(trials_results.keys(), [trials["_trials"] for trials in trials_results.values()])
-        for trial in trials
-    ]
+    # reform to complete list of trials + job_ids i.o. violin plots
+    try:
+        trials_list = [trial for trial in trials_results["_trials"]]
+    except:
+        trials_list = [
+            {"jid": job_id, **trial}
+            for job_id, trials in zip(trials_results.keys(), [trials["_trials"] for trials in trials_results.values()])
+            for trial in trials
+        ]
     parameters = trials_list[0]["result"]["hyper_parameters"].keys()
 
     # build DataFrame
@@ -649,14 +652,16 @@ def trials_df_and_minimum(trials_results, test_param="loss"):
     min_val = df[test_param].min()
     min_idxs = df.index[df[test_param] == min_val].to_list()
     min_df = df[df[test_param] == min_val].reset_index()
-    
+    min_trials = [trials_list[idx] for idx in min_idxs]
+
     # print best model(s) hyperparameters:
     print("\nBest Hyper Parameters:")
     hyper_parameters_df = min_df.loc[
         :, min_df.columns.str.startswith("hyper_parameters")
     ]
     for index, row in hyper_parameters_df.iterrows():
-        print(f"\nFrom job {trials_list[min_idxs[index]]['jid']} - trial {trials_list[min_idxs[index]]['tid']}:")
+        min_trial = min_trials[index]
+        print(f"\nFrom {'job'+str(min_trial['jid'])+' - ' if 'jid' in min_trial else ''}trial {min_trial['tid']}:")
         for key in hyper_parameters_df.keys():
             print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
         print(f"with loss: \t\t{min_df['loss'].iloc[index]}")

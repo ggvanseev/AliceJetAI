@@ -42,6 +42,7 @@ job_ids = [
     "11120654",
     "11120655",
 ]
+# job_ids = ["22_09_06_1613"]
 
 # select "test" or "train"
 trial_type = "test"
