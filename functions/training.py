@@ -318,7 +318,7 @@ def training_algorithm(
     # print_out += f"\n  With cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
     print_out += f"\n  With cost condition: {cost_condition}, vs epsilon: {training_params['epsilon']} "
 
-    return lstm_model, svm_model, track_cost, track_cost_condition, track_roc_auc, passed, print_out
+    return lstm_model, svm_model, track_cost, track_cost_condition, track_roc_auc, track_cost2, track_cost_condition2, track_roc_auc2, passed, print_out
 
 
 class TRAINING:
