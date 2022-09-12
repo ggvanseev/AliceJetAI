@@ -826,6 +826,8 @@ def run_full_training(
     #     print(f"Running {max_evals} evaluations, on {cores} cores:\n")
     # else:
     #     trials = Trials()  # NOTE keep for debugging since can't do with spark trials
+    trials = SparkTrials(parallelism=cores)  # run as many trials parallel as the nr of cores available
+    print(f"Running {max_evals} evaluations, on {cores} cores:\n")
 
     # Create training object
     training = TRAINING_TYPE()

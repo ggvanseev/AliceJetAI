@@ -48,7 +48,7 @@ plot_flag = (
     True                    # for making cost condition plots, only works if save_results_flag is True
 )
 
-train_notes = "regular training 100k mixed 90g 10q, lr=e-2, nu = 0.15, hidden dim = 3"  # Small command on run, will be save to save file.
+train_notes = "regular training 100k mixed 90g 10q, lr=e-3, nu = 0.1, hidden dim = 3"  # Small command on run, will be save to save file.
 
 ###-----------------------------------------------------------------------------###
 
@@ -62,7 +62,7 @@ space = hp.choice(
             "hidden_dim": hp.choice("hidden_dim", [3]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(120)]),
-            "learning_rate": 10 ** hp.choice("learning_rate", [-2]),
+            "learning_rate": 10 ** hp.choice("learning_rate", [-3]),
             "dropout": hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
@@ -104,7 +104,7 @@ for i in range(runs):
                     "hidden_dim": hp.choice("hidden_dim", [3]),
                     "num_layers": hp.choice("num_layers", [1]),
                     "min_epochs": hp.choice("min_epochs", [int(120)]),
-                    "learning_rate": 10 ** hp.choice("learning_rate", [-2]),
+                    "learning_rate": 10 ** hp.choice("learning_rate", [-3]),
                     "dropout": hp.choice(
                         "dropout", [0]
                     ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
