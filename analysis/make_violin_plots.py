@@ -13,6 +13,11 @@ job_ids = [
     "11120653",
     "11120654",
     "11120655",
+# ]
+# job_ids = [
+    "11316965",
+    "11316966",
+    "11316965",
 ]
 
 # select test parameter: e.g. "loss" or "final_cost"

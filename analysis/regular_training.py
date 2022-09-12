@@ -27,7 +27,7 @@ from functions.training import REGULAR_TRAINING, run_full_training
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 # file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 # file_name = "samples/JetToyHIResultSoftDropTiny.root"
@@ -38,23 +38,53 @@ mix = True                  # set to true if you want a mixture of quark and glu
 g_percentage = 90           # percentage gluon jets of mixture
 
 # set run settings
-max_evals = 1               # nr. of trials with same settings
+max_evals = 10              # nr. of trials with same settings
 max_attempts = 8            # nr. of times algorithm will retry upon failed training
 patience = 10               # nr. of epochs to run after cost condition is met
 kt_cut = None               # for dataset, splittings kt > 1.0 GeV, assign None if not using
-multicore_flag = False      # for using SparkTrials or Trials, turn of for debuging
+multicore_flag = True       # for using SparkTrials or Trials, turn off for debuging
 save_results_flag = True    # for saving trials and runtime
 plot_flag = (
     True                    # for making cost condition plots, only works if save_results_flag is True
 )
 
-train_notes = "regular training mixed 90g 10q, last_pooled, lr=e-3, nu = 0.1, hidden dim = 3"  # Small command on run, will be save to save file.
+train_notes = "regular training 100k mixed 90g 10q, lr=e-2, nu = 0.15, hidden dim = 3"  # Small command on run, will be save to save file.
 
 ###-----------------------------------------------------------------------------###
 
 
+# set space
+space = hp.choice(
+    "hyper_parameters",
+    [
+        {
+            "batch_size": hp.choice("num_batch", [5000]),
+            "hidden_dim": hp.choice("hidden_dim", [3]),
+            "num_layers": hp.choice("num_layers", [1]),
+            "min_epochs": hp.choice("min_epochs", [int(120)]),
+            "learning_rate": 10 ** hp.choice("learning_rate", [-2]),
+            "dropout": hp.choice(
+                "dropout", [0]
+            ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
+            "output_dim": hp.choice("output_dim", [1]),
+            "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default
+            "svm_gamma": hp.choice(
+                "svm_gamma", ["auto"]
+            ),  # "scale" or "auto"[ 0.23 was the defeault before], auto seems weird -> this should not do anything!
+            "scaler_id": hp.choice(
+                "scaler_id", ["minmax"]
+            ),  # "minmax" = MinMaxScaler or "std" = StandardScaler
+            "variables": hp.choice(
+                "variables", [[na.recur_dr, na.recur_jetpt, na.recur_z]]
+            ),
+            "pooling": hp.choice("pooling", ["mean"]),  # "last" , "mean"
+        }
+    ],
+)
+
+
 # set multiple runs
-runs = 4
+runs = 2
 for i in range(runs):
     
     # set for this specific run
@@ -64,34 +94,35 @@ for i in range(runs):
     run_notes = train_notes + f", run {i+1}/{runs}"  # Small command on run, will be save to save file.
     print(f"\nStarting run: {i}, with notes: {run_notes}")
     
-    # set space
-    space = hp.choice(
-        "hyper_parameters",
-        [
-            {
-                "batch_size": hp.choice("num_batch", [300]),
-                "hidden_dim": hp.choice("hidden_dim", [3]),
-                "num_layers": hp.choice("num_layers", [1]),
-                "min_epochs": hp.choice("min_epochs", [int(0)]),
-                "learning_rate": 10 ** hp.choice("learning_rate", [-3]),
-                "dropout": hp.choice(
-                    "dropout", [0]
-                ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
-                "output_dim": hp.choice("output_dim", [1]),
-                "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default
-                "svm_gamma": hp.choice(
-                    "svm_gamma", ["auto"]
-                ),  # "scale" or "auto"[ 0.23 was the defeault before], auto seems weird -> this should not do anything!
-                "scaler_id": hp.choice(
-                    "scaler_id", ["minmax"]
-                ),  # "minmax" = MinMaxScaler or "std" = StandardScaler
-                "variables": hp.choice(
-                    "variables", [[na.recur_dr, na.recur_jetpt, na.recur_z]]
-                ),
-                "pooling": hp.choice("pooling", ["mean"]),  # "last" , "mean"
-            }
-        ],
-    )
+    if i ==1:
+        # set space
+        space = hp.choice(
+            "hyper_parameters",
+            [
+                {
+                    "batch_size": hp.choice("num_batch", [5000]),
+                    "hidden_dim": hp.choice("hidden_dim", [3]),
+                    "num_layers": hp.choice("num_layers", [1]),
+                    "min_epochs": hp.choice("min_epochs", [int(120)]),
+                    "learning_rate": 10 ** hp.choice("learning_rate", [-2]),
+                    "dropout": hp.choice(
+                        "dropout", [0]
+                    ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
+                    "output_dim": hp.choice("output_dim", [1]),
+                    "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default
+                    "svm_gamma": hp.choice(
+                        "svm_gamma", ["auto"]
+                    ),  # "scale" or "auto"[ 0.23 was the defeault before], auto seems weird -> this should not do anything! only for rbf/poly kernel
+                    "scaler_id": hp.choice(
+                        "scaler_id", ["minmax"]
+                    ),  # "minmax" = MinMaxScaler or "std" = StandardScaler
+                    "variables": hp.choice(
+                        "variables", [[na.recur_dr, na.recur_jetpt, na.recur_z]]
+                    ),
+                    "pooling": hp.choice("pooling", ["last"]),  # "last" , "mean"
+                }
+            ],
+        )
 
     # Load and filter data for criteria eta and jetpt_cap
     # You can load your premade mix here: pickled file w q/g mix
