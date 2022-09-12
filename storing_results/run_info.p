@@ -102,3 +102,6 @@
 11120654	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 28382.85 s	notes: Hyper Training, 100k quark gluons
 11120655	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 26031.56 s	notes: Hyper Training, 100k quark gluons
 22_09_06_1613	on: samples/pendigits/pendigits-orig.tra,samples/pendigits/pendigits-orig.tes	runtime: 8505.37 s	notes: 0:0.9 9:0.1[75:150],bs=2000, 4 evals, nu=0.5, mean pool
+11316965	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 19133.60 s	notes: Hyper Training, 100k quark gluons
+11316966	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 37880.34 s	notes: Hyper Training, 100k quark gluons
+11316967	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 28719.70 s	notes: Hyper Training, 100k quark gluons
