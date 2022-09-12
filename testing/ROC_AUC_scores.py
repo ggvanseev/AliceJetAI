@@ -60,22 +60,25 @@ auc_scores_lstm_ocsvm_hypertraining = {
     '11120655': [0.4611069928341982, 0.4702100321225599, 0.33580429948109713, 0.5029157400543612, 0.44941932295527554, 0.5196837163330863, 0.37785025945144546, 0.512656288608846, 0.3178008401284902, 0.6990313812700766, 0.33499382258463056, 0.3587842846553002, 0.4800444773906597, 0.5011860637509266, 0.5011020509019026, 0.5540202619224117, 0.5435829009142575, 0.5127748949839387, 0.6644625648628614, 0.380721522115147, 0.5007165801828515, 0.5232863849765258, 0.39210279219174693, 0.34409686187299227, 0.5944403261675315, 0.4889696071163825, 0.5434890042006424, 0.36294539164813444, 0.46502594514455153, 0.3148307388188782, 0.4665085248332098, 0.3363627378304917, 0.5427674820854954, 0.503953545836422, 0.38967136150234744, 0.3237311588831233, 0.4510798122065728, 0.5800000000000001]
 }
 
-kwargs = dict(histtype='stepfilled', density=True, alpha=0.5,  bins=40) # normed=True,
 
-# plt.figure()
-# plt.title("AUC Scores of ROC Curves")
-# plt.hist([y for x in list(auc_scores_lstm_ocsvm.values()) for y in x], label="LSTM + OCSVM", **kwargs)
-# plt.hist([y for x in list(auc_scores_lstm.values()) for y in x], label="Hand Cut LSTM Hidden State", **kwargs)
-# plt.hist([y for x in list(auc_scores_hand.values()) for y in x], label="Hand Cut Variables", **kwargs)
-# plt.legend()
-# plt.show()
+auc_scores_lstm_ocsvm_digits_01 = {'22_09_06_1613': [0.9892361111111111, 0.9918055555555556, 0.9877777777777778, 0.9727083333333333, 0.9630555555555554, 0.9824305555555556, 0.7838888888888889, 0.9756249999999999, 0.9944444444444445, 0.18576388888888887]}
+auc_scores_lstm_ocsvm_digits_05 = {'22_09_05_1618': [0.8865972222222221, 0.04118055555555556, 0.9443750000000001, 0.6231944444444445, 0.6321527777777778, 0.7145833333333332, 0.20152777777777775, 0.04541666666666667, 0.9493750000000001, 0.4759027777777778], }
 
+# For QG
 dicts = [auc_scores_lstm_ocsvm_hypertraining, auc_scores_lstm_ocsvm, auc_scores_lstm, auc_scores_hand]
-labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM", "Hand Cut LSTM Hidden State", "Hand Cut Variables"]
+labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM - Reg. Training", "Hand Cut LSTM Hidden State", "Hand Cut Variables"]
+
+# for digits -> comment if want to use qg
+dicts = [auc_scores_lstm_ocsvm_digits_01, auc_scores_lstm_ocsvm_digits_05]
+labels = [r"$\nu = 0.1$", r"$\nu = 0.5$"]
+
+
+# store for best job/trials
 best_dict = {}
 
-# set font size
+# set font size & kwargs
 plt.rcParams.update({'font.size': 13.5})
+kwargs = dict(histtype='stepfilled', density=True, alpha=0.5,  bins=40) # normed=True,
 
 # make plots and print best scores
 print("Best AUC Scores:")
@@ -100,7 +103,7 @@ for i, (d, l) in enumerate(zip(dicts,labels)):
     print(f"For {l}:\nJob {job}{' - Trial '+str(trial) if len(x)>1 else ''}{' - Dimension '+str(dim) if dim>=0 else ''}\nAUC {max_auc}\n") 
     best_dict[job] = trial if dim < 0 else (trial, dim)
 plt.xlabel("Area Under Curve")
-plt.legend()
+plt.legend(loc=2)
 
 # store roc curve plots in designated directory
 out_dir = f"output/ROC_curves_best"
@@ -109,7 +112,7 @@ try:
 except FileExistsError:
     pass
 
-out_file = out_dir + "/auc_scores" + time.strftime("%y_%m_%d_%H%M")
+out_file = out_dir + "/auc_scores_" + time.strftime("%y_%m_%d_%H%M")
 
 # save plot without title
 plt.savefig(out_file+"_no_title")
