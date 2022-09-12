@@ -818,14 +818,13 @@ def run_full_training(
         
 
     # set trials or sparktrials
-    # if multicore_flag:
-    #     cores = os.cpu_count() if os.cpu_count() < 10 else 10
-    #     trials = SparkTrials(
-    #         parallelism=cores
-    #     )  # run as many trials parallel as the nr of cores available
-    #     print(f"Running {max_evals} evaluations, on {cores} cores:\n")
-    # else:
-    #     trials = Trials()  # NOTE keep for debugging since can't do with spark trials
+    if multicore_flag:
+        cores = os.cpu_count() if os.cpu_count() < 10 else 10
+        trials = SparkTrials(
+            parallelism=cores
+        )  # run as many trials parallel as the nr of cores available
+    else:
+        trials = Trials()  # NOTE keep for debugging since can't do with spark trials
 
     # Create training object
     training = TRAINING_TYPE()
@@ -838,6 +837,9 @@ def run_full_training(
             torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         )
 
+    # print statement to check multicore & device used in training
+    print(f"Running {max_evals} evaluations, {f'on {cores} cores,' if multicore_flag else ''} with device{device}\n")
+    
     # hyper tuning and evaluation
     try:
         best = fmin(
