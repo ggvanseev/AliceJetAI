@@ -22,10 +22,10 @@ import branch_names as na
 ### ------------------------------- User Input ------------------------------- ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
+# file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 # file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
-# file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
+file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 
 # set data sample settings
 out_file = ""               # if previously created a specific sample, otherwise leave empty
