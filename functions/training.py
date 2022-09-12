@@ -826,16 +826,13 @@ def run_full_training(
     else:
         trials = Trials()  # NOTE keep for debugging since can't do with spark trials
 
-    # Create training object
+    # create training object
     training = TRAINING_TYPE()
-
-    # use correct device:
-    if multicore_flag:
-        device = torch.device("cpu")
-    else:
-        device = (
-            torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-        )
+    
+    # set device for training
+    device = (
+        torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    )
 
     # print statement to check multicore & device used in training
     print(f"Running {max_evals} evaluations, {f'on {cores} cores,' if multicore_flag else ''} with device{device}\n")
