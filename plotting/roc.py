@@ -80,8 +80,11 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str, xl
     fpr, tpr, _ = roc_curve(y_true, y_predict)
     roc_auc = auc(fpr, tpr)
     print(f"ROC Area under curve: {roc_auc:.4f}")
-    print(f"Model accuracy: {accuracy_score(y_true, np.sign(y_predict))}")
-    
+    try:
+         print(f"Model accuracy: {accuracy_score(y_true, np.sign(y_predict))}")
+    except:
+        pass
+
     ax.plot(fpr, tpr, color="C1", label="Sklearn Metrics") 
     ax.plot([0,1],[0,1],color='k')
     

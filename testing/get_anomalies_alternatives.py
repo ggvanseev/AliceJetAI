@@ -69,8 +69,8 @@ else:
     
 # split data TODO see if it works -> test set too small for small dataset!!! -> using full set
 # split data TODO see if it works -> test set too small for small dataset!!! -> using full set
-_, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.0, 1.0])
-_, split_test_data, _ = train_dev_test_split(jets, split=[0.0, 1.0])
+_, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1])
+_, split_test_data, _ = train_dev_test_split(jets, split=[0.7, 0.1])
 # split_test_data_recur = jets_recur
 # split_test_data= jets
 
