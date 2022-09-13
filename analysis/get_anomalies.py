@@ -60,9 +60,9 @@ job_ids = [
 ]
 
 job_ids = [
-    "11316965",
-    "11316966",
-    "11316967",   
+#    "11316965",
+#    "11316966",
+#    "11316967",   
     "11461549",
     "11461550",
 ]
@@ -70,7 +70,7 @@ job_ids = [
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
 g_percentage = 90 # for evaluation of stacked plots 50%, ROC would be nice to have 90 vs 10 percent
-num = 0 # trial nr.
+num = 8 # trial nr.
 save_flag = True
 show_distribution_percentages_flag = False
 
@@ -109,8 +109,8 @@ for i, job_id in enumerate(job_ids):
         jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
     
     # split data TODO see if it works -> test set too small for small dataset!!! -> using full set
-    _, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.0, 1.0])
-    _, split_test_data, _ = train_dev_test_split(jets, split=[0.0, 1.0])
+    _, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1])
+    _, split_test_data, _ = train_dev_test_split(jets, split=[0.7, 0.1])
     # split_test_data_recur = jets_recur
     # split_test_data= jets
     
@@ -171,11 +171,11 @@ for i, job_id in enumerate(job_ids):
     # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id)
     # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="first")
     # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="last")
-    collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
-    all_aucs[job_id] = collect_aucs
+    #collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
+    #all_aucs[job_id] = collect_aucs
     
     #stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    #stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     #stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
@@ -186,5 +186,5 @@ for i, job_id in enumerate(job_ids):
     # stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     #stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     #stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-
+    num=9
 print(f"All AUC values for these jobs:\n{all_aucs}")
