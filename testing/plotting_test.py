@@ -140,6 +140,12 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
         plt.savefig(f"{file_name}/trial_{i}_all", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
 
 
+def normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id=None):
+    
+    
+    
+    return
+
 def sk_train_plot(model, X1, y=None, fit=False, ax=plt):
     if fit:
         # fit (train) and predict the data, if y

@@ -313,6 +313,9 @@ def ROC_anomalies_hand_cut_lstm(g_recur, q_recur, job_id, trials):
     g_true = ak.Array([{"y_true": 1} for i in range(len(g_recur))])
     q_true = ak.Array([{"y_true": 0} for i in range(len(q_recur))])
     
+    # collect auc per trial
+    collect_aucs = []
+    
     for i in range(len(trials)):
         # mix 90% g vs 10% q of 1500
         data_list = [{**item, **y} for item, y in zip(g_recur.to_list(), g_true.to_list())] + [{**item, **y} for item, y in zip(q_recur.to_list(), q_true.to_list())]
@@ -356,6 +359,9 @@ def ROC_anomalies_hand_cut_lstm(g_recur, q_recur, job_id, trials):
         
         dimensions = h_bar_list_np.shape[1]
         
+        # store aucs of trial
+        aucs = []
+        
         # make ROC curve for each dimension
         for j in range(dimensions):
             
@@ -373,6 +379,7 @@ def ROC_anomalies_hand_cut_lstm(g_recur, q_recur, job_id, trials):
             if len(trials) > 1:
                 plot_title += f" - Trial {i}"
             out_file = f"{out_dir}/trial_{i}_on_dimension_{j}"
-            _, collect_aucs = ROC_plot_curve(y_true, y_predict, plot_title, out_file)
-
-    return 
+            _, auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file)
+            aucs.append(auc)
+        collect_aucs.append(aucs)
+    return collect_aucs

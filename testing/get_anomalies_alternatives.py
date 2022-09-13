@@ -107,6 +107,8 @@ job_ids = [
 #    "10993305",
 #]
 
+# collect all auc values from ROC curves
+all_aucs = {}
 
 for job_id in job_ids:
     
@@ -119,5 +121,5 @@ for job_id in job_ids:
         continue
     print("Loading trials complete")
     
-    ROC_anomalies_hand_cut_lstm(g_jets_recur, q_jets_recur, job_id, trials)
-
+    collect_aucs = ROC_anomalies_hand_cut_lstm(g_jets_recur, q_jets_recur, job_id, trials)
+    all_aucs[job_id] = collect_aucs

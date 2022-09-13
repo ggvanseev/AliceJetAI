@@ -1,5 +1,11 @@
 
 import torch
+from functions.classification import get_anomalies
+from functions.data_loader import *
+from functions.data_manipulation import cut_on_length, separate_anomalies_from_regular, train_dev_test_split
+import matplotlib.pyplot as plt
+
+from testing.plotting_test import normal_vs_anomaly_2D_qg
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
@@ -19,6 +25,8 @@ pre_made = False   # created in regular training
 mix = True        # set to true if mixture of q and g is required
 kt_cut = None         # for dataset, splittings kt > 1.0 GeV, assign None if not using
 
+
+out_files=[]
 
 # set current device
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -58,3 +66,54 @@ for i, job_id in enumerate(job_ids):
     # # split data into quark and gluon jets
     g_jets_recur = split_test_data_recur[split_test_data[na.parton_match_id] == 21]
     q_jets_recur = split_test_data_recur[abs(split_test_data[na.parton_match_id]) < 7]
+    
+    print("Loading data complete")       
+    
+    # load trials
+    trials = load_trials(job_id, remove_unwanted=False)
+    if not trials:
+        print(f"No succesful trial for job: {job_id}. Try to complete a new training with same settings.")
+        continue
+    print("Loading trials complete")
+    
+    # gluon jets, get anomalies and normal out
+    type_jets = "g_jets"
+    _, g_jets_index_tracker, g_classification_tracker = get_anomalies(g_jets_recur, job_id, trials, file_name, jet_info=type_jets)
+    g_anomaly, g_normal = separate_anomalies_from_regular(
+        anomaly_track=g_classification_tracker[num],
+        jets_index=g_jets_index_tracker[num],
+        data=g_jets_recur,
+    )
+
+    # quark jets, get anomalies and normal out
+    type_jets = "q_jets"
+    _, q_jets_index_tracker, q_classification_tracker = get_anomalies(q_jets_recur, job_id, trials, file_name, jet_info=type_jets)
+    q_anomaly, q_normal = separate_anomalies_from_regular(
+        anomaly_track=q_classification_tracker[num],
+        jets_index=q_jets_index_tracker[num],
+        data=q_jets_recur,
+    )
+
+    if show_distribution_percentages_flag:
+        plt.figure(f"Distribution histogram anomalies {jet_info}", figsize=[1.36 * 8, 8])
+        plt.hist(anomalies_info["percentage_anomalies"])
+        plt.xlabel(f"Percentage (%) jets anomalies {jet_info}")
+        plt.ylabel(f"N")
+
+    features = [na.recur_jetpt, na.recur_dr, na.recur_z]
+
+    # other selection/cuts
+    extra_cuts = False
+    if extra_cuts == True:
+        
+        # cut on length
+        length = 3
+        g_anomaly = cut_on_length(g_anomaly, length, features)
+        g_normal = cut_on_length(g_normal, length, features)
+        q_anomaly = cut_on_length(q_anomaly, length, features)
+        q_normal = cut_on_length(q_normal, length, features)
+        job_id += f"_jet_len_{length}"
+        
+        pass
+    
+    normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
