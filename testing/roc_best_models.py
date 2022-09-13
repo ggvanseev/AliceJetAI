@@ -1,5 +1,6 @@
 import time
 import torch
+import seaborn as sns
 from functions.data_loader import load_n_filter_data, load_n_filter_data_qg, mix_quark_gluon_samples, load_trials
 from plotting.stacked import *
 from plotting.roc import *
@@ -13,16 +14,17 @@ from functions.data_manipulation import (
 
 ### ----- User Input ----- ###
 # obtain best_dict from roc_auc_scores.py
-best_dict = {'11120653': 3, '22_07_18_1520': 0, '22_08_11_1520': (0, 0), 'sigJetRecur_dr12': 0} # hand cut lstm: (trial nr, hidden dim nr.)
+best_dict = {'11120653': 3, '11461550': 7, '22_08_11_1520': (0, 0), 'sigJetRecur_dr12': 0} # hand cut lstm: (trial nr, hidden dim nr.)
 
 # Setup to make multiple roc plot
-labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM", "Hand Cut LSTM Hidden State", r"Cut Counting On $R_G$"]
+labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM - RegularTraining", "Hand Cut LSTM Hidden State", r"Cut Counting On $R_g$"]
 colors = ["C1", "C2", "C3", "C4"]
+colors = sns.color_palette()
 
 # file setup
 out_files = [] # leave empty if no specific file to use # you can load your premade mix here: pickled file
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root" # if available
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 # setup as in get_anomalies
 g_percentage = 90
