@@ -1,5 +1,6 @@
 import time
 import torch
+import seaborn as sns
 from functions.data_loader import load_n_filter_data, load_n_filter_data_qg, mix_quark_gluon_samples, load_trials
 from plotting.stacked import *
 from plotting.roc import *
@@ -18,6 +19,7 @@ best_dict = {'11120653': 3, '22_07_18_1520': 0, '22_08_11_1520': (0, 0), 'sigJet
 # Setup to make multiple roc plot
 labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM", "Hand Cut LSTM Hidden State", r"Cut Counting On $R_G$"]
 colors = ["C1", "C2", "C3", "C4"]
+colors = sns.color_palette()
 
 # file setup
 out_files = [] # leave empty if no specific file to use # you can load your premade mix here: pickled file

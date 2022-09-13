@@ -55,7 +55,7 @@ def normal_vs_anomaly_2D(data, classification, file_name):
     plt.savefig(f"testing/output/{file_name}")
 
 
-def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_name, job_id=None, y=None):
+def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_name, job_id=None, y=None, xlabel=r"$\overline{h_{i,1}}$", ylabel=r"$\overline{h_{i,2}}$"):
     
     # set matplotlib font settings
     plt.rcParams.update({'font.size': 12})
@@ -130,8 +130,8 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
         lgd = ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), 
                   fancybox=True, shadow=True, ncol=nr_digits) # , prop={'size': 8}
         ax.grid(alpha=0.4, zorder=0)
-        plt.xlabel(r"$\overline{h_{i,1}}$")
-        plt.ylabel(r"$\overline{h_{i,2}}$")
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
         plt.subplots_adjust(left=0.1, bottom=0.2, right=0.87, top=0.86)
         
         # save figure without and with title

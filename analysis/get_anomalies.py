@@ -12,6 +12,7 @@ from functions.data_manipulation import (
     cut_on_length,
     train_dev_test_split,
 )
+from plotting.svm_boundary import svm_boundary_plots
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
@@ -162,11 +163,11 @@ for i, job_id in enumerate(job_ids):
     # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id)
     # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="first")
     # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="last")
-    # collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
+    collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
     # all_aucs[job_id] = collect_aucs
     
     # stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    #stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
@@ -177,5 +178,7 @@ for i, job_id in enumerate(job_ids):
     # stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    
+    normal_vs_anomaly_2D_qg(trials_h_bars, trials_classifications, trials_ocsvms, out_dir, job_id)
 
 print(f"All AUC values for these jobs:\n{all_aucs}")

@@ -52,6 +52,8 @@ auc_scores_lstm_ocsvm = {
     '22_08_11_1520': [0.4168668149246355],
     '10993304': [0.5371237954040029], 
     '10993305': [0.4154583642204102], 
+    '11461549': [0.5186631714881734, 0.4485841966424211, 0.45705343649628594, 0.4893741879228706, 0.34927047162834846, 0.3633484575225439, 0.47265484045429956, 0.4596173993664529, 0.657881414112427, 0.44038188540965334], 
+    '11461550': [0.2513420160925376, 0.48719603977881043, 0.49857338439973065, 0.4914624341894681, 0.5476338980805951, 0.48871426143199304, 0.48022538382578556, 0.6650408715135594, 0.3846916038454322, 0.5147656206885134]
 }
 
 auc_scores_lstm_ocsvm_hypertraining = {
@@ -66,11 +68,11 @@ auc_scores_lstm_ocsvm_digits_05 = {'22_09_05_1618': [0.8865972222222221, 0.04118
 
 # For QG
 dicts = [auc_scores_lstm_ocsvm_hypertraining, auc_scores_lstm_ocsvm, auc_scores_lstm, auc_scores_hand]
-labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM - Reg. Training", "Hand Cut LSTM Hidden State", "Hand Cut Variables"]
+labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM - RegularTraining", "Hand Cut LSTM Hidden State", "Hand Cut Variables"]
 
 # for digits -> comment if want to use qg
-dicts = [auc_scores_lstm_ocsvm_digits_01, auc_scores_lstm_ocsvm_digits_05]
-labels = [r"$\nu = 0.1$", r"$\nu = 0.5$"]
+# dicts = [auc_scores_lstm_ocsvm_digits_01, auc_scores_lstm_ocsvm_digits_05]
+# labels = [r"$\nu = 0.1$", r"$\nu = 0.5$"]
 
 
 # store for best job/trials
