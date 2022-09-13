@@ -37,8 +37,9 @@ from functions.data_manipulation import (
 from plotting.roc import *
 
 #file_name(s) - comment/uncomment when switching between local/Nikhef
-#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 #file_name = "samples/time_cluster_5k.root"
 #file_name = "samples/mixed_1500jets_pct:90g_10q.p"
 
@@ -92,19 +93,27 @@ job_ids = [
     "22_08_09_1941",
     "22_08_11_1520",
     "10993304",
-    "10993305"
-    
+    "10993305",
+    "11120653",   
+    "11120654",
+    "11120655",
 ]
 job_ids = [
-    "10993304",
-    "10993305",
+    "11461549",
+    "11461550",
 ]
+#job_ids = [
+#    "10993304",
+#    "10993305",
+#]
+
+
 for job_id in job_ids:
     
     print(f"\nFor job: {job_id}")
     
     # load trials
-    trials = load_trials(job_id)
+    trials = load_trials(job_id, remove_unwanted=False)
     if not trials:
         print(f"No succesful trial for job: {job_id}. Try to complete a new training with same settings.")
         continue

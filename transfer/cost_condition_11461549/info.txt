@@ -1,0 +1,160 @@
+For 11461549:trial: 0
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.01
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.0028310492114989524
+with final cost:  0.007989092244315543
+
+trial: 1
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.01
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.0005319157480906944
+with final cost:  0.0019007563129450622
+
+trial: 2
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.01
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.004576266488949654
+with final cost:  0.002073197407854277
+
+trial: 3
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.01
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.0017196347288442743
+with final cost:  0.0021123230649777724
+
+trial: 4
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.01
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.0029656276348247745
+with final cost:  6.445078003260163e-05
+
+trial: 5
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.01
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.00010455516527166364
+with final cost:  0.001373355771075599
+
+trial: 6
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.01
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.0015283795585336601
+with final cost:  0.0016325563085928252
+
+trial: 7
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.01
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.00034610760184276834
+with final cost:  0.013844184265963122
+
+trial: 8
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.01
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.001748347008225723
+with final cost:  0.0003460217870395674
+
+trial: 9
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.01
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.005551348421885427
+with final cost:  3.0625007393069933e-05
+
