@@ -8,9 +8,9 @@ import time
 
 # per variable
 auc_scores_hand = {
-    "sigJetRecur_dr12": [0.73],
-    "sigJetRecur_z": [0.51],
-    "sigJetRecur_jetpt": [0.49],
+    "sigJetRecur_dr12": [0.7345],
+    "sigJetRecur_z": [0.4912],
+    "sigJetRecur_jetpt": [0.4954],
 }
 
 # per job per dimension TODO result for every trial for every hidden dim
@@ -21,10 +21,8 @@ auc_scores_lstm = {
     "22_08_11_1520": [[0.6820, 0.2809, 0.4418]],
     "10993304": [[0.3523,0.4577,0.5105]],
     "10993305": [[0.4364,0.3418,0.4589]],
-    "11461549": [[0.7090, 0.5521, 0.5006], [0.5071,0.4753,0.5374], [0.4671,0.5409,0.5072], [0.5108,0.4905,0.5057], [0.4795,0.5698,0.4199],[0.7282,0.5021,0.4937], [0.5522,0.5451,0.5148], [0.4693,0.5165,0.4192], [0.6706,0.4500,0.5122],[0.5417,0.5265,0.4786]],
-    "11461550": [[0.4793,0.7409,0.4813], [0.5344,0.4826,0.6915], [0.6060,0.4759,0.5005], [0.4257,0.4845,0.4330], [0.4479,0.4886,0.4508], [0.7081,0.5085,0.4710], [0.4860,0.5039,0.5700], [0.5131,0.5648,0.6011], [0.5587,0.4891,0.5186], [0.5011,0.3803,0.4546]],
-
-
+    '11461549': [[0.7147680434973253, 0.5520276618934866, 0.4973879054384185], [0.5091304293356385, 0.4788564412873805, 0.5381140301424436], [0.47032109344658674, 0.5321356535247617, 0.5064130993097055], [0.5122298643214191, 0.4934703899976197, 0.5077611154959221], [0.4787725034765288, 0.5662870673131131, 0.4208942508863583], [0.7279988975332305, 0.5043033788100876, 0.49241803535410483], [0.5478357825634859, 0.5424499818343544, 0.5118151864797484], [0.4732501472043698, 0.5130717480362311, 0.4236591874318788], [0.6664574485411108, 0.4490986081357037, 0.5140458024830559], [0.5433181744152542, 0.522937572819183, 0.4823993685872139]], 
+    '11461550': [[0.47396048658874235, 0.7378603375051679, 0.48379749689931223], [0.5305007454178725, 0.48680422445221183, 0.6856466343443455], [0.6028238182934316, 0.47921098457799327, 0.5027511557109031], [0.4347640345272547, 0.48330013404993677, 0.43824933288232426], [0.45059821350271234, 0.4916162413399982, 0.4567532353641272], [0.6983888951529047, 0.5061662970897383, 0.46826900189173276], [0.48864709788150984, 0.5011701181393368, 0.5647624058831635], [0.509899650467922, 0.5653512233622731, 0.5968542112977788], [0.557608273511983, 0.4871299532704426, 0.5201663722579272], [0.5036544267799201, 0.38651232131895114, 0.4546172059984215]]
 }
 
 # per job
@@ -89,12 +87,13 @@ best_dict = {}
 
 # set font size & kwargs
 plt.rcParams.update({'font.size': 13.5})
-kwargs = dict(histtype='stepfilled', density=True, alpha=0.5,  bins=40) # normed=True,
+kwargs = dict(histtype='stepfilled', density=True, alpha=0.1,  bins=40, zorder=3, hist_kws={'alpha':0.1}) # normed=True,
 
 # make plots and print best scores
 print("Best AUC Scores:")
-fig, ax = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
-kwargs = dict(ax=ax, kde=False, element="step",bins=60)
+fig, ax = plt.subplots(figsize=[6.5 * 1.36, 6], dpi=160)
+plt.grid(alpha=0.4,zorder=0)
+kwargs = dict(ax=ax, kde=False, element="step",bins=60, alpha=0.4,linewidth=2,zorder=1)
 for i, (d, l) in enumerate(zip(dicts,labels)):
     sns.histplot(np.concatenate(list(d.values())).ravel(), color=sns.color_palette()[i] ,label=l, **kwargs)
     max_auc = 0
@@ -112,9 +111,10 @@ for i, (d, l) in enumerate(zip(dicts,labels)):
                     trial = k
                     job = j
     print(f"For {l}:\nJob {job}{' - Trial '+str(trial) if len(x)>1 else ''}{' - Dimension '+str(dim) if dim>=0 else ''}\nAUC {max_auc}\n") 
-    best_dict[job] = trial if dim < 0 else (trial, dim)
+    best_dict[l] = (job, trial) if dim < 0 else (job, (trial, dim))
 plt.xlabel("Area Under Curve")
-plt.legend(loc=2)
+plt.legend(bbox_to_anchor=(1.17,0.95))
+fig.subplots_adjust(right=0.85)
 
 # store roc curve plots in designated directory
 out_dir = f"output/ROC_curves_best"

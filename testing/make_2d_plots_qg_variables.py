@@ -117,3 +117,4 @@ for i, job_id in enumerate(job_ids):
         pass
     
     normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    lund_plots(g_anomaly, g_normal, q_anomaly, q_normal, job_id)

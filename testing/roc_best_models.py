@@ -14,10 +14,9 @@ from functions.data_manipulation import (
 
 ### ----- User Input ----- ###
 # obtain best_dict from roc_auc_scores.py
-best_dict = {'11120653': 3, '11461550': 7, '22_08_11_1520': (0, 0), 'sigJetRecur_dr12': 0} # hand cut lstm: (trial nr, hidden dim nr.)
+best_dict = {'LSTM + OCSVM - HyperTraining': ('11120653', 3), 'LSTM + OCSVM - RegularTraining': ('11461550', 7), 'Hand Cut LSTM Hidden State': ('11461550', (0, 1)), 'Hand Cut Variables': ('sigJetRecur_dr12', 0)}
 
 # Setup to make multiple roc plot
-labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM - RegularTraining", "Hand Cut LSTM Hidden State", r"Cut Counting On $R_g$"]
 colors = ["C1", "C2", "C3", "C4"]
 colors = sns.color_palette()
 
@@ -55,8 +54,8 @@ else:
     jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
 
 # split data TODO see if it works -> test set too small for small dataset!!! -> using full set
-_, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.0, 1.0])
-_, split_test_data, _ = train_dev_test_split(jets, split=[0.0, 1.0])
+_, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1])
+_, split_test_data, _ = train_dev_test_split(jets, split=[0.7, 0.1])
 # split_test_data_recur = jets_recur
 # split_test_data= jets
 
@@ -84,40 +83,40 @@ fig, ax = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
 ax.plot([0,1],[0,1],color='k')
     
 # First plot
-job_id, trial = list(best_dict.items())[0]
+label, (job_id, trial) = list(best_dict.items())[0]
 trials = load_trials(job_id, remove_unwanted=True) # do not remove unwanted, otherwise trial nr. is wrong
 y_true, y_predict = get_y_results_from_trial(data_list, trials[trial])
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc:.4f}")
-ax.plot(fpr, tpr, color=colors[0], label=labels[0]+"\n"+f" AUC: {roc_auc:.4F}")     
+ax.plot(fpr, tpr, color=colors[0], label=label+"\n"+f" AUC: {roc_auc:.4F}")     
 
 # Second plot
-job_id, trial = list(best_dict.items())[1]
+label, (job_id, trial) = list(best_dict.items())[1]
 trials = load_trials(job_id, remove_unwanted=False) # do not remove unwanted, otherwise trial nr. is wrong
 y_true, y_predict = get_y_results_from_trial(data_list, trials[trial])
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc:.4f}")
-ax.plot(fpr, tpr, color=colors[1], label=labels[1]+"\n"+f" AUC: {roc_auc:.4F}") 
+ax.plot(fpr, tpr, color=colors[1], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
 
 # Third plot - Hand cut on lstm hidden dims
-job_id, (trial, dim) = list(best_dict.items())[2]
+label, (job_id, (trial,dim)) = list(best_dict.items())[2]
 trials = load_trials(job_id, remove_unwanted=False) # do not remove unwanted, otherwise trial nr. is wrong
 y_true, y_predict = get_y_results_from_trial_h(data_list, trials[trial], dim)
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc:.4f}")
-ax.plot(fpr, tpr, color=colors[2], label=labels[2]+"\n"+f" AUC: {roc_auc:.4F}") 
+ax.plot(fpr, tpr, color=colors[2], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
 
 # Fourth plot - Hand cut on variable
-job_id, trial = list(best_dict.items())[3]
+label, (job_id, trial) = list(best_dict.items())[3]
 y_predict = [d[job_id][0] for d  in data_list]
 y_true = [d['y_true'] for d in data_list]
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc:.4f}")
-ax.plot(fpr, tpr, color=colors[3], label=labels[3]+"\n"+f" AUC: {roc_auc:.4F}") 
+ax.plot(fpr, tpr, color=colors[3], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
 ax.set_xlabel("Normal Fraction Quarks")
 ax.set_ylabel("Normal Fraction Gluons")
 ax.set_xlim(0, 1)

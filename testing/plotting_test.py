@@ -142,7 +142,51 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
 
 def normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id=None):
     
+    data = ((g_anomaly, g_normal), (q_anomaly, q_normal))
     
+    # set colors, same as in other plot
+    color = ['b', 'tab:orange', 'c', 'm', 'k', 'b1', 'c1', 'm1', 'k1']#plt.cm.(np.linspace(0,1,2*len(data_dict))) # since I won't put 10 digits in one plot
+    markers = ["o", "s", "v", "*" , "D" , "-"]
+    
+    #TODO only for 3 features now (because easier)
+    for i in range(3):
+        
+        fig = plt.figure(figsize=[6 * 1.36, 6], dpi=160)
+        ax = plt.subplot(111)
+        
+        for j,d in enumerate(data): # quark and gluon jets
+            
+            normal = d[1]
+            anomalous = d[0]
+            
+            # set color
+            #color = next(ax._get_lines.prop_cycler)['color']
+            
+            # plot normal
+            x = [i[0] for i in normal]
+            y = [i[1] for i in normal]
+            plt.scatter(x, y, color=color[j], s=25, linewidths=.8, marker=markers[j], alpha=0.7, zorder=3 ,label=key+' - Normal', edgecolors="k") # , marker=markers[j]
+
+            # plot anomalous
+            x = [i[0] for i in anomalous]
+            y = [i[1] for i in anomalous]
+            plt.scatter(x, y, color=color[j], s=25, linewidths=.8, marker=markers[j], alpha=0.7, zorder=3, label=key+' - Anomalous', edgecolors="r")
+        
+        # Shrink current axis's height by 10% on the bottom
+        box = ax.get_position()
+        ax.set_position([box.x0, box.y0 + box.height * 0.1,
+                        box.width, box.height * 0.9])
+        lgd = ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), 
+                    fancybox=True, shadow=True, ncol=nr_digits) # , prop={'size': 8}
+        ax.grid(alpha=0.4, zorder=0)
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.subplots_adjust(left=0.1, bottom=0.2, right=0.87, top=0.86)
+        
+        # save figure without and with title
+        plt.savefig(f"{file_name}/trial_{i}_all_no_title", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
+        plt.title(r"$\overline{h_i}$" + f" Test States {'- Job '+str(job_id) if job_id is not None else ''}- Trial_{i}")
+        plt.savefig(f"{file_name}/trial_{i}_all", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
     
     return
 
@@ -250,3 +294,8 @@ def ROC_curve_digits(digits_data_normal, digits_data_anomaly, trials, job_id):
         collect_aucs.append(auc)
     
     return collect_aucs
+
+
+def lund_planes(g_anomaly, g_normal, q_anomaly, q_normal, job_id):
+    
+    return
