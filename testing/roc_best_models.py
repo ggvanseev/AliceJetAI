@@ -14,7 +14,7 @@ from functions.data_manipulation import (
 
 ### ----- User Input ----- ###
 # obtain best_dict from roc_auc_scores.py
-best_dict = {'LSTM + OCSVM - HyperTraining': ('11120653', 3), 'LSTM + OCSVM - RegularTraining': ('11461550', 7), 'Hand Cut LSTM Hidden State': ('11461550', (0, 1)), 'Hand Cut Variables': ('sigJetRecur_dr12', 0)}
+best_dict = {'LSTM + OCSVM - HyperTraining': ('11120653', 3), 'LSTM + OCSVM - RegularTraining': ('11461550', 7), 'Hand Cut LSTM Hidden State': ('11461550', (0, 1)), r'Hand Cut Variable $R_g$': ('sigJetRecur_dr12', 0)}
 
 # Setup to make multiple roc plot
 colors = ["C1", "C2", "C3", "C4"]
