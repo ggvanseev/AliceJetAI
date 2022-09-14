@@ -123,3 +123,4 @@ for job_id in job_ids:
     
     collect_aucs = ROC_anomalies_hand_cut_lstm(g_jets_recur, q_jets_recur, job_id, trials)
     all_aucs[job_id] = collect_aucs
+print(f"All AUC values for these jobs:\n{all_aucs}")
