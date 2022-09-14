@@ -88,7 +88,7 @@ trials = load_trials(job_id, remove_unwanted=True) # do not remove unwanted, oth
 y_true, y_predict = get_y_results_from_trial(data_list, trials[trial])
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
-print(f"ROC Area under curve: {roc_auc:.4f}")
+print(f"ROC Area under curve: {roc_auc}")
 ax.plot(fpr, tpr, color=colors[0], label=label+"\n"+f" AUC: {roc_auc:.4F}")     
 
 # Second plot
@@ -97,7 +97,7 @@ trials = load_trials(job_id, remove_unwanted=False) # do not remove unwanted, ot
 y_true, y_predict = get_y_results_from_trial(data_list, trials[trial])
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
-print(f"ROC Area under curve: {roc_auc:.4f}")
+print(f"ROC Area under curve: {roc_auc}")
 ax.plot(fpr, tpr, color=colors[1], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
 
 # Third plot - Hand cut on lstm hidden dims
@@ -106,7 +106,7 @@ trials = load_trials(job_id, remove_unwanted=False) # do not remove unwanted, ot
 y_true, y_predict = get_y_results_from_trial_h(data_list, trials[trial], dim)
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
-print(f"ROC Area under curve: {roc_auc:.4f}")
+print(f"ROC Area under curve: {roc_auc}")
 ax.plot(fpr, tpr, color=colors[2], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
 
 # Fourth plot - Hand cut on variable
@@ -115,7 +115,7 @@ y_predict = [d[job_id][0] for d  in data_list]
 y_true = [d['y_true'] for d in data_list]
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
-print(f"ROC Area under curve: {roc_auc:.4f}")
+print(f"ROC Area under curve: {roc_auc}")
 ax.plot(fpr, tpr, color=colors[3], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
 ax.set_xlabel("Normal Fraction Quarks")
 ax.set_ylabel("Normal Fraction Gluons")

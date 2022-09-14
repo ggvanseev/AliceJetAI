@@ -63,8 +63,11 @@ job_ids = [
 #    "11316965",
 #    "11316966",
 #    "11316967",   
-    "11461549",
-    "11461550",
+#    "11461549",
+#    "11461550",
+    "11120653",
+    "11120654",
+    "11120655",
 ]
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
@@ -171,11 +174,11 @@ for i, job_id in enumerate(job_ids):
     # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id)
     # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="first")
     # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="last")
-    #collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
-    #all_aucs[job_id] = collect_aucs
+    collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
+    all_aucs[job_id] = collect_aucs
     
     #stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    #stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     #stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
