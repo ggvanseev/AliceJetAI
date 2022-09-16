@@ -84,7 +84,7 @@ space = hp.choice(
 
 
 # set multiple runs
-runs = 2
+runs = 1
 for i in range(runs):
     
     # set for this specific run
