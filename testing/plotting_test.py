@@ -1,10 +1,12 @@
 from attr import s
 import matplotlib.pyplot as plt
-from matplotlib import cm
+import awkward as ak
+from matplotlib import colors
 import random
 import numpy as np
 import os
 
+import branch_names as na
 from functions.run_lstm import calc_lstm_results
 from functions.data_manipulation import (
     lstm_data_prep,
@@ -140,53 +142,97 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
         plt.savefig(f"{file_name}/trial_{i}_all", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
 
 
-def normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id=None):
+def sort_feature_splitting(data, feature, splittings):
+    """
+    Takes specific splittings from dataset, options:
+    'all', 'first', 'last', 'mean'
+    """
+    if splittings == 'all':
+        return ak.flatten(data[feature])
+    elif splittings == 'first':
+        return ak.firsts(data[feature])
+    elif splittings == 'last':
+        return [d[-1] for d in data[feature]]
+    elif splittings == 'mean':
+        return [ak.mean(d) for d in data[feature]]
+    return -1
+
+def normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, splittings, job_id=None, trial=None):
+    # first splitting, last splitting, mean of splittings or all splittings
+    #ak.firsts(g_normal[feature]),
+    #[[g_normal[feature][i][-1] for i in range(len(g_normal[feature]))],
+    #[[ak.mean(x) for x in g_normal[feature]],
+    #ak.flatten(g_normal[feature]),
+        
+    # make out directory if it does not exist yet
+    out_dir = f"testing/output/2D_{job_id}"
+    try:
+        os.mkdir(out_dir)
+    except FileExistsError:
+        pass
     
     data = ((g_anomaly, g_normal), (q_anomaly, q_normal))
+    feature_combinations= [
+        (features[0], features[1]),
+        (features[0], features[2]),
+        (features[1], features[2])
+    ]
     
     # set colors, same as in other plot
-    color = ['b', 'tab:orange', 'c', 'm', 'k', 'b1', 'c1', 'm1', 'k1']#plt.cm.(np.linspace(0,1,2*len(data_dict))) # since I won't put 10 digits in one plot
+    color = ['b', 'tab:orange', 'g', 'r', 'k', 'b1', 'c1', 'm1', 'k1']#plt.cm.(np.linspace(0,1,2*len(data_dict))) # since I won't put 10 digits in one plot
     markers = ["o", "s", "v", "*" , "D" , "-"]
+    labels = ["Gluon Jets", "Quark Jets"]
+    
+    # set matplotlib font settings
+    plt.rcParams.update({'font.size': 12})
+    fig, axs = plt.subplots(1, 3, figsize=(8 * 1.36, 3.3), dpi=160)
     
     #TODO only for 3 features now (because easier)
-    for i in range(3):
-        
-        fig = plt.figure(figsize=[6 * 1.36, 6], dpi=160)
-        ax = plt.subplot(111)
-        
+    for i, (f1, f2) in enumerate(feature_combinations):
         for j,d in enumerate(data): # quark and gluon jets
             
             normal = d[1]
             anomalous = d[0]
             
-            # set color
-            #color = next(ax._get_lines.prop_cycler)['color']
-            
             # plot normal
-            x = [i[0] for i in normal]
-            y = [i[1] for i in normal]
-            plt.scatter(x, y, color=color[j], s=25, linewidths=.8, marker=markers[j], alpha=0.7, zorder=3 ,label=key+' - Normal', edgecolors="k") # , marker=markers[j]
+            x = sort_feature_splitting(normal, f1, splittings)
+            y = sort_feature_splitting(normal, f2, splittings)
+            xmin = np.min(x)
+            xmax = np.max(x)
+            ymin = np.min(y)
+            ymax = np.max(y)
+            axs[i].scatter(x, y, color=color[2*j], s=3, linestyle='None', marker=markers[j], alpha=0.5, zorder=3 ,label=labels[j]+' - Normal') # , edgecolors="k", marker=markers[j]
 
             # plot anomalous
-            x = [i[0] for i in anomalous]
-            y = [i[1] for i in anomalous]
-            plt.scatter(x, y, color=color[j], s=25, linewidths=.8, marker=markers[j], alpha=0.7, zorder=3, label=key+' - Anomalous', edgecolors="r")
-        
-        # Shrink current axis's height by 10% on the bottom
-        box = ax.get_position()
-        ax.set_position([box.x0, box.y0 + box.height * 0.1,
-                        box.width, box.height * 0.9])
-        lgd = ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.15), 
-                    fancybox=True, shadow=True, ncol=nr_digits) # , prop={'size': 8}
-        ax.grid(alpha=0.4, zorder=0)
-        plt.xlabel(xlabel)
-        plt.ylabel(ylabel)
-        plt.subplots_adjust(left=0.1, bottom=0.2, right=0.87, top=0.86)
-        
-        # save figure without and with title
-        plt.savefig(f"{file_name}/trial_{i}_all_no_title", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
-        plt.title(r"$\overline{h_i}$" + f" Test States {'- Job '+str(job_id) if job_id is not None else ''}- Trial_{i}")
-        plt.savefig(f"{file_name}/trial_{i}_all", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
+            x = sort_feature_splitting(anomalous, f1, splittings)
+            y = sort_feature_splitting(anomalous, f2, splittings)
+            xmin = np.min(x) if np.min(x) < xmin else xmin
+            xmax = np.max(x) if np.max(x) > xmax else xmax
+            ymin = np.min(y) if np.min(y) < ymin else ymin
+            ymax = np.max(y) if np.max(y) > ymax else ymax
+            axs[i].scatter(x, y, color=color[2*j+1], s=3,  linestyle='None', marker=markers[j], alpha=0.7, zorder=4, label=labels[j]+' - Anomalous') #linewidths=.6,
+            
+            # setup
+            axs[i].set_xlim([xmin, xmax])
+            axs[i].set_ylim([ymin, ymax])
+            axs[i].set_xlabel(na.variable_names[f1])
+            axs[i].set_ylabel(na.variable_names[f2])
+            axs[i].grid(alpha=0.4, zorder=0)
+
+
+    # Shrink current axis's height by 10% on the bottom
+    box = axs[1].get_position()
+    axs[1].set_position([box.x0, box.y0 + box.height * 0.1,
+                    box.width, box.height * 0.9])
+    lgd = axs[1].legend(loc='upper center', bbox_to_anchor=(0.5, -0.2), 
+                fancybox=True, shadow=True, ncol=len(labels)) # , prop={'size': 8}
+    
+    plt.subplots_adjust(left=0.1, bottom=0.1, right=0.87, top=0.86, wspace=0.3, hspace=0.4)
+    
+    # save figure without and with title #TODO title
+    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}{splittings}_no_title", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
+    plt.title(r"$\overline{h_i}$" + f" Test States {'- Job '+str(job_id) if job_id is not None else ''}- Trial_{i}")
+    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}{splittings}", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
     
     return
 
@@ -296,6 +342,111 @@ def ROC_curve_digits(digits_data_normal, digits_data_anomaly, trials, job_id):
     return collect_aucs
 
 
-def lund_planes(g_anomaly, g_normal, q_anomaly, q_normal, job_id):
+def get_dr_kt(branches, features=["sigJetRecur_dr12", "sigJetRecur_jetpt", "sigJetRecur_z"]):
+    """Obtain flattened dr and kt array for Lund plane
+    default features are recursive, can be changed for normal softdrop:
+    order = [dr, pt, z]"""
+    try:
+        flat_dr = ak.flatten(ak.flatten(branches[features[0]]))
+        flat_pt = ak.flatten(ak.flatten(branches[features[1]]))
+        flat_z = ak.flatten(ak.flatten(branches[features[2]]))
+    except:
+        flat_dr = ak.flatten(branches[features[0]])
+        flat_pt = ak.flatten(branches[features[1]])
+        flat_z = ak.flatten(branches[features[2]])
+    #flat_kt = (1-flat_z) * flat_pt * flat_dr
+    flat_kt = flat_z * flat_pt * flat_dr
+    return flat_dr, flat_kt
+
+def lund_planes_anomalies(g_anomaly, g_normal, q_anomaly, q_normal, job_id, trial=None):
+    """Normal data vs anomaly data, next to each other, difference, other?"""
+    
+    # store roc curve plots in designated directory
+    out_dir = f"testing/output/Lund"
+    out_dir += f"_{job_id}"
+    try:
+        os.mkdir(out_dir)
+    except FileExistsError:
+        pass
+    
+    normal = ak.concatenate((g_normal,q_normal))
+    anomalous = ak.concatenate((g_anomaly,q_anomaly))
+    
+    plt.rcParams.update({'font.size': 12})
+    
+    fig, ax = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,5),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
+    fig.patch.set_facecolor('white')
+
+    # Normal dataset
+    flat_dr, flat_kt = get_dr_kt(normal)
+    H, xedges, yedges = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
+    im = ax[0].imshow(H.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], aspect=0.7)
+    ax[0].title.set_text(r'Normal Data')
+    fig.colorbar(im, ax=ax[0])
+    ax[0].set_xlabel(r'$\ln (R/\Delta R)$')
+    ax[0].set_ylabel(r'$\ln (k_t)$')
+
+    # Anomalous dataset
+    flat_dr, flat_kt = get_dr_kt(anomalous)
+    H2, xedges2, yedges2 = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
+    im2 = ax[1].imshow(H2.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges2[0], xedges2[-1], yedges2[0], yedges2[-1]], aspect=0.7)
+    ax[1].title.set_text(r'Anomalous Data')
+    fig.colorbar(im, ax=ax[1])
+    ax[1].set_xlabel(r'$\ln (R/\Delta R)$')
+    ax[1].set_ylabel(r'$\ln (k_t)$')
+    
+    plt.tight_layout()
+    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies_qg")
+    
+    # - difference -
+    fig = plt.figure( figsize = (18, 5))#, gridspec_kw={'width_ratios': [1, 1.5]})
+    fig.patch.set_facecolor('white')
+
+    # First dataset zcut = 0.0
+    H3 = H2 - H
+    xedges3 = xedges2 - xedges
+    yedges3 = yedges2 - yedges
+    plt.imshow(H3.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges3[0], xedges3[-1], yedges3[0], yedges3[-1]], aspect=0.7)
+
+    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies_difference")
+
+    return
+
+
+def lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal,num):
+    # store roc curve plots in designated directory
+    out_dir = f"testing/output/Lund_qg"
+    try:
+        os.mkdir(out_dir)
+    except FileExistsError:
+        pass
+    
+    quark = ak.concatenate((g_normal,g_anomaly))
+    gluon = ak.concatenate((q_normal,q_anomaly))
+    plt.rcParams.update({'font.size': 12})
+    
+    fig, ax = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,5),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
+    fig.patch.set_facecolor('white')
+
+    # Normal dataset
+    flat_dr, flat_kt = get_dr_kt(quark)
+    H, xedges, yedges = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
+    im = ax[0].imshow(H.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], aspect=0.7)
+    ax[0].title.set_text(r'Quark Jets')
+    fig.colorbar(im, ax=ax[0])
+    ax[0].set_xlabel(r'$\ln (R/\Delta R)$')
+    ax[0].set_ylabel(r'$\ln (k_t)$')
+
+    # Anomalous dataset
+    flat_dr, flat_kt = get_dr_kt(gluon)
+    H2, xedges2, yedges2 = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
+    im2 = ax[1].imshow(H2.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges2[0], xedges2[-1], yedges2[0], yedges2[-1]], aspect=0.7)
+    ax[1].title.set_text(r'Gluon Jets')
+    fig.colorbar(im, ax=ax[1])
+    ax[1].set_xlabel(r'$\ln (R/\Delta R)$')
+    ax[1].set_ylabel(r'$\ln (k_t)$')
+    
+    plt.tight_layout()
+    plt.savefig(f"{out_dir}/quark_and_gluon")
     
     return

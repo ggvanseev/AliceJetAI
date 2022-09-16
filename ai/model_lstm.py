@@ -64,6 +64,16 @@ class LSTMModel(nn.Module):
         theta_gradients=None,
         backpropagation_flag=True,
     ):
+        # reverse the jets in order, so first splitting will be forwarded last
+        if pooling == "last_reversed":
+            jet_track_prev = 0
+            jet_bounds = [x + 1 for x in jet_track_local] 
+            jet_bounds[-1] = None
+            for jet_track in jet_bounds:
+                x[jet_track_prev:jet_track] = reversed(x[jet_track_prev:jet_track])
+                jet_track_prev = jet_track
+            pass
+        
         # We need to detach as we are doing truncated backpropagation through time (BPTT)
         # If we don't, we'll backprop all the way to the start even after going through another batch
         # Forward propagation by passing in the input, hidden state, and cell state into the model
@@ -72,22 +82,17 @@ class LSTMModel(nn.Module):
         except RuntimeError:
             # h0/c0 wrong dim -> torch doc: "Defaults to zeros if (h_0, c_0) is not provided."
             _, (hn, cn) = self.lstm(x)
-        # TODO of mean pooling hier?
-        # out = F.avg_pool2d(out)
-        # self.mp(out)
-        # self.mp(hn)
-
 
         # get mean/last pooled hidden states
-        if pooling == "last":
+        if (pooling == "last") or (pooling == "last_reversed"):
             h_bar = hn[:, jet_track_local]
         elif pooling == "mean":
             h_bar = torch.zeros([hn.shape[0], len(jet_track_local), hn.shape[-1]]).to(
                 self.set_device
             )
             jet_track_prev = 0
-            jet_track_local = [x + 1 for x in jet_track_local]
-            jet_track_local[-1] = None
+            jet_bounds = [x + 1 for x in jet_track_local] 
+            jet_bounds[-1] = None
             for j, jet_track in enumerate(jet_track_local):
                 h_bar[:, j] = torch.mean(hn[:, jet_track_prev:jet_track], dim=1)
                 jet_track_prev = jet_track

@@ -756,17 +756,25 @@ class REGULAR_TRAINING(TRAINING):
                 train_data, batch_size=batch_size
                 )
                 bf_success=True
-            except ValueError as e:
+            except (ValueError, TypeError) as e:
                 print(str(e))
-                print("Branch Filler failed -> lowering batch-size to try to circumvent the issue")
                 batch_size = batch_size - 10
+                print(f"Branch Filler failed -> lowering batch-size to {batch_size}, to try to circumvent the issue")
         
         bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_train_batches}"
-        val_data, track_jets_val_data, max_n_val_batches, _ = branch_filler(
-            val_data, batch_size=batch_size
-        )
-        bf_out_txt += f"\nNr. of validation batches: {int(len(val_data) / batch_size)}, out of max.: {max_n_val_batches}"
-
+        
+        bf_val_success = False
+        while(bf_val_success == False):
+            try:
+                val_data, track_jets_val_data, max_n_val_batches, _ = branch_filler(
+                    val_data, batch_size=batch_size
+                )
+                bf_out_txt += f"\nNr. of validation batches: {int(len(val_data) / batch_size)}, out of max.: {max_n_val_batches}"
+                bf_val_success = True
+            except (ValueError, TypeError) as e:
+                print(str(e))
+                batch_size = batch_size - 10
+                print(f"Branch Filler Validation failed -> lowering batch-size to {batch_size}, to try to circumvent the issue")
         return (
             train_data,
             val_data,

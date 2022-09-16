@@ -5,7 +5,7 @@ from functions.data_loader import *
 from functions.data_manipulation import cut_on_length, separate_anomalies_from_regular, train_dev_test_split
 import matplotlib.pyplot as plt
 
-from testing.plotting_test import normal_vs_anomaly_2D_qg
+from testing.plotting_test import lund_planes_anomalies, lund_planes_qg, normal_vs_anomaly_2D_qg
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
@@ -79,20 +79,11 @@ for i, job_id in enumerate(job_ids):
     # gluon jets, get anomalies and normal out
     type_jets = "g_jets"
     _, g_jets_index_tracker, g_classification_tracker = get_anomalies(g_jets_recur, job_id, trials, file_name, jet_info=type_jets)
-    g_anomaly, g_normal = separate_anomalies_from_regular(
-        anomaly_track=g_classification_tracker[num],
-        jets_index=g_jets_index_tracker[num],
-        data=g_jets_recur,
-    )
 
     # quark jets, get anomalies and normal out
     type_jets = "q_jets"
     _, q_jets_index_tracker, q_classification_tracker = get_anomalies(q_jets_recur, job_id, trials, file_name, jet_info=type_jets)
-    q_anomaly, q_normal = separate_anomalies_from_regular(
-        anomaly_track=q_classification_tracker[num],
-        jets_index=q_jets_index_tracker[num],
-        data=q_jets_recur,
-    )
+    
 
     if show_distribution_percentages_flag:
         plt.figure(f"Distribution histogram anomalies {jet_info}", figsize=[1.36 * 8, 8])
@@ -102,19 +93,33 @@ for i, job_id in enumerate(job_ids):
 
     features = [na.recur_jetpt, na.recur_dr, na.recur_z]
 
-    # other selection/cuts
-    extra_cuts = False
-    if extra_cuts == True:
+    for num in range(len(trials)):
+        # get anomalies for trial: num
+        g_anomaly, g_normal = separate_anomalies_from_regular(
+            anomaly_track=g_classification_tracker[num],
+            jets_index=g_jets_index_tracker[num],
+            data=g_jets_recur,
+        )
+        q_anomaly, q_normal = separate_anomalies_from_regular(
+            anomaly_track=q_classification_tracker[num],
+            jets_index=q_jets_index_tracker[num],
+            data=q_jets_recur,
+        )
         
-        # cut on length
-        length = 3
-        g_anomaly = cut_on_length(g_anomaly, length, features)
-        g_normal = cut_on_length(g_normal, length, features)
-        q_anomaly = cut_on_length(q_anomaly, length, features)
-        q_normal = cut_on_length(q_normal, length, features)
-        job_id += f"_jet_len_{length}"
-        
-        pass
-    
-    normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    lund_plots(g_anomaly, g_normal, q_anomaly, q_normal, job_id)
+        # other selection/cuts
+        extra_cuts = False
+        if extra_cuts == True:
+            
+            # cut on length
+            length = 3
+            g_anomaly = cut_on_length(g_anomaly, length, features)
+            g_normal = cut_on_length(g_normal, length, features)
+            q_anomaly = cut_on_length(q_anomaly, length, features)
+            q_normal = cut_on_length(q_normal, length, features)
+            job_id += f"_jet_len_{length}"
+            
+            pass
+        for splittings in ['all', 'first', 'last', 'mean']:
+            normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, splittings, job_id, num)
+        lund_planes_anomalies(g_anomaly, g_normal, q_anomaly, q_normal, job_id, num)
+    lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id)
