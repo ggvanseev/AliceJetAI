@@ -69,6 +69,10 @@ job_ids = [
     "11120654",
     "11120655",
 ]
+job_ids = [
+    "11474168",
+    "11474169",
+]
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
 

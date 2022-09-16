@@ -42,7 +42,6 @@ file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # set data sample settings
 out_file = ""               # if previously created a specific sample, otherwise leave empty
 mix = True                  # set to true if you want a mixture of quark and gluon jets
-reverse = True              # try for reverse order of jets -> effect on Last Pooling? TODO
 g_percentage = 90           # percentage gluon jets of mixture
 
 # set run settings
