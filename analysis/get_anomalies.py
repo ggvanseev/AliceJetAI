@@ -81,7 +81,7 @@ job_ids = [
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
 g_percentage = 50 # for evaluation of stacked plots 50%, ROC would be nice to have 90 vs 10 percent
-num = 8 # trial nr.
+num = 7 # trial nr.
 save_flag = True
 show_distribution_percentages_flag = False
 
@@ -101,7 +101,8 @@ for i, job_id in enumerate(job_ids):
     # start from a point in the series
     # if i < 0:
     #   continue
-    
+    if i == 1:
+        num = 1   
     ### Regular Training options ### TODO make this automatic 
     # get dr_cut as in the regular training!
     dr_cut = None# np.linspace(0,0.4,len(job_ids)+1)[i+1] 
