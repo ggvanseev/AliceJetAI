@@ -111,3 +111,5 @@
 11461550	on: samples/mixed/30100jets_pct90g10q.p	runtime: 31332.72 s	notes: regular training 100k mixed 90g 10q, lr=e-3, nu = 0.1, hidden dim = 3, run 2/2
 11474168	on: samples/mixed/30100jets_pct90g10q.p	runtime: 13380.02 s	notes: regular training 100k mixed 90g 10q, lr=e-2, nu = 0.1, hidden dim = 3, run 1/1
 11474169	on: samples/mixed/30100jets_pct90g10q.p	runtime: 46627.42 s	notes: regular training 100k mixed 90g 10q, lr=e-3, nu = 0.1, hidden dim = 3, run 1/1
+11478120	on: samples/mixed/30100jets_pct90g10q.p	runtime: 19945.33 s	notes: regular training 100k mixed 90g 10q, lr=e-3, nu = 0.1, hidden dim = 3
+11478121	on: samples/mixed/30100jets_pct90g10q.p	runtime: 41049.48 s	notes: regular training 100k mixed 90g 10q, lr=e-3, nu = 0.1, hidden dim = 3

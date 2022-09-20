@@ -1,0 +1,160 @@
+For 11478121:trial: 0
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last_reversed
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.00217074987592325
+with final cost:  0.0029930064273792634
+
+trial: 1
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last_reversed
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.002152802393248804
+with final cost:  0.001033516349034258
+
+trial: 2
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last_reversed
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.00020205689599431254
+with final cost:  0.004488969541002863
+
+trial: 3
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last_reversed
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.0011760124951408352
+with final cost:  0.0006401227468172954
+
+trial: 4
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last_reversed
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.0030759714171936237
+with final cost:  0.0008652601670581239
+
+trial: 5
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last_reversed
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.0011656446849333257
+with final cost:  0.00457573084077012
+
+trial: 6
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last_reversed
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.001672430264382116
+with final cost:  0.0060334685473928396
+
+trial: 7
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last_reversed
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.0009509580789088395
+with final cost:  0.0015743809542456688
+
+trial: 8
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last_reversed
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.0021534117213643095
+with final cost:  0.007412275999399753
+
+trial: 9
+  batch_size  	  5000
+  dropout     	  0
+  hidden_dim  	  3
+  learning_rate	  0.001
+  min_epochs  	  120
+  num_layers  	  1
+  output_dim  	  1
+  pooling     	  last_reversed
+  scaler_id   	  minmax
+  svm_gamma   	  auto
+  svm_nu      	  0.1
+  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
+with loss:        0.005044775184052636
+with final cost:  0.0006394606897019983
+
