@@ -1,6 +1,7 @@
 from encodings import normalize_encoding
 from locale import normalize
 import numpy as np
+import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
@@ -79,22 +80,21 @@ labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM - RegularTraining", "Han
 # for digits -> comment if want to use qg
 # dicts = [auc_scores_lstm_ocsvm_digits_01, auc_scores_lstm_ocsvm_digits_05]
 # labels = [r"$\nu = 0.1$", r"$\nu = 0.5$"]
-
+a = pd.DataFrame({"label":l, "val":val} for l,d in zip(labels,dicts) for val in np.concatenate(list(d.values())).flatten())
 
 # store for best job/trials
 best_dict = {}
 
 # set font size & kwargs
 plt.rcParams.update({'font.size': 13.5})
-kwargs = dict(histtype='stepfilled', density=True, alpha=0.1,  bins=40, zorder=3, hist_kws={'alpha':0.1}) # normed=True,
-
+kwargs = dict(histtype='stepfilled', density=True, linewidth=1, alpha=0.01,  bins=40, zorder=3, line_kws={'linewidth':1, 'alpha':0.1}, hist_kws={'alpha':0.1}) # normed=True,
 # make plots and print best scores
 print("Best AUC Scores:")
 fig, ax = plt.subplots(figsize=[6.5 * 1.36, 6], dpi=160)
 plt.grid(alpha=0.4,zorder=0)
 kwargs = dict(ax=ax, kde=False, element="step",bins=60, alpha=0.4,linewidth=2,zorder=1)
 for i, (d, l) in enumerate(zip(dicts,labels)):
-    sns.histplot(np.concatenate(list(d.values())).ravel(), color=sns.color_palette()[i] ,label=l, **kwargs)
+    ax = sns.histplot(np.concatenate(list(d.values())).ravel(), color=sns.color_palette()[i] ,label=l, **kwargs)
     max_auc = 0
     job = 0
     trial = 0
