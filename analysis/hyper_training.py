@@ -24,12 +24,12 @@ import branch_names as na
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 # file_name = "samples/JetToyHIResultSoftDropSkinny.root"
-# file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
+#file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 
 # set data sample settings
 out_file = ""               # if previously created a specific sample, otherwise leave empty
-mix = True                  # set to true if you want a mixture of quark and gluon jets
+mix = False                  # set to true if you want a mixture of quark and gluon jets
 g_percentage = 90           # percentage gluon jets of mixture
 
 # set run settings
@@ -43,7 +43,7 @@ plot_flag = (
     False                   # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Hyper Training, 100k quark gluons"  # Small comment on run, will be saved to save file.
+run_notes = "Hyper Training, 100k Jewel Vac"  # Small comment on run, will be saved to save file.
 
 ###-----------------------------------------------------------------------------###
 
@@ -130,7 +130,7 @@ if out_file:
 elif mix:
     jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut)
 else:
-    jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut)
+    jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut)
 print("Loading data complete")     
 
 # split data 
