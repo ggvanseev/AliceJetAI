@@ -12,8 +12,8 @@ from testing.plotting_test import lund_planes_anomalies, lund_planes_qg, normal_
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 
 job_ids = [
-    "11461549",
-    "11461550"           
+    "11478120",
+    "11478121"           
 ]
 
 g_percentage = 50 # for evaluation of stacked plots 50%, ROC would be nice to have 90 vs 10 percent
