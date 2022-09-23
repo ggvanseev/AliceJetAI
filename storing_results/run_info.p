@@ -115,3 +115,7 @@
 11478121	on: samples/mixed/30100jets_pct90g10q.p	runtime: 41049.48 s	notes: regular training 100k mixed 90g 10q, lr=e-3, nu = 0.1, hidden dim = 3
 11487532	on: samples/SDTiny_jewelNR_120_vac-1.root	runtime: 18407.45 s	notes: Hyper Training, 100k Jewel Vac
 11487531	on: samples/SDTiny_jewelNR_120_simple-1.root	runtime: 65070.29 s	notes: Hyper Training, 100k Jewel Vac
+11503917	on: samples/SDTiny_jewelNR_120_vac-1.root	runtime: 17769.22 s	notes: Hyper Training, 100k Jewel Vac
+11503918	on: samples/SDTiny_jewelNR_120_vac-1.root	runtime: 19967.60 s	notes: Hyper Training, 100k Jewel Vac
+11503920	on: samples/SDTiny_jewelNR_120_simple-1.root	runtime: 46796.86 s	notes: Hyper Training, 100k Jewel Vac
+11503919	on: samples/SDTiny_jewelNR_120_simple-1.root	runtime: 78544.00 s	notes: Hyper Training, 100k Jewel Vac
