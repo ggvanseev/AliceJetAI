@@ -396,7 +396,7 @@ def lund_planes_anomalies(g_anomaly, g_normal, q_anomaly, q_normal, job_id, tria
     ax[1].set_ylabel(r'$\ln (k_t)$')
     
     plt.tight_layout()
-    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies_qg")
+    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies")
     
     # - difference -
     fig = plt.figure( figsize = (18, 5))#, gridspec_kw={'width_ratios': [1, 1.5]})
@@ -412,6 +412,77 @@ def lund_planes_anomalies(g_anomaly, g_normal, q_anomaly, q_normal, job_id, tria
 
     return
 
+def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, trial=None):
+    """Normal data vs anomaly data, next to each other, difference, other?"""
+    
+    # store roc curve plots in designated directory
+    out_dir = f"testing/output/Lund"
+    out_dir += f"_{job_id}"
+    try:
+        os.mkdir(out_dir)
+    except FileExistsError:
+        pass
+    
+    normal = ak.concatenate((g_normal,q_normal))
+    anomalous = ak.concatenate((g_anomaly,q_anomaly))
+    
+    plt.rcParams.update({'font.size': 12})
+    
+    fig, ax = plt.subplots(2, 2, sharex=False, sharey=False, figsize = (12,10),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
+    fig.patch.set_facecolor('white')
+
+    # Normal gluon dataset
+    flat_dr, flat_kt = get_dr_kt(g_normal)
+    H, xedges, yedges = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
+    im = ax[0,0].imshow(H.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], aspect=0.7)
+    ax[0,0].title.set_text(r'Normal Gluon Data')
+    fig.colorbar(im, ax=ax[0,0])
+    ax[0,0].set_xlabel(r'$\ln (R/\Delta R)$')
+    ax[0,0].set_ylabel(r'$\ln (k_t)$')
+
+    # Anomalous gluon dataset
+    flat_dr, flat_kt = get_dr_kt(g_anomaly)
+    H2, xedges2, yedges2 = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
+    im2 = ax[0,1].imshow(H2.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges2[0], xedges2[-1], yedges2[0], yedges2[-1]], aspect=0.7)
+    ax[0,1].title.set_text(r'Anomalous Gluon Data')
+    fig.colorbar(im, ax=ax[0,1])
+    ax[0,1].set_xlabel(r'$\ln (R/\Delta R)$')
+    ax[0,1].set_ylabel(r'$\ln (k_t)$')
+    
+    # Normal gluon dataset
+    flat_dr, flat_kt = get_dr_kt(q_normal)
+    H, xedges, yedges = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
+    im3 = ax[1,0].imshow(H.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], aspect=0.7)
+    ax[1,0].title.set_text(r'Normal Quark Data')
+    fig.colorbar(im, ax=ax[1,0])
+    ax[1,0].set_xlabel(r'$\ln (R/\Delta R)$')
+    ax[1,0].set_ylabel(r'$\ln (k_t)$')
+
+    # Anomalous gluon dataset
+    flat_dr, flat_kt = get_dr_kt(q_anomaly)
+    H2, xedges2, yedges2 = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
+    im4 = ax[1,1].imshow(H2.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges2[0], xedges2[-1], yedges2[0], yedges2[-1]], aspect=0.7)
+    ax[1,1].title.set_text(r'Anomalous Quark Data')
+    fig.colorbar(im, ax=ax[1,1])
+    ax[1,1].set_xlabel(r'$\ln (R/\Delta R)$')
+    ax[1,1].set_ylabel(r'$\ln (k_t)$')
+    
+    plt.tight_layout()
+    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies_qg")
+    
+    # - difference -
+    fig = plt.figure( figsize = (18, 5))#, gridspec_kw={'width_ratios': [1, 1.5]})
+    fig.patch.set_facecolor('white')
+
+    # First dataset zcut = 0.0
+    H3 = H2 - H
+    xedges3 = xedges2 - xedges
+    yedges3 = yedges2 - yedges
+    plt.imshow(H3.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges3[0], xedges3[-1], yedges3[0], yedges3[-1]], aspect=0.7)
+
+    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies_difference_qg")
+
+    return
 
 def lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal,num):
     # store roc curve plots in designated directory

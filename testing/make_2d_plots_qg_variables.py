@@ -5,7 +5,7 @@ from functions.data_loader import *
 from functions.data_manipulation import cut_on_length, separate_anomalies_from_regular, train_dev_test_split
 import matplotlib.pyplot as plt
 
-from testing.plotting_test import lund_planes_anomalies, lund_planes_qg, normal_vs_anomaly_2D_qg
+from testing.plotting_test import lund_planes_anomalies, lund_planes_anomalies_qg, lund_planes_qg, normal_vs_anomaly_2D_qg
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
@@ -122,4 +122,5 @@ for i, job_id in enumerate(job_ids):
         for splittings in ['all', 'first', 'last', 'mean']:
             normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, splittings, job_id, num)
         lund_planes_anomalies(g_anomaly, g_normal, q_anomaly, q_normal, job_id, num)
+        lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, num)
     lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id)

@@ -56,7 +56,7 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     # figure setup
     legend = cost + cost_con + [final_cost]
     labels = [l.get_label() for l in legend]
-    plt.legend(legend, labels, loc=5) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
+    plt.legend(legend, labels, loc=1) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
     ax1.grid(axis="both", alpha=0.4) # add grid
     #plt.tight_layout()
     plt.subplots_adjust(left=0.15, bottom=0.1, right=0.9, top=0.9)
@@ -81,21 +81,25 @@ def cost_auc_plot(result: dict, title_plot: str, out_file: str):
     track_cost = result["cost_data"]["cost"]
     
     # plot roc auc & figure setup
-    fig = plt.figure()
-    roc = plt.plot(track_roc_auc, label="ROC AUC")
-    plt.xlabel("Epoch $k$")
-    plt.ylabel("Area Under Curve")
-    plt.grid( alpha=0.4)
+    fig, ax = plt.subplots(sharex=True, figsize=[6 * 1.36, 6], dpi=160)
+    roc = ax.plot(track_roc_auc, label="ROC AUC")
+    ax.set_xlabel("Epoch $k$")
+    ax.set_ylabel("Area Under Curve")
+    ax.set_ylim(bottom=0)
+    ax.set_xlim(left=0, right=len(track_roc_auc[1:])-1)
+    ax.grid( alpha=0.4)
     
     # plot cost 
-    ax1 = plt.twinx()
+    ax1 = ax.twinx()
     cost = ax1.plot(track_cost, color='r', label="Cost")
     ax1.set_ylabel("Cost")
+    ax1.set_ylim(bottom=0)
+    ax1.set_xlim(left=0, right=len(track_roc_auc[1:])-1)
     
     # create legend & figure setup
     legend = roc + cost
     labels = [l.get_label() for l in legend]
-    ax1.legend(legend, labels) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
+    ax1.legend(legend, labels, loc=5) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
     plt.tight_layout()
     
     # save version without title
