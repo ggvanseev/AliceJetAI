@@ -84,6 +84,7 @@ job_ids = [
 #     "11478121",
 #     "11120653",
 # ]
+job_ids = ["11524829",] # hp op last_reversed
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
 

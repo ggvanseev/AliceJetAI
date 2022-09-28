@@ -35,13 +35,13 @@ from functions.training import REGULAR_TRAINING, run_full_training
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 # file_name = "samples/JetToyHIResultSoftDropSkinny.root"
-file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
-# file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
+#file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
+file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 # file_name = "samples/JetToyHIResultSoftDropTiny.root"
 
 # set data sample settings
 out_file = ""               # if previously created a specific sample, otherwise leave empty
-mix = True                  # set to true if you want a mixture of quark and gluon jets
+mix = False                  # set to true if you want a mixture of quark and gluon jets
 g_percentage = 90           # percentage gluon jets of mixture
 
 # set run settings
@@ -55,7 +55,7 @@ plot_flag = (
     True                    # for making cost condition plots, only works if save_results_flag is True
 )
 
-notes = "regular training 100k mixed 90g 10q, lr=e-3, nu = 0.1, hidden dim = 3"  # Small command on run, will be save to save file.
+notes = "regular training Jewel simple, lr=e-3, nu = 0.5, hidden dim = 3"  # Small command on run, will be save to save file.
 
 ###-----------------------------------------------------------------------------###
 
@@ -74,7 +74,7 @@ space = hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.15]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.5]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["auto"]
             ),  # "scale" or "auto"[ 0.23 was the defeault before], auto seems weird -> this should not do anything!
@@ -102,33 +102,33 @@ if out_file:
 elif mix:
     jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut, dr_cut=dr_cut)
 else:
-    jets_recur, jets = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
+    jets_recur, jets = load_n_filter_data(file_name, kt_cut=kt_cut, dr_cut=dr_cut)
 print("Loading data complete")       
 
 # split data
 split_train_data, split_dev_data, split_val_data = train_dev_test_split(jets_recur, split=[0.7, 0.1])
-_, jets, _ = train_dev_test_split(jets, split=[0.7, 0.1])
+#_, jets, _ = train_dev_test_split(jets, split=[0.7, 0.1])
 print("Splitting data complete")
 
 # split data into quark and gluon jets
-g_recur = split_dev_data[jets[na.parton_match_id] == 21]
-q_recur = split_dev_data[abs(jets[na.parton_match_id]) < 7]
+#g_recur = split_dev_data[jets[na.parton_match_id] == 21]
+#q_recur = split_dev_data[abs(jets[na.parton_match_id]) < 7]
         
 # mock arrays for moniker 1 or 0 if gluon or quark
-g_true = ak.Array([{"y_true": 1} for i in range(len(g_recur))])
-q_true = ak.Array([{"y_true": 0} for i in range(len(q_recur))])
+#g_true = ak.Array([{"y_true": 1} for i in range(len(g_recur))])
+#q_true = ak.Array([{"y_true": 0} for i in range(len(q_recur))])
 
 # make ROC data
-roc_data = [{**item, **y} for item, y in zip(g_recur.to_list(), g_true.to_list())] + [{**item, **y} for item, y in zip(q_recur.to_list(), q_true.to_list())]
+#roc_data = [{**item, **y} for item, y in zip(g_recur.to_list(), g_true.to_list())] + [{**item, **y} for item, y in zip(q_recur.to_list(), q_true.to_list())]
 
 # do full training
 run_full_training(
     TRAINING_TYPE=REGULAR_TRAINING,
-    file_name=file_name_mixed_sample,
+    file_name=file_name,
     space=space,
     train_data=split_train_data,
     val_data=split_val_data,
-    roc_data=roc_data,
+    roc_data=None,
     max_evals=max_evals,
     max_attempts=max_attempts,
     patience=patience,

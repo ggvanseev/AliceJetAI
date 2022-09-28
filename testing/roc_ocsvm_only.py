@@ -124,4 +124,4 @@ for pooling in ["mean", "last", "last_reversed"]:
 
         # make ROC curve & store for later
         fig, roc_auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file,  xlabel="Normal Fraction Quarks", ylabel="Normal Fraction Gluons")
-        pickle.dump(fig, open(out_file+'.p'), 'wb')
+        #pickle.dump(fig, open(out_file+'.p'), 'wb')
