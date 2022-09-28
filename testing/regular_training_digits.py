@@ -145,7 +145,7 @@ for i in range(runs):
                     "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default
                     "svm_gamma": hp.choice("svm_gamma", ["scale"]),  #"scale" or "auto"[ 0.23 was the defeault before], auto seems weird
                     "scaler_id": hp.choice("scaler_id", ["minmax"]),  # "minmax" = MinMaxScaler or "std" = StandardScaler
-                    "pooling": hp.choice("pooling", ["mean"]),  # "last" , "mean"
+                    "pooling": hp.choice("pooling", ["mean"]),  # "mean", "last" , "last_reversed"
                 }
             ],
         )

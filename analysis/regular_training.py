@@ -33,9 +33,9 @@ from functions.training import REGULAR_TRAINING, run_full_training
 ### ------------------------------- User Input ------------------------------- ###
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
-# file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
+#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
+# file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 # file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 # file_name = "samples/JetToyHIResultSoftDropTiny.root"
 
@@ -49,7 +49,7 @@ max_evals = 10              # nr. of trials with same settings
 max_attempts = 8            # nr. of times algorithm will retry upon failed training
 patience = 10               # nr. of epochs to run after cost condition is met
 kt_cut = None               # for dataset, splittings kt > 1.0 GeV, assign None if not using
-multicore_flag = True       # for using SparkTrials or Trials, turn off for debuging
+multicore_flag = False       # for using SparkTrials or Trials, turn off for debuging
 save_results_flag = True    # for saving trials and runtime
 plot_flag = (
     True                    # for making cost condition plots, only works if save_results_flag is True
@@ -74,7 +74,7 @@ space = hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
             "output_dim": hp.choice("output_dim", [1]),
-            "svm_nu": hp.choice("svm_nu", [0.1]),  # 0.5 was the default
+            "svm_nu": hp.choice("svm_nu", [0.15]),  # 0.5 was the default
             "svm_gamma": hp.choice(
                 "svm_gamma", ["auto"]
             ),  # "scale" or "auto"[ 0.23 was the defeault before], auto seems weird -> this should not do anything!

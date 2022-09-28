@@ -9,21 +9,22 @@ from testing.plotting_test import lund_planes_anomalies, lund_planes_anomalies_q
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
 
 job_ids = [
-    "11478120",
-    "11478121"           
+    # "11478120",
+    # "11478121",
+    "11120653"           
 ]
 
 g_percentage = 50 # for evaluation of stacked plots 50%, ROC would be nice to have 90 vs 10 percent
-num = 0 # trial nr.
+num = 2 # trial nr. if None will do for all trials
 save_flag = True
 show_distribution_percentages_flag = False
 
 pre_made = False   # created in regular training
-mix = True        # set to true if mixture of q and g is required
-kt_cut = None         # for dataset, splittings kt > 1.0 GeV, assign None if not using
+mix = True         # set to true if mixture of q and g is required
+kt_cut = None      # for dataset, splittings kt > 1.0 GeV, assign None if not using
 
 
 out_files=[]
@@ -58,8 +59,8 @@ for i, job_id in enumerate(job_ids):
         jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
     
     # split data TODO see if it works -> test set too small for small dataset!!! -> using full set
-    _, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.0, 1.0])
-    _, split_test_data, _ = train_dev_test_split(jets, split=[0.0, 1.0])
+    _, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1])
+    _, split_test_data, _ = train_dev_test_split(jets, split=[0.7, 0.1])
     # split_test_data_recur = jets_recur
     # split_test_data= jets
     
@@ -93,7 +94,7 @@ for i, job_id in enumerate(job_ids):
 
     features = [na.recur_jetpt, na.recur_dr, na.recur_z]
 
-    for num in range(len(trials)):
+    for num in ([num] if num is not None else range(len(trials))):
         # get anomalies for trial: num
         g_anomaly, g_normal = separate_anomalies_from_regular(
             anomaly_track=g_classification_tracker[num],

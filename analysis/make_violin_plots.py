@@ -7,22 +7,37 @@ from functions.data_manipulation import trials_df_and_minimum
 from plotting.violin import violin_plots
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
+# older hypertrainings pythia
 job_ids = [
     "10993302",
     "10993303",
     "11120653",
     "11120654",
     "11120655",
-# ]
-# job_ids = [
+]
+# last hypertrainings pythia
+job_ids = [
     "11316965",
     "11316966",
     "11316965",
+    "11524829", # last reversed
 ]
+# Jewel simple (should be similar to pythia, but no q/g info here)
 job_ids = [
-    # "11487531",
-    "11487532",
+    "11487531", 
+    "11503919", 
+    "11503920",
+    "11524830", # last_reversed
+# ]
+
+# Jewel vac-1 (should have qgp in a vacuum)
+# job_ids = [
+    "11487532", 
+    "11503917", 
+    "11503918",
+    "11524831", # last_reversed
 ]
+# job_ids = ["11524831"]
 
 # select test parameter: e.g. "loss" or "final_cost"
 test_param = "final_cost"

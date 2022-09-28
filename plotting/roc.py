@@ -87,7 +87,7 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str, xl
 
     roc_plot = ax.plot(fpr, tpr, color="C1", linewidth=2, zorder=3, label="Sklearn Metrics")
     roc_plot[0].set_clip_on(False) 
-    ax.plot([0,1],[0,1], alpha=0.8, color='k')
+    ax.plot([0,1],[0,1], alpha=0.7, color='k', label="Random Classifier")
     
     # plot textbox
     if roc_auc <= 0.5:
@@ -110,19 +110,19 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str, xl
     #ax.legend() TODO
     
     # Hide the right and top spines
-    ax.spines.right.set_visible(False)
-    ax.spines.top.set_visible(False)
+    # ax.spines.right.set_visible(False)
+    # ax.spines.top.set_visible(False)
 
     # Only show ticks on the left and bottom spines
     ax.yaxis.set_ticks_position('left')
     ax.xaxis.set_ticks_position('bottom')
     
     # save plot without title
-    plt.savefig(out_file+"_no_title")
+    plt.savefig(out_file+"_no_title.png")
     
     # save plot with title
     plt.title(plot_title, y=1.04)
-    plt.savefig(out_file)
+    plt.savefig(out_file+".png")
     print(f"ROC curve stored at:\n\t{out_file}")
     
     return fig, roc_auc

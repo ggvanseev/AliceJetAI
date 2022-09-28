@@ -492,8 +492,8 @@ def lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal,num):
     except FileExistsError:
         pass
     
-    quark = ak.concatenate((g_normal,g_anomaly))
-    gluon = ak.concatenate((q_normal,q_anomaly))
+    gluon = ak.concatenate((g_normal,g_anomaly))
+    quark = ak.concatenate((q_normal,q_anomaly))
     plt.rcParams.update({'font.size': 12})
     
     fig, ax = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,5),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})

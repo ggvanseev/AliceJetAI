@@ -23,7 +23,7 @@ colors = sns.color_palette()
 # file setup
 out_files = [] # leave empty if no specific file to use # you can load your premade mix here: pickled file
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root" # if available
-#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
 
 # setup as in get_anomalies
 g_percentage = 90

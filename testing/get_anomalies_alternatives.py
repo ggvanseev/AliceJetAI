@@ -37,7 +37,7 @@ from functions.data_manipulation import (
 from plotting.roc import *
 
 #file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
+#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
 file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 #file_name = "samples/time_cluster_5k.root"
@@ -101,6 +101,10 @@ job_ids = [
 job_ids = [
     "11461549",
     "11461550",
+    "11474168",
+    "11474168",
+    "11478120",
+    "11478121",
 ]
 #job_ids = [
 #    "10993304",

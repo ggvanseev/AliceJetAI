@@ -80,26 +80,28 @@ def cost_auc_plot(result: dict, title_plot: str, out_file: str):
     track_roc_auc = result["cost_data"]["roc_auc"]
     track_cost = result["cost_data"]["cost"]
     
-    # plot roc auc & figure setup
+    #  figure setup & plot roc auc & final roc auc
     fig, ax = plt.subplots(sharex=True, figsize=[6 * 1.36, 6], dpi=160)
-    roc = ax.plot(track_roc_auc, label="ROC AUC")
-    ax.set_xlabel("Epoch $k$")
-    ax.set_ylabel("Area Under Curve")
+    cost = ax.plot(track_cost, color='r', label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
+    ax.set_ylabel("Cost")
     ax.set_ylim(bottom=0)
     ax.set_xlim(left=0, right=len(track_roc_auc[1:])-1)
-    ax.grid( alpha=0.4)
     
     # plot cost 
     ax1 = ax.twinx()
-    cost = ax1.plot(track_cost, color='r', label="Cost")
-    ax1.set_ylabel("Cost")
-    ax1.set_ylim(bottom=0)
+    roc = ax1.plot(track_roc_auc, label="ROC AUC\nOf Test Dataset")
+    final_roc = ax1.scatter(len(track_roc_auc[1:])-1,track_roc_auc[1:][-1], color="k", zorder=3, label=f"Final ROC AUC: {track_roc_auc[1:][-1]:.4f}")
+    final_roc.set_clip_on(False) # so the marker can overlap the axis
+    ax1.set_xlabel("Epoch $k$")
+    ax1.set_ylabel("Area Under Curve")
+    ax1.set_ylim(bottom=0, top=1)
     ax1.set_xlim(left=0, right=len(track_roc_auc[1:])-1)
+    ax1.grid( alpha=0.4)
     
     # create legend & figure setup
-    legend = roc + cost
+    legend = cost + roc + [final_roc]
     labels = [l.get_label() for l in legend]
-    ax1.legend(legend, labels, loc=5) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
+    ax1.legend(legend, labels, loc=1) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
     plt.tight_layout()
     
     # save version without title
@@ -155,7 +157,8 @@ def cost_condition_plots(trials: dict, job_id):
                 
         # generate the plots
         cost_condition_plot(result, title_plot, out_file=out_dir+ "/"+ f"trial_{i}")
-        cost_auc_plot(result, title_plot, out_file=out_dir+ "/cost_auc_"+ f"trial_{i}") if "roc_auc" in result["cost_data"] else None
+        if ("roc_auc" in result["cost_data"]) and (result["cost_data"]["roc_auc"]):
+            cost_auc_plot(result, title_plot, out_file=out_dir+ "/cost_auc_"+ f"trial_{i}")
         out_txt_trial += "\n\n"
         print(out_txt_trial)
         out_txt += out_txt_trial
