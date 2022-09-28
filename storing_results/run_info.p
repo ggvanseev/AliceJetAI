@@ -119,3 +119,6 @@
 11503918	on: samples/SDTiny_jewelNR_120_vac-1.root	runtime: 19967.60 s	notes: Hyper Training, 100k Jewel Vac
 11503920	on: samples/SDTiny_jewelNR_120_simple-1.root	runtime: 46796.86 s	notes: Hyper Training, 100k Jewel Vac
 11503919	on: samples/SDTiny_jewelNR_120_simple-1.root	runtime: 78544.00 s	notes: Hyper Training, 100k Jewel Vac
+11524829	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 29024.54 s	notes: Hyper Training, 100k 90%g 10%g - only last_reversed
+11524831	on: samples/SDTiny_jewelNR_120_vac-1.root	runtime: 79101.10 s	notes: Hyper Training, 100k 90%g 10%g - only last_reversed
+11524830	on: samples/SDTiny_jewelNR_120_simple-1.root	runtime: 83562.00 s	notes: Hyper Training, 100k 90%g 10%g - only last_reversed

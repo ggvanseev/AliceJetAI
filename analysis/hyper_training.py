@@ -24,8 +24,8 @@ import branch_names as na
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 # file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 # file_name = "samples/JetToyHIResultSoftDropSkinny.root"
-file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
-#file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
+# file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
+file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 
 # set data sample settings
 out_file = ""               # if previously created a specific sample, otherwise leave empty
@@ -43,7 +43,7 @@ plot_flag = (
     False                   # for making cost condition plots, only works if save_results_flag is True
 )
 
-run_notes = "Hyper Training, 100k Jewel Vac"  # Small comment on run, will be saved to save file.
+run_notes = "Hyper Training, 100k 90%g 10%g - only last_reversed"  # Small comment on run, will be saved to save file.
 
 ###-----------------------------------------------------------------------------###
 
@@ -82,7 +82,7 @@ space = hp.choice(
                     [na.recur_jetpt, na.recur_z],
                 ],
             ),
-            "pooling": hp.choice("pooling", ["mean", "last"]),  # "last" , "mean"
+            "pooling": hp.choice("pooling", ["last_reversed"]),  # "last" , "mean", "last_reversed"
         }
     ],
 )
