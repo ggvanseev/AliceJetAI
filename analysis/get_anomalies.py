@@ -74,6 +74,7 @@ job_ids = [
     "11474169",
     "11478120", # reg last_reversed
     "11478121",
+    "11524829", # hp op last_reversed
 ]
 # job_ids = [
 #     "11474168",
@@ -84,11 +85,12 @@ job_ids = [
 #     "11478121",
 #     "11120653",
 # ]
-job_ids = ["11524829",] # hp op last_reversed
+# use for 50 % gluon 50 % quark stacked plots!
+#job_ids = ["11524829",] # hp op last_reversed
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
-g_percentage = 50 # for evaluation of stacked plots 50%, ROC would be nice to have 90 vs 10 percent
+g_percentage = 90 # for evaluation of stacked plots 50%, ROC would be nice to have 90 vs 10 percent
 num = 3 # trial nr.
 save_flag = True
 show_distribution_percentages_flag = False
@@ -194,17 +196,17 @@ for i, job_id in enumerate(job_ids):
     collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
     all_aucs[job_id] = collect_aucs
     
-    stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    #stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    #stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     #stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     #stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    #stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    #stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    #stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    #stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     # stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    #stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
+    #stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
     num=1
 print(f"All AUC values for these jobs:\n{all_aucs}")
