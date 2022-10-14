@@ -122,3 +122,7 @@
 11524829	on: /data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root	runtime: 29024.54 s	notes: Hyper Training, 100k 90%g 10%g - only last_reversed
 11524831	on: samples/SDTiny_jewelNR_120_vac-1.root	runtime: 79101.10 s	notes: Hyper Training, 100k 90%g 10%g - only last_reversed
 11524830	on: samples/SDTiny_jewelNR_120_simple-1.root	runtime: 83562.00 s	notes: Hyper Training, 100k 90%g 10%g - only last_reversed
+11542143	on: samples/SDTiny_jewelNR_120_simple-1.root	runtime: 107322.42 s	notes: regular training Jewel simple, lr=e-3, nu = 0.1, hidden dim = 3
+11542141	on: samples/SDTiny_jewelNR_120_vac-1.root	runtime: 144336.98 s	notes: regular training Jewel vac, lr=e-3, nu = 0.1, hidden dim = 3
+11542144	on: samples/SDTiny_jewelNR_120_simple-1.root	runtime: 211806.33 s	notes: regular training Jewel simple, lr=e-3, nu = 0.5, hidden dim = 3
+11542142	on: samples/SDTiny_jewelNR_120_vac-1.root	runtime: 332440.42 s	notes: regular training Jewel vac, lr=e-3, nu = 0.5, hidden dim = 3
