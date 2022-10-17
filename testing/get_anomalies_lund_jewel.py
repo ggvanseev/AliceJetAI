@@ -8,23 +8,23 @@ import matplotlib.pyplot as plt
 from testing.plotting_test import lund_planes_anomalies, lund_planes_anomalies_qg, lund_planes_qg, normal_vs_anomaly_2D_qg
 
 file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
-# file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
+file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 
 job_ids = [
-    11542141, # vac
-    11542142, # vac
-    # 11542143, # simple
-    # 11542143, # simple
-    # 11542144, # simple
-    # 11542144, # simple
+    # 11542141, # vac
+    # 11542142, # vac
+    11542143, # simple
+    11542143, # simple
+    11542144, # simple
+    11542144, # simple
 ]
 trial_nrs = [
-    3, # vac
-    1, # vac
-    # 8, # simple
-    # 9, # simple
-    # 3, # simple
-    # 9, # simple
+    # 3, # vac
+    # 1, # vac
+    8, # simple
+    9, # simple
+    6, # simple
+    9, # simple
 ]
 
 kt_cut = None
@@ -35,7 +35,7 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 # Load and filter data for criteria eta and jetpt_cap
 # You can load your premade mix here: pickled file w q/g mix
-jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
+jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut, dr_cut=dr_cut)
 _, _, split_test_data_recur = train_dev_test_split(jets_recur, split=[0.7, 0.1])
 print("Loading data complete")  
 

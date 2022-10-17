@@ -361,7 +361,7 @@ def get_dr_kt(branches, features=["sigJetRecur_dr12", "sigJetRecur_jetpt", "sigJ
     return flat_dr, flat_kt
 
 
-def lund_planes_anomalies(normal, anomalous, job_id, trial=None):
+def lund_planes_anomalies(normal, anomalous, job_id, trial=None, R=0.4):
     """Normal data vs anomaly data, next to each other, difference, other?"""
     
     # store roc curve plots in designated directory
@@ -378,7 +378,9 @@ def lund_planes_anomalies(normal, anomalous, job_id, trial=None):
     histograms = []
     for dataset in (normal, anomalous):
         flat_dr, flat_kt = get_dr_kt(dataset)
-        histograms.append(np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20))
+        x = np.log(R/flat_dr)
+        y = np.log(flat_kt)
+        histograms.append(np.histogram2d(x.to_numpy(), y.to_numpy(), range=[[0, 8], [-7, 5]], bins=20))
     vmin = min([np.min(H[H > 0]) for H, _, _ in histograms])
     vmax = max([np.max(H) for H, _, _ in histograms])
         
@@ -424,7 +426,7 @@ def lund_planes_anomalies(normal, anomalous, job_id, trial=None):
     """
     return
 
-def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, trial=None):
+def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, trial=None, R=0.4):
     """Normal data vs anomaly data, next to each other, difference, other?"""
     
     # store roc curve plots in designated directory
@@ -437,7 +439,7 @@ def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, t
     
     normal = ak.concatenate((g_normal,q_normal))
     anomalous = ak.concatenate((g_anomaly,q_anomaly))
-    lund_planes_anomalies(normal, anomalous, job_id, trial)
+    lund_planes_anomalies(normal, anomalous, job_id, trial, R=R)
     
     labels = ["Normal Gluon Data", "Anomalous Gluon Data", "Normal Quark Data", "Anomalous Quark Data"]
 
@@ -445,7 +447,9 @@ def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, t
     histograms = []
     for dataset in (g_normal, g_anomaly, q_normal, q_anomaly):
         flat_dr, flat_kt = get_dr_kt(dataset)
-        histograms.append(np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20))
+        x = np.log(R/flat_dr)
+        y = np.log(flat_kt)
+        histograms.append(np.histogram2d(x.to_numpy(), y.to_numpy(), range=[[0, 8], [-7, 5]], bins=20))
     vmin = min([np.min(H[H > 0]) for H, _, _ in histograms])
     vmax = max([np.max(H) for H, _, _ in histograms])
         
