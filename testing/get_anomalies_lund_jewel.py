@@ -8,23 +8,23 @@ import matplotlib.pyplot as plt
 from testing.plotting_test import lund_planes_anomalies, lund_planes_anomalies_qg, lund_planes_qg, normal_vs_anomaly_2D_qg
 
 file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
-file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
+#file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 
 job_ids = [
-    # 11542141, # vac
-    # 11542142, # vac
-    11542143, # simple
-    11542143, # simple
-    11542144, # simple
-    11542144, # simple
+    11542141, # vac
+    11542142, # vac
+    #11542143, # simple
+    #11542143, # simple
+    #11542144, # simple
+    #11542144, # simple
 ]
 trial_nrs = [
-    # 3, # vac
-    # 1, # vac
-    8, # simple
-    9, # simple
-    6, # simple
-    9, # simple
+    3, # vac
+    1, # vac
+    #8, # simple
+    #9, # simple
+    #6, # simple
+    #9, # simple
 ]
 
 kt_cut = None
