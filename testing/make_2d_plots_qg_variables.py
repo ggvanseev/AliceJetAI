@@ -20,14 +20,15 @@ from testing.plotting_test import lund_planes_anomalies, lund_planes_anomalies_q
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 out_files=[] # you can load your premade mix here: pickled file
 
-job_ids = ["11474168", # reg mean - lowest cost
-        #    "11474168",  # reg mean - highest
-        #    "11461550", # reg last - highest 
-        #    "11478121", # last_reversed - highest auc regtraining
-        #    '11120653', # hp training mean - highest auc total
+job_ids = [
+    "11474168", # reg mean - lowest cost
+    #    "11474168",  # reg mean - highest
+    #    "11461550", # reg last - highest 
+    #    "11478121", # last_reversed - highest auc regtraining
+    #    '11120653', # hp training mean - highest auc total
 ] 
 trial_nrs = [9, 5, 7, 1, 11]
 

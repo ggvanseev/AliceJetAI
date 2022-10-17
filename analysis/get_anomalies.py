@@ -107,7 +107,7 @@ job_ids = [
     # '11542144', # 3
     "11542144", # 9
 ] 
-trial_nrs = [9]#3, 1, 8, 9, 3, 9]
+trial_nrs = [6]#3, 1, 8, 9, 3, 9]
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
 

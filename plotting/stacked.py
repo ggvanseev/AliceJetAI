@@ -181,8 +181,12 @@ def stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, fea
         pass
         
     for feature in features:
-        data = [ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature]), 
-                ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])]
+        try:
+            data = [ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature]), 
+                    ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         title = f"Distribution Histogram Anomalies Quarks And Gluons For {vn[feature]} - First Splittings"
         label = vn[feature]
         out_file = out_dir + f"/trial{trial}_first_" + feature 
@@ -198,10 +202,14 @@ def stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, feat
         pass
         
     for feature in features:
-        data = [[g_normal[feature][i][-1] for i in range(len(g_normal[feature]))],
-            [g_anomaly[feature][i][-1] for i in range(len(g_anomaly[feature]))],
-            [q_normal[feature][i][-1] for i in range(len(q_normal[feature]))],
-            [q_anomaly[feature][i][-1] for i in range(len(q_anomaly[feature]))]]
+        try:
+            data = [[g_normal[feature][i][-1] for i in range(len(g_normal[feature]))],
+                [g_anomaly[feature][i][-1] for i in range(len(g_anomaly[feature]))],
+                [q_normal[feature][i][-1] for i in range(len(q_normal[feature]))],
+                [q_anomaly[feature][i][-1] for i in range(len(q_anomaly[feature]))]]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Last Splittings"
         label = vn[feature]
         out_file = out_dir + f"/trial{trial}_last_" + feature 
@@ -217,8 +225,12 @@ def stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_
         pass
     
     for feature in features:
-        data = [ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature]), 
-                ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])]
+        try:
+            data = [ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature]), 
+                    ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Normalised First Splittings"
         label = vn[feature]
         out_file = out_dir + f"/trial{trial}_normalised_first_" + feature 
@@ -234,8 +246,12 @@ def stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, jo
         pass
         
     for feature in features:
-        data = [[ak.mean(x) for x in g_normal[feature]], [ak.mean(x) for x in g_anomaly[feature]], 
+        try:
+            data = [[ak.mean(x) for x in g_normal[feature]], [ak.mean(x) for x in g_anomaly[feature]], 
                 [ak.mean(x) for x in q_normal[feature]], [ak.mean(x) for x in q_anomaly[feature]]]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Mean Of Jets"
         label = vn[feature]
         out_file = out_dir + f"/trial{trial}_mean_" + feature 
@@ -268,8 +284,12 @@ def stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, featur
         pass
         
     for feature in features:
-        data = [ak.flatten(g_normal[feature]), ak.flatten(g_anomaly[feature]), 
-                ak.flatten(q_normal[feature]), ak.flatten(q_anomaly[feature])]
+        try:
+            data = [ak.flatten(g_normal[feature]), ak.flatten(g_anomaly[feature]), 
+                    ak.flatten(q_normal[feature]), ak.flatten(q_anomaly[feature])]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - All Splittings"
         label = vn[feature]
         out_file = out_dir + f"/trial{trial}_all_" + feature 
@@ -286,8 +306,12 @@ def stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_norma
         pass
         
     for feature in features:
-        data = [[ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature])], 
-                [ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])]]
+        try:
+            data = [[ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature])], 
+                    [ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])]]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - First Splittings"
         label = vn[feature]
         out_file = out_dir + f"/trial{trial}_first_sided_" + feature 
@@ -305,8 +329,12 @@ def stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal
         pass
         
     for feature in features:
-        data = [[[g_normal[feature][i][-1] for i in range(len(g_normal[feature]))], [g_anomaly[feature][i][-1] for i in range(len(g_anomaly[feature]))]], 
-                [[q_normal[feature][i][-1] for i in range(len(q_normal[feature]))], [q_anomaly[feature][i][-1] for i in range(len(q_anomaly[feature]))]]]
+        try:
+            data = [[[g_normal[feature][i][-1] for i in range(len(g_normal[feature]))], [g_anomaly[feature][i][-1] for i in range(len(g_anomaly[feature]))]], 
+                    [[q_normal[feature][i][-1] for i in range(len(q_normal[feature]))], [q_anomaly[feature][i][-1] for i in range(len(q_anomaly[feature]))]]]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Last Splittings"
         label = vn[feature]
         out_file = out_dir + f"/trial{trial}_last_sided_" + feature 
@@ -324,8 +352,12 @@ def stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, featur
         pass
         
     for feature in features:
-        data = [[[ak.mean(x) for x in g_normal[feature]], [ak.mean(x) for x in g_anomaly[feature]]],
-                [[ak.mean(x) for x in q_normal[feature]], [ak.mean(x) for x in q_anomaly[feature]]]]
+        try:
+            data = [[[ak.mean(x) for x in g_normal[feature]], [ak.mean(x) for x in g_anomaly[feature]]],
+                    [[ak.mean(x) for x in q_normal[feature]], [ak.mean(x) for x in q_anomaly[feature]]]]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         title = f"Distribution Histograms Anomalies Quarks and Gluons for {vn[feature]} - Mean Of Jets"
         label = vn[feature]
         out_file = out_dir + f"/trial{trial}_mean_sided_" + feature 
@@ -343,8 +375,12 @@ def stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         pass
         
     for feature in features:
-        data = [[[ak.count(x) for x in g_normal[feature]], [ak.count(x) for x in g_anomaly[feature]]],
-                [[ak.count(x) for x in q_normal[feature]], [ak.count(x) for x in q_anomaly[feature]]]]
+        try:
+            data = [[[ak.count(x) for x in g_normal[feature]], [ak.count(x) for x in g_anomaly[feature]]],
+                    [[ak.count(x) for x in q_normal[feature]], [ak.count(x) for x in q_anomaly[feature]]]]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Splittings Of Jets"
         label = vn[feature]
         out_file = out_dir + f"/trial{trial}_splittings_sided_" + feature 
@@ -362,8 +398,12 @@ def stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anoma
         pass
         
     for feature in features:
-        data = [[ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature])],
-                [ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])]]
+        try:
+            data = [[ak.firsts(g_normal[feature]), ak.firsts(g_anomaly[feature])],
+                    [ak.firsts(q_normal[feature]), ak.firsts(q_anomaly[feature])]]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Normalised First Splittings"
         label = vn[feature]
         out_file = out_dir + f"/trial{trial}_normalised_first_sided_" + feature 
@@ -381,8 +421,12 @@ def stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         pass
         
     for feature in features:
-        data = [[ak.flatten(g_normal[feature]), ak.flatten(g_anomaly[feature])],
-                [ak.flatten(q_normal[feature]), ak.flatten(q_anomaly[feature])]]
+        try:
+            data = [[ak.flatten(g_normal[feature]), ak.flatten(g_anomaly[feature])],
+                    [ak.flatten(q_normal[feature]), ak.flatten(q_anomaly[feature])]]
+        except ValueError:
+            print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
+            return -1
         label = vn[feature]
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {label} - All Splittings"
         out_file = out_dir + f"/trial{trial}_all_sided_" + feature 

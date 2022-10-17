@@ -385,8 +385,8 @@ def lund_planes_anomalies(normal, anomalous, job_id, trial=None, R=0.4):
     vmax = max([np.max(H) for H, _, _ in histograms])
         
     # create plot
-    plt.rcParams.update({'font.size': 14})
-    fig, axs = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,3.7),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
+    plt.rcParams.update({'font.size': 24})
+    fig, axs = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,5),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
     fig.patch.set_facecolor('white')
 
     for i, (ax, histogram) in enumerate(zip(axs.flat, histograms)):
@@ -401,10 +401,13 @@ def lund_planes_anomalies(normal, anomalous, job_id, trial=None, R=0.4):
         ax.title.set_text(labels[i])
         ax.set_xlabel(r'$\ln (R/\Delta R)$')
         ax.set_ylabel(r'$\ln (k_t)$')
+        ax.set_xticks(np.arange(xedges[0], xedges[-1] +2, 2.0))
+        ax.set_yticks(np.arange(min(yedges+1), max(yedges), 2.0) if 0 not in yedges else np.arange(min(yedges), max(yedges), 2.0))
 
-    # colorbar
-    fig.subplots_adjust(left=0.1, right=1., top=0.95, bottom=0.1, hspace=0.3, wspace=0.35)
-    cbar = fig.colorbar(im,shrink=0.83, ax=axs.ravel().tolist())
+    # colorbar & adjust
+    fig.subplots_adjust(left=0.12, right=.92, top=0.9, bottom=0.18, hspace=0.3, wspace=0.4)
+    im_ratio = H.shape[0]/H.shape[1] 
+    cbar = fig.colorbar(im, ax=axs.ravel().tolist(), fraction=0.046*im_ratio, pad=0.04, shrink=0.99) #  ,shrink=0.65
     cbar.set_label("Count")
 
     # savefig
@@ -454,8 +457,8 @@ def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, t
     vmax = max([np.max(H) for H, _, _ in histograms])
         
     # create plot
-    plt.rcParams.update({'font.size': 14})
-    fig, axs = plt.subplots(2, 2, sharex=False, sharey=False, figsize = (12,7.4),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
+    plt.rcParams.update({'font.size': 22})
+    fig, axs = plt.subplots(2, 2, sharex=False, sharey=False, figsize = (12,10),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
     fig.patch.set_facecolor('white')
 
     for i, (ax, histogram) in enumerate(zip(axs.flat, histograms)):
@@ -470,10 +473,13 @@ def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, t
         ax.title.set_text(labels[i])
         ax.set_xlabel(r'$\ln (R/\Delta R)$')
         ax.set_ylabel(r'$\ln (k_t)$')
+        ax.set_xticks(np.arange(xedges[0], xedges[-1] +2, 2.0))
+        ax.set_yticks(np.arange(min(yedges+1), max(yedges), 2.0) if 0 not in yedges else np.arange(min(yedges), max(yedges), 2.0))
 
-    # colorbar
-    fig.subplots_adjust(left=0.1, right=1., top=0.95, bottom=0.1, hspace=0.3, wspace=0.35)
-    cbar = fig.colorbar(im,shrink=0.83, ax=axs.ravel().tolist())
+    # colorbar & adjust
+    fig.subplots_adjust(left=0.05, right=.9, top=0.95, bottom=0.1, hspace=0.4, wspace=0.2)
+    im_ratio = H.shape[0]/H.shape[1] 
+    cbar = fig.colorbar(im, ax=axs.ravel().tolist(), aspect=25, fraction=0.046*im_ratio, pad=0.08, shrink=0.85) #  ,shrink=0.65
     cbar.set_label("Count")
 
     # savefig    
@@ -494,7 +500,7 @@ def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, t
 
     return
 
-def lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal,num):
+def lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal,num, R=0.4):
     # store roc curve plots in designated directory
     out_dir = f"testing/output/Lund_qg"
     try:
@@ -510,13 +516,13 @@ def lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal,num):
     histograms = []
     for dataset in (gluon, quark):
         flat_dr, flat_kt = get_dr_kt(dataset)
-        histograms.append(np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20))
+        histograms.append(np.histogram2d(np.log(R/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20))
     vmin = min([np.min(H[H > 0]) for H, _, _ in histograms])
     vmax = max([np.max(H) for H, _, _ in histograms])
         
     # create plot
-    plt.rcParams.update({'font.size': 14})
-    fig, axs = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,3.7),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
+    plt.rcParams.update({'font.size': 24})
+    fig, axs = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,5),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
     fig.patch.set_facecolor('white')
 
     for i, (ax, histogram) in enumerate(zip(axs.flat, histograms)):
@@ -531,8 +537,10 @@ def lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal,num):
         ax.title.set_text(labels[i])
         ax.set_xlabel(r'$\ln (R/\Delta R)$')
         ax.set_ylabel(r'$\ln (k_t)$')
+        ax.set_xticks(np.arange(xedges[0], xedges[-1] +2, 2.0))
+        ax.set_yticks(np.arange(min(yedges+1), max(yedges), 2.0) if 0 not in yedges else np.arange(min(yedges), max(yedges), 2.0))
 
-    # colorbar
+    # colorbar & adjust
     fig.subplots_adjust(left=0.1, right=1., top=0.95, bottom=0.1, hspace=0.3, wspace=0.35)
     cbar = fig.colorbar(im,shrink=0.83, ax=axs.ravel().tolist())
     cbar.set_label("Count")
