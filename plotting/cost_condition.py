@@ -45,6 +45,15 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     ax1.set_ylabel(r"Cost")
     ax1.set_ylim(bottom=0)
     ax1.set_xlim(left=0, right=len(track_cost_condition[1:])-1)
+    
+    # adjust for legend, at 50% of epochs
+    epoch_halfway = int(len(track_cost[1:])/2)
+    max_cost_second_half = max(track_cost[epoch_halfway+1:])
+    threshold =  0.63 * track_cost[0]
+    if max_cost_second_half > threshold:
+        factor = max_cost_second_half / threshold
+        ax1.set_ylim(top=max(track_cost) * factor)
+        
 
     # plot cost function and final cost
     ax2 = ax1.twinx()
@@ -86,6 +95,7 @@ def cost_auc_plot(result: dict, title_plot: str, out_file: str):
     ax.set_ylabel("Cost")
     ax.set_ylim(bottom=0)
     ax.set_xlim(left=0, right=len(track_roc_auc[1:])-1)
+    ax.grid( alpha=0.4)
     
     # plot cost 
     ax1 = ax.twinx()
@@ -96,7 +106,7 @@ def cost_auc_plot(result: dict, title_plot: str, out_file: str):
     ax1.set_ylabel("Area Under Curve")
     ax1.set_ylim(bottom=0, top=1)
     ax1.set_xlim(left=0, right=len(track_roc_auc[1:])-1)
-    ax1.grid( alpha=0.4)
+    
     
     # create legend & figure setup
     legend = cost + roc + [final_roc]

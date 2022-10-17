@@ -1,6 +1,9 @@
 import time
 import torch
 import seaborn as sns
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.svm import OneClassSVM
+
 from functions.data_loader import load_n_filter_data, load_n_filter_data_qg, mix_quark_gluon_samples, load_trials
 from plotting.stacked import *
 from plotting.roc import *
@@ -13,11 +16,14 @@ from functions.data_manipulation import (
 )
 
 ### ----- User Input ----- ###
-# obtain best_dict from roc_auc_scores.py
-best_dict = {'LSTM + OCSVM - HyperTraining': ('11120653', 3), 'LSTM + OCSVM - RegularTraining': ('11478121', 1), 'Hand Cut LSTM Hidden State': ('11461550', (0, 1)), r'Hand Cut Variable $R_g$': ('sigJetRecur_dr12', 0)}
+# obtain best_dict from roc_auc_scores.py - NOTE second dict is with OCSVM only as well
+best_dict = {'LSTM + OCSVM - HyperTraining': ('11120653', 11), 'LSTM + OCSVM - RegularTraining': ('11478121', 1), 'Cut And Count $R_g$': ('sigJetRecur_dr12', 0)} #  'Hand Cut LSTM Hidden State': ('11478121', (7, 0)),
+best_dict = {'LSTM + OCSVM - HyperTraining': ('11120653', 11), 'LSTM + OCSVM - RegularTraining': ('11478121', 1),  r'OCSVM $\nu=0.1$ - First Splittings': ('last_reversed_nu0.1', 0), 'Cut And Count $R_g$ - First Splittings': ('sigJetRecur_dr12', 0)} # 'Hand Cut LSTM Hidden State': ('11478121', (7, 0)),
+# best_dict = {'LSTM + OCSVM - HyperTraining': ('11120653', 11), 'LSTM + OCSVM - RegularTraining': ('11461550', 7),  r'OCSVM $\nu=0.1$ - First Splittings': ('last_reversed_nu0.1', 0), 'Cut And Count $R_g$ - First Splittings': ('sigJetRecur_dr12', 0)} # 'Hand Cut LSTM Hidden State': ('11478121', (7, 0)),
+
 
 # Setup to make multiple roc plot
-colors = ["C1", "C2", "C3", "C4"]
+colors = ["C1", "C2", "C3", "C4", "C5"]
 colors = sns.color_palette()
 
 # file setup
@@ -54,8 +60,8 @@ else:
     jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
 
 # split data TODO see if it works -> test set too small for small dataset!!! -> using full set
-_, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1])
-_, split_test_data, _ = train_dev_test_split(jets, split=[0.7, 0.1])
+split_train_data_recur, _, split_test_data_recur = train_dev_test_split(jets_recur, split=[0.7, 0.1])
+_,  _, split_test_data = train_dev_test_split(jets, split=[0.7, 0.1])
 # split_test_data_recur = jets_recur
 # split_test_data= jets
 
@@ -82,16 +88,16 @@ plt.rcParams.update({'font.size': 13.5})
 fig, ax = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
 ax.plot([0,1],[0,1],color='k')
     
-# First plot
+# First plot - Hypertraining
 label, (job_id, trial) = list(best_dict.items())[0]
-trials = load_trials(job_id, remove_unwanted=True) # do not remove unwanted, otherwise trial nr. is wrong
+trials = load_trials(job_id, remove_unwanted=False) # do not remove unwanted, otherwise trial nr. is wrong
 y_true, y_predict = get_y_results_from_trial(data_list, trials[trial])
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc}")
 ax.plot(fpr, tpr, color=colors[0], label=label+"\n"+f" AUC: {roc_auc:.4F}")     
 
-# Second plot
+# Second plot - Regular Training
 label, (job_id, trial) = list(best_dict.items())[1]
 trials = load_trials(job_id, remove_unwanted=False) # do not remove unwanted, otherwise trial nr. is wrong
 y_true, y_predict = get_y_results_from_trial(data_list, trials[trial])
@@ -101,6 +107,7 @@ print(f"ROC Area under curve: {roc_auc}")
 ax.plot(fpr, tpr, color=colors[1], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
 
 # Third plot - Hand cut on lstm hidden dims
+""" NOTE leave this out
 label, (job_id, (trial,dim)) = list(best_dict.items())[2]
 trials = load_trials(job_id, remove_unwanted=False) # do not remove unwanted, otherwise trial nr. is wrong
 y_true, y_predict = get_y_results_from_trial_h(data_list, trials[trial], dim)
@@ -108,8 +115,40 @@ fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc}")
 ax.plot(fpr, tpr, color=colors[2], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
+"""
 
-# Fourth plot - Hand cut on variable
+# Fourth plot - OCSVM only
+# prepare data
+scaler = MinMaxScaler()
+split_train_data = format_ak_to_list(split_train_data_recur)
+split_dev_data = format_ak_to_list(split_test_data_recur)
+scaler.fit([s for jet in split_train_data for s in jet]) # fit as single branch
+train_data = [scaler.transform(d) for d in split_train_data] # then transform it
+dev_data = [scaler.transform(d) for d in split_dev_data] # then transform it
+train_data = [train_data[i][0] for i in range(len(train_data))] # last reversed pooling
+dev_data = [dev_data[i][0] for i in range(len(dev_data))] # last reversed pooling
+
+# now use ocsvm to fit and predict
+# make and fit model
+svm_model = OneClassSVM(nu=0.1, gamma = "auto", kernel="linear")
+svm_model.fit(train_data)
+y_predict = svm_model.decision_function(dev_data) 
+y_true = [1 if jet[na.parton_match_id] == 21 else 0 for jet in split_test_data]
+
+# make plot
+label, (job_id, trial) = list(best_dict.items())[2]
+fpr, tpr, _ = roc_curve(y_true, y_predict)
+roc_auc = auc(fpr, tpr)
+print(f"ROC Area under curve: {roc_auc}")
+ax.plot(fpr, tpr, color=colors[2], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
+ax.set_xlabel("Normal Fraction Quarks")
+ax.set_ylabel("Normal Fraction Gluons")
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1)
+ax.grid(alpha=0.4)
+ax.legend() #TODO
+
+# Fifth plot - Hand cut on variable
 label, (job_id, trial) = list(best_dict.items())[3]
 y_predict = [d[job_id][0] for d  in data_list]
 y_true = [d['y_true'] for d in data_list]
@@ -139,5 +178,5 @@ plt.savefig(out_file+"_no_title")
 # save plot with title
 plt.title("Best Models By AUC", y=1.04)
 plt.savefig(out_file)
-        
+plt.close('all')        
     

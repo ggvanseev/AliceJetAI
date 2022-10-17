@@ -105,21 +105,26 @@ else:
     jets_recur, jets = load_n_filter_data(file_name, kt_cut=kt_cut, dr_cut=dr_cut)
 print("Loading data complete")       
 
-# split data
-split_train_data, split_dev_data, split_val_data = train_dev_test_split(jets_recur, split=[0.7, 0.1])
-#_, jets, _ = train_dev_test_split(jets, split=[0.7, 0.1])
+# split data into (train, val, test) like 70/10/20 if splits are set at [0.7, 0.1]
+split_train_data, split_val_data, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1]) 
+_, jets, _ = train_dev_test_split(jets, split=[0.7, 0.1])
 print("Splitting data complete")
 
-# split data into quark and gluon jets
-#g_recur = split_dev_data[jets[na.parton_match_id] == 21]
-#q_recur = split_dev_data[abs(jets[na.parton_match_id]) < 7]
-        
-# mock arrays for moniker 1 or 0 if gluon or quark
-#g_true = ak.Array([{"y_true": 1} for i in range(len(g_recur))])
-#q_true = ak.Array([{"y_true": 0} for i in range(len(q_recur))])
+try:
+    # split data into quark and gluon jets
+    g_recur = split_val_data[jets[na.parton_match_id] == 21]
+    q_recur = split_val_data[abs(jets[na.parton_match_id]) < 7]
+            
+    # mock arrays for moniker 1 or 0 if gluon or quark
+    g_true = ak.Array([{"y_true": 1} for i in range(len(g_recur))])
+    q_true = ak.Array([{"y_true": 0} for i in range(len(q_recur))])
 
-# make ROC data
-#roc_data = [{**item, **y} for item, y in zip(g_recur.to_list(), g_true.to_list())] + [{**item, **y} for item, y in zip(q_recur.to_list(), q_true.to_list())]
+    # make ROC data
+    roc_data = [{**item, **y} for item, y in zip(g_recur.to_list(), g_true.to_list())] + [{**item, **y} for item, y in zip(q_recur.to_list(), q_true.to_list())]
+except:
+    roc_data=None
+    jets=None
+    
 
 # do full training
 run_full_training(
@@ -128,7 +133,7 @@ run_full_training(
     space=space,
     train_data=split_train_data,
     val_data=split_val_data,
-    roc_data=None,
+    roc_data=roc_data,
     max_evals=max_evals,
     max_attempts=max_attempts,
     patience=patience,

@@ -25,7 +25,7 @@ parameter_names ={
     "final_cost": "Cost",
 }
 
-def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
+def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss", yscale="linear"):
     """Function that creates and stores violin plots. The function accepts
     a Pandas dataframe of all the trials of a training. The violin plots
     showcase the density of the loss for all trained hyperparameters as well
@@ -44,7 +44,7 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
     plt.rcParams.update({'font.size': 13.5})
     
     # store violin plots in designated directory
-    out_dir = f"output/violin_plots"
+    out_dir = f"output/violin_plots_"+yscale
     for job_id in job_ids:
         out_dir += f"_{job_id}"
     try:
@@ -82,7 +82,7 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
             # create appropriate title and x-label
             plt.xlabel(parameter_names[parameter])
             plt.ylabel("Loss" if test_param == "loss" else "Final Cost")
-            # plt.yscale("log") TODO
+            plt.yscale(yscale) 
             plt.legend()
             plt.tight_layout()
             
@@ -101,4 +101,4 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
 
             # save plot
             plt.savefig(out_file)
-            plt.close(fig)  # close figure - clean memory
+            plt.close('all')  # close figure - clean memory

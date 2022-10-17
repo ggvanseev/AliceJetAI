@@ -24,7 +24,7 @@ from plotting.roc import ROC_plot_curve
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
 # file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
 # file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 # file_name = "samples/JetToyHIResultSoftDropTiny.root"
@@ -64,9 +64,9 @@ else:
     jets_recur, jets = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
 print("Loading data complete")       
 
-# split data
-split_train_data, split_dev_data, split_val_data = train_dev_test_split(jets_recur, split=[0.7, 0.1])
-_, jets, _ = train_dev_test_split(jets, split=[0.7, 0.1])
+# split data into (train, val, test) like 70/10/20 if splits are set at [0.7, 0.1]
+split_train_data, _, split_test_data = train_dev_test_split(jets_recur, split=[0.7, 0.1])
+_, _, jets = train_dev_test_split(jets, split=[0.7, 0.1])
 print("Splitting data complete")
 
 # scale datasets according to training set
@@ -75,24 +75,26 @@ if scaler_id == "minmax":
 elif scaler_id == "std":
     scaler = StandardScaler()
 split_train_data = format_ak_to_list(split_train_data)
-split_dev_data = format_ak_to_list(split_dev_data)
+split_test_data = format_ak_to_list(split_test_data)
 scaler.fit([s for jet in split_train_data for s in jet]) # fit as single branch
 
+# collect all auc values from ROC curves
+all_aucs = {}
 
 for pooling in ["mean", "last", "last_reversed"]:
     train_data = [scaler.transform(d) for d in split_train_data] # then transform it
-    dev_data = [scaler.transform(d) for d in split_dev_data] # then transform it
+    test_data = [scaler.transform(d) for d in split_test_data] # then transform it
 
     # pool data
     if pooling == "mean":
         train_data = [np.mean(jet, axis=0) for jet in train_data]
-        dev_data = [np.mean(jet, axis=0) for jet in dev_data]
+        test_data = [np.mean(jet, axis=0) for jet in test_data]
     elif pooling == "last":
         train_data = [train_data[i][-1] for i in range(len(train_data))]
-        dev_data = [dev_data[i][-1] for i in range(len(dev_data))]
+        test_data = [test_data[i][-1] for i in range(len(test_data))]
     elif pooling == "last_reversed":
         train_data = [train_data[i][0] for i in range(len(train_data))]
-        dev_data = [dev_data[i][0] for i in range(len(dev_data))]
+        test_data = [test_data[i][0] for i in range(len(test_data))]
     else:
         print("pooling is wrong!")
 
@@ -107,8 +109,8 @@ for pooling in ["mean", "last", "last_reversed"]:
         a_idx = svm_model.support_
 
         # make predictions and get probabilities for ROC
-        classification = svm_model.predict(dev_data)
-        y_predict = svm_model.decision_function(dev_data) # = y_predict
+        classification = svm_model.predict(test_data)
+        y_predict = svm_model.decision_function(test_data) # = y_predict
 
         # count anomalies
         n_anomaly = np.count_nonzero(classification == -1)
@@ -125,3 +127,5 @@ for pooling in ["mean", "last", "last_reversed"]:
         # make ROC curve & store for later
         fig, roc_auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file,  xlabel="Normal Fraction Quarks", ylabel="Normal Fraction Gluons")
         #pickle.dump(fig, open(out_file+'.p'), 'wb')
+        all_aucs[str(pooling)+"_nu"+str(svm_nu)] = roc_auc
+print(f"All AUC values for these jobs:\n{all_aucs}")

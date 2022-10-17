@@ -110,6 +110,7 @@ def hist_comparison_first_entries(
         plt.savefig(
             f"output/comperative_hist_first_entries_{origin_stamp}__{feature}_{jet_info}.png"
         )
+        plt.close('all')
 
 
 def hist_comparison_flatten_entries(
@@ -134,3 +135,4 @@ def hist_comparison_flatten_entries(
         plt.savefig(
             f"output/comperative_hist_flatten_entries_{origin_stamp}_{feature}_{jet_info}.png"
         )
+        plt.close('all')

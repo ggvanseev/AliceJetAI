@@ -108,8 +108,8 @@ test_data = test_dict["0"][:360] + test_dict["9"][:40]
 #print('Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples')
 
 # make roc data
-zeros = test_dict["0"][360:720]
-nines = test_dict["9"][40:80]
+zeros = test_dict["0"][:360]
+nines = test_dict["9"][:40]
 roc_data = [{"data": item, "y_true": 1} for item in zeros] + [{"data": item, "y_true": 0} for item in nines]
 
 # plot random sample

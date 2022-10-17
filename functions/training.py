@@ -209,9 +209,9 @@ def training_algorithm(
             fpr, tpr, _ = roc_curve(y_true, y_predict)
             roc_auc = auc(fpr, tpr)
             print(roc_auc)
-            track_roc_auc.append(roc_auc)
+            track_roc_auc2.append(roc_auc)
 
-        # obtain the new cost and cost condition given theta_k+1 and alpha_k+1
+        # obtain the new cost and cost condition given theta_k and alpha_k+1
         cost = kappa(alphas, a_idx, h_bar_list)
         cost_condition = (cost - cost_prev) ** 2
 
@@ -266,7 +266,7 @@ def training_algorithm(
             fpr, tpr, _ = roc_curve(y_true, y_predict)
             roc_auc = auc(fpr, tpr)
             print(roc_auc)
-            track_roc_auc2.append(roc_auc)
+            track_roc_auc.append(roc_auc)
 
         # check condition algorithm 1, paper Tolga
         if cost_condition < training_params["epsilon"]:

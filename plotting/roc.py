@@ -206,6 +206,7 @@ def ROC_curve_qg(g_recur, q_recur, trials, job_id):
         out_file = out_dir + "/ROC_curve_trial" + str(i)
         _, auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file, xlabel="Normal Fraction Quarks", ylabel="Normal Fraction Gluons")
         collect_aucs.append(auc)
+        plt.close('all')
     
     return collect_aucs
 
@@ -272,12 +273,12 @@ def ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job
         # save plot
         splitting_string = samples + "_splittings" if samples else "all_splittings"
         plt.savefig(out_dir + "/ROC_curve_" + splitting_string + feature)
-        plt.close()  # close figure - clean memory
+        plt.close('all')  # close figure - clean memory
             
     return
 
 
-def ROC_anomalies_hand_cut(g_recur, q_recur, cut_variable):
+def ROC_anomalies_hand_cut(g_recur, q_recur, cut_variable, pooling="first"):
     
     # print text
     print(f"\nFor variable {na.variable_names[cut_variable]}:")
@@ -295,17 +296,25 @@ def ROC_anomalies_hand_cut(g_recur, q_recur, cut_variable):
     data_list = [{**item, **y} for item, y in zip(g_recur.to_list(), g_true.to_list())] + [{**item, **y} for item, y in zip(q_recur.to_list(), q_true.to_list())]
 
     # 1st splitting of the recursive jet data is the SoftDrop splitting -> make cuts on this splitting
-    y_predict = [d[cut_variable][0] for d  in data_list]
+    if pooling == "first":
+        y_predict = [d[cut_variable][0] for d  in data_list]
+    elif pooling == "last":
+        y_predict = [d[cut_variable][-1] for d  in data_list]
+    elif pooling == "mean":
+        y_predict = [ak.mean(d[cut_variable]) for d  in data_list]
+    else:
+        print("Wrong pooling method given!")
+        return
     # Not necessary to extrapolate? -> maybe for the lstm results TODO
-    #y_predict = [y - min(y_predict) for y in y_predict]     # move set s.t. lowest value is at 0
-    #y_predict = [y / max(y_predict) for y in y_predict] # stretch set s.t. highest value is at 1
+    # y_predict = [y - min(y_predict) for y in y_predict]     # move set s.t. lowest value is at 0
+    # y_predict = [y / max(y_predict) for y in y_predict] # stretch set s.t. highest value is at 1
     data_list = [ {**item, "y_predict":y} for item, y in zip(data_list, y_predict)]
     y_true = [d['y_true'] for d in data_list]
     
     plot_title = f"ROC Curve Quark & Gluon Jets - Cuts On Variable {na.variable_names[cut_variable]}"
-    out_file = f"{out_dir}/on_variable_{cut_variable}"
+    out_file = f"{out_dir}/on_variable_{cut_variable}_"+pooling
 
-    ROC_plot_curve(y_true, y_predict, plot_title, out_file)
+    ROC_plot_curve(y_true, y_predict, plot_title, out_file, xlabel="Normal Fraction Quarks", ylabel="Normal Fraction Gluons")
 
     return 
 
@@ -331,7 +340,7 @@ def ROC_anomalies_hand_cut_lstm(g_recur, q_recur, job_id, trials):
     collect_aucs = []
     
     for i in range(len(trials)):
-        # mix 90% g vs 10% q of 1500
+        # mix recur dataset with labels
         data_list = [{**item, **y} for item, y in zip(g_recur.to_list(), g_true.to_list())] + [{**item, **y} for item, y in zip(q_recur.to_list(), q_true.to_list())]
     
         # select model
@@ -339,14 +348,21 @@ def ROC_anomalies_hand_cut_lstm(g_recur, q_recur, job_id, trials):
         
         # get models
         lstm_model = result["model"]["lstm"]  # note in some old files it is lstm:
+        ocsvm_model = result["model"]["ocsvm"]
         scaler = result["model"]["scaler"]
         
         # get important parameters
         batch_size = result['hyper_parameters']['batch_size']
         pooling = result['hyper_parameters']['pooling']
+        input_variables = list(result['hyper_parameters']["variables"])
+        final_cost = result['final_cost']
     
         # reformat data to go into lstm
-        data = format_ak_to_list([{ key: d[key] for key in variables } for d in data_list])
+        data = format_ak_to_list([{ key: d[key] for key in input_variables } for d in data_list])
+        data = [x for x in data if len(x[0]) > 0] # remove empty stuff
+    
+        # reformat data to go into lstm
+        data = format_ak_to_list([{ key: d[key] for key in input_variables } for d in data_list])
         data = [x for x in data if len(x[0]) > 0] # remove empty stuff
         
         ### build a single branch from all test data ###
@@ -393,7 +409,7 @@ def ROC_anomalies_hand_cut_lstm(g_recur, q_recur, job_id, trials):
             if len(trials) > 1:
                 plot_title += f" - Trial {i}"
             out_file = f"{out_dir}/trial_{i}_on_dimension_{j}"
-            _, auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file)
+            _, auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file, xlabel="Normal Fraction Quarks", ylabel="Normal Fraction Gluons")
             aucs.append(auc)
         collect_aucs.append(aucs)
     return collect_aucs

@@ -140,3 +140,4 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss"):
 
             # save plot
             plt.savefig(out_dir + "/violin_plot_" + test_param + "_vs_" + parameter)
+            plt.close('all')

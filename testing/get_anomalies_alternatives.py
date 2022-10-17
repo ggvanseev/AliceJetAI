@@ -38,10 +38,9 @@ from plotting.roc import *
 
 #file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_500k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-#file_name = "samples/time_cluster_5k.root"
-#file_name = "samples/mixed_1500jets_pct:90g_10q.p"
+#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
 
 g_percentage = 90
 num = 0 # trial nr.
@@ -67,10 +66,10 @@ elif qg:
 else:
     jets_recur, jets = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
     
-# split data TODO see if it works -> test set too small for small dataset!!! -> using full set
-# split data TODO see if it works -> test set too small for small dataset!!! -> using full set
-_, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1])
-_, split_test_data, _ = train_dev_test_split(jets, split=[0.7, 0.1])
+
+# split data into (train, val, test) like 70/10/20 if splits are set at [0.7, 0.1]
+_, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.7, 0.2])
+_, split_test_data, _= train_dev_test_split(jets, split=[0.7, 0.2])
 # split_test_data_recur = jets_recur
 # split_test_data= jets
 
@@ -84,7 +83,14 @@ q_jets_recur = split_test_data_recur[abs(split_test_data[na.parton_match_id]) < 
 ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_dr)
 ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_z)
 ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_jetpt)
+ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_dr, pooling="last")
+ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_z, pooling="last")
+ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_jetpt, pooling="last")
+ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_dr, pooling="mean")
+ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_z, pooling="mean")
+ROC_anomalies_hand_cut(g_jets_recur, q_jets_recur, na.recur_jetpt, pooling="mean")
 
+"""
 # Test hand cuts from LSTM results
 job_ids = [
     "22_08_09_1909",
@@ -92,18 +98,25 @@ job_ids = [
     "22_08_09_1939",
     "22_08_09_1941",
     "22_08_11_1520",
-    "10993304",
-    "10993305",
+    # "10993304",
+    # "10993305",
     "11120653",   
     "11120654",
     "11120655",
 ]
 job_ids = [
-    "11461549",
+    # "11120653", # hp qg
+    # "11120654",
+    # "11120655", 
+    # "11316965",# hp qg
+    # "11316966",
+    # "11316967",
+    # "11524829", # hp op last_reversed
+    "11461549", # reg last
     "11461550",
-    "11474168",
-    "11474168",
-    "11478120",
+    "11474168", # reg mean
+    "11474169",
+    "11478120", # reg last_reversed
     "11478121",
 ]
 #job_ids = [
@@ -128,3 +141,4 @@ for job_id in job_ids:
     collect_aucs = ROC_anomalies_hand_cut_lstm(g_jets_recur, q_jets_recur, job_id, trials)
     all_aucs[job_id] = collect_aucs
 print(f"All AUC values for these jobs:\n{all_aucs}")
+"""

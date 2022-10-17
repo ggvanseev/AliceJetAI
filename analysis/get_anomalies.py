@@ -15,8 +15,8 @@ from functions.data_manipulation import (
 from plotting.svm_boundary import svm_boundary_plots
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
-file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-#file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+#file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
 #file_name = "samples/time_cluster_5k.root"
 #file_name = "samples/mixed_1500jets_pct:90g_10q.p"
 
@@ -65,9 +65,10 @@ job_ids = [
     "11120653", # hp qg
     "11120654",
     "11120655", 
-    "11316965",# hp qg
+    "11316965", # hp qg
     "11316966",
-    "11316967",   
+    "11316967",
+    "11524829", # hp qg - last_reversed only
     "11461549", # reg last
     "11461550",
     "11474168", # reg mean
@@ -85,19 +86,37 @@ job_ids = [
 #     "11478121",
 #     "11120653",
 # ]
+
+
 # use for 50 % gluon 50 % quark stacked plots!
-#job_ids = ["11524829",] # hp op last_reversed
+# pythia
+job_ids = [
+    "11474168", # reg mean - lowest cost - trial 9"
+    "11474168",  # reg mean - highest - trial 5
+    "11461550", # reg last - highest - trial 7
+    "11478121", # last_reversed - highest auc regtraining - trial 1
+    '11120653', # hp training mean - highest auc total - trial 11     
+] 
+trial_nrs = [9, 5, 7, 1, 11] # check auc scores before this
+# jewel
+job_ids = [
+    # "11542141", # trial 3
+    # "11542142", # 1
+    # "11542143", # 8
+    # "11542143", # 9
+    # '11542144', # 3
+    "11542144", # 9
+] 
+trial_nrs = [9]#3, 1, 8, 9, 3, 9]
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
-g_percentage = 90 # for evaluation of stacked plots 50%, ROC would be nice to have 90 vs 10 percent
-num = 3 # trial nr.
+g_percentage = 50 # for evaluation of stacked plots 50%, ROC would be nice to have 90 vs 10 percent
+mix = True        # set to true if mixture of q and g is required
+kt_cut = None         # for dataset, splittings kt > 1.0 GeV, assign None if not using
 save_flag = True
 show_distribution_percentages_flag = False
 
-pre_made = False   # created in regular training
-mix = True        # set to true if mixture of q and g is required
-kt_cut = None         # for dataset, splittings kt > 1.0 GeV, assign None if not using
 
 
 # set current device
@@ -106,41 +125,40 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 # collect all auc values from ROC curves
 all_aucs = {}
 
+### Regular Training options ### TODO make this automatic 
+# get dr_cut as in the regular training!
+dr_cut = None# np.linspace(0,0.4,len(job_ids)+1)[i+1] 
+
+###--------------------------###
+
+# you can load your premade mix here: pickled file
+# Load and filter data for criteria eta and jetpt_cap
+# You can load your premade mix here: pickled file w q/g mix
+
+if out_files:
+    jets_recur, jets = torch.load(file_name)
+elif mix:
+    jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut, dr_cut=dr_cut)
+else:
+    jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
+
+# split data into (train, val, test) like 70/10/20 if splits are set at [0.7, 0.1]
+_, _, split_test_data_recur = train_dev_test_split(jets_recur, split=[0.7, 0.1])
+_, _, split_test_data = train_dev_test_split(jets, split=[0.7, 0.1])
+# split_test_data_recur = jets_recur
+# split_test_data= jets
+
+# # split data into quark and gluon jets
+g_jets_recur = split_test_data_recur[split_test_data[na.parton_match_id] == 21]
+q_jets_recur = split_test_data_recur[abs(split_test_data[na.parton_match_id]) < 7]
+
+print("Loading data complete")       
+
+
+
 for i, job_id in enumerate(job_ids):
-    
-    # start from a point in the series
-    # if i < 0:
-    #   continue
-    if i == 1:
-        num = 1   
-    ### Regular Training options ### TODO make this automatic 
-    # get dr_cut as in the regular training!
-    dr_cut = None# np.linspace(0,0.4,len(job_ids)+1)[i+1] 
-    
+
     print(f"\nAnomalies run: {i+1}, job_id: {job_id}") # , for dr_cut: {dr_cut}")
-    ###--------------------------###
-    
-   # you can load your premade mix here: pickled file
-    # Load and filter data for criteria eta and jetpt_cap
-    # You can load your premade mix here: pickled file w q/g mix
-    if out_files:
-        jets_recur, jets = torch.load(file_name)
-    elif mix:
-        jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut, dr_cut=dr_cut)
-    else:
-        jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
-    
-    # split data TODO see if it works -> test set too small for small dataset!!! -> using full set
-    _, split_test_data_recur, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1])
-    _, split_test_data, _ = train_dev_test_split(jets, split=[0.7, 0.1])
-    # split_test_data_recur = jets_recur
-    # split_test_data= jets
-    
-    # # split data into quark and gluon jets
-    g_jets_recur = split_test_data_recur[split_test_data[na.parton_match_id] == 21]
-    q_jets_recur = split_test_data_recur[abs(split_test_data[na.parton_match_id]) < 7]
-    
-    print("Loading data complete")       
     
     # load trials
     trials = load_trials(job_id, remove_unwanted=False)
@@ -149,7 +167,19 @@ for i, job_id in enumerate(job_ids):
         continue
     print("Loading trials complete")
     
+    
+    # ROC curves, use 90/10 mixture
+    # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id)
+    # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="first")
+    # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="last")
+    # collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
+    # all_aucs[job_id] = collect_aucs
+    
+    
+    # stacked plots, use 50/50 mixture
     # gluon jets, get anomalies and normal out
+    num = trial_nrs[i]
+
     type_jets = "g_jets"
     _, g_jets_index_tracker, g_classification_tracker = get_anomalies(g_jets_recur, job_id, trials, file_name, jet_info=type_jets)
     g_anomaly, g_normal = separate_anomalies_from_regular(
@@ -188,25 +218,17 @@ for i, job_id in enumerate(job_ids):
         job_id += f"_jet_len_{length}"
         
         pass
-
-
-    # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id)
-    # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="first")
-    # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="last")
-    collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
-    all_aucs[job_id] = collect_aucs
     
-    #stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    #stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    #stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    #stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    #stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    #stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    #stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    #stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    # stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    #stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    #stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id)
-    num=1
+    stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    stacked_plots_last_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    # stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    # stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    #stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    #stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    #stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
+    #stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
 print(f"All AUC values for these jobs:\n{all_aucs}")

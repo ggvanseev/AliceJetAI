@@ -105,7 +105,7 @@ for job_id in job_ids:
         print("\n")
         
 
-    #normal_vs_anomaly_2D_all(trials_h_bars, trials_classifications, trials_ocsvms, out_dir, job_id)
+    normal_vs_anomaly_2D_all(trials_h_bars, trials_classifications, trials_ocsvms, out_dir, job_id)
     
     collect_aucs = ROC_curve_digits(test_dict["0"][:360], test_dict["9"][:40], trials, job_id)
     all_aucs[job_id] = collect_aucs

@@ -55,12 +55,13 @@ def normal_vs_anomaly_2D(data, classification, file_name):
     plt.legend()
     #plt.show()
     plt.savefig(f"testing/output/{file_name}")
+    plt.close('all')
 
 
 def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_name, job_id=None, y=None, xlabel=r"$\overline{h_{i,1}}$", ylabel=r"$\overline{h_{i,2}}$"):
     
     # set matplotlib font settings
-    plt.rcParams.update({'font.size': 12})
+    plt.rcParams.update({'font.size': 18})
     
     first_key = list(data_dict.keys())[0]
     nr_trials = len(data_dict[first_key])
@@ -140,6 +141,7 @@ def normal_vs_anomaly_2D_all(data_dict, classification_dict, ocsvm_list, file_na
         plt.savefig(f"{file_name}/trial_{i}_all_no_title", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
         plt.title(r"$\overline{h_i}$" + f" Test States {'- Job '+str(job_id) if job_id is not None else ''}- Trial_{i}")
         plt.savefig(f"{file_name}/trial_{i}_all", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
+        plt.close('all')
 
 
 def sort_feature_splitting(data, feature, splittings):
@@ -184,7 +186,7 @@ def normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, 
     labels = ["Gluon Jets", "Quark Jets"]
     
     # set matplotlib font settings
-    plt.rcParams.update({'font.size': 12})
+    plt.rcParams.update({'font.size': 18})
     fig, axs = plt.subplots(1, 3, figsize=(8 * 1.36, 3.3), dpi=160)
     
     #TODO only for 3 features now (because easier)
@@ -233,8 +235,9 @@ def normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, 
     plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}{splittings}_no_title", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
     plt.title(r"$\overline{h_i}$" + f" Test States {'- Job '+str(job_id) if job_id is not None else ''}- Trial_{i}")
     plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}{splittings}", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=300)
-    
+    plt.close('all')
     return
+
 
 def sk_train_plot(model, X1, y=None, fit=False, ax=plt):
     if fit:
@@ -256,13 +259,12 @@ def sk_train_plot(model, X1, y=None, fit=False, ax=plt):
     ax.contour( xx1, yy1, Z1, levels=(-1,0,1), linewidths=(1, 1, 1),
                 linestyles=('--', '-', '--'), colors=('b','k', 'r'))
     
-    
-    
     # Plot support vectors (non-zero alphas)
     # as circled points (linewidth > 0)
     ax.scatter(model.support_vectors_[:,0], model.support_vectors_[:,1], c=y[model.support_],
                 cmap=plt.cm.viridis, lw=1, edgecolors='k')
     return
+
 
 
 # roc curve function
@@ -358,7 +360,8 @@ def get_dr_kt(branches, features=["sigJetRecur_dr12", "sigJetRecur_jetpt", "sigJ
     flat_kt = flat_z * flat_pt * flat_dr
     return flat_dr, flat_kt
 
-def lund_planes_anomalies(g_anomaly, g_normal, q_anomaly, q_normal, job_id, trial=None):
+
+def lund_planes_anomalies(normal, anomalous, job_id, trial=None):
     """Normal data vs anomaly data, next to each other, difference, other?"""
     
     # store roc curve plots in designated directory
@@ -369,35 +372,44 @@ def lund_planes_anomalies(g_anomaly, g_normal, q_anomaly, q_normal, job_id, tria
     except FileExistsError:
         pass
     
-    normal = ak.concatenate((g_normal,q_normal))
-    anomalous = ak.concatenate((g_anomaly,q_anomaly))
+    labels = ["Normal Data", "Anomalous Data"]
     
-    plt.rcParams.update({'font.size': 12})
-    
-    fig, ax = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,5),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
+    # create histograms
+    histograms = []
+    for dataset in (normal, anomalous):
+        flat_dr, flat_kt = get_dr_kt(dataset)
+        histograms.append(np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20))
+    vmin = min([np.min(H[H > 0]) for H, _, _ in histograms])
+    vmax = max([np.max(H) for H, _, _ in histograms])
+        
+    # create plot
+    plt.rcParams.update({'font.size': 14})
+    fig, axs = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,3.7),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
     fig.patch.set_facecolor('white')
 
-    # Normal dataset
-    flat_dr, flat_kt = get_dr_kt(normal)
-    H, xedges, yedges = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
-    im = ax[0].imshow(H.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], aspect=0.7)
-    ax[0].title.set_text(r'Normal Data')
-    fig.colorbar(im, ax=ax[0])
-    ax[0].set_xlabel(r'$\ln (R/\Delta R)$')
-    ax[0].set_ylabel(r'$\ln (k_t)$')
+    for i, (ax, histogram) in enumerate(zip(axs.flat, histograms)):
+        H, xedges, yedges = histogram
+        im = ax.imshow(H.T,
+                        interpolation='nearest',
+                        origin='lower', 
+                        norm=colors.LogNorm(vmin=vmin,vmax=vmax), 
+                        extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], 
+                        aspect=0.7
+                    )
+        ax.title.set_text(labels[i])
+        ax.set_xlabel(r'$\ln (R/\Delta R)$')
+        ax.set_ylabel(r'$\ln (k_t)$')
 
-    # Anomalous dataset
-    flat_dr, flat_kt = get_dr_kt(anomalous)
-    H2, xedges2, yedges2 = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
-    im2 = ax[1].imshow(H2.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges2[0], xedges2[-1], yedges2[0], yedges2[-1]], aspect=0.7)
-    ax[1].title.set_text(r'Anomalous Data')
-    fig.colorbar(im, ax=ax[1])
-    ax[1].set_xlabel(r'$\ln (R/\Delta R)$')
-    ax[1].set_ylabel(r'$\ln (k_t)$')
-    
-    plt.tight_layout()
+    # colorbar
+    fig.subplots_adjust(left=0.1, right=1., top=0.95, bottom=0.1, hspace=0.3, wspace=0.35)
+    cbar = fig.colorbar(im,shrink=0.83, ax=axs.ravel().tolist())
+    cbar.set_label("Count")
+
+    # savefig
     plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies")
-    
+    plt.close('all')
+
+    """
     # - difference -
     fig = plt.figure( figsize = (18, 5))#, gridspec_kw={'width_ratios': [1, 1.5]})
     fig.patch.set_facecolor('white')
@@ -409,7 +421,7 @@ def lund_planes_anomalies(g_anomaly, g_normal, q_anomaly, q_normal, job_id, tria
     plt.imshow(H3.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges3[0], xedges3[-1], yedges3[0], yedges3[-1]], aspect=0.7)
 
     plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies_difference")
-
+    """
     return
 
 def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, trial=None):
@@ -425,62 +437,56 @@ def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, t
     
     normal = ak.concatenate((g_normal,q_normal))
     anomalous = ak.concatenate((g_anomaly,q_anomaly))
+    lund_planes_anomalies(normal, anomalous, job_id, trial)
     
-    plt.rcParams.update({'font.size': 12})
-    
-    fig, ax = plt.subplots(2, 2, sharex=False, sharey=False, figsize = (12,10),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
+    labels = ["Normal Gluon Data", "Anomalous Gluon Data", "Normal Quark Data", "Anomalous Quark Data"]
+
+    # create histograms
+    histograms = []
+    for dataset in (g_normal, g_anomaly, q_normal, q_anomaly):
+        flat_dr, flat_kt = get_dr_kt(dataset)
+        histograms.append(np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20))
+    vmin = min([np.min(H[H > 0]) for H, _, _ in histograms])
+    vmax = max([np.max(H) for H, _, _ in histograms])
+        
+    # create plot
+    plt.rcParams.update({'font.size': 14})
+    fig, axs = plt.subplots(2, 2, sharex=False, sharey=False, figsize = (12,7.4),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
     fig.patch.set_facecolor('white')
 
-    # Normal gluon dataset
-    flat_dr, flat_kt = get_dr_kt(g_normal)
-    H, xedges, yedges = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
-    im = ax[0,0].imshow(H.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], aspect=0.7)
-    ax[0,0].title.set_text(r'Normal Gluon Data')
-    fig.colorbar(im, ax=ax[0,0])
-    ax[0,0].set_xlabel(r'$\ln (R/\Delta R)$')
-    ax[0,0].set_ylabel(r'$\ln (k_t)$')
+    for i, (ax, histogram) in enumerate(zip(axs.flat, histograms)):
+        H, xedges, yedges = histogram
+        im = ax.imshow(H.T,
+                        interpolation='nearest',
+                        origin='lower', 
+                        norm=colors.LogNorm(vmin=vmin,vmax=vmax), 
+                        extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], 
+                        aspect=0.7
+                    )
+        ax.title.set_text(labels[i])
+        ax.set_xlabel(r'$\ln (R/\Delta R)$')
+        ax.set_ylabel(r'$\ln (k_t)$')
 
-    # Anomalous gluon dataset
-    flat_dr, flat_kt = get_dr_kt(g_anomaly)
-    H2, xedges2, yedges2 = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
-    im2 = ax[0,1].imshow(H2.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges2[0], xedges2[-1], yedges2[0], yedges2[-1]], aspect=0.7)
-    ax[0,1].title.set_text(r'Anomalous Gluon Data')
-    fig.colorbar(im, ax=ax[0,1])
-    ax[0,1].set_xlabel(r'$\ln (R/\Delta R)$')
-    ax[0,1].set_ylabel(r'$\ln (k_t)$')
-    
-    # Normal gluon dataset
-    flat_dr, flat_kt = get_dr_kt(q_normal)
-    H, xedges, yedges = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
-    im3 = ax[1,0].imshow(H.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], aspect=0.7)
-    ax[1,0].title.set_text(r'Normal Quark Data')
-    fig.colorbar(im, ax=ax[1,0])
-    ax[1,0].set_xlabel(r'$\ln (R/\Delta R)$')
-    ax[1,0].set_ylabel(r'$\ln (k_t)$')
+    # colorbar
+    fig.subplots_adjust(left=0.1, right=1., top=0.95, bottom=0.1, hspace=0.3, wspace=0.35)
+    cbar = fig.colorbar(im,shrink=0.83, ax=axs.ravel().tolist())
+    cbar.set_label("Count")
 
-    # Anomalous gluon dataset
-    flat_dr, flat_kt = get_dr_kt(q_anomaly)
-    H2, xedges2, yedges2 = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
-    im4 = ax[1,1].imshow(H2.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges2[0], xedges2[-1], yedges2[0], yedges2[-1]], aspect=0.7)
-    ax[1,1].title.set_text(r'Anomalous Quark Data')
-    fig.colorbar(im, ax=ax[1,1])
-    ax[1,1].set_xlabel(r'$\ln (R/\Delta R)$')
-    ax[1,1].set_ylabel(r'$\ln (k_t)$')
-    
-    plt.tight_layout()
+    # savefig    
     plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies_qg")
+    plt.close('all')
     
-    # - difference -
-    fig = plt.figure( figsize = (18, 5))#, gridspec_kw={'width_ratios': [1, 1.5]})
-    fig.patch.set_facecolor('white')
+    # # - difference -
+    # fig = plt.figure( figsize = (18, 5))#, gridspec_kw={'width_ratios': [1, 1.5]})
+    # fig.patch.set_facecolor('white')
 
-    # First dataset zcut = 0.0
-    H3 = H2 - H
-    xedges3 = xedges2 - xedges
-    yedges3 = yedges2 - yedges
-    plt.imshow(H3.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges3[0], xedges3[-1], yedges3[0], yedges3[-1]], aspect=0.7)
+    # # First dataset zcut = 0.0
+    # H3 = H2 - H
+    # xedges3 = xedges2 - xedges
+    # yedges3 = yedges2 - yedges
+    # plt.imshow(H3.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges3[0], xedges3[-1], yedges3[0], yedges3[-1]], aspect=0.7)
 
-    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies_difference_qg")
+    # plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies_difference_qg")
 
     return
 
@@ -494,30 +500,41 @@ def lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal,num):
     
     gluon = ak.concatenate((g_normal,g_anomaly))
     quark = ak.concatenate((q_normal,q_anomaly))
-    plt.rcParams.update({'font.size': 12})
-    
-    fig, ax = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,5),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
+    labels = ["Gluon Jets", "Quark Jets"]
+
+    # create histograms
+    histograms = []
+    for dataset in (gluon, quark):
+        flat_dr, flat_kt = get_dr_kt(dataset)
+        histograms.append(np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20))
+    vmin = min([np.min(H[H > 0]) for H, _, _ in histograms])
+    vmax = max([np.max(H) for H, _, _ in histograms])
+        
+    # create plot
+    plt.rcParams.update({'font.size': 14})
+    fig, axs = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,3.7),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
     fig.patch.set_facecolor('white')
 
-    # Normal dataset
-    flat_dr, flat_kt = get_dr_kt(quark)
-    H, xedges, yedges = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
-    im = ax[0].imshow(H.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], aspect=0.7)
-    ax[0].title.set_text(r'Quark Jets')
-    fig.colorbar(im, ax=ax[0])
-    ax[0].set_xlabel(r'$\ln (R/\Delta R)$')
-    ax[0].set_ylabel(r'$\ln (k_t)$')
+    for i, (ax, histogram) in enumerate(zip(axs.flat, histograms)):
+        H, xedges, yedges = histogram
+        im = ax.imshow(H.T,
+                        interpolation='nearest',
+                        origin='lower', 
+                        norm=colors.LogNorm(vmin=vmin,vmax=vmax), 
+                        extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], 
+                        aspect=0.7
+                    )
+        ax.title.set_text(labels[i])
+        ax.set_xlabel(r'$\ln (R/\Delta R)$')
+        ax.set_ylabel(r'$\ln (k_t)$')
 
-    # Anomalous dataset
-    flat_dr, flat_kt = get_dr_kt(gluon)
-    H2, xedges2, yedges2 = np.histogram2d(np.log(0.4/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20)
-    im2 = ax[1].imshow(H2.T, interpolation='nearest', origin='lower', norm=colors.LogNorm(), extent=[xedges2[0], xedges2[-1], yedges2[0], yedges2[-1]], aspect=0.7)
-    ax[1].title.set_text(r'Gluon Jets')
-    fig.colorbar(im, ax=ax[1])
-    ax[1].set_xlabel(r'$\ln (R/\Delta R)$')
-    ax[1].set_ylabel(r'$\ln (k_t)$')
-    
-    plt.tight_layout()
-    plt.savefig(f"{out_dir}/quark_and_gluon")
+    # colorbar
+    fig.subplots_adjust(left=0.1, right=1., top=0.95, bottom=0.1, hspace=0.3, wspace=0.35)
+    cbar = fig.colorbar(im,shrink=0.83, ax=axs.ravel().tolist())
+    cbar.set_label("Count")
+
+    # savefig
+    plt.savefig(f"{out_dir}/quark_gluon_lund")
+    plt.close('all')
     
     return

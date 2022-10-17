@@ -41,7 +41,7 @@ def format_ak_to_list(arr: ak.Array) -> list:
     return lst
 
 
-def train_dev_test_split(dataset, split=[0.8, 0.1]):
+def train_dev_test_split(dataset, split=[0.7, 0.1]):
     """
     Split is the percentage cut of for selecting training data.
     Thus split 0.8 means 80% of data is considered for training.
