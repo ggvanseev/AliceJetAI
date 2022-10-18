@@ -59,29 +59,31 @@ for i, (job_id, num) in enumerate(zip(job_ids, trial_nrs)):
     
     type_jets = "Jewel"
     num = None
+    
+    # get anomalies
+    _, jets_index_tracker_vac, classification_tracker_vac = get_anomalies(split_test_data_recur_vac, job_id, trials, file_name_vac, jet_info=type_jets+" Vac")
+    _, jets_index_tracker_simple, classification_tracker_simple = get_anomalies(split_test_data_recur_simple, job_id, trials, file_name_simple, jet_info=type_jets+ " Simple")
     for num in ([num] if num is not None else range(len(trials))):
-        _, jets_index_tracker, classification_tracker = get_anomalies(split_test_data_recur_vac, job_id, trials, file_name_vac, jet_info=type_jets+" Vac")
-        # get anomalies for trial: num
+        # separate  anomalies for trial: num
         anomaly_vac, normal_vac = separate_anomalies_from_regular(
-            anomaly_track=classification_tracker[num],
-            jets_index=jets_index_tracker[num],
+            anomaly_track=classification_tracker_vac[num],
+            jets_index=jets_index_tracker_vac[num],
             data=split_test_data_recur_vac,
         )
-    
-        _, jets_index_tracker, classification_tracker = get_anomalies(split_test_data_recur_simple, job_id, trials, file_name_simple, jet_info=type_jets+ "Simple")
-        # get anomalies for trial: num
         anomaly_simple, normal_simple = separate_anomalies_from_regular(
-            anomaly_track=classification_tracker[num],
-            jets_index=jets_index_tracker[num],
+            anomaly_track=classification_tracker_simple[num],
+            jets_index=jets_index_tracker_simple[num],
             data=split_test_data_recur_simple,
         )
             
         if i < 2: # first two on vac
-            lund_planes(normal_vac, anomaly_vac, job_id, num)
+            print("Using vac dataset for", job_id)
+            lund_planes(normal_vac, anomaly_vac, job_id, trial=num)
         else:
-            lund_planes(anomaly_simple, normal_simple, job_id, num)
+            print("Using simple dataset for", job_id)
+            lund_planes(anomaly_simple, normal_simple, job_id, trial=num)
         
-        lund_planes(split_test_data_recur_vac, split_test_data_recur_simple, job_id, num, labels=["Unquenched Jets", "Quenched Jets"], info="quenchedness")
+        lund_planes(split_test_data_recur_vac, split_test_data_recur_simple, job_id, trial=num, labels=["Unquenched Jets", "Contains Quenched Jets"], info="quenchedness")
         
         
         for feature in [na.recur_jetpt, na.recur_dr, na.recur_z]:
@@ -93,11 +95,27 @@ for i, (job_id, num) in enumerate(zip(job_ids, trial_nrs)):
                 pass
         
             try:
-                data = [[ak.firsts(normal_vac), ak.firsts(anomaly_vac)], 
-                        [ak.firsts(normal_simple), ak.firsts(anomaly_simple)]]
+                data = [[ak.firsts(normal_vac[feature]), ak.firsts(anomaly_vac[feature])], 
+                        [ak.firsts(normal_simple[feature]), ak.firsts(anomaly_simple[feature])]]
+                out_file =  out_dir + f"/trial{num}_first_" + feature 
+                title = "Unquenched Samples Versus QGP Samples  - First Splitting"
+                x_label = feature
+                stacked_plot_sided_old(data, title, x_label, out_file, labels=["Unquenched Data", "Quenched Data"])
             except ValueError:
                 print(f"Either no normal or no anomalous data for {job_id} trial {num}!")
-            out_file =  out_dir + f"/trial{num}_mean_" + feature 
-            title = "Quenched Versus Unquenched Samples - First Splitting"
-            x_label = feature
-            stacked_plot_sided_old(data, title, x_label, out_file, labels=["Unquenched Data", "Quenched Data"])
+                try:
+                    a = ak.first(normal_vac[feature])
+                except:
+                    print("\tError in ak.first(normal_vac)")
+                try:
+                    a = ak.first(anomaly_vac[feature])
+                except:
+                    print("\tError in ak.first(anomaly_vac)")
+                try:
+                    a = ak.first(normal_simple[feature])
+                except:
+                    print("\tError in ak.first(normal_simple)")
+                try:
+                    a = ak.first(anomaly_simple[feature])
+                except:
+                    print("\tError in ak.first(anomaly_simple)")

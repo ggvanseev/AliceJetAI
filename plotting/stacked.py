@@ -54,7 +54,7 @@ def stacked_plot(data, title, x_label, out_file, labels=["Gluon - Normal", "Gluo
     return
 
 
-def stacked_plot_sided(data, title, x_label, out_file, labels=["Gluon Jets", "Quark Jets"], xlabels=["Normal", "Anomaly"]):
+def stacked_plot_sided(data, fig_title, x_label, out_file, titles=["Gluon Jets", "Quark Jets"], labels=["Normal", "Anomaly"]):
     """Make a general side by side stacked histogram of qg data
 
     Args:
@@ -78,11 +78,11 @@ def stacked_plot_sided(data, title, x_label, out_file, labels=["Gluon Jets", "Qu
         sharey=True,
         figsize=[12, 7],
     )
-    for i, label in enumerate(labels):
+    for i, title in enumerate(titles):
         hist = ax[i].hist(
             data[i],
             stacked=True,
-            label=xlabels,
+            label=labels,
             bins=bins,
             alpha=0.8,
             zorder=3,
@@ -104,7 +104,7 @@ def stacked_plot_sided(data, title, x_label, out_file, labels=["Gluon Jets", "Qu
         anom_plot[0].set_clip_on(False) # so the plot can overlap the axis
 
         # plot setup
-        ax[i].set_title(label)
+        ax[i].set_title(title)
         ax[i].set_xlabel(x_label)
         ax[i].grid(alpha=0.4)
     # legend & overall setup
@@ -119,14 +119,14 @@ def stacked_plot_sided(data, title, x_label, out_file, labels=["Gluon Jets", "Qu
         
     # save plot
     plt.savefig(out_file +"_no_title", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=160)
-    plt.title(title)
+    plt.title(fig_title)
     plt.savefig(out_file, bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=160)
     plt.close('all')  # close figure - clean memory
     
     return
 
 
-def stacked_plot_sided_old(data, title, x_label, out_file):
+def stacked_plot_sided_old(data, fig_title, x_label, out_file, titles=["Gluon Jets", "Quark Jets"], labels=["Normal", "Anomaly"]):
     """Make a general side by side stacked histogram of qg data.
     Old version, does not contain the anomal / total fraction plot.
     This is actually the better version for now, because the other 
@@ -153,18 +153,18 @@ def stacked_plot_sided_old(data, title, x_label, out_file):
         sharey=True,
         figsize=[12, 7],
     )
-    for i, label in enumerate(["Gluon Jets", "Quark Jets"]):
+    for i, title in enumerate(titles):
         ax[i].hist(
             data[i],
             stacked=True,
-            label=["Normal", "Anomaly"],
+            label=labels,
             bins=bins,
             alpha=0.8,
             zorder=3,
         )
         
         # plot setup
-        ax[i].set_title(label)
+        ax[i].set_title(title)
         ax[i].set_xlabel(x_label)
         ax[i].grid(alpha=0.4)
         ax[i].legend(loc="upper right")
@@ -173,7 +173,7 @@ def stacked_plot_sided_old(data, title, x_label, out_file):
     ax[0].set_ylabel("N")
     fig.subplots_adjust(bottom=0.15, wspace=0.1)
     plt.savefig(out_file + "_no_title")
-    plt.title(title)
+    plt.title(fig_title)
     plt.savefig(out_file)
     plt.close('all')  # close figure - clean memory
     
