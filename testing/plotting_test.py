@@ -361,12 +361,12 @@ def get_dr_kt(branches, features=["sigJetRecur_dr12", "sigJetRecur_jetpt", "sigJ
     return flat_dr, flat_kt
 
 
-def lund_planes(normal, anomalous, job_id, labels = ["Normal Data", "Anomalous Data"], info="anomalies", trial=None, R=0.4):
+def lund_planes(normal, anomalous, job_id=None, trial=None, labels = ["Normal Data", "Anomalous Data"], info="anomalies", R=0.4):
     """Normal data vs anomaly data, next to each other, difference, other?"""
     
     # store roc curve plots in designated directory
     out_dir = f"testing/output/Lund"
-    out_dir += f"_{job_id}"
+    if job_id: out_dir += f"_{job_id}" 
     try:
         os.mkdir(out_dir)
     except FileExistsError:
