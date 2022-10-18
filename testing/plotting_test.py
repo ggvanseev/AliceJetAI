@@ -361,7 +361,7 @@ def get_dr_kt(branches, features=["sigJetRecur_dr12", "sigJetRecur_jetpt", "sigJ
     return flat_dr, flat_kt
 
 
-def lund_planes_anomalies(normal, anomalous, job_id, trial=None, R=0.4):
+def lund_planes(normal, anomalous, job_id, labels = ["Normal Data", "Anomalous Data"], info="anomalies", trial=None, R=0.4):
     """Normal data vs anomaly data, next to each other, difference, other?"""
     
     # store roc curve plots in designated directory
@@ -371,8 +371,6 @@ def lund_planes_anomalies(normal, anomalous, job_id, trial=None, R=0.4):
         os.mkdir(out_dir)
     except FileExistsError:
         pass
-    
-    labels = ["Normal Data", "Anomalous Data"]
     
     # create histograms
     histograms = []
@@ -411,7 +409,7 @@ def lund_planes_anomalies(normal, anomalous, job_id, trial=None, R=0.4):
     cbar.set_label("Count")
 
     # savefig
-    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_anomalies")
+    plt.savefig(f"{out_dir}/{'trial_'+str(trial)+'_' if type(trial) == int else ''}_{info}")
     plt.close('all')
 
     """
@@ -442,7 +440,7 @@ def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, t
     
     normal = ak.concatenate((g_normal,q_normal))
     anomalous = ak.concatenate((g_anomaly,q_anomaly))
-    lund_planes_anomalies(normal, anomalous, job_id, trial, R=R)
+    lund_planes(normal, anomalous, job_id, trial, R=R)
     
     labels = ["Normal Gluon Data", "Anomalous Gluon Data", "Normal Quark Data", "Anomalous Quark Data"]
 
@@ -500,53 +498,3 @@ def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, t
 
     return
 
-def lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal,num, R=0.4):
-    # store roc curve plots in designated directory
-    out_dir = f"testing/output/Lund_qg"
-    try:
-        os.mkdir(out_dir)
-    except FileExistsError:
-        pass
-    
-    gluon = ak.concatenate((g_normal,g_anomaly))
-    quark = ak.concatenate((q_normal,q_anomaly))
-    labels = ["Gluon Jets", "Quark Jets"]
-
-    # create histograms
-    histograms = []
-    for dataset in (gluon, quark):
-        flat_dr, flat_kt = get_dr_kt(dataset)
-        histograms.append(np.histogram2d(np.log(R/flat_dr), np.log(flat_kt), range=[[0, 8], [-7, 5]], bins=20))
-    vmin = min([np.min(H[H > 0]) for H, _, _ in histograms])
-    vmax = max([np.max(H) for H, _, _ in histograms])
-        
-    # create plot
-    plt.rcParams.update({'font.size': 24})
-    fig, axs = plt.subplots(1, 2, sharex=False, sharey=False, figsize = (12,5),dpi=160)#, gridspec_kw={'width_ratios': [1, 1.5]})
-    fig.patch.set_facecolor('white')
-
-    for i, (ax, histogram) in enumerate(zip(axs.flat, histograms)):
-        H, xedges, yedges = histogram
-        im = ax.imshow(H.T,
-                        interpolation='nearest',
-                        origin='lower', 
-                        norm=colors.LogNorm(vmin=vmin,vmax=vmax), 
-                        extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], 
-                        aspect=0.7
-                    )
-        ax.title.set_text(labels[i])
-        ax.set_xlabel(r'$\ln (R/\Delta R)$')
-        ax.set_ylabel(r'$\ln (k_t)$')
-        ax.set_xticks(np.arange(xedges[0], xedges[-1] +2, 2.0))
-        ax.set_yticks(np.arange(min(yedges+1), max(yedges), 2.0) if 0 not in yedges else np.arange(min(yedges), max(yedges), 2.0))
-
-    # colorbar & adjust
-    fig.subplots_adjust(left=0.1, right=1., top=0.95, bottom=0.1, hspace=0.3, wspace=0.35)
-    cbar = fig.colorbar(im,shrink=0.83, ax=axs.ravel().tolist())
-    cbar.set_label("Count")
-
-    # savefig
-    plt.savefig(f"{out_dir}/quark_gluon_lund")
-    plt.close('all')
-    
-    return

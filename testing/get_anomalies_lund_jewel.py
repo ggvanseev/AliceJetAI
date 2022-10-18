@@ -4,27 +4,29 @@ from functions.classification import get_anomalies
 from functions.data_loader import *
 from functions.data_manipulation import cut_on_length, separate_anomalies_from_regular, train_dev_test_split
 import matplotlib.pyplot as plt
+from plotting.stacked import stacked_plot, stacked_plot_sided, stacked_plot_sided_old
 
-from testing.plotting_test import lund_planes_anomalies, lund_planes_anomalies_qg, lund_planes_qg, normal_vs_anomaly_2D_qg
+from testing.plotting_test import lund_planes
+import branch_names as na
 
-file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
-#file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
+file_name_vac = "samples/SDTiny_jewelNR_120_vac-1.root"
+file_name_simple = "samples/SDTiny_jewelNR_120_simple-1.root"
 
 job_ids = [
-    11542141, # vac
-    11542142, # vac
-    #11542143, # simple
-    #11542143, # simple
-    #11542144, # simple
-    #11542144, # simple
+    "11542141", # vac
+    "11542142", # vac
+    "11542143", # simple
+    "11542143", # simple
+    "11542144", # simple
+    "11542144", # simple
 ]
 trial_nrs = [
     3, # vac
     1, # vac
-    #8, # simple
-    #9, # simple
-    #6, # simple
-    #9, # simple
+    8, # simple
+    9, # simple
+    6, # simple
+    9, # simple
 ]
 
 kt_cut = None
@@ -35,8 +37,11 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 
 # Load and filter data for criteria eta and jetpt_cap
 # You can load your premade mix here: pickled file w q/g mix
-jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut, dr_cut=dr_cut)
-_, _, split_test_data_recur = train_dev_test_split(jets_recur, split=[0.7, 0.1])
+jets_recur_vac, _ = load_n_filter_data(file_name_vac, kt_cut=kt_cut, dr_cut=dr_cut)
+_, _, split_test_data_recur_vac = train_dev_test_split(jets_recur_vac, split=[0.7, 0.1])
+
+jets_recur_simple, _ = load_n_filter_data(file_name_simple, kt_cut=kt_cut, dr_cut=dr_cut)
+_, _, split_test_data_recur_simple = train_dev_test_split(jets_recur_simple, split=[0.7, 0.1])
 print("Loading data complete")  
 
 
@@ -52,13 +57,47 @@ for i, (job_id, num) in enumerate(zip(job_ids, trial_nrs)):
         continue
     print("Loading trials complete")
     
-    type_jets = "Jewel "
-    _, jets_index_tracker, classification_tracker = get_anomalies(split_test_data_recur, job_id, trials, file_name, jet_info=type_jets)
-     # get anomalies for trial: num
-    anomaly, normal = separate_anomalies_from_regular(
-        anomaly_track=classification_tracker[num],
-        jets_index=jets_index_tracker[num],
-        data=jets_recur,
-    )
+    type_jets = "Jewel"
+    num = None
+    for num in ([num] if num is not None else range(len(trials))):
+        _, jets_index_tracker, classification_tracker = get_anomalies(split_test_data_recur_vac, job_id, trials, file_name_vac, jet_info=type_jets+" Vac")
+        # get anomalies for trial: num
+        anomaly_vac, normal_vac = separate_anomalies_from_regular(
+            anomaly_track=classification_tracker[num],
+            jets_index=jets_index_tracker[num],
+            data=split_test_data_recur_vac,
+        )
     
-    lund_planes_anomalies(normal, anomaly, job_id, num)
+        _, jets_index_tracker, classification_tracker = get_anomalies(split_test_data_recur_simple, job_id, trials, file_name_simple, jet_info=type_jets+ "Simple")
+        # get anomalies for trial: num
+        anomaly_simple, normal_simple = separate_anomalies_from_regular(
+            anomaly_track=classification_tracker[num],
+            jets_index=jets_index_tracker[num],
+            data=split_test_data_recur_simple,
+        )
+            
+        if i < 2: # first two on vac
+            lund_planes(normal_vac, anomaly_vac, job_id, num)
+        else:
+            lund_planes(anomaly_simple, normal_simple, job_id, num)
+        
+        lund_planes(split_test_data_recur_vac, split_test_data_recur_simple, job_id, num, labels=["Unquenched Jets", "Quenched Jets"], info="quenchedness")
+        
+        
+        for feature in [na.recur_jetpt, na.recur_dr, na.recur_z]:
+            # store roc curve plots in designated directory
+            out_dir = f"testing/output/stacked_{job_id}"
+            try:
+                os.mkdir(out_dir)
+            except FileExistsError:
+                pass
+        
+            try:
+                data = [[ak.firsts(normal_vac), ak.firsts(anomaly_vac)], 
+                        [ak.firsts(normal_simple), ak.firsts(anomaly_simple)]]
+            except ValueError:
+                print(f"Either no normal or no anomalous data for {job_id} trial {num}!")
+            out_file =  out_dir + f"/trial{num}_mean_" + feature 
+            title = "Quenched Versus Unquenched Samples - First Splitting"
+            x_label = feature
+            stacked_plot_sided_old(data, title, x_label, out_file, labels=["Unquenched Data", "Quenched Data"])

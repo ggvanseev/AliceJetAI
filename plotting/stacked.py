@@ -7,7 +7,7 @@ import os
 
 from branch_names import variable_names as vn
 
-def stacked_plot(data, title, x_label, out_file):
+def stacked_plot(data, title, x_label, out_file, labels=["Gluon - Normal", "Gluon - Anomaly", "Quark - Normal", "Quark - Anomaly"]):
     """Make a general stacked plot of given qg data
 
     Args:
@@ -33,7 +33,7 @@ def stacked_plot(data, title, x_label, out_file):
     plt.hist(
         data,
         stacked=True,
-        label=["Gluon - Normal", "Gluon - Anomaly", "Quark - Normal", "Quark - Anomaly"],
+        label=labels,
         bins=bins,
         alpha=0.8,
         zorder=3,
@@ -54,7 +54,7 @@ def stacked_plot(data, title, x_label, out_file):
     return
 
 
-def stacked_plot_sided(data, title, x_label, out_file):
+def stacked_plot_sided(data, title, x_label, out_file, labels=["Gluon Jets", "Quark Jets"], xlabels=["Normal", "Anomaly"]):
     """Make a general side by side stacked histogram of qg data
 
     Args:
@@ -78,11 +78,11 @@ def stacked_plot_sided(data, title, x_label, out_file):
         sharey=True,
         figsize=[12, 7],
     )
-    for i, label in enumerate(["Gluon Jets", "Quark Jets"]):
+    for i, label in enumerate(labels):
         hist = ax[i].hist(
             data[i],
             stacked=True,
-            label=["Normal", "Anomaly"],
+            label=xlabels,
             bins=bins,
             alpha=0.8,
             zorder=3,
@@ -93,7 +93,14 @@ def stacked_plot_sided(data, title, x_label, out_file):
         if i == 0:
             anom_ax.set_yticklabels([])
         anom_fraction = (hist[0][1] - hist[0][0]) /hist[0][1] # anomalies ( = (total - normal) ) / total
-        anom_plot = anom_ax.errorbar((hist[1][:-1] + hist[1][1:]) / 2, anom_fraction.tolist(), xerr=binwidth/2, color='r', linestyle='', elinewidth=2, zorder=3, label= "Anomaly / Normal")
+        anom_plot = anom_ax.errorbar((hist[1][:-1] + hist[1][1:]) / 2,
+                                     anom_fraction.tolist(), 
+                                     xerr=binwidth/2, 
+                                     color='r', 
+                                     linestyle='', 
+                                     elinewidth=2, 
+                                     zorder=3, 
+                                     label= "Anomalous / Total")
         anom_plot[0].set_clip_on(False) # so the plot can overlap the axis
 
         # plot setup
@@ -109,7 +116,6 @@ def stacked_plot_sided(data, title, x_label, out_file):
     fig.subplots_adjust(left=0.1, right=1., top=0.85, bottom=0.12, hspace=0.3, wspace=0.1)
     lgd = fig.legend(legend, labels, loc='upper center', bbox_to_anchor=(0.55, 0), 
                      fancybox=True, shadow=True, ncol=3) # , prop={'size': 8}
-    
         
     # save plot
     plt.savefig(out_file +"_no_title", bbox_extra_artists=(lgd,), bbox_inches='tight',dpi=160)
@@ -121,7 +127,10 @@ def stacked_plot_sided(data, title, x_label, out_file):
 
 
 def stacked_plot_sided_old(data, title, x_label, out_file):
-    """Make a general side by side stacked histogram of qg data
+    """Make a general side by side stacked histogram of qg data.
+    Old version, does not contain the anomal / total fraction plot.
+    This is actually the better version for now, because the other 
+    one is too messy.
 
     Args:
         data (_type_): _description_

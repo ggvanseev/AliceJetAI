@@ -16,7 +16,7 @@ from functions.data_loader import *
 from functions.data_manipulation import cut_on_length, separate_anomalies_from_regular, train_dev_test_split
 import matplotlib.pyplot as plt
 
-from testing.plotting_test import lund_planes_anomalies, lund_planes_anomalies_qg, lund_planes_qg, normal_vs_anomaly_2D_qg
+from testing.plotting_test import lund_planes, lund_planes_anomalies_qg, normal_vs_anomaly_2D_qg
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
@@ -25,10 +25,10 @@ out_files=[] # you can load your premade mix here: pickled file
 
 job_ids = [
     "11474168", # reg mean - lowest cost
-    #    "11474168",  # reg mean - highest
-    #    "11461550", # reg last - highest 
-    #    "11478121", # last_reversed - highest auc regtraining
-    #    '11120653', # hp training mean - highest auc total
+    "11474168",  # reg mean - highest
+    "11461550", # reg last - highest 
+    "11478121", # last_reversed - highest auc regtraining
+    '11120653', # hp training mean - highest auc total
 ] 
 trial_nrs = [9, 5, 7, 1, 11]
 
@@ -36,7 +36,7 @@ g_percentage = 50 # for evaluation of stacked plots 50%, ROC would be nice to ha
 num = 2 # trial nr. if None will do for all trials
 save_flag = True
 show_distribution_percentages_flag = False
-mix = True         # set to true if mixture of q and g is required
+mix = False         # set to true if mixture of q and g is required
 kt_cut = None      # for dataset, splittings kt > 1.0 GeV, assign None if not using
 dr_cut = None# np.linspace(0,0.4,len(job_ids)+1)[i+1] 
 
@@ -50,7 +50,7 @@ if out_files:
 elif mix:
     jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut, dr_cut=dr_cut)
 else:
-    jets_recur, _ = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
+    jets_recur, jets = load_n_filter_data(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], kt_cut=kt_cut, dr_cut=dr_cut)
 
 # split data TODO see if it works -> test set too small for small dataset!!! -> using full set
 _, _, split_test_data_recur = train_dev_test_split(jets_recur, split=[0.7, 0.1])
@@ -133,4 +133,9 @@ for i, (job_id, num) in enumerate(zip(job_ids, trial_nrs)):
         # for splittings in ['all', 'first', 'last', 'mean']:
             # normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, splittings, job_id, num)
         lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, num)
-    lund_planes_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id)
+    
+    # make lund planes for quark and gluon data
+    gluon = ak.concatenate((g_normal,g_anomaly))
+    quark = ak.concatenate((q_normal,q_anomaly))
+    labels = ["Gluon Jets", "Quark Jets"]
+    lund_planes(gluon, quark, job_id, labels=labels, info="qg")
