@@ -1,5 +1,6 @@
 from lib2to3.pgen2.literals import simple_escapes
 import torch
+import awkward as ak
 from functions.classification import get_anomalies
 from functions.data_loader import *
 from functions.data_manipulation import cut_on_length, separate_anomalies_from_regular, train_dev_test_split
@@ -39,10 +40,9 @@ _, _, split_test_data_recur_vac = train_dev_test_split(jets_recur_vac, split=[0.
 jets_recur_simple, _ = load_n_filter_data(file_name_simple, kt_cut=kt_cut, dr_cut=dr_cut)
 _, _, split_test_data_recur_simple = train_dev_test_split(jets_recur_simple, split=[0.7, 0.1])
 
-# make same size ~ 20000
-split_test_data_recur_vac = split_test_data_recur_vac[:20000]
-split_test_data_recur_simple = split_test_data_recur_simple[:20000]
-print(f"Datasets cut down to size {len(jets_recur_vac)}")
+# make same size of 3882 for current sets
+split_test_data_recur_vac = split_test_data_recur_vac[:len(split_test_data_recur_simple)]
+print(f"Vac dataset cut down to size {len(split_test_data_recur_vac)}, the size of simple test set")
 print("Loading data complete")  
 
 # lund plane vac versus simple
