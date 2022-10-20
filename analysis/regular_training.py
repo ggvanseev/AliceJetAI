@@ -35,9 +35,9 @@ from functions.training import REGULAR_TRAINING, run_full_training
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 # file_name = "samples/JetToyHIResultSoftDropSkinny.root"
-#file_name = "samples/SDTiny_jewelNR_120_vac-1.root"
-file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 # file_name = "samples/JetToyHIResultSoftDropTiny.root"
+#file_name = "samples/JetToyHIResultSoftDropTiny_zc01_simple-1.root"
+file_name = "samples/JetToyHIResultSoftDropTiny_zc01_vac-1.root"
 
 # set data sample settings
 out_file = ""               # if previously created a specific sample, otherwise leave empty
@@ -55,7 +55,7 @@ plot_flag = (
     True                    # for making cost condition plots, only works if save_results_flag is True
 )
 
-notes = "regular training Jewel simple, lr=e-3, nu = 0.5, hidden dim = 3"  # Small command on run, will be save to save file.
+notes = "regular training Jewel vac, lr=e-3, nu = 0.5, hidden dim = 3"  # Small command on run, will be save to save file.
 
 ###-----------------------------------------------------------------------------###
 
@@ -102,12 +102,12 @@ if out_file:
 elif mix:
     jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut, dr_cut=dr_cut)
 else:
-    jets_recur, jets = load_n_filter_data(file_name, kt_cut=kt_cut, dr_cut=dr_cut)
+    jets_recur, _ = load_n_filter_data(file_name, kt_cut=kt_cut, dr_cut=dr_cut)
 print("Loading data complete")       
 
 # split data into (train, val, test) like 70/10/20 if splits are set at [0.7, 0.1]
 split_train_data, split_val_data, _ = train_dev_test_split(jets_recur, split=[0.7, 0.1]) 
-_, jets, _ = train_dev_test_split(jets, split=[0.7, 0.1])
+# _, jets, _ = train_dev_test_split(jets, split=[0.7, 0.1])
 print("Splitting data complete")
 
 try:

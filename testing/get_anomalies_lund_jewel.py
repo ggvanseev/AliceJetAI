@@ -10,22 +10,18 @@ from testing.plotting_test import lund_planes
 import branch_names as na
 
 file_name_vac = "samples/SDTiny_jewelNR_120_vac-1.root"
-file_name_simple = "samples/SDTiny_jewelNR_120_simple-1.root"
+file_name_simple = "samples/JetToyHIResultSoftDropTiny_zc01_simple-1.root"
 
 job_ids = [
     "11542141", # vac
     "11542142", # vac
-    "11542143", # simple
-    "11542143", # simple
-    "11542144", # simple
-    "11542144", # simple
+    "11852650", # simple
+    "11852651", # simple
 ]
 trial_nrs = [
     3, # vac
     1, # vac
     8, # simple
-    9, # simple
-    6, # simple
     9, # simple
 ]
 
@@ -42,6 +38,11 @@ _, _, split_test_data_recur_vac = train_dev_test_split(jets_recur_vac, split=[0.
 
 jets_recur_simple, _ = load_n_filter_data(file_name_simple, kt_cut=kt_cut, dr_cut=dr_cut)
 _, _, split_test_data_recur_simple = train_dev_test_split(jets_recur_simple, split=[0.7, 0.1])
+
+# make same size ~ 20000
+jets_recur_vac = jets_recur_vac[:20000]
+jets_recur_simple = jets_recur_simple[:20000]
+print(f"Datasets cut down to size {len(jets_recur_vac)}")
 print("Loading data complete")  
 
 # lund plane vac versus simple
