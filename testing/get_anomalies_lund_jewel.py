@@ -40,8 +40,8 @@ jets_recur_simple, _ = load_n_filter_data(file_name_simple, kt_cut=kt_cut, dr_cu
 _, _, split_test_data_recur_simple = train_dev_test_split(jets_recur_simple, split=[0.7, 0.1])
 
 # make same size ~ 20000
-jets_recur_vac = jets_recur_vac[:20000]
-jets_recur_simple = jets_recur_simple[:20000]
+split_test_data_recur_vac = split_test_data_recur_vac[:20000]
+split_test_data_recur_simple = split_test_data_recur_simple[:20000]
 print(f"Datasets cut down to size {len(jets_recur_vac)}")
 print("Loading data complete")  
 

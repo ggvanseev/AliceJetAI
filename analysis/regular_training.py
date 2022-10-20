@@ -36,8 +36,8 @@ from functions.training import REGULAR_TRAINING, run_full_training
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
 # file_name = "samples/JetToyHIResultSoftDropSkinny.root"
 # file_name = "samples/JetToyHIResultSoftDropTiny.root"
-#file_name = "samples/JetToyHIResultSoftDropTiny_zc01_simple-1.root"
-file_name = "samples/JetToyHIResultSoftDropTiny_zc01_vac-1.root"
+file_name = "samples/JetToyHIResultSoftDropTiny_zc01_simple-1.root"
+#file_name = "samples/JetToyHIResultSoftDropTiny_zc01_vac-1.root"
 
 # set data sample settings
 out_file = ""               # if previously created a specific sample, otherwise leave empty
@@ -55,7 +55,7 @@ plot_flag = (
     True                    # for making cost condition plots, only works if save_results_flag is True
 )
 
-notes = "regular training Jewel vac, lr=e-3, nu = 0.5, hidden dim = 3"  # Small command on run, will be save to save file.
+notes = "regular training Jewel simple, lr=e-2, nu = 0.5, hidden dim = 3"  # Small command on run, will be save to save file.
 
 ###-----------------------------------------------------------------------------###
 
@@ -69,7 +69,7 @@ space = hp.choice(
             "hidden_dim": hp.choice("hidden_dim", [3]),
             "num_layers": hp.choice("num_layers", [1]),
             "min_epochs": hp.choice("min_epochs", [int(120)]),
-            "learning_rate": 10 ** hp.choice("learning_rate", [-3]),
+            "learning_rate": 10 ** hp.choice("learning_rate", [-2]),
             "dropout": hp.choice(
                 "dropout", [0]
             ),  # voegt niks toe, want we gebuiken één layer, dus dropout niet nodig
