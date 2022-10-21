@@ -167,10 +167,10 @@ def stacked_plot_sided_old(data, fig_title, x_label, out_file, titles=["Gluon Je
         ax[i].set_title(title)
         ax[i].set_xlabel(x_label)
         ax[i].grid(alpha=0.4)
-        ax[i].legend(loc=0)
     
-    # save plot & plot setup
+    # fig setup & save file
     ax[0].set_ylabel("N")
+    ax[1].legend()
     fig.subplots_adjust(bottom=0.15, wspace=0.1)
     plt.savefig(out_file + "_no_title")
     plt.title(fig_title)

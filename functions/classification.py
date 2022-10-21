@@ -196,8 +196,6 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
 
         # TODO test creating plots of normal data vs anomalies
         # normal_vs_anomaly_2D(h_bar_list_all[i], classification_tracker[i], f"{job_id}/{jet_info}_trial_{i}")
-        if jet_info:
-            print(f"For {jet_info}")
         trial_txt = f"trial {i} percentage anomaly: {np.round(anomaly_tracker[i]*100,2) }%, where the model has a nu of {trials[i]['result']['hyper_parameters']['svm_nu']}"
         print(trial_txt)
         out_txt += "\n" + trial_txt

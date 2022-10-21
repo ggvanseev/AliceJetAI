@@ -64,7 +64,7 @@ job_ids = [
     "11857497",
     "11857498",
 ]
-# job_ids = ["11852650"]
+# job_ids = ["11478121"]
 
 # select "test" or "train"
 trial_type = "test" # TODO what is this even?

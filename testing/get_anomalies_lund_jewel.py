@@ -61,11 +61,14 @@ for i, job_id in enumerate(job_ids):
     print("Loading trials complete")
     
     type_jets = "Jewel"
+    print(f"For {type_jets}")
     num = None # trial_nrs[i]
     
     # get anomalies
     _, jets_index_tracker_vac, classification_tracker_vac = get_anomalies(split_test_data_recur_vac, job_id, trials, file_name_vac, jet_info=type_jets+" Vac")
     _, jets_index_tracker_simple, classification_tracker_simple = get_anomalies(split_test_data_recur_simple, job_id, trials, file_name_simple, jet_info=type_jets+ " Simple")
+    
+    print(f"Using {'vac' if i < 2 else 'simple'} dataset for", job_id)
     for num in ([num] if num is not None else range(len(trials))):
         # separate  anomalies for trial: num
         anomaly_vac, normal_vac = separate_anomalies_from_regular(
@@ -80,10 +83,8 @@ for i, job_id in enumerate(job_ids):
         )
             
         if i < 2: # first two on vac
-            print("Using vac dataset for", job_id)
             lund_planes(normal_vac, anomaly_vac, job_id, trial=num)
         else:
-            print("Using simple dataset for", job_id)
             lund_planes(anomaly_simple, normal_simple, job_id, trial=num)        
         
         for feature in [na.recur_jetpt, na.recur_dr, na.recur_z]:

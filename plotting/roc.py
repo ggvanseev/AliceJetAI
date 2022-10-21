@@ -204,7 +204,7 @@ def ROC_curve_qg(g_recur, q_recur, trials, job_id):
             print(f"\nTrial {i}:\nWith final cost: {final_cost:.2E}")
             plot_title += f"- Trial {i}"
         out_file = out_dir + "/ROC_curve_trial" + str(i)
-        _, auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file, xlabel="Normal Fraction Quarks", ylabel="Normal Fraction Gluons")
+        _, auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file, xlabel="Normal Fraction Quarks (FPR)", ylabel="Normal Fraction Gluons (TPR)")
         collect_aucs.append(auc)
         plt.close('all')
     

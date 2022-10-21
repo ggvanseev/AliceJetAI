@@ -18,16 +18,16 @@ jet_area = "sigJetArea"
 
 # variable names from JetToyHI monickers
 variable_names = {
-    "sigJetRecur_kts" : r"$k_T$",
+    "sigJetRecur_kts" : r"$k_T\ (GeV)$",
     "sigJetRecur_dr12" : r"$R_g$",
     "sigJetRecur_tf" : "$t_f$",
-    "sigJetRecur_jetpt" : r"$p_T$",
+    "sigJetRecur_jetpt" : r"$p_T\ (GeV)$",
     "sigJetRecur_omegas" : "$\omega_s$",
     "sigJetRecur_nSD" : "Nr. SD Splittings",
-    "sigJetRecur_z" : r"Recursive $z$",
-    "sigJetPt" : r"$Jet p_T$",
+    "sigJetRecur_z" : r"$z$",
+    "sigJetPt" : r"$Jet p_T\ (GeV)$",
     "sigJetEta" : r"$Jet \eta$",
-    "sigJetPhi" : r"$Jet \phi$",
+    "sigJetPhi" : r"$Jet \phi\$",
     "sigJetM" : "Jet Mass",
     "sigJetArea" : "Jet Area",
 }

@@ -20,45 +20,7 @@ file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
 #file_name = "samples/time_cluster_5k.root"
 #file_name = "samples/mixed_1500jets_pct:90g_10q.p"
 
-# put in order of cuts/changes -> check if you had to redo a test and place the job_id in the correct spot
-
-# These jobs require dr_cut of np.linspace(0,0.4,len(job_ids)+1)[i+1]
-job_ids = [
-    "22_07_18_1327",
-    "22_07_18_1334",
-    "22_07_18_1340",
-    "22_07_18_1345",
-    "22_07_18_1348",
-    "22_07_18_1357",
-    "22_07_18_1404",
-    "22_07_18_1410",
-    "22_07_18_1414",
-    "22_07_18_1417",
-    "22_07_18_1424",
-    "22_07_18_1432",
-    "22_07_18_1435",
-    "22_07_18_1440",
-    "22_07_18_1445",
-    "22_07_18_1452",
-    "22_07_18_1502",
-    "22_07_18_1508",
-    "22_07_18_1514",
-    "22_07_18_1520",
-]
-   
-job_ids = [
-    "22_08_09_1909",
-    "22_08_09_1934",
-    "22_08_09_1939",
-    "22_08_09_1941",
-    "22_08_11_1520",
-    "10993304",
-    "10993305",
-    "11120653",
-    "11120654",
-    "11120655",
-]
-
+# use for 90 % gluon 10 % quark ROC curves
 job_ids = [
     # "10993304",
     # "10993305",
@@ -77,15 +39,6 @@ job_ids = [
     "11478121",
     "11524829", # hp op last_reversed
 ]
-# job_ids = [
-#     "11474168",
-#     "11474169",
-# ]
-# job_ids = [
-#     "11478120",
-#     "11478121",
-#     "11120653",
-# ]
 
 
 # use for 50 % gluon 50 % quark stacked plots!
@@ -99,24 +52,23 @@ job_ids = [
 ] 
 trial_nrs = [9, 5, 7, 1, 11] # check auc scores before this
 # jewel
-job_ids = [
-    # "11542141", # trial 3
-    # "11542142", # 1
-    # "11542143", # 8
-    # "11542143", # 9
-    # '11542144', # 3
-    "11542144", # 9
-] 
-trial_nrs = [6]#3, 1, 8, 9, 3, 9]
+# job_ids = [
+#     "11542141", # trial 3
+# #     # "11542142", # 1
+# #     # "11542143", # 8
+# #     # "11542143", # 9
+# #     # '11542144', # 3
+# #     "11542144", # 9
+# ] 
+# trial_nrs = [6]#3, 1, 8, 9, 3, 9]
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
-g_percentage = 50 # for evaluation of stacked plots 50%, ROC would be nice to have 90 vs 10 percent
+g_percentage = 50 # for evaluation of stacked plots 50, ROC would be 90
 mix = True        # set to true if mixture of q and g is required
 kt_cut = None         # for dataset, splittings kt > 1.0 GeV, assign None if not using
 save_flag = True
 show_distribution_percentages_flag = False
-
 
 
 # set current device
@@ -174,13 +126,14 @@ for i, job_id in enumerate(job_ids):
     # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="last")
     # collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
     # all_aucs[job_id] = collect_aucs
-    
+    # continue
     
     # stacked plots, use 50/50 mixture
     # gluon jets, get anomalies and normal out
     num = trial_nrs[i]
 
     type_jets = "g_jets"
+    print(f"For {type_jets}")
     _, g_jets_index_tracker, g_classification_tracker = get_anomalies(g_jets_recur, job_id, trials, file_name, jet_info=type_jets)
     g_anomaly, g_normal = separate_anomalies_from_regular(
         anomaly_track=g_classification_tracker[num],
@@ -190,18 +143,13 @@ for i, job_id in enumerate(job_ids):
 
     # quark jets, get anomalies and normal out
     type_jets = "q_jets"
+    print(f"For {type_jets}")
     _, q_jets_index_tracker, q_classification_tracker = get_anomalies(q_jets_recur, job_id, trials, file_name, jet_info=type_jets)
     q_anomaly, q_normal = separate_anomalies_from_regular(
         anomaly_track=q_classification_tracker[num],
         jets_index=q_jets_index_tracker[num],
         data=q_jets_recur,
     )
-
-    if show_distribution_percentages_flag:
-        plt.figure(f"Distribution histogram anomalies {jet_info}", figsize=[1.36 * 8, 8])
-        plt.hist(anomalies_info["percentage_anomalies"])
-        plt.xlabel(f"Percentage (%) jets anomalies {jet_info}")
-        plt.ylabel(f"N")
 
     features = [na.recur_jetpt, na.recur_dr, na.recur_z]
 
@@ -219,6 +167,7 @@ for i, job_id in enumerate(job_ids):
         
         pass
     
+    # all possible stacked plots, comment/uncomment which one you want
     stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
     stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)
     stacked_plots_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job_id, num)

@@ -41,7 +41,7 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     final_cost = ax1.scatter(len(track_cost[1:])-1,track_cost[1:][-1], color="k", zorder=3, label=f"Final Cost: {track_cost[1:][-1]:.2E}")
     final_cost.set_clip_on(False) # so the marker can overlap the axis
     cost = ax1.plot([x for x in range(len(track_cost[1:]))], track_cost[1:], color="red", linewidth=1.3, alpha=0.85, zorder=2, label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
-    ax1.set_xlabel(r"Epoch: $k$")
+    ax1.set_xlabel(r"Epoch $k$")
     ax1.set_ylabel(r"Cost")
     ax1.set_ylim(bottom=0)
     ax1.set_xlim(left=0, right=len(track_cost_condition[1:])-1)
@@ -93,18 +93,28 @@ def cost_auc_plot(result: dict, title_plot: str, out_file: str):
     
     #  figure setup & plot roc auc & final roc auc
     fig, ax = plt.subplots(sharex=True, figsize=[6 * 1.36, 6], dpi=160)
-    cost = ax.plot(track_cost, color='r', label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
-    ax.set_ylabel("Cost")
+    cost = ax.plot(track_cost, alpha=0.85, color='r', label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
+    ax.set_ylabel("Cost")    
+    ax.set_xlabel("Epoch $k$")
     ax.set_ylim(bottom=0)
     ax.set_xlim(left=0, right=len(track_roc_auc[1:])-1)
     ax.grid( alpha=0.4)
     
+    # adjust for legend, at 50% of epochs
+    epoch_halfway = int(len(track_cost[1:])/2)
+    max_cost_second_half = max(track_cost[epoch_halfway+1:])
+    threshold =  0.63 * track_cost[0]
+    if max_cost_second_half > threshold:
+        factor = max_cost_second_half / threshold
+        ax.set_ylim(top=max(track_cost) * factor)
+    
     # plot cost 
     ax1 = ax.twinx()
-    roc = ax1.plot(track_roc_auc, label="ROC AUC\nOf Test Dataset")
+    roc = ax1.plot(track_roc_auc, alpha=0.85, label="ROC AUC\nOf Test Dataset")
+    roc[0].remove() # remove from this axis
+    ax.add_artist(roc[0]) # add to axis 1 to plot behind cost function
     final_roc = ax1.scatter(len(track_roc_auc[1:])-1,track_roc_auc[1:][-1], color="k", zorder=3, label=f"Final ROC AUC: {track_roc_auc[1:][-1]:.4f}")
     final_roc.set_clip_on(False) # so the marker can overlap the axis
-    ax1.set_xlabel("Epoch $k$")
     ax1.set_ylabel("Area Under Curve")
     ax1.set_ylim(bottom=0, top=1)
     ax1.set_xlim(left=0, right=len(track_roc_auc[1:])-1)
