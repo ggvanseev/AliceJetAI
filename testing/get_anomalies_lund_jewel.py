@@ -14,10 +14,10 @@ file_name_vac = "samples/SDTiny_jewelNR_120_vac-1.root"
 file_name_simple = "samples/JetToyHIResultSoftDropTiny_zc01_simple-1.root"
 
 job_ids = [
-    #"11542141", # vac
-    #"11542142", # vac
-    #"11852650", # simple
-    #"11852651", # simple
+    "11542141", # vac
+    "11542142", # vac
+    "11852650", # simple
+    "11852651", # simple
     "11857497", # simple - 2.5 lr
     "11857498", # simple - 2 lr
 ]
