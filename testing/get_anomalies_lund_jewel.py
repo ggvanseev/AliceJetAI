@@ -46,7 +46,7 @@ print(f"Vac dataset cut down to size {len(split_test_data_recur_vac)}, the size 
 print("Loading data complete")  
 
 # lund plane vac versus simple
-lund_planes(split_test_data_recur_vac, split_test_data_recur_simple, labels=["Unquenched Jets", "Contains Quenched Jets"], info="quenchedness")
+lund_planes(split_test_data_recur_vac, split_test_data_recur_simple, labels=["Without QGP", "With QGP"], info="quenchedness")
 
 
 for i, (job_id, num) in enumerate(zip(job_ids, trial_nrs)):
@@ -100,7 +100,7 @@ for i, (job_id, num) in enumerate(zip(job_ids, trial_nrs)):
                         [ak.firsts(normal_simple[feature]), ak.firsts(anomaly_simple[feature])]]
                 out_file =  out_dir + f"/trial{num}_first_" + feature 
                 title = "Unquenched Samples Versus QGP Samples  - First Splitting"
-                x_label = na.variable_names[feature]
+                x_label = "First Splitting " + na.variable_names[feature]
                 stacked_plot_sided_old(data, title, x_label, out_file, titles=["Unquenched Data", "Quenched Data"])
             except ValueError:
                 print(f"Either no normal or no anomalous data for {job_id} trial {num}!")

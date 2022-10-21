@@ -40,7 +40,7 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     fig, ax1 = plt.subplots(sharex=True, figsize=[6 * 1.36, 6], dpi=160)
     final_cost = ax1.scatter(len(track_cost[1:])-1,track_cost[1:][-1], color="k", zorder=3, label=f"Final Cost: {track_cost[1:][-1]:.2E}")
     final_cost.set_clip_on(False) # so the marker can overlap the axis
-    cost = ax1.plot([x for x in range(len(track_cost[1:]))], track_cost[1:], color="red", linewidth=1.3, alpha=0.85, label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
+    cost = ax1.plot([x for x in range(len(track_cost[1:]))], track_cost[1:], color="red", linewidth=1.3, alpha=0.85, zorder=2, label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
     ax1.set_xlabel(r"Epoch: $k$")
     ax1.set_ylabel(r"Cost")
     ax1.set_ylim(bottom=0)
@@ -57,7 +57,9 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
 
     # plot cost function and final cost
     ax2 = ax1.twinx()
-    cost_con = ax2.plot(track_cost_condition[1:], linewidth=1.3,alpha=0.85, label="Cost Condition:\n"+r"$(\kappa(\mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1}) - \kappa(\mathbf{ \theta }_k, \mathbf{ \alpha }_k))^2$")
+    cost_con = ax2.plot(track_cost_condition[1:], linewidth=1.3,alpha=0.85, zorder=1, label="Cost Condition:\n"+r"$(\kappa(\mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1}) - \kappa(\mathbf{ \theta }_k, \mathbf{ \alpha }_k))^2$")
+    cost_con[0].remove() # remove from this axis
+    ax1.add_artist(cost_con[0]) # add to axis 1 to plot behind cost function
     ax2.set_ylabel(r"Cost Condition")
     ax2.set_ylim(bottom=0)
     ax2.set_xlim(left=0, right=len(track_cost_condition[1:])-1)

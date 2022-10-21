@@ -167,7 +167,7 @@ def stacked_plot_sided_old(data, fig_title, x_label, out_file, titles=["Gluon Je
         ax[i].set_title(title)
         ax[i].set_xlabel(x_label)
         ax[i].grid(alpha=0.4)
-        ax[i].legend(loc="upper right")
+        ax[i].legend(loc=0)
     
     # save plot & plot setup
     ax[0].set_ylabel("N")
@@ -241,7 +241,7 @@ def stacked_plots_normalised_first_entries_qg(g_anomaly, g_normal, q_anomaly, q_
             print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
             return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Normalised First Splittings"
-        label = vn[feature]
+        label = "Normalised First Splitting " + vn[feature]
         out_file = out_dir + f"/trial{trial}_normalised_first_" + feature 
         stacked_plot(data, title, label, out_file)
 
@@ -262,7 +262,7 @@ def stacked_plots_mean_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, jo
             print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
             return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Mean Of Jets"
-        label = vn[feature]
+        label = "Mean " + vn[feature]
         out_file = out_dir + f"/trial{trial}_mean_" + feature 
         stacked_plot(data, title, label, out_file)
     
@@ -279,7 +279,7 @@ def stacked_plots_splittings_qg(g_anomaly, g_normal, q_anomaly, q_normal, featur
         data = [[ak.count(x) for x in g_normal[feature]], [ak.count(x) for x in g_anomaly[feature]], 
                 [ak.count(x) for x in q_normal[feature]], [ak.count(x) for x in q_anomaly[feature]]]
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Splittings Of Jet"
-        label = vn[feature]
+        label = "Nr. Of Splittings " + vn[feature]
         out_file = out_dir + f"/trial{trial}_splittings_" + feature 
         stacked_plot(data, title, label, out_file)
 
@@ -300,7 +300,7 @@ def stacked_plots_all_splits_qg(g_anomaly, g_normal, q_anomaly, q_normal, featur
             print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
             return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - All Splittings"
-        label = vn[feature]
+        label = "All Splittings " + vn[feature]
         out_file = out_dir + f"/trial{trial}_all_" + feature 
         stacked_plot(data, title, label, out_file)
         
@@ -322,7 +322,7 @@ def stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_norma
             print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
             return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - First Splittings"
-        label = vn[feature]
+        label = "First Splitting " + vn[feature]
         out_file = out_dir + f"/trial{trial}_first_sided_" + feature 
         stacked_plot_sided(data, title, label, out_file)
         out_file = out_dir + f"/zold_trial{trial}_first_sided_" + feature 
@@ -345,7 +345,7 @@ def stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal
             print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
             return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Last Splittings"
-        label = vn[feature]
+        label = "Last Splitting " + vn[feature]
         out_file = out_dir + f"/trial{trial}_last_sided_" + feature 
         stacked_plot_sided(data, title, label, out_file)
         out_file = out_dir + f"/zold_trial{trial}_last_sided_" + feature 
@@ -368,7 +368,7 @@ def stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, featur
             print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
             return -1
         title = f"Distribution Histograms Anomalies Quarks and Gluons for {vn[feature]} - Mean Of Jets"
-        label = vn[feature]
+        label = "Mean " + vn[feature]
         out_file = out_dir + f"/trial{trial}_mean_sided_" + feature 
         stacked_plot_sided(data, title, label, out_file)
         out_file = out_dir + f"/zold_trial{trial}_mean_sided_" + feature 
@@ -391,7 +391,7 @@ def stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
             print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
             return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Splittings Of Jets"
-        label = vn[feature]
+        label = "Nr. Of Splittings " + vn[feature]
         out_file = out_dir + f"/trial{trial}_splittings_sided_" + feature 
         stacked_plot_sided(data, title, label, out_file)
         out_file = out_dir + f"/zold_trial{trial}_splittings_sided_" + feature 
@@ -414,7 +414,7 @@ def stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anoma
             print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
             return -1
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Normalised First Splittings"
-        label = vn[feature]
+        label = "Normalised First Splitting " + vn[feature]
         out_file = out_dir + f"/trial{trial}_normalised_first_sided_" + feature 
         stacked_plot_sided(data, title, label, out_file)
         out_file = out_dir + f"/zold_trial{trial}_normalised_first_sided_" + feature 
@@ -436,7 +436,7 @@ def stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         except ValueError:
             print(f"Either no normal or no anomalous data for {job_id} trial {trial}!")
             return -1
-        label = vn[feature]
+        label = "All Splittings " + vn[feature]
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {label} - All Splittings"
         out_file = out_dir + f"/trial{trial}_all_sided_" + feature 
         stacked_plot_sided(data, title, label, out_file)
