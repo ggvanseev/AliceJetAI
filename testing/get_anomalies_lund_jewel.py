@@ -100,7 +100,7 @@ for i, job_id in enumerate(job_ids):
                 out_file =  out_dir + f"/trial{num}_first_" + feature 
                 title = "Unquenched Samples Versus QGP Samples  - First Splitting"
                 x_label = "First Splitting " + na.variable_names[feature]
-                stacked_plot_sided_old(data, title, x_label, out_file, titles=["Unquenched Data", "Quenched Data"])
+                stacked_plot_sided_old(data, title, x_label, out_file, titles=["Unquenched Jets", "Quenched Jets"])
             except ValueError:
                 print(f"Either no normal or no anomalous data for {job_id} trial {num}!")
                 try:

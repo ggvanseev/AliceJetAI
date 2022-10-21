@@ -324,8 +324,8 @@ def stacked_plots_first_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_norma
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - First Splittings"
         label = "First Splitting " + vn[feature]
         out_file = out_dir + f"/trial{trial}_first_sided_" + feature 
-        stacked_plot_sided(data, title, label, out_file)
-        out_file = out_dir + f"/zold_trial{trial}_first_sided_" + feature 
+        # stacked_plot_sided(data, title, label, out_file)
+        # out_file = out_dir + f"/zold_trial{trial}_first_sided_" + feature 
         stacked_plot_sided_old(data, title, label, out_file)
 
 
@@ -347,8 +347,8 @@ def stacked_plots_last_entries_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Last Splittings"
         label = "Last Splitting " + vn[feature]
         out_file = out_dir + f"/trial{trial}_last_sided_" + feature 
-        stacked_plot_sided(data, title, label, out_file)
-        out_file = out_dir + f"/zold_trial{trial}_last_sided_" + feature 
+        # stacked_plot_sided(data, title, label, out_file)
+        # out_file = out_dir + f"/zold_trial{trial}_last_sided_" + feature 
         stacked_plot_sided_old(data, title, label, out_file)
         
     
@@ -370,8 +370,8 @@ def stacked_plots_mean_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, featur
         title = f"Distribution Histograms Anomalies Quarks and Gluons for {vn[feature]} - Mean Of Jets"
         label = "Mean " + vn[feature]
         out_file = out_dir + f"/trial{trial}_mean_sided_" + feature 
-        stacked_plot_sided(data, title, label, out_file)
-        out_file = out_dir + f"/zold_trial{trial}_mean_sided_" + feature 
+        # stacked_plot_sided(data, title, label, out_file)
+        # out_file = out_dir + f"/zold_trial{trial}_mean_sided_" + feature 
         stacked_plot_sided_old(data, title, label, out_file)
 
 
@@ -393,8 +393,8 @@ def stacked_plots_splittings_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Splittings Of Jets"
         label = "Nr. Of Splittings " + vn[feature]
         out_file = out_dir + f"/trial{trial}_splittings_sided_" + feature 
-        stacked_plot_sided(data, title, label, out_file)
-        out_file = out_dir + f"/zold_trial{trial}_splittings_sided_" + feature 
+        # stacked_plot_sided(data, title, label, out_file)
+        # out_file = out_dir + f"/zold_trial{trial}_splittings_sided_" + feature 
         stacked_plot_sided_old(data, title, label, out_file)
 
 
@@ -416,8 +416,8 @@ def stacked_plots_normalised_first_entries_qg_sided(g_anomaly, g_normal, q_anoma
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {vn[feature]} - Normalised First Splittings"
         label = "Normalised First Splitting " + vn[feature]
         out_file = out_dir + f"/trial{trial}_normalised_first_sided_" + feature 
-        stacked_plot_sided(data, title, label, out_file)
-        out_file = out_dir + f"/zold_trial{trial}_normalised_first_sided_" + feature 
+        # stacked_plot_sided(data, title, label, out_file)
+        # out_file = out_dir + f"/zold_trial{trial}_normalised_first_sided_" + feature 
         stacked_plot_sided_old(data, title, label, out_file)
   
         
@@ -439,6 +439,6 @@ def stacked_plots_all_splits_qg_sided(g_anomaly, g_normal, q_anomaly, q_normal, 
         label = "All Splittings " + vn[feature]
         title = f"Distribution Histograms Anomalies Quarks And Gluons For {label} - All Splittings"
         out_file = out_dir + f"/trial{trial}_all_sided_" + feature 
-        stacked_plot_sided(data, title, label, out_file)
-        out_file = out_dir + f"/zold_trial{trial}_all_sided_" + feature 
+        # stacked_plot_sided(data, title, label, out_file)
+        # out_file = out_dir + f"/zold_trial{trial}_all_sided_" + feature 
         stacked_plot_sided_old(data, title, label, out_file)
