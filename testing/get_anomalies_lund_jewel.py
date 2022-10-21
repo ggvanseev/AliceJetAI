@@ -14,16 +14,16 @@ file_name_vac = "samples/SDTiny_jewelNR_120_vac-1.root"
 file_name_simple = "samples/JetToyHIResultSoftDropTiny_zc01_simple-1.root"
 
 job_ids = [
-    "11542141", # vac
-    "11542142", # vac
-    "11852650", # simple
-    "11852651", # simple
+    #"11542141", # vac
+    #"11542142", # vac
+    #"11852650", # simple
+    #"11852651", # simple
+    "11857497", # simple - 2.5 lr
+    "11857498", # simple - 2 lr
 ]
 trial_nrs = [
     3, # vac
     1, # vac
-    8, # simple
-    9, # simple
 ]
 
 kt_cut = None
@@ -49,8 +49,7 @@ print("Loading data complete")
 lund_planes(split_test_data_recur_vac, split_test_data_recur_simple, labels=["Unquenched Jets", "Contains Quenched Jets"], info="quenchedness")
 
 
-for i, (job_id, num) in enumerate(zip(job_ids, trial_nrs)):
-    
+for i, job_id in enumerate(job_ids): 
     print(f"\nAnomalies run: {i+1}, job_id: {job_id}") # , for dr_cut: {dr_cut}")
     ###--------------------------###
     
@@ -62,7 +61,7 @@ for i, (job_id, num) in enumerate(zip(job_ids, trial_nrs)):
     print("Loading trials complete")
     
     type_jets = "Jewel"
-    num = None
+    num = None # trial_nrs[i]
     
     # get anomalies
     _, jets_index_tracker_vac, classification_tracker_vac = get_anomalies(split_test_data_recur_vac, job_id, trials, file_name_vac, jet_info=type_jets+" Vac")
