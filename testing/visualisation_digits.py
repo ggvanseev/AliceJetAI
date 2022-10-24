@@ -59,7 +59,7 @@ def stacked_plot_first_entries(anomaly, normal, feature, jet_info=None):
         label=[f"normal", "anomalous"],
     )
     plt.xlabel(feature)
-    plt.ylabel("N")
+    plt.ylabel("Count")
     plt.legend()
 
 

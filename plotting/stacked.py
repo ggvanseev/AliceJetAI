@@ -41,7 +41,7 @@ def stacked_plot(data, title, x_label, out_file, labels=["Gluon - Normal", "Gluo
     
     # plot setup
     plt.xlabel(x_label)
-    plt.ylabel("N")
+    plt.ylabel("Count")
     plt.grid(alpha=0.4)
     plt.legend()
     
@@ -108,7 +108,7 @@ def stacked_plot_sided(data, fig_title, x_label, out_file, titles=["Gluon Jets",
         ax[i].set_xlabel(x_label)
         ax[i].grid(alpha=0.4)
     # legend & overall setup
-    ax[0].set_ylabel("N")
+    ax[0].set_ylabel("Count")
     anom_ax.set_ylabel(r"Fraction")
     legend = [h[0] for h in hist[2]] + [anom_plot]
     labels = [l.get_label() for l in legend]
@@ -169,7 +169,7 @@ def stacked_plot_sided_old(data, fig_title, x_label, out_file, titles=["Gluon Je
         ax[i].grid(alpha=0.4)
     
     # fig setup & save file
-    ax[0].set_ylabel("N")
+    ax[0].set_ylabel("Count")
     ax[1].legend()
     fig.subplots_adjust(bottom=0.15, wspace=0.1)
     plt.savefig(out_file + "_no_title")
