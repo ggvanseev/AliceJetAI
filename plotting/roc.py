@@ -27,7 +27,7 @@ def ROC_zero_division(pos, neg):
 def ROC_plot_ax(y_true:list, y_predict:list):
     
     # set font size
-    plt.rcParams.update({'font.size': 13.5})
+    plt.rcParams.update({'font.size': 16})
     
     fpr, tpr, _ = roc_curve(y_true, y_predict)
     roc_auc = auc(fpr, tpr)
@@ -53,7 +53,7 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str, xl
     """    
     
     # set font size
-    plt.rcParams.update({'font.size': 13.5})
+    plt.rcParams.update({'font.size': 16})
     
     # get minimum and maximum values
     minimum = min(y_predict)

@@ -25,7 +25,7 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     """    
         
     # set matplotlib font settings
-    plt.rcParams.update({'font.size': 13.5})
+    plt.rcParams.update({'font.size': 16})
     
     # extract cost data from the results
     cost_data = result["cost_data"]
@@ -45,15 +45,6 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     ax1.set_ylabel(r"Cost")
     ax1.set_ylim(bottom=0)
     ax1.set_xlim(left=0, right=len(track_cost_condition[1:])-1)
-    
-    # adjust for legend, at 50% of epochs
-    epoch_halfway = int(len(track_cost[1:])/2)
-    max_cost_second_half = max(track_cost[epoch_halfway+1:])
-    threshold =  0.63 * track_cost[0]
-    if max_cost_second_half > threshold:
-        factor = max_cost_second_half / threshold
-        ax1.set_ylim(top=max(track_cost) * factor)
-        
 
     # plot cost function and final cost
     ax2 = ax1.twinx()
@@ -63,6 +54,14 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     ax2.set_ylabel(r"Cost Condition")
     ax2.set_ylim(bottom=0)
     ax2.set_xlim(left=0, right=len(track_cost_condition[1:])-1)
+    
+    # adjust for legend, at 40% of epochs
+    epoch_halfway = int(len(track_cost[1:])* 2/5)
+    max_cost_second_half = max(track_cost[epoch_halfway+1:])
+    threshold =  0.6 * track_cost[0]
+    if max_cost_second_half > threshold:
+        factor = max_cost_second_half / threshold
+        ax1.set_ylim(top=max(track_cost) * factor)
     
     # figure setup
     legend = cost + cost_con + [final_cost]
@@ -85,7 +84,7 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
 def cost_auc_plot(result: dict, title_plot: str, out_file: str):
     
     # set matplotlib font settings
-    plt.rcParams.update({'font.size': 13.5})
+    plt.rcParams.update({'font.size': 16})
     
     # exctract cost & roc auc data
     track_roc_auc = result["cost_data"]["roc_auc"]
@@ -98,15 +97,7 @@ def cost_auc_plot(result: dict, title_plot: str, out_file: str):
     ax.set_xlabel("Epoch $k$")
     ax.set_ylim(bottom=0)
     ax.set_xlim(left=0, right=len(track_roc_auc[1:])-1)
-    ax.grid( alpha=0.4)
-    
-    # adjust for legend, at 50% of epochs
-    epoch_halfway = int(len(track_cost[1:])/2)
-    max_cost_second_half = max(track_cost[epoch_halfway+1:])
-    threshold =  0.63 * track_cost[0]
-    if max_cost_second_half > threshold:
-        factor = max_cost_second_half / threshold
-        ax.set_ylim(top=max(track_cost) * factor)
+    ax.grid( alpha=0.4)    
     
     # plot cost 
     ax1 = ax.twinx()
@@ -119,11 +110,31 @@ def cost_auc_plot(result: dict, title_plot: str, out_file: str):
     ax1.set_ylim(bottom=0, top=1)
     ax1.set_xlim(left=0, right=len(track_roc_auc[1:])-1)
     
-    
+    # adjust for legend, at 40% of epochs
+    epoch_halfway = int(len(track_cost[1:])* 2/5)
+    max_cost_second_half = max(track_cost[epoch_halfway+1:])
+    threshold =  0.6 * track_cost[0]
+    if max_cost_second_half > threshold:
+        factor = max_cost_second_half / threshold
+        ax.set_ylim(top=max(track_cost) * factor)
+        
+    # adjust legend if auc track would pass through it    
+    loc=1
+    mean_auc = sum(track_roc_auc[epoch_halfway+1:]) / len(track_roc_auc[epoch_halfway+1:])
+    if mean_auc > 0.63:
+        max_cost = max(track_cost)
+        ax.set_ylim(top=max_cost * 1.05)
+        bbox_loc = (1, mean_auc-0.03)
+        if len([x for x in track_cost if x >= max_cost*0.5]) > len([x for x in track_cost if x < max_cost*0.5]):
+            bbox_loc =(0,0)
+            loc=3
+    else:
+        bbox_loc = (1,1)
+        
     # create legend & figure setup
     legend = cost + roc + [final_roc]
     labels = [l.get_label() for l in legend]
-    ax1.legend(legend, labels, loc=1) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
+    ax1.legend(legend, labels, loc=loc, bbox_to_anchor=bbox_loc) # , borderaxespad=0.1 # put on ax2 since cost is more important -> legend will follow cost line
     plt.tight_layout()
     
     # save version without title

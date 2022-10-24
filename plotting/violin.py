@@ -18,8 +18,8 @@ parameter_names ={
     "output_dim" : "Output Dimension",
     "pooling" : "Pooling Type",
     "scaler_id" : "Scaler Type",
-    "svm_gamma" : r"SVM $\gamma$",
-    "svm_nu" : r"SVM $\nu$",
+    "svm_gamma" : r"OCSVM $\gamma$",
+    "svm_nu" : r"OCSVM $\nu$",
     "variables" : "Variables Used",
     "loss": "Loss",
     "final_cost": "Cost",
@@ -41,7 +41,7 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss", ys
                                     or something else. Defaults to "loss".
     """
     # set matplotlib font settings
-    plt.rcParams.update({'font.size': 13.5})
+    plt.rcParams.update({'font.size': 16})
     
     # store violin plots in designated directory
     out_dir = f"output/violin_plots_"+yscale
@@ -102,3 +102,4 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss", ys
             # save plot
             plt.savefig(out_file)
             plt.close('all')  # close figure - clean memory
+        print(f"\n Violin Plots Stored in {out_dir}")

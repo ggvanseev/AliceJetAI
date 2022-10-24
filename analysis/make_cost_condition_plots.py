@@ -70,8 +70,9 @@ job_ids = [
     "11461550", # reg last - best regtraining - trial 7
     "11478121", # last_reversed - highest auc best regtraining - trial 1
     '11120653', # hp training mean - highest auc total - trial 11     
-] 
-# job_ids = ["11478121"]
+]
+job_ids = ["22_09_06_1613"]
+# job_ids = ["11461550"]
 
 # select "test" or "train"
 trial_type = "test" # TODO what is this even?

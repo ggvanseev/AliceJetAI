@@ -133,7 +133,7 @@ auc_scores_lstm_ocsvm_digits_05 = {'22_09_05_1618': [0.8865972222222221, 0.04118
 
 # For QG - comparison of methods
 dicts = [auc_scores_lstm_ocsvm_hypertraining, auc_scores_lstm_ocsvm,  auc_scores_ocsvm, auc_scores_hand] # auc_scores_lstm,
-labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM - RegularTraining",  r'OCSVM', 'Cut And Count Variables'] #"Hand Cut LSTM Hidden State",
+labels = ["LSTM + OCSVM - Hyper", "LSTM + OCSVM - Regular",  r'OCSVM', 'Cut And Count Variables'] #"Hand Cut LSTM Hidden State",
 
 # For QG - comparison of pooling
 # dicts = [auc_scores_mean, auc_scores_first, auc_scores_last]
@@ -148,7 +148,7 @@ labels = ["LSTM + OCSVM - HyperTraining", "LSTM + OCSVM - RegularTraining",  r'O
 best_dict = {}
 
 # set font size & kwargs
-plt.rcParams.update({'font.size': 13.5})
+plt.rcParams.update({'font.size': 16})
 kwargs = dict(histtype='stepfilled', density=True, linewidth=1, alpha=0.01,  bins=40, zorder=3, line_kws={'linewidth':1, 'alpha':0.1}, hist_kws={'alpha':0.1}) # normed=True,
 
 # set ranges
@@ -230,9 +230,9 @@ ax.set_ylabel("Count")
 ax.set_xlabel("Area Under Curve")
 
 # fix legend
-leg = fig.legend(handles=plot_list, labels=labels, bbox_to_anchor=(1.0,0.85))
+leg = fig.legend(handles=plot_list, labels=labels, bbox_to_anchor=(0.98,0.85))
 leg.get_frame().set_alpha(0.9)
-fig.subplots_adjust(right=0.85)
+# fig.subplots_adjust(left=0.1, right=0.85)
 
 
 # store roc curve plots in designated directory

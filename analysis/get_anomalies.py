@@ -20,37 +20,46 @@ file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
 #file_name = "samples/time_cluster_5k.root"
 #file_name = "samples/mixed_1500jets_pct:90g_10q.p"
 
-# use for 90 % gluon 10 % quark ROC curves
-job_ids = [
-    # "10993304",
-    # "10993305",
-    "11120653", # hp qg
-    "11120654",
-    "11120655", 
-    "11316965", # hp qg
-    "11316966",
-    "11316967",
-    "11524829", # hp qg - last_reversed only
-    "11461549", # reg last
-    "11461550",
-    "11474168", # reg mean
-    "11474169",
-    "11478120", # reg last_reversed
-    "11478121",
-    "11524829", # hp op last_reversed
-]
+# roc flag determines if roc curves are being made or stacked plots otherwise
+roc_flag = True
 
-
-# use for 50 % gluon 50 % quark stacked plots!
-# pythia
-# job_ids = [
-#     "11474168", # reg mean - lowest cost - trial 9"
-#     "11474168",  # reg mean - best regtraining - trial 5
-#     "11461550", # reg last - best regtraining - trial 7
-#     "11478121", # last_reversed - highest auc best regtraining - trial 1
-#     '11120653', # hp training mean - highest auc total - trial 11     
-# ] 
-# trial_nrs = [9, 5, 7, 1, 11] # check auc scores before this
+if roc_flag:
+    # use for 90 % gluon 10 % quark ROC curves
+    job_ids = [
+        # "10993304",
+        # "10993305",
+        "11120653", # hp qg
+        "11120654",
+        "11120655", 
+        "11316965", # hp qg
+        "11316966",
+        "11316967",
+        "11524829", # hp qg - last_reversed only
+        "11461549", # reg last
+        "11461550",
+        "11474168", # reg mean
+        "11474169",
+        "11478120", # reg last_reversed
+        "11478121",
+    ]
+    job_ids = [
+        "11474168", # reg mean - lowest cost - trial 9"
+        "11474168",  # reg mean - best regtraining - trial 5
+        "11461550", # reg last - best regtraining - trial 7
+        "11478121", # last_reversed - highest auc best regtraining - trial 1
+        '11120653', # hp training mean - highest auc total - trial 11     
+    ]
+else:
+    # use for 50 % gluon 50 % quark stacked plots!
+    # pythia
+    job_ids = [
+        "11474168", # reg mean - lowest cost - trial 9"
+        "11474168",  # reg mean - best regtraining - trial 5
+        "11461550", # reg last - best regtraining - trial 7
+        "11478121", # last_reversed - highest auc best regtraining - trial 1
+        '11120653', # hp training mean - highest auc total - trial 11     
+    ] 
+trial_nrs = [9, 5, 7, 1, 11] # check auc scores before this
 # jewel
 # job_ids = [
 #     "11542141", # trial 3
@@ -64,7 +73,9 @@ job_ids = [
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
-g_percentage = 90 # for evaluation of stacked plots 50, ROC would be 90
+
+
+g_percentage = 90 if roc_flag else 50 # for evaluation of stacked plots 50, ROC would be 90
 mix = True        # set to true if mixture of q and g is required
 kt_cut = None         # for dataset, splittings kt > 1.0 GeV, assign None if not using
 save_flag = True
@@ -117,9 +128,10 @@ for i, job_id in enumerate(job_ids):
     print("Loading trials complete")
     
     # ROC curves, use 90/10 mixture
-    collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
-    all_aucs[job_id] = collect_aucs
-    continue
+    if roc_flag:
+        collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
+        all_aucs[job_id] = collect_aucs
+        continue # skips the stacked plot part
     
     # stacked plots, use 50/50 mixture
     # gluon jets, get anomalies and normal out

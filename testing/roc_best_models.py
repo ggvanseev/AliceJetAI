@@ -17,8 +17,8 @@ from functions.data_manipulation import (
 
 ### ----- User Input ----- ###
 # obtain best_dict from roc_auc_scores.py - NOTE second dict is with OCSVM only as well
-best_dict = {'LSTM + OCSVM - HyperTraining': ('11120653', 11), 'LSTM + OCSVM - RegularTraining': ('11478121', 1), 'Cut And Count $R_g$': ('sigJetRecur_dr12', 0)} #  'Hand Cut LSTM Hidden State': ('11478121', (7, 0)),
-best_dict = {'LSTM + OCSVM - HyperTraining': ('11120653', 11), 'LSTM + OCSVM - RegularTraining': ('11478121', 1),  r'OCSVM $\nu=0.1$ - First Splittings': ('last_reversed_nu0.1', 0), 'Cut And Count $R_g$ - First Splittings': ('sigJetRecur_dr12', 0)} # 'Hand Cut LSTM Hidden State': ('11478121', (7, 0)),
+best_dict = {'LSTM + OCSVM - Hyper': ('11120653', 11), 'LSTM + OCSVM - Regular': ('11478121', 1), 'Cut And Count $R_g$': ('sigJetRecur_dr12', 0)} #  'Hand Cut LSTM Hidden State': ('11478121', (7, 0)),
+best_dict = {'LSTM + OCSVM - Hyper': ('11120653', 11), 'LSTM + OCSVM - Regular': ('11478121', 1),  r'OCSVM $\nu=0.1$ - FS': ('last_reversed_nu0.1', 0), 'Cut And Count $R_g$ - FS': ('sigJetRecur_dr12', 0)} # 'Hand Cut LSTM Hidden State': ('11478121', (7, 0)),
 # best_dict = {'LSTM + OCSVM - HyperTraining': ('11120653', 11), 'LSTM + OCSVM - RegularTraining': ('11461550', 7),  r'OCSVM $\nu=0.1$ - First Splittings': ('last_reversed_nu0.1', 0), 'Cut And Count $R_g$ - First Splittings': ('sigJetRecur_dr12', 0)} # 'Hand Cut LSTM Hidden State': ('11478121', (7, 0)),
 
 
@@ -82,7 +82,7 @@ print("Loading data complete")
 variables = g_recur.fields
 
 # set font size
-plt.rcParams.update({'font.size': 13.5})
+plt.rcParams.update({'font.size': 16})
 
 # make supplots
 fig, ax = plt.subplots(figsize=[6 * 1.36, 6], dpi=160)
@@ -95,7 +95,8 @@ y_true, y_predict = get_y_results_from_trial(data_list, trials[trial])
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc}")
-ax.plot(fpr, tpr, color=colors[0], label=label+"\n"+f" AUC: {roc_auc:.4F}")     
+roc_plot1 = ax.plot(fpr, tpr, color=colors[0], label=label+"\n"+f" AUC: {roc_auc:.4F}", zorder=3) 
+roc_plot1[0].set_clip_on(False)    
 
 # Second plot - Regular Training
 label, (job_id, trial) = list(best_dict.items())[1]
@@ -104,7 +105,8 @@ y_true, y_predict = get_y_results_from_trial(data_list, trials[trial])
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc}")
-ax.plot(fpr, tpr, color=colors[1], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
+roc_plot2 = ax.plot(fpr, tpr, color=colors[1], label=label+"\n"+f" AUC: {roc_auc:.4F}", zorder=3) 
+roc_plot2[0].set_clip_on(False)
 
 # Third plot - Hand cut on lstm hidden dims
 """ NOTE leave this out
@@ -114,7 +116,8 @@ y_true, y_predict = get_y_results_from_trial_h(data_list, trials[trial], dim)
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc}")
-ax.plot(fpr, tpr, color=colors[2], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
+roc_plot3 = ax.plot(fpr, tpr, color=colors[2], label=label+"\n"+f" AUC: {roc_auc:.4F}", zorder=3)
+roc_plot3[0].set_clip_on(False) 
 """
 
 # Fourth plot - OCSVM only
@@ -140,13 +143,8 @@ label, (job_id, trial) = list(best_dict.items())[2]
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc}")
-ax.plot(fpr, tpr, color=colors[2], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
-ax.set_xlabel("Normal Fraction Quarks")
-ax.set_ylabel("Normal Fraction Gluons")
-ax.set_xlim(0, 1)
-ax.set_ylim(0, 1)
-ax.grid(alpha=0.4)
-ax.legend() #TODO
+roc_plot4 = ax.plot(fpr, tpr, color=colors[2], label=label+"\n"+f" AUC: {roc_auc:.4F}", zorder=3) 
+roc_plot4[0].set_clip_on(False)
 
 # Fifth plot - Hand cut on variable
 label, (job_id, trial) = list(best_dict.items())[3]
@@ -155,9 +153,10 @@ y_true = [d['y_true'] for d in data_list]
 fpr, tpr, _ = roc_curve(y_true, y_predict)
 roc_auc = auc(fpr, tpr)
 print(f"ROC Area under curve: {roc_auc}")
-ax.plot(fpr, tpr, color=colors[3], label=label+"\n"+f" AUC: {roc_auc:.4F}") 
-ax.set_xlabel("Normal Fraction Quarks")
-ax.set_ylabel("Normal Fraction Gluons")
+roc_plot5 = ax.plot(fpr, tpr, color=colors[3], label=label+"\n"+f" AUC: {roc_auc:.4F}", zorder=3) 
+roc_plot5[0].set_clip_on(False)
+ax.set_xlabel("Normal Fraction Quarks (FPR)")
+ax.set_ylabel("Normal Fraction Gluons (TPR)")
 ax.set_xlim(0, 1)
 ax.set_ylim(0, 1)
 ax.grid(alpha=0.4)

@@ -66,4 +66,4 @@ trials_test_list = {
 df, min_val, min_df, parameters = trials_df_and_minimum(trials_test_list, test_param)
 
 # create violin plots which are stored in "output/violin_plots_{job_id}"
-violin_plots(df, min_val, min_df, parameters, job_ids, test_param, yscale="log")
+violin_plots(df, min_val, min_df, parameters, job_ids, test_param, yscale="linear")
