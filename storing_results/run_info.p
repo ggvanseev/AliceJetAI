@@ -130,3 +130,5 @@
 11852651	on: samples/JetToyHIResultSoftDropTiny_zc01_simple-1.root	runtime: 26432.98 s	notes: regular training Jewel simple, lr=e-3, nu = 0.5, hidden dim = 3
 11857497	on: samples/JetToyHIResultSoftDropTiny_zc01_simple-1.root	runtime: 24368.93 s	notes: regular training Jewel simple, lr=e-2.5, nu = 0.5, hidden dim = 3
 11857498	on: samples/JetToyHIResultSoftDropTiny_zc01_simple-1.root	runtime: 9470.36 s	notes: regular training Jewel simple, lr=e-2, nu = 0.5, hidden dim = 3
+11852652	on: samples/JetToyHIResultSoftDropTiny_zc01_vac-1.root	runtime: 172895.68 s	notes: regular training Jewel vac, lr=e-3, nu = 0.1, hidden dim = 3
+11852653	on: samples/JetToyHIResultSoftDropTiny_zc01_vac-1.root	runtime: 178848.39 s	notes: regular training Jewel vac, lr=e-3, nu = 0.5, hidden dim = 3
