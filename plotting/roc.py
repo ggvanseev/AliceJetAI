@@ -215,7 +215,9 @@ def ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job
     """Make ROC curve for given features for quarks and gluons
     
     TODO I cannot wrap my head around why I made this, it does
-    not make any sense to me anymore, leave it for now, but it's not good"""
+    not make any sense to me anymore, leave it for now, but it's not good
+    TODO probably delete it
+    """
     
     # store stacked plots in designated directory
     out_dir = f"output/ROC_curves"
@@ -224,7 +226,6 @@ def ROC_feature_curve_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, job
         os.mkdir(out_dir)
     except FileExistsError:
         pass
-
     
     for feature in features:
         # check what kind of sample to take e.g. first-, last-, all splittings
@@ -314,7 +315,7 @@ def ROC_anomalies_hand_cut(g_recur, q_recur, cut_variable, pooling="first"):
     plot_title = f"ROC Curve Quark & Gluon Jets - Cuts On Variable {na.variable_names[cut_variable]}"
     out_file = f"{out_dir}/on_variable_{cut_variable}_"+pooling
 
-    ROC_plot_curve(y_true, y_predict, plot_title, out_file, xlabel="Normal Fraction Quarks", ylabel="Normal Fraction Gluons")
+    ROC_plot_curve(y_true, y_predict, plot_title, out_file, xlabel="Normal Fraction Quarks (FPR)", ylabel="Normal Fraction Gluons (TPR)")
 
     return 
 

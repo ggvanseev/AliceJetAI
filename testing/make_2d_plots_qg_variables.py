@@ -20,7 +20,7 @@ from testing.plotting_test import lund_planes, lund_planes_anomalies_qg, normal_
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
-file_name = "samples/JetToyHIResultSoftDropSkinny.root"
+file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
 out_files=[] # you can load your premade mix here: pickled file
 
 job_ids = [
@@ -38,7 +38,8 @@ save_flag = True
 show_distribution_percentages_flag = False
 mix = False         # set to true if mixture of q and g is required
 kt_cut = None      # for dataset, splittings kt > 1.0 GeV, assign None if not using
-dr_cut = None# np.linspace(0,0.4,len(job_ids)+1)[i+1] 
+dr_cut = None # np.linspace(0,0.4,len(job_ids)+1)[i+1] 
+features = [na.recur_jetpt, na.recur_dr, na.recur_z] # features to do analysis on
 
 # set current device
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -94,15 +95,7 @@ for i, (job_id, num) in enumerate(zip(job_ids, trial_nrs)):
     # quark jets, get anomalies and normal out
     type_jets = "q_jets"
     _, q_jets_index_tracker, q_classification_tracker = get_anomalies(q_jets_recur, job_id, trials, file_name, jet_info=type_jets)
-    
 
-    if show_distribution_percentages_flag:
-        plt.figure(f"Distribution histogram anomalies {jet_info}", figsize=[1.36 * 8, 8])
-        plt.hist(anomalies_info["percentage_anomalies"])
-        plt.xlabel(f"Percentage (%) jets anomalies {jet_info}")
-        plt.ylabel(f"N")
-
-    features = [na.recur_jetpt, na.recur_dr, na.recur_z]
 
     for num in ([num] if num is not None else range(len(trials))):
         # get anomalies for trial: num

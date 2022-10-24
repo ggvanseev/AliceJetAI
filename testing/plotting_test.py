@@ -397,7 +397,7 @@ def lund_planes(normal, anomalous, job_id=None, trial=None, labels = ["Normal Da
                         aspect=0.7
                     )
         ax.title.set_text(labels[i])
-        ax.set_xlabel(r'$\ln (R/\Delta R)$')
+        ax.set_xlabel(r'$\ln (R / R_g)$')
         ax.set_ylabel(r'$\ln (k_T / GeV)$')
         ax.set_xticks(np.arange(xedges[0], xedges[-1] +2, 2.0))
         ax.set_yticks(np.arange(min(yedges+1), max(yedges), 2.0) if 0 not in yedges else np.arange(min(yedges), max(yedges), 2.0))
@@ -469,8 +469,8 @@ def lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, t
                         aspect=0.7
                     )
         ax.title.set_text(labels[i])
-        ax.set_xlabel(r'$\ln (R/\Delta R)$')
-        ax.set_ylabel(r'$\ln (k_t)$')
+        ax.set_xlabel(r'$\ln (R / R_g)$')
+        ax.set_ylabel(r'$\ln (k_T / GeV)$')
         ax.set_xticks(np.arange(xedges[0], xedges[-1] +2, 2.0))
         ax.set_yticks(np.arange(min(yedges+1), max(yedges), 2.0) if 0 not in yedges else np.arange(min(yedges), max(yedges), 2.0))
 

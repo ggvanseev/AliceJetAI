@@ -93,7 +93,7 @@ def cost_auc_plot(result: dict, title_plot: str, out_file: str):
     
     #  figure setup & plot roc auc & final roc auc
     fig, ax = plt.subplots(sharex=True, figsize=[6 * 1.36, 6], dpi=160)
-    cost = ax.plot(track_cost, alpha=0.85, color='r', label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
+    cost = ax.plot(track_cost, zorder=2, alpha=0.85, color='r', label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
     ax.set_ylabel("Cost")    
     ax.set_xlabel("Epoch $k$")
     ax.set_ylim(bottom=0)
@@ -110,7 +110,7 @@ def cost_auc_plot(result: dict, title_plot: str, out_file: str):
     
     # plot cost 
     ax1 = ax.twinx()
-    roc = ax1.plot(track_roc_auc, alpha=0.85, label="ROC AUC\nOf Test Dataset")
+    roc = ax1.plot(track_roc_auc, zorder=1, alpha=0.85, label="ROC AUC\nOf Test Dataset")
     roc[0].remove() # remove from this axis
     ax.add_artist(roc[0]) # add to axis 1 to plot behind cost function
     final_roc = ax1.scatter(len(track_roc_auc[1:])-1,track_roc_auc[1:][-1], color="k", zorder=3, label=f"Final ROC AUC: {track_roc_auc[1:][-1]:.4f}")

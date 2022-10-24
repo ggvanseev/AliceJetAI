@@ -64,6 +64,13 @@ job_ids = [
     "11857497",
     "11857498",
 ]
+job_ids = [
+    "11474168", # reg mean - lowest cost - trial 9"
+    "11474168",  # reg mean - best regtraining - trial 5
+    "11461550", # reg last - best regtraining - trial 7
+    "11478121", # last_reversed - highest auc best regtraining - trial 1
+    '11120653', # hp training mean - highest auc total - trial 11     
+] 
 # job_ids = ["11478121"]
 
 # select "test" or "train"

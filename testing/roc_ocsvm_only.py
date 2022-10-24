@@ -125,7 +125,7 @@ for pooling in ["mean", "last", "last_reversed"]:
         out_file =  f"testing/output/ROC_OCSVM/nu{svm_nu}_{pooling}"
 
         # make ROC curve & store for later
-        fig, roc_auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file,  xlabel="Normal Fraction Quarks", ylabel="Normal Fraction Gluons")
+        fig, roc_auc = ROC_plot_curve(y_true, y_predict, plot_title, out_file,  xlabel="Normal Fraction Quarks (FPR)", ylabel="Normal Fraction Gluons (TPR)")
         #pickle.dump(fig, open(out_file+'.p'), 'wb')
         all_aucs[str(pooling)+"_nu"+str(svm_nu)] = roc_auc
 print(f"All AUC values for these jobs:\n{all_aucs}")

@@ -43,14 +43,14 @@ job_ids = [
 
 # use for 50 % gluon 50 % quark stacked plots!
 # pythia
-job_ids = [
-    "11474168", # reg mean - lowest cost - trial 9"
-    "11474168",  # reg mean - highest - trial 5
-    "11461550", # reg last - highest - trial 7
-    "11478121", # last_reversed - highest auc regtraining - trial 1
-    '11120653', # hp training mean - highest auc total - trial 11     
-] 
-trial_nrs = [9, 5, 7, 1, 11] # check auc scores before this
+# job_ids = [
+#     "11474168", # reg mean - lowest cost - trial 9"
+#     "11474168",  # reg mean - best regtraining - trial 5
+#     "11461550", # reg last - best regtraining - trial 7
+#     "11478121", # last_reversed - highest auc best regtraining - trial 1
+#     '11120653', # hp training mean - highest auc total - trial 11     
+# ] 
+# trial_nrs = [9, 5, 7, 1, 11] # check auc scores before this
 # jewel
 # job_ids = [
 #     "11542141", # trial 3
@@ -64,11 +64,12 @@ trial_nrs = [9, 5, 7, 1, 11] # check auc scores before this
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
 
-g_percentage = 50 # for evaluation of stacked plots 50, ROC would be 90
+g_percentage = 90 # for evaluation of stacked plots 50, ROC would be 90
 mix = True        # set to true if mixture of q and g is required
 kt_cut = None         # for dataset, splittings kt > 1.0 GeV, assign None if not using
 save_flag = True
 show_distribution_percentages_flag = False
+features = [na.recur_jetpt, na.recur_dr, na.recur_z] # features to do analysis on
 
 
 # set current device
@@ -103,13 +104,9 @@ _, _, split_test_data = train_dev_test_split(jets, split=[0.7, 0.1])
 # # split data into quark and gluon jets
 g_jets_recur = split_test_data_recur[split_test_data[na.parton_match_id] == 21]
 q_jets_recur = split_test_data_recur[abs(split_test_data[na.parton_match_id]) < 7]
-
 print("Loading data complete")       
 
-
-
 for i, job_id in enumerate(job_ids):
-
     print(f"\nAnomalies run: {i+1}, job_id: {job_id}") # , for dr_cut: {dr_cut}")
     
     # load trials
@@ -119,18 +116,14 @@ for i, job_id in enumerate(job_ids):
         continue
     print("Loading trials complete")
     
-    
     # ROC curves, use 90/10 mixture
-    # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id)
-    # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="first")
-    # ROC_feature_curve_qg(g_jets_recur, q_jets_recur, features, trials, job_id, samples="last")
-    # collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
-    # all_aucs[job_id] = collect_aucs
-    # continue
+    collect_aucs = ROC_curve_qg(g_jets_recur, q_jets_recur, trials, job_id)
+    all_aucs[job_id] = collect_aucs
+    continue
     
     # stacked plots, use 50/50 mixture
     # gluon jets, get anomalies and normal out
-    num = trial_nrs[i]
+    num = trial_nrs[i] if trial_nrs else range(len(trials))
 
     type_jets = "g_jets"
     print(f"For {type_jets}")
@@ -150,9 +143,7 @@ for i, job_id in enumerate(job_ids):
         jets_index=q_jets_index_tracker[num],
         data=q_jets_recur,
     )
-
-    features = [na.recur_jetpt, na.recur_dr, na.recur_z]
-
+    
     # other selection/cuts
     extra_cuts = False
     if extra_cuts == True:
