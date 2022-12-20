@@ -86,3 +86,4 @@ trials_test_list = [
 # create cost condition plots from trials and jobs
 for job_id, trials in zip(job_ids, trials_test_list):
     cost_condition_plots(trials, job_id)
+# test ?
