@@ -1,12 +1,11 @@
-# install pytorch by hand
+# torch==1.10.2
+# install pytorch by hand -> https://pytorch.org
 autograd
 awkward
-hyperopt==0.2.7 # if this does not work, try https://stackoverflow.com/questions/29286624/how-to-install-pypi-packages-using-anaconda-conda-command - now did it with pip install hyperopt==0.2.7 in conda
-# pickle
-# functools
+hyperopt==0.2.7 # if this does not work -> `$ pip install hyperopt==0.2.7` in conda, or check https://stackoverflow.com/questions/29286624/how-to-install-pypi-packages-using-anaconda-conda-command
 numpy
 pandas
-pyspark==3.2.1 #f does not work, try:$ conda install -c conda-forge pyspark
+pyspark==3.2.1 #f does not work -> `$ conda install -c conda-forge pyspark`
 openpyxl
 numba
 scikit-image==0.19.1
@@ -14,5 +13,4 @@ scikit-learn==1.0.2
 scipy
 seaborn
 spyder
-# torch==1.10.2
 uproot

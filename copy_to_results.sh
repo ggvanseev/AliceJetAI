@@ -50,10 +50,10 @@ cp output/stacked_plots_11120653/trial11_mean_sided_sigJetRecur_z_no_title.png /
 cp output/ROC_curves_11120653/ROC_curve_trial11_no_title.png /Volumes/GoogleDrive/My\ Drive/Grappa\ Library/Master\ Project/Results/qg_highest_auc_11120653_trial11_ROC_curve_trial11_no_title.png
 
 # others - check
-cp output/cost_condition_11120654/trial_37_no_title.png /Volumes/GoogleDrive/My\ Drive/Grappa\ Library/Master\ Project/Results/cost_condition_1120654_trial_37_no_title.png
+cp output/cost_condition_11120654/trial_37_no_title.png /Volumes/GoogleDrive/My\ Drive/Grappa\ Library/Master\ Project/Results/cost_condition_11120654_trial_37_no_title.png
 cp testing/output/ROC_OCSVM/nu0.1_last_no_title.png /Volumes/GoogleDrive/My\ Drive/Grappa\ Library/Master\ Project/Results/OCSVM_only_nu0.1_last_no_title.png
 cp testing/output/ROC_OCSVM/nu0.1_last_reversed_no_title.png /Volumes/GoogleDrive/My\ Drive/Grappa\ Library/Master\ Project/Results/OCSVM_only_nu0.1_last_reversed_no_title.png
 cp testing/output/ROC_OCSVM/nu0.1_mean_no_title.png /Volumes/GoogleDrive/My\ Drive/Grappa\ Library/Master\ Project/Results/OCSVM_only_nu0.1_mean_no_title.png
-cp testing/output/Lund_qg/quark_gluon_lund.png /Volumes/GoogleDrive/My\ Drive/Grappa\ Library/Master\ Project/Results/qg_lund_quark_and_gluon.png
+cp testing/output/Lund/_qg.png /Volumes/GoogleDrive/My\ Drive/Grappa\ Library/Master\ Project/Results/qg_lund_quark_and_gluon.png
 cp output/cost_condition_11478121/cost_auc_trial_8_no_title.png /Volumes/GoogleDrive/My\ Drive/Grappa\ Library/Master\ Project/Results/qg_best_to_worst_cost_auc_11478121_trial_8_no_title.png
 cp output/cost_condition_11474168/cost_auc_trial_1_no_title.png /Volumes/GoogleDrive/My\ Drive/Grappa\ Library/Master\ Project/Results/qg_best_to_worst_mean_cost_auc_11474168_trial_1_no_title.png

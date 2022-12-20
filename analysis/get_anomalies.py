@@ -1,6 +1,3 @@
-import pickle
-import glob
-import numpy as np
 import torch
 import branch_names as na
 from functions.classification import get_anomalies, CLASSIFICATION_CHECK
@@ -12,7 +9,6 @@ from functions.data_manipulation import (
     cut_on_length,
     train_dev_test_split,
 )
-from plotting.svm_boundary import svm_boundary_plots
 
 # file_name(s) - comment/uncomment when switching between local/Nikhef
 #file_name = "/data/alice/wesselr/JetToyHIResultSoftDropSkinny_100k.root"
@@ -21,26 +17,29 @@ file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
 #file_name = "samples/mixed_1500jets_pct:90g_10q.p"
 
 # roc flag determines if roc curves are being made or stacked plots otherwise
-roc_flag = True
+roc_flag = False
+
+# cuts placed on dataset, leave False for normal behaviour, otherwise check the code below
+extra_cuts = False
 
 if roc_flag:
     # use for 90 % gluon 10 % quark ROC curves
     job_ids = [
         # "10993304",
         # "10993305",
-        "11120653", # hp qg
-        "11120654",
-        "11120655", 
-        "11316965", # hp qg
+        # "11120653", # hp qg
+        # "11120654",
+        # "11120655", 
+        # "11316965", # hp qg
         "11316966",
-        "11316967",
-        "11524829", # hp qg - last_reversed only
-        "11461549", # reg last
-        "11461550",
-        "11474168", # reg mean
-        "11474169",
-        "11478120", # reg last_reversed
-        "11478121",
+        # "11316967",
+        # "11524829", # hp qg - last_reversed only
+        # "11461549", # reg last
+        # "11461550",
+        # "11474168", # reg mean
+        # "11474169",
+        # "11478120", # reg last_reversed
+        # "11478121",
     ]
     job_ids = [
         "11474168", # reg mean - lowest cost - trial 9"
@@ -48,7 +47,7 @@ if roc_flag:
         "11461550", # reg last - best regtraining - trial 7
         "11478121", # last_reversed - highest auc best regtraining - trial 1
         '11120653', # hp training mean - highest auc total - trial 11     
-    ]
+    ] 
 else:
     # use for 50 % gluon 50 % quark stacked plots!
     # pythia
@@ -60,6 +59,7 @@ else:
         '11120653', # hp training mean - highest auc total - trial 11     
     ] 
 trial_nrs = [9, 5, 7, 1, 11] # check auc scores before this
+
 # jewel
 # job_ids = [
 #     "11542141", # trial 3
@@ -72,8 +72,6 @@ trial_nrs = [9, 5, 7, 1, 11] # check auc scores before this
 # trial_nrs = [6]#3, 1, 8, 9, 3, 9]
 
 out_files = [] # if previously created a specific sample, otherwise leave empty
-
-
 
 g_percentage = 90 if roc_flag else 50 # for evaluation of stacked plots 50, ROC would be 90
 mix = True        # set to true if mixture of q and g is required
@@ -157,16 +155,21 @@ for i, job_id in enumerate(job_ids):
     )
     
     # other selection/cuts
-    extra_cuts = False
     if extra_cuts == True:
         
+        # cut on Rg range
+        g_anomaly = g_anomaly[ak.firsts(g_anomaly["sigJetRecur_dr12"]) < 0.1]
+        g_normal = g_normal[ak.firsts(g_normal["sigJetRecur_dr12"]) < 0.1]
+        q_anomaly = q_anomaly[ak.firsts(q_anomaly["sigJetRecur_dr12"]) < 0.1]
+        q_normal = q_normal[ak.firsts(q_normal["sigJetRecur_dr12"]) < 0.1]
+        
         # cut on length
-        length = 3
-        g_anomaly = cut_on_length(g_anomaly, length, features)
-        g_normal = cut_on_length(g_normal, length, features)
-        q_anomaly = cut_on_length(q_anomaly, length, features)
-        q_normal = cut_on_length(q_normal, length, features)
-        job_id += f"_jet_len_{length}"
+        # length = 3
+        # g_anomaly = cut_on_length(g_anomaly, length, features)
+        # g_normal = cut_on_length(g_normal, length, features)
+        # q_anomaly = cut_on_length(q_anomaly, length, features)
+        # q_normal = cut_on_length(q_normal, length, features)
+        # job_id += f"_jet_len_{length}"
         
         pass
     

@@ -40,7 +40,7 @@ def cost_condition_plot(result: dict, title_plot: str, out_file: str):
     fig, ax1 = plt.subplots(sharex=True, figsize=[6 * 1.36, 6], dpi=160)
     final_cost = ax1.scatter(len(track_cost[1:])-1,track_cost[1:][-1], color="k", zorder=3, label=f"Final Cost: {track_cost[1:][-1]:.2E}")
     final_cost.set_clip_on(False) # so the marker can overlap the axis
-    cost = ax1.plot([x for x in range(len(track_cost[1:]))], track_cost[1:], color="red", linewidth=1.3, alpha=0.85, zorder=2, label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
+    cost = ax1.plot([x for x in range(len(track_cost[1:]))], track_cost[1:], color="red", alpha=0.85, zorder=2, label="Cost:\n"+r"$\kappa( \mathbf{ \theta }_{k+1}, \mathbf{ \alpha }_{k+1})$")
     ax1.set_xlabel(r"Epoch $k$")
     ax1.set_ylabel(r"Cost")
     ax1.set_ylim(bottom=0)
@@ -119,17 +119,17 @@ def cost_auc_plot(result: dict, title_plot: str, out_file: str):
         ax.set_ylim(top=max(track_cost) * factor)
         
     # adjust legend if auc track would pass through it    
-    loc=1
+    loc=1 # default
+    bbox_loc = (1,1) # default
     mean_auc = sum(track_roc_auc[epoch_halfway+1:]) / len(track_roc_auc[epoch_halfway+1:])
     if mean_auc > 0.63:
         max_cost = max(track_cost)
         ax.set_ylim(top=max_cost * 1.05)
-        bbox_loc = (1, mean_auc-0.03)
+        bbox_loc = (1, mean_auc-0.03)  
+        # check cost function, if more in the lower half, move legend to bottom left corner
         if len([x for x in track_cost if x >= max_cost*0.5]) > len([x for x in track_cost if x < max_cost*0.5]):
-            bbox_loc =(0,0)
-            loc=3
-    else:
-        bbox_loc = (1,1)
+            bbox_loc = (0,0)
+            loc = 3            
         
     # create legend & figure setup
     legend = cost + roc + [final_roc]

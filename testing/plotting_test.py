@@ -16,6 +16,7 @@ from functions.data_manipulation import (
 from plotting.roc import ROC_plot_curve
 
 def sample_plot(data, idx=None, label=""):
+    plt.rcParams.update({'font.size': 18})
     # random sample if no index is given
     if idx == None:
         idx = int(random.random() * len(data))
@@ -26,11 +27,15 @@ def sample_plot(data, idx=None, label=""):
     plt.scatter(x, y, label=label)
     plt.xlim(np.min(sample),np.max(sample))
     plt.ylim(np.min(sample),np.max(sample))
+    plt.xlabel("x")
+    plt.ylabel("y")
+    if label:
+        plt.title(f"Sample of {label} Digit")
 
 
-def create_sample_plot(data, idx=None):
-    plt.figure()
-    sample_plot(data, idx)
+def create_sample_plot(data, idx=None, label=""):
+    plt.figure(figsize=[6 * 1.36, 6], dpi=160)
+    sample_plot(data, idx, label)
     plt.show()
     return
     
@@ -388,6 +393,13 @@ def lund_planes(normal, anomalous, job_id=None, trial=None, labels = ["Normal Da
     fig.patch.set_facecolor('white')
 
     for i, (ax, histogram) in enumerate(zip(axs.flat, histograms)):
+        # plot z lines
+        pt = 200 # don't know which else to choose
+        zs = [1,0.5,0.4,0.3,0.2,0.1]
+        rgs = [0.4, 0.0001]
+        for z in zs:
+            ax.plot([np.log(0.4/rg) for rg in rgs],[np.log(pt*z*rg) for rg in rgs], color='grey')
+        # plot Lund
         H, xedges, yedges = histogram
         im = ax.imshow(H.T,
                         interpolation='nearest',

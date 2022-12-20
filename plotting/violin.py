@@ -24,6 +24,11 @@ parameter_names ={
     "loss": "Loss",
     "final_cost": "Cost",
 }
+variable_names = {
+    "sigJetRecur_jetpt": "$p_T$",
+    "sigJetRecur_z": "$z$",
+    "sigJetRecur_dr12": "$R_g$"
+}
 
 def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss", yscale="linear"):
     """Function that creates and stores violin plots. The function accepts
@@ -64,20 +69,27 @@ def violin_plots(df, min_val, min_df, parameters, job_ids, test_param="loss", ys
             ax2 = sns.violinplot(x=p_name, y=test_param, cut=0, data=df)
 
             # plot minimum loss per parameter value
-            unique = sorted(df[p_name].unique())
             for p_val in min_df[p_name].unique():
                 label = "Minimum:\n{} = {}\n{} = {:.2E}".format(
                     parameter_names[parameter], p_val, parameter_names[test_param], min_val
                 )
-                ax2.scatter(int([lab.get_text() for lab in ax2.get_xticklabels()].index(str(p_val))), min_val, s=120, marker="x", c="r", linewidth=2, zorder=3, label=label)
+                minimum = ax2.scatter(int([lab.get_text() for lab in ax2.get_xticklabels()].index(str(p_val))), min_val, s=120, marker="x", c="r", linewidth=2, zorder=3, label=label)
 
-            # rotate x-ticks
+            # rotate x-ticks & fix labels for variables
             if parameter != "variables":
                 _ = plt.xticks(rotation=45, ha="right")
             else:
                 a = 1
                 _ = plt.xticks(rotation=9, ha="right")
-                
+                labels = [[variable_names['sigJetRecur_' + l].replace("//","/") for l in ''.join([i for i in lab.get_text() if i.isalnum()]).split('sigJetRecur')[1:]] for lab in ax2.get_xticklabels()]
+                ax2.set_xticklabels(labels)
+                label = "Minimum:\n{} = {}\n{} = {:.2E}".format(
+                    parameter_names[parameter], 
+                    [variable_names[p] for p in p_val], 
+                    parameter_names[test_param], 
+                    min_val
+                )
+                minimum.set_label(label)
 
             # create appropriate title and x-label
             plt.xlabel(parameter_names[parameter])

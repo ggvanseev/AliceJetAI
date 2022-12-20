@@ -613,7 +613,7 @@ def separate_anomalies_from_regular(anomaly_track, jets_index, data: list):
     return anomalies, non_anomalies
 
 
-def trials_df_and_minimum(trials_results, test_param="loss"):
+def trials_df_and_minimum(trials_results, test_param="final_cost"):
     """Function that takes a dictionary of trials and converts
     this to a Pandas Dataframe. Subsequently the minimum loss
     is taken and the model(s) corresponding to this loss is/are

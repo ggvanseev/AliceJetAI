@@ -24,13 +24,14 @@ file_name = "samples/JetToyHIResultSoftDropSkinny_100k.root"
 out_files=[] # you can load your premade mix here: pickled file
 
 job_ids = [
-    "11474168", # reg mean - lowest cost
-    "11474168",  # reg mean - highest
-    "11461550", # reg last - highest 
+    # "11474168", # reg mean - lowest cost
+    # "11474168",  # reg mean - highest
+    # "11461550", # reg last - highest 
     "11478121", # last_reversed - highest auc regtraining
-    '11120653', # hp training mean - highest auc total
+    # '11120653', # hp training mean - highest auc total
 ] 
 trial_nrs = [9, 5, 7, 1, 11]
+trial_nrs = [1]
 
 g_percentage = 50 # for evaluation of stacked plots 50%, ROC would be nice to have 90 vs 10 percent
 num = 2 # trial nr. if None will do for all trials
@@ -126,9 +127,9 @@ for i, (job_id, num) in enumerate(zip(job_ids, trial_nrs)):
         # for splittings in ['all', 'first', 'last', 'mean']:
             # normal_vs_anomaly_2D_qg(g_anomaly, g_normal, q_anomaly, q_normal, features, splittings, job_id, num)
         lund_planes_anomalies_qg(g_anomaly, g_normal, q_anomaly, q_normal, job_id, num)
-    
+        break
     # make lund planes for quark and gluon data
     gluon = ak.concatenate((g_normal,g_anomaly))
     quark = ak.concatenate((q_normal,q_anomaly))
     labels = ["Gluon Jets", "Quark Jets"]
-    lund_planes(gluon, quark, job_id, labels=labels, info="qg")
+    lund_planes(gluon, quark, labels=labels, info="qg")

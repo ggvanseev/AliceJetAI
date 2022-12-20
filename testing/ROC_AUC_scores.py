@@ -149,53 +149,15 @@ best_dict = {}
 
 # set font size & kwargs
 plt.rcParams.update({'font.size': 16})
-kwargs = dict(histtype='stepfilled', density=True, linewidth=1, alpha=0.01,  bins=40, zorder=3, line_kws={'linewidth':1, 'alpha':0.1}, hist_kws={'alpha':0.1}) # normed=True,
 
-# set ranges
+# plot settings
 values = [ak.Array(list(d.values())) for d in dicts]
 minimum = ak.min(values) #- 0.05 * ak.mean(values)
 maximum = ak.max(values) #+ 0.05 * ak.mean(values)
 binwidth = (maximum - minimum) / 60
 bins = np.arange(minimum,maximum+binwidth,binwidth)
 
-# make plots and print best scores
-# ax = sns.histplot(np.concatenate(list(d.values())).ravel(), color=sns.color_palette()[i] ,label=l, **kwargs)
-
-"""
-# old plot
-print("Best AUC Scores:")
-fig, ax = plt.subplots(figsize=[6.5 * 1.36, 6], dpi=160)
-plt.grid(alpha=0.4,zorder=0)
-kwargs = dict(ax=ax, kde=False, element="step",bins=bins, alpha=0.4,linewidth=2,zorder=1)
-for i, (d, l) in enumerate(zip(dicts,labels)):
-    ax = sns.histplot(np.concatenate(list(d.values())).ravel(), color=sns.color_palette()[i] ,label=l, **kwargs)
-    max_auc = 0
-    job = 0
-    trial = 0
-    dim = -1
-    for j, x in d.items():
-        try:    
-            max_auc, trial, job = (max(x), x.index(max(x)), j) if max(x) > max_auc else (max_auc, trial, job)
-        except TypeError: # in case of hidden dimensions
-            max_auc = max([y for z in x for y in z])
-            for k, hidden in enumerate(x):
-                if max_auc in hidden:
-                    dim = hidden.index(max_auc)
-                    trial = k
-                    job = j
-    print(f"For {l}:\nJob {job}{' - Trial '+str(trial) if len(x)>1 else ''}{' - Dimension '+str(dim) if dim>=0 else ''}\nAUC {max_auc}\n") 
-    best_dict[l] = (job, trial) if dim < 0 else (job, (trial, dim))
-plt.xlabel("Area Under Curve")
-plt.legend(bbox_to_anchor=(1.17,0.95))
-fig.subplots_adjust(right=0.85)
-"""
-
-# new plot
-values = [ak.Array(list(d.values())) for d in dicts]
-minimum = ak.min(values) #- 0.05 * ak.mean(values)
-maximum = ak.max(values) #+ 0.05 * ak.mean(values)
-binwidth = (maximum - minimum) / 60
-
+# make plot, get auc scores
 print("Best AUC Scores:")
 fig, ax = plt.subplots(figsize=[6.5 * 1.36, 6], dpi=160)
 plt.grid(alpha=0.4,zorder=0)
@@ -234,7 +196,6 @@ leg = fig.legend(handles=plot_list, labels=labels, bbox_to_anchor=(0.98,0.85))
 leg.get_frame().set_alpha(0.9)
 # fig.subplots_adjust(left=0.1, right=0.85)
 
-
 # store roc curve plots in designated directory
 out_dir = f"output/ROC_curves_best"
 try:
@@ -252,10 +213,3 @@ plt.title("AUC Scores For Various Tests", y=1.04)
 plt.savefig(out_file)
 plt.close('all')
 print("Best dict:\n",best_dict)
-
-"""
-plt.figure()
-kwargs = dict(multiple="stack", kde=False, element="step",bins=60)
-sns.histplot(pd.DataFrame(dict(zip(labels, dicts))).melt(), hue="variable", x="value")#,  **kwargs)
-plt.show()
-"""

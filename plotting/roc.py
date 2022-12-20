@@ -81,23 +81,37 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str, xl
     roc_auc = auc(fpr, tpr)
     print(f"ROC Area under curve: {roc_auc:.4f}")
     try:
-         print(f"Model accuracy: {accuracy_score(y_true, np.sign(y_predict))}")
+         print(f"Model accuracy: {accuracy_score(y_true, np.sign(y_predict)):.4f}")
     except:
         pass
+    
+    # get false pos and true pos for current hyperplane
+    false_neg_under_th = np.count_nonzero(results[(results[:,0] == 1) & (results[:,1] < 0)])
+    true_pos_under_th = np.count_nonzero(results[(results[:,0] == 1) & (results[:,1] >= 0)])
+            
+    true_neg_under_th = np.count_nonzero(results[(results[:,0] == 0) & (results[:,1] < 0)])
+    false_pos_under_th = np.count_nonzero(results[(results[:,0] == 0) & (results[:,1] >= 0)])
+    tp_hp = ROC_zero_division(true_pos_under_th, false_neg_under_th)
+    fp_hp = ROC_zero_division(false_pos_under_th, true_neg_under_th)
 
-    roc_plot = ax.plot(fpr, tpr, color="C1", linewidth=2, zorder=3, label="Sklearn Metrics")
+    # plot everything
+    roc_plot = ax.plot(fpr, tpr, color="C1", linewidth=2, zorder=3, label="ROC Curve\n"+f"(AUC: {roc_auc:.4f})")
     roc_plot[0].set_clip_on(False) 
+    hp_point = ax.scatter(fp_hp,tp_hp , marker="o", color="red", label="Trained Hyperplane\n"+f"(TPR: {tp_hp:.3f}, FPR: {fp_hp:.3f})")
+    hp_point.set_clip_on(False)
     ax.plot([0,1],[0,1], alpha=0.7, color='k', label="Random Classifier")
     
     # plot textbox
     if roc_auc <= 0.5:
         x = 0.35
         y = 0.7
+        loc = 2
     else:
         x = 0.7
         y = 0.35
-    bbox_props = dict(boxstyle="round,pad=0.3", fc="w", ec="0.5", alpha=0.8)
-    ax.text(x, y, f"Area Under Curve: {roc_auc:.4f}", ha="center", va="center", size=17, bbox=bbox_props)
+        loc = 4
+    #bbox_props = dict(boxstyle="round,pad=0.3", fc="w", ec="0.5", alpha=0.8)
+    #ax.text(x, y, f"Area Under Curve: {roc_auc:.4f}", ha="center", va="center", size=17, bbox=bbox_props)
     
     # set plot values
     ax.set_xlabel(xlabel)
@@ -107,7 +121,7 @@ def ROC_plot_curve(y_true:list, y_predict:list, plot_title:str, out_file:str, xl
     ax.set_xticks(np.arange(0, 1.1, 0.1))
     ax.set_yticks(np.arange(0, 1.1, 0.1))
     ax.grid(alpha=0.4)
-    #ax.legend() TODO
+    ax.legend(loc=loc) # TODO
     
     # Hide the right and top spines
     # ax.spines.right.set_visible(False)
