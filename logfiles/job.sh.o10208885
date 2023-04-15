@@ -1,1598 +1,0 @@
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-22/05/04 16:51:26 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Number of jets in dataset:		21477
-Number of gluon jets in dataset:	3252
-Number of quark jets in dataset:	2885
-Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
-	gluon jets left after cuts:	1537
-	quark jets left after cuts:	1475 
-Loading data complete
-Splitting data complete
-Running 60 evaluations, on 10 cores:
-
-  0%|          | 0/60 [00:00<?, ?trial/s, best loss=?][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                  (0 + 1) / 1][Stage 1:>                  (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 0 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 1 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0.1
-  hidden_dim	  6
-  learning_rate	  0.001
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.022229671478271484
-Dataprep done in: 0.0423274040222168
-Training done in: 17.52571988105774
-  Model done learning in 700 epochs
-  With cost condition: 5.183026082256407e-09, vs epsilon: 1e-08 
-  With loss: 7.6027E-03
-Passed in: 17.57 s
-[Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1]                                                                                  2%|▏         | 1/60 [00:36<35:31, 36.14s/trial, best loss: 0.00760272956662562][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0.1
-  hidden_dim	  12
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 2, out of max.: 2
-Branch filler done in: 0.022428035736083984
-Dataprep done in: 0.025678634643554688
-Training done in: 19.853165864944458
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 1.5244378274642654e-06, vs epsilon: 1e-08 
-Training done in: 19.855215311050415
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 6.851092704499391e-07, vs epsilon: 1e-08 
-Training done in: 19.75239896774292
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 2.2912066735976071e-07, vs epsilon: 1e-08 
-Training done in: 19.874308347702026
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 5.351744207166892e-07, vs epsilon: 1e-08 
-Failed in: 00:01:19
-                                                                                [Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1]  3%|▎         | 2/60 [02:00<1:02:11, 64.34s/trial, best loss: 0.00760272956662562]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 4 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.029276371002197266
-Dataprep done in: 0.03207206726074219
-Training done in: 19.06589365005493
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.3367240572255464e-06, vs epsilon: 1e-08 
-Training done in: 19.067761659622192
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.755546957809438e-06, vs epsilon: 1e-08 
-Training done in: 18.993996143341064
-  Model done learning in 900 epochs
-  With cost condition: 1.1464314743598533e-12, vs epsilon: 1e-08 
-  With loss: 7.4094E-03
-Passed in: 57.16 s
-                                                                                [Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1]  5%|▌         | 3/60 [03:06<1:01:52, 65.14s/trial, best loss: 0.007409358413359262][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.021935462951660156
-Dataprep done in: 0.025427579879760742
-Training done in: 25.887802600860596
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 7.819025079673875e-08, vs epsilon: 1e-08 
-Training done in: 25.878315448760986
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 4.857817394412794e-07, vs epsilon: 1e-08 
-Training done in: 25.88612937927246
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 2.3013451970330188e-07, vs epsilon: 1e-08 
-Training done in: 25.80216145515442
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 4.1016911840786537e-07, vs epsilon: 1e-08 
-Failed in: 00:01:43
-                                                                                [Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1]  7%|▋         | 4/60 [04:54<1:16:37, 82.10s/trial, best loss: 0.007409358413359262]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 7 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.029278278350830078
-Dataprep done in: 0.03211045265197754
-Training done in: 1.3398396968841553
-  Model done learning in 50 epochs
-  With cost condition: 4.135716753279968e-11, vs epsilon: 1e-08 
-  With loss: 1.3352E-02
-Passed in: 1.37 s
-                                                                                  8%|▊         | 5/60 [05:03<51:06, 55.75s/trial, best loss: 0.007409358413359262]  [Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 9 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.029192686080932617
-Dataprep done in: 0.03199648857116699
-Training done in: 6.939646005630493
-  Model done learning in 333 epochs
-  With cost condition: 3.890229720656885e-09, vs epsilon: 1e-08 
-  With loss: 5.7866E-03
-Passed in: 6.97 s
-                                                                                 10%|█         | 6/60 [05:18<37:42, 41.91s/trial, best loss: 0.005786565835470495][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 11 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0.1
-  hidden_dim	  100
-  learning_rate	  0.001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.029195785522460938
-Dataprep done in: 0.03221464157104492
-Training done in: 20.034165620803833
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 2.3853418885578806e-06, vs epsilon: 1e-08 
-Training done in: 20.17154049873352
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 1.5072188684495764e-05, vs epsilon: 1e-08 
-Training done in: 20.029861211776733
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 4.3793200267625333e-07, vs epsilon: 1e-08 
-Training done in: 19.921692848205566
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 1.3714428905640382e-05, vs epsilon: 1e-08 
-Failed in: 00:01:20
-                                                                                 12%|█▏        | 7/60 [06:46<50:21, 57.01s/trial, best loss: 0.005786565835470495][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.02205348014831543
-Dataprep done in: 0.025547027587890625
-Training done in: 19.066177129745483
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 1.2267267998968124e-07, vs epsilon: 1e-08 
-Training done in: 19.073898315429688
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 7.238284233929426e-08, vs epsilon: 1e-08 
-Training done in: 19.059828519821167
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 1.5400866870107723e-08, vs epsilon: 1e-08 
-Training done in: 19.0281343460083
-  Model done learning in 800 epochs
-  With cost condition: 7.956077548587655e-09, vs epsilon: 1e-08 
-  With loss: 2.4047E-02
-Passed in: 00:01:16
-                                                                                 13%|█▎        | 8/60 [08:07<56:03, 64.68s/trial, best loss: 0.005786565835470495][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 14 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 15 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.022182941436767578
-Dataprep done in: 0.02479410171508789
-Training done in: 23.506012678146362
-  Model done learning in 800 epochs
-  With cost condition: 6.9726153562059015e-09, vs epsilon: 1e-08 
-  With loss: 1.1251E-02
-Passed in: 23.53 s
-                                                                                 15%|█▌        | 9/60 [08:43<47:22, 55.73s/trial, best loss: 0.005786565835470495][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0.1
-  hidden_dim	  6
-  learning_rate	  0.00031622776601683794
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.021975278854370117
-Dataprep done in: 0.02477240562438965
-Training done in: 13.989949703216553
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 4.5650987681164135e-07, vs epsilon: 1e-08 
-Training done in: 13.91347050666809
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 2.1356150276670397e-05, vs epsilon: 1e-08 
-Training done in: 13.990866899490356
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 1.133348440256576e-06, vs epsilon: 1e-08 
-Training done in: 13.870145559310913
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 9.186685387215678e-07, vs epsilon: 1e-08 
-Failed in: 55.79 s
-                                                                                [Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1] 17%|█▋        | 10/60 [09:43<47:33, 57.07s/trial, best loss: 0.005786565835470495]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0.1
-  hidden_dim	  50
-  learning_rate	  0.001
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.02190375328063965
-Dataprep done in: 0.024976730346679688
-Training done in: 1.7636456489562988
-  Model done learning in 51 epochs
-  With cost condition: 1.8694300242610455e-09, vs epsilon: 1e-08 
-  With loss: 1.5569E-02
-Passed in: 1.79 s
-                                                                                [Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1] 18%|█▊        | 11/60 [09:49<33:51, 41.45s/trial, best loss: 0.005786565835470495]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  1e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.022023439407348633
-Dataprep done in: 0.02462935447692871
-Training done in: 0.741227388381958
-  Model done learning in 50 epochs
-  With cost condition: 1.2607886819120109e-09, vs epsilon: 1e-08 
-  With loss: 2.6272E-02
-Passed in: 0.77 s
-                                                                                [Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1] 20%|██        | 12/60 [09:54<24:18, 30.38s/trial, best loss: 0.005786565835470495][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  0.001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.02190876007080078
-Dataprep done in: 0.025423288345336914
-Training done in: 19.82956576347351
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 1.2911132441652037e-05, vs epsilon: 1e-08 
-Training done in: 19.764190673828125
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 7.80289242731695e-08, vs epsilon: 1e-08 
-Training done in: 19.779807329177856
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 2.372609300341589e-07, vs epsilon: 1e-08 
-Training done in: 19.739465951919556
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 2.8858015808802046e-06, vs epsilon: 1e-08 
-Failed in: 00:01:19
-                                                                                [Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1] 22%|██▏       | 13/60 [11:17<36:18, 46.35s/trial, best loss: 0.005786565835470495]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 21 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0.1
-  hidden_dim	  6
-  learning_rate	  1e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.02202463150024414
-Dataprep done in: 0.024822473526000977
-Training done in: 17.447842359542847
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 2.008519409497573e-08, vs epsilon: 1e-08 
-Training done in: 17.404992818832397
-  Model done learning in 1000 epochs
-  With cost condition: 3.12727766253121e-09, vs epsilon: 1e-08 
-  With loss: 9.8929E-03
-Passed in: 34.88 s
-                                                                                 23%|██▎       | 14/60 [12:01<34:46, 45.36s/trial, best loss: 0.005786565835470495][Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 23 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 24 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  1e-06
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.029345989227294922
-Dataprep done in: 0.03217482566833496
-Training done in: 4.205655574798584
-  Model done learning in 189 epochs
-  With cost condition: 4.32511672447165e-09, vs epsilon: 1e-08 
-  With loss: 2.4046E-02
-Passed in: 4.24 s
-                                                                                 25%|██▌       | 15/60 [12:17<27:24, 36.54s/trial, best loss: 0.005786565835470495][Stage 26:>   (0 + 1) / 1][Stage 27:>   (0 + 0) / 1][Stage 28:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 26 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  1e-06
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.021863937377929688
-Dataprep done in: 0.02511429786682129
-Training done in: 1.6576251983642578
-  Model done learning in 50 epochs
-  With cost condition: 5.6049652955182876e-09, vs epsilon: 1e-08 
-  With loss: 2.8192E-02
-Passed in: 1.69 s
-                                                                                 27%|██▋       | 16/60 [12:27<20:56, 28.56s/trial, best loss: 0.005786565835470495][Stage 28:>   (0 + 1) / 1][Stage 29:>   (0 + 0) / 1][Stage 30:>   (0 + 0) / 1][Stage 28:>   (0 + 1) / 1][Stage 29:>   (0 + 0) / 1][Stage 30:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 2, out of max.: 2
-Branch filler done in: 0.022123098373413086
-Dataprep done in: 0.025164127349853516
-Training done in: 22.48636746406555
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 5.663615499306834e-07, vs epsilon: 1e-08 
-Training done in: 22.50229263305664
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 2.0304455152910452e-07, vs epsilon: 1e-08 
-Training done in: 22.444274187088013
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 5.901293626561438e-07, vs epsilon: 1e-08 
-Training done in: 22.450786352157593
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.5624669847732625e-07, vs epsilon: 1e-08 
-Failed in: 00:01:29
-                                                                                 28%|██▊       | 17/60 [14:01<34:35, 48.28s/trial, best loss: 0.005786565835470495][Stage 29:>   (0 + 1) / 1][Stage 30:>   (0 + 0) / 1][Stage 31:>   (0 + 0) / 1][Stage 29:>   (0 + 1) / 1][Stage 30:>   (0 + 0) / 1][Stage 31:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.022029399871826172
-Dataprep done in: 0.02507638931274414
-Training done in: 22.424716234207153
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 3.356074370022208e-07, vs epsilon: 1e-08 
-Training done in: 22.305291175842285
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.8784064041425754e-06, vs epsilon: 1e-08 
-Training done in: 22.43102526664734
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 7.625223586782955e-07, vs epsilon: 1e-08 
-Training done in: 22.292583227157593
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.3768751098269706e-08, vs epsilon: 1e-08 
-Failed in: 00:01:29
-                                                                                 30%|███       | 18/60 [15:35<43:26, 62.05s/trial, best loss: 0.005786565835470495][Stage 30:>   (0 + 1) / 1][Stage 31:>   (0 + 0) / 1][Stage 32:>   (0 + 0) / 1][Stage 30:>   (0 + 1) / 1][Stage 31:>   (0 + 0) / 1][Stage 32:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  9
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.029237985610961914
-Dataprep done in: 0.03205418586730957
-Training done in: 20.245940446853638
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 5.902198467892571e-06, vs epsilon: 1e-08 
-Training done in: 20.191644191741943
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 1.408813292780672e-06, vs epsilon: 1e-08 
-Training done in: 20.175913095474243
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 3.073704404576422e-06, vs epsilon: 1e-08 
-Training done in: 20.159092664718628
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 4.115657967935865e-07, vs epsilon: 1e-08 
-Failed in: 00:01:20
-                                                                                 32%|███▏      | 19/60 [17:00<47:07, 68.98s/trial, best loss: 0.005786565835470495][Stage 31:>   (0 + 1) / 1][Stage 32:>   (0 + 0) / 1][Stage 33:>   (0 + 0) / 1][Stage 31:>   (0 + 1) / 1][Stage 32:>   (0 + 0) / 1][Stage 33:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 2, out of max.: 2
-Branch filler done in: 0.022072315216064453
-Dataprep done in: 0.025120973587036133
-Training done in: 22.46581482887268
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.4633005488789387e-06, vs epsilon: 1e-08 
-Training done in: 22.49107837677002
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 2.6061319189380537e-06, vs epsilon: 1e-08 
-Training done in: 22.440110206604004
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 4.6578515474085635e-07, vs epsilon: 1e-08 
-Training done in: 22.47540855407715
-  Model done learning in 900 epochs
-  With cost condition: 1.3588110637756318e-10, vs epsilon: 1e-08 
-  With loss: 6.8587E-03
-Passed in: 00:01:29
-                                                                                [Stage 32:>   (0 + 1) / 1][Stage 33:>   (0 + 0) / 1][Stage 34:>   (0 + 0) / 1] 33%|███▎      | 20/60 [18:35<51:13, 76.83s/trial, best loss: 0.005786565835470495]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 32 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 33:>   (0 + 1) / 1][Stage 34:>   (0 + 0) / 1][Stage 35:>   (0 + 0) / 1][Stage 33:>   (0 + 1) / 1][Stage 34:>   (0 + 0) / 1][Stage 35:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0
-  hidden_dim	  9
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.022133350372314453
-Dataprep done in: 0.025177955627441406
-Training done in: 24.21646761894226
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 3.1043545046998023e-07, vs epsilon: 1e-08 
-Training done in: 24.17113733291626
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 1.6676679364200852e-08, vs epsilon: 1e-08 
-Training done in: 24.1849946975708
-  Model done learning in 1000 epochs
-  With cost condition: 6.433673020955138e-09, vs epsilon: 1e-08 
-  With loss: 5.2216E-03
-Passed in: 00:01:12
-                                                                                [Stage 34:>   (0 + 1) / 1][Stage 35:>   (0 + 0) / 1][Stage 36:>   (0 + 0) / 1] 35%|███▌      | 21/60 [19:56<50:46, 78.12s/trial, best loss: 0.005221617044123955]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 34 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 35:>   (0 + 1) / 1][Stage 36:>   (0 + 0) / 1][Stage 37:>   (0 + 0) / 1][Stage 35:>   (0 + 1) / 1][Stage 36:>   (0 + 0) / 1][Stage 37:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0.1
-  hidden_dim	  100
-  learning_rate	  0.00031622776601683794
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.02926325798034668
-Dataprep done in: 0.032083988189697266
-Training done in: 25.88443660736084
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 9.612930267363502e-07, vs epsilon: 1e-08 
-Training done in: 25.95990824699402
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 9.089157659810561e-07, vs epsilon: 1e-08 
-Training done in: 25.934629201889038
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 1.2656590314395387e-08, vs epsilon: 1e-08 
-Training done in: 25.853715896606445
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 6.395141012849466e-06, vs epsilon: 1e-08 
-Failed in: 00:01:43
-                                                                                 37%|███▋      | 22/60 [21:48<55:56, 88.33s/trial, best loss: 0.005221617044123955][Stage 36:>   (0 + 1) / 1][Stage 37:>   (0 + 0) / 1][Stage 38:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 36 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 37:>   (0 + 1) / 1][Stage 38:>   (0 + 0) / 1][Stage 39:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 37 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 38:>   (0 + 1) / 1][Stage 39:>   (0 + 0) / 1][Stage 40:>   (0 + 0) / 1][Stage 38:>   (0 + 1) / 1][Stage 39:>   (0 + 0) / 1][Stage 40:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.022103548049926758
-Dataprep done in: 0.024715185165405273
-Training done in: 23.29938054084778
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 1.1332248958606744e-07, vs epsilon: 1e-08 
-Training done in: 23.20026993751526
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 1.6974168021218818e-08, vs epsilon: 1e-08 
-Training done in: 23.277236700057983
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 4.790183778338126e-08, vs epsilon: 1e-08 
-Training done in: 23.210757732391357
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 6.674299817776745e-07, vs epsilon: 1e-08 
-Failed in: 00:01:33
-                                                                                 38%|███▊      | 23/60 [23:34<57:35, 93.39s/trial, best loss: 0.005221617044123955][Stage 39:>   (0 + 1) / 1][Stage 40:>   (0 + 0) / 1][Stage 41:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 39 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 40:>   (0 + 1) / 1][Stage 41:>   (0 + 0) / 1][Stage 42:>   (0 + 0) / 1][Stage 40:>   (0 + 1) / 1][Stage 41:>   (0 + 0) / 1][Stage 42:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  0.00031622776601683794
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.02201247215270996
-Dataprep done in: 0.025029897689819336
-Training done in: 19.689135313034058
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 6.133342743954102e-07, vs epsilon: 1e-08 
-Training done in: 19.711148023605347
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 3.42360060536738e-08, vs epsilon: 1e-08 
-Training done in: 19.658034563064575
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 4.7385162808816425e-08, vs epsilon: 1e-08 
-Training done in: 19.680647611618042
-  Model done learning in 800 epochs
-  With cost condition: 7.674535424480439e-10, vs epsilon: 1e-08 
-  With loss: 1.1107E-02
-Passed in: 00:01:18
-                                                                                 40%|████      | 24/60 [25:01<54:54, 91.51s/trial, best loss: 0.005221617044123955][Stage 41:>   (0 + 1) / 1][Stage 42:>   (0 + 0) / 1][Stage 43:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.029044389724731445
-Dataprep done in: 0.031905174255371094
-Training done in: 19.375996589660645
-  Model done learning in 900 epochs
-  With cost condition: 1.2996147968801133e-09, vs epsilon: 1e-08 
-  With loss: 5.5928E-03
-Passed in: 19.41 s
-                                                                                 42%|████▏     | 25/60 [25:25<41:34, 71.27s/trial, best loss: 0.005221617044123955][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0.1
-  hidden_dim	  12
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 2, out of max.: 2
-Branch filler done in: 0.022106647491455078
-Dataprep done in: 0.025165081024169922
-Training done in: 1.7047028541564941
-  Model done learning in 67 epochs
-  With cost condition: 1.752697935142743e-09, vs epsilon: 1e-08 
-  With loss: 1.0767E-02
-Passed in: 1.73 s
-                                                                                [Stage 43:>   (0 + 1) / 1][Stage 44:>   (0 + 0) / 1][Stage 45:>   (0 + 0) / 1] 43%|████▎     | 26/60 [25:31<29:17, 51.70s/trial, best loss: 0.005221617044123955]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  9
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 2, out of max.: 2
-Branch filler done in: 0.022032737731933594
-Dataprep done in: 0.02503800392150879
-Training done in: 14.993310689926147
-  Model done learning in 619 epochs
-  With cost condition: 4.532486452320495e-09, vs epsilon: 1e-08 
-  With loss: 3.0901E-04
-Passed in: 15.02 s
-                                                                                [Stage 44:>   (0 + 1) / 1][Stage 45:>   (0 + 0) / 1][Stage 46:>   (0 + 0) / 1] 45%|████▌     | 27/60 [25:50<23:02, 41.90s/trial, best loss: 0.00030901449052633996]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.022133588790893555
-Dataprep done in: 0.025179386138916016
-Training done in: 16.866194248199463
-  Model done learning in 695 epochs
-  With cost condition: 7.1238794517340976e-09, vs epsilon: 1e-08 
-  With loss: 2.9226E-03
-Passed in: 16.89 s
-                                                                                [Stage 45:>   (0 + 1) / 1][Stage 46:>   (0 + 0) / 1][Stage 47:>   (0 + 0) / 1] 47%|████▋     | 28/60 [26:11<19:00, 35.65s/trial, best loss: 0.00030901449052633996]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 45 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 46 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 47:>   (0 + 1) / 1][Stage 48:>   (0 + 0) / 1][Stage 49:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 47 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.022106409072875977
-Dataprep done in: 0.02513575553894043
-Training done in: 21.789323806762695
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.9703611895891125e-08, vs epsilon: 1e-08 
-Training done in: 4.773169994354248
-  Model done learning in 197 epochs
-  With cost condition: 5.432483587975629e-09, vs epsilon: 1e-08 
-  With loss: 1.1580E-02
-Passed in: 26.59 s
-                                                                                 48%|████▊     | 29/60 [26:53<19:27, 37.65s/trial, best loss: 0.00030901449052633996][Stage 49:>   (0 + 1) / 1][Stage 50:>   (0 + 0) / 1][Stage 51:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 49 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 50:>   (0 + 1) / 1][Stage 51:>   (0 + 0) / 1][Stage 52:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 50 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 51:>   (0 + 1) / 1][Stage 52:>   (0 + 0) / 1][Stage 53:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 51 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  600.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.021895408630371094
-Dataprep done in: 0.02493453025817871
-Training done in: 1.9662013053894043
-  Model done learning in 61 epochs
-  With cost condition: 5.354449998489616e-11, vs epsilon: 1e-08 
-  With loss: 1.9778E-02
-Passed in: 1.99 s
-                                                                                 50%|█████     | 30/60 [27:11<15:53, 31.77s/trial, best loss: 0.00030901449052633996][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 1, out of max.: 1
-Branch filler done in: 0.022046804428100586
-Dataprep done in: 0.02531909942626953
-Training done in: 20.625674724578857
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.9392720861771133e-06, vs epsilon: 1e-08 
-Training done in: 20.557981252670288
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 7.132307097853931e-08, vs epsilon: 1e-08 
-Training done in: 20.543338298797607
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 5.956375722600989e-07, vs epsilon: 1e-08 
-Training done in: 20.446518659591675
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.3396087233650822e-07, vs epsilon: 1e-08 
-Failed in: 00:01:22
-                                                                                [Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1] 52%|█████▏    | 31/60 [28:38<23:22, 48.36s/trial, best loss: 0.00030901449052633996]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 54 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0.1
-  hidden_dim	  50
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 2, out of max.: 2
-Branch filler done in: 0.02202296257019043
-Dataprep done in: 0.025049924850463867
-Training done in: 25.12971782684326
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.3569678355685008e-06, vs epsilon: 1e-08 
-Training done in: 25.169578790664673
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 8.913798938677649e-07, vs epsilon: 1e-08 
-Training done in: 25.256725788116455
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 4.0074426089753896e-08, vs epsilon: 1e-08 
-Training done in: 25.11412262916565
-  Algorithm failed: not done learning in max = 900 epochs
-  With cost condition: 1.1244152425461582e-06, vs epsilon: 1e-08 
-Failed in: 00:01:40
-                                                                                [Stage 56:>   (0 + 1) / 1][Stage 57:>   (0 + 0) / 1][Stage 58:>   (0 + 0) / 1] 53%|█████▎    | 32/60 [30:28<31:04, 66.59s/trial, best loss: 0.00030901449052633996]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 56 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 57:>   (0 + 1) / 1][Stage 58:>   (0 + 0) / 1][Stage 59:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 57 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 58:>                 (0 + 1) / 1][Stage 59:>                 (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 58 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-[Stage 59:>                                                         (0 + 1) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
-                                                                                trial task 59 failed, exception is cannot unpack non-iterable int object.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-TypeError: cannot unpack non-iterable int object
-
- 53%|█████▎    | 32/60 [30:44<26:53, 57.63s/trial, best loss: 0.00030901449052633996]Total Trials: 60: 32 succeeded, 28 failed, 0 cancelled.
-
-
-Best Hyper Parameters:
-
-Model 0 from trial 26:
-  batch_size  	  300.0
-  dropout     	  0.0
-  hidden_dim  	  9
-  learning_rate	  3.1622776601683795e-05
-  min_epochs  	  50
-  num_layers  	  1
-  output_dim  	  1
-  pooling     	  mean
-  scaler_id   	  minmax
-  svm_gamma   	  auto
-  svm_nu      	  0.1
-  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-with loss: 		0.00030901449052633996
-with final cost:	0.00030901449052633996
-
-Hypertuning completed on dataset:
-	samples/JetToyHIResultSoftDropSkinny.root
-Stored results in:
-	storing_results/trials_test_10208885.p
-Plotting complete, stored results at:
-	output/cost_condition_10208885/
-	output/violin_plots_10208885/
-
-Completed run in: 1863.15 seconds
-	on job: 10208885

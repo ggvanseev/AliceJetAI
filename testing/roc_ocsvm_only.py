@@ -1,3 +1,7 @@
+"""
+Make ROC curves of only the OC-SVM.
+"""
+
 import pickle
 from hyperopt import (
     hp,

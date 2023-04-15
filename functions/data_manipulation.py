@@ -1,3 +1,7 @@
+"""
+Functions used in formatting data, arrays and branches.
+"""
+
 import torch
 import awkward as ak
 from copy import copy
@@ -9,13 +13,6 @@ from itertools import compress
 
 import branch_names as na
 from functions.run_lstm import calc_lstm_results
-
-# from numba.errors import NumbaDeprecationWarning, NumbaPendingDeprecationWarning
-# import warnings
-
-# ignore numba warnings in terms of depraciation
-# warnings.simplefilter("ignore", category=NumbaDeprecationWarning)
-# warnings.simplefilter("ignore", category=NumbaPendingDeprecationWarning)
 
 
 def format_ak_to_list(arr: ak.Array) -> list:
@@ -236,25 +233,25 @@ def branch_filler(original_dataset, batch_size, n_features=3, max_trials=100):
 
 def single_branch(data):
     """Create one single branch from all data, uses are for classification.
-    Reason for a single branch is that branch filler removes jets from 
+    Reason for a single branch is that branch filler removes jets from
     original dataset in order to successfully fill branches of a specific size.
     During testing, especially, losing numerous jets is not desirable."""
-    
+
     # create new tracks
     current_pos = -1
     track_jets_in_batch = list()
     for length in [len(x) for x in data]:
         current_pos += length
         track_jets_in_batch.append(current_pos)
-    
-    track_index = [x for x in range(len(data))] # simple list of 1 -> total
-    track_jets_in_batch = [track_jets_in_batch] # put in list for "batches"
-    data = [x for y in data for x in y] # flatten = single batch
-    batch_size = len(data) # size of the single batch
-    
+
+    track_index = [x for x in range(len(data))]  # simple list of 1 -> total
+    track_jets_in_batch = [track_jets_in_batch]  # put in list for "batches"
+    data = [x for y in data for x in y]  # flatten = single batch
+    batch_size = len(data)  # size of the single batch
+
     return data, batch_size, track_jets_in_batch, track_index
-    
-    
+
+
 def shuffle_batches(batches, track_jets_in_batch, device, shuffle=False):
     """Function that shuffles batches according to batch structure
     built by the branch_filler
@@ -267,15 +264,15 @@ def shuffle_batches(batches, track_jets_in_batch, device, shuffle=False):
     Returns:
         _type_: _description_
     """
-        
-    batches_shuffled = list() # contains newly shuffled batches
-    track_jets_shuffled = list() # ontains newly shuffled tracks
+
+    batches_shuffled = list()  # contains newly shuffled batches
+    track_jets_shuffled = list()  # ontains newly shuffled tracks
 
     for (batch, _), tracks in zip(batches, track_jets_in_batch):
         # convert to cpu
         if device.type != "cpu":
             batch = batch.to(torch.device("cpu"))
-        
+
         # rebuild batches in order to shuffle them
         batch_rebuilt = [
             batch[tracks[i - 1] + 1 if i > 0 else None : tracks[i] + 1]
@@ -303,7 +300,7 @@ def shuffle_batches(batches, track_jets_in_batch, device, shuffle=False):
     data = TensorDataset(data, data)
     data = DataLoader(data, batch_size=len(batch), shuffle=shuffle)
 
-    return data, track_jets_shuffled # TODO indices as well?
+    return data, track_jets_shuffled  # TODO indices as well?
 
 
 def lstm_data_prep(*, data, scaler, batch_size, fit_flag=False, shuffle=False):
@@ -637,7 +634,10 @@ def trials_df_and_minimum(trials_results, test_param="final_cost"):
     except:
         trials_list = [
             {"jid": job_id, **trial}
-            for job_id, trials in zip(trials_results.keys(), [trials["_trials"] for trials in trials_results.values()])
+            for job_id, trials in zip(
+                trials_results.keys(),
+                [trials["_trials"] for trials in trials_results.values()],
+            )
             for trial in trials
         ]
     parameters = trials_list[0]["result"]["hyper_parameters"].keys()
@@ -661,7 +661,9 @@ def trials_df_and_minimum(trials_results, test_param="final_cost"):
     ]
     for index, row in hyper_parameters_df.iterrows():
         min_trial = min_trials[index]
-        print(f"\nFrom {'job'+str(min_trial['jid'])+' - ' if 'jid' in min_trial else ''}trial {min_trial['tid']}:")
+        print(
+            f"\nFrom {'job'+str(min_trial['jid'])+' - ' if 'jid' in min_trial else ''}trial {min_trial['tid']}:"
+        )
         for key in hyper_parameters_df.keys():
             print("  {:12}\t  {}".format(key.split(".")[1], row[key]))
         print(f"with loss: \t\t{min_df['loss'].iloc[index]}")
@@ -681,7 +683,7 @@ def cut_on_length(data, length, features=[na.recur_jetpt, na.recur_dr, na.recur_
 
 
 def get_h_results_from_trial(data_list: list, trial: list):
-    
+
     # select model
     result = trial["result"]
 
@@ -691,12 +693,14 @@ def get_h_results_from_trial(data_list: list, trial: list):
     scaler = result["model"]["scaler"]
 
     # get important parameters
-    pooling = result['hyper_parameters']['pooling']
-    input_variables = list(result['hyper_parameters']["variables"])
+    pooling = result["hyper_parameters"]["pooling"]
+    input_variables = list(result["hyper_parameters"]["variables"])
 
     # reformat data to go into lstm
-    data = format_ak_to_list([{ key: d[key] for key in input_variables } for d in data_list])
-    data = [x for x in data if len(x[0]) > 0] # remove empty stuff
+    data = format_ak_to_list(
+        [{key: d[key] for key in input_variables} for d in data_list]
+    )
+    data = [x for x in data if len(x[0]) > 0]  # remove empty stuff
 
     ### build a single branch from all test data ###
     data, batch_size, track_jets_data, _ = single_branch(data)
@@ -720,26 +724,27 @@ def get_h_results_from_trial(data_list: list, trial: list):
     )
     h_bar_list_np = h_bar_list_to_numpy(h_bar_list)
     return h_bar_list_np, ocsvm_model
-    
+
 
 def get_y_results_from_trial(data_list: list, trial: list):
-    
+
     h_bar_list_np, ocsvm_model = get_h_results_from_trial(data_list, trial)
-    
+
     # get decision function results
     y_predict = ocsvm_model.decision_function(h_bar_list_np)
-    data_list = [ {**item, "y_predict":y} for item, y in zip(data_list, y_predict)]
-    
+    data_list = [{**item, "y_predict": y} for item, y in zip(data_list, y_predict)]
+
     # sort by y_predict
-    data_list = sorted(data_list, key=lambda d: d['y_predict'])
-    
+    data_list = sorted(data_list, key=lambda d: d["y_predict"])
+
     y_predict = [x["y_predict"] for x in data_list]
-    y_true = [d['y_true'] for d in data_list]
+    y_true = [d["y_true"] for d in data_list]
     return y_true, y_predict
 
+
 def get_y_results_from_trial_h(data_list: list, trial: list, dim: int):
-    
+
     h_bar_list_np, ocsvm_model = get_h_results_from_trial(data_list, trial)
     y_predict = h_bar_list_np[:, dim]
-    y_true = [d['y_true'] for d in data_list]
+    y_true = [d["y_true"] for d in data_list]
     return y_true, y_predict

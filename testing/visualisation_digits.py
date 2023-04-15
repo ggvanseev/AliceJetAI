@@ -1,3 +1,7 @@
+"""
+Stacked plots to visualize more things on digits dataset.
+"""
+
 import pickle
 from functions.data_loader import load_n_filter_data
 import branch_names as na
@@ -31,9 +35,13 @@ train_dict = load_digits_data(train_file)
 test_dict = load_digits_data(test_file)
 
 train_data = train_dict["9"][:75] + train_dict["0"][:675]
-print('Mixed "0": 675 = 90% of normal data with "9": 75 = 10% as anomalous data for a train set of 750 samples')
+print(
+    'Mixed "0": 675 = 90% of normal data with "9": 75 = 10% as anomalous data for a train set of 750 samples'
+)
 test_data = test_dict["9"][:40] + test_dict["0"][:360]
-print('Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples')
+print(
+    'Mixed "0": 360 = 90% of normal data with "9": 40 = 10% as anomalous data for a test set of 400 samples'
+)
 
 # get anomalies and normal out
 q_anomaly, q_normal = separate_anomalies_from_regular(

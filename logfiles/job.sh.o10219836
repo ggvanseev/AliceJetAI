@@ -1,1594 +1,0 @@
-Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
-Setting default log level to "WARN".
-To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
-22/05/08 14:45:33 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
-Number of jets in dataset:		383078
-Applying cuts: -2 < eta < 2 and jet_pt > 130 GeV
-	jets left after cuts:	64155
-Splitting data complete
-Running 60 evaluations, on 10 cores:
-
-  0%|          | 0/60 [00:00<?, ?trial/s, best loss=?][Stage 0:>                                                          (0 + 1) / 1][Stage 0:>                  (0 + 1) / 1][Stage 1:>                  (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 0) / 1][Stage 2:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0.1
-  hidden_dim	  100
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 144, out of max.: 147
-Branch filler done in: 11.99588394165039
-Dataprep done in: 12.16585922241211
-Training done in: 153.81471371650696
-  Model done learning in 50 epochs
-  With cost condition: 1.0058318302943778e-09, vs epsilon: 1e-08 
-  With loss: 8.4448E-03
-Passed in: 00:02:46
-[Stage 0:>    (0 + 1) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 0:=====(1 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1]                                                                                  2%|▏         | 1/60 [02:57<2:54:19, 177.28s/trial, best loss: 0.008444795482064952][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1][Stage 1:>    (0 + 1) / 1][Stage 2:>    (0 + 0) / 1][Stage 3:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  1e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 83, out of max.: 84
-Branch filler done in: 7.057286024093628
-Dataprep done in: 7.192519903182983
-Training done in: 1467.9062747955322
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 2.8585331378722303e-07, vs epsilon: 1e-08 
-Training done in: 1471.4180138111115
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 1.1774242149743557e-06, vs epsilon: 1e-08 
-Training done in: 1469.6324338912964
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 4.199055087572341e-08, vs epsilon: 1e-08 
-Training done in: 1467.8744869232178
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 2.9704737266315913e-08, vs epsilon: 1e-08 
-Failed in: 01:38:04
-                                                                                [Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1]  3%|▎         | 2/60 [1:41:06<56:59:09, 3537.05s/trial, best loss: 0.008444795482064952][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1][Stage 2:>    (0 + 1) / 1][Stage 3:>    (0 + 0) / 1][Stage 4:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0.1
-  hidden_dim	  100
-  learning_rate	  1e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 83, out of max.: 84
-Branch filler done in: 7.056045770645142
-Dataprep done in: 7.187252521514893
-Training done in: 275.91047859191895
-  Model done learning in 79 epochs
-  With cost condition: 4.4578872956402437e-10, vs epsilon: 1e-08 
-  With loss: 8.4418E-03
-Passed in: 00:04:43
-[Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1]                                                                                [Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1]  5%|▌         | 3/60 [1:45:54<32:30:55, 2053.60s/trial, best loss: 0.008441838186220952][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1][Stage 3:>    (0 + 1) / 1][Stage 4:>    (0 + 0) / 1][Stage 5:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 58, out of max.: 59
-Branch filler done in: 4.8759050369262695
-Dataprep done in: 5.0120463371276855
-Training done in: 1864.458174943924
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 5.99513456949999e-08, vs epsilon: 1e-08 
-Training done in: 1858.2176604270935
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 4.390599423408484e-06, vs epsilon: 1e-08 
-Training done in: 1863.9537680149078
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 3.6227922188392278e-06, vs epsilon: 1e-08 
-Training done in: 1865.7688210010529
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 3.1837193560898025e-06, vs epsilon: 1e-08 
-Failed in: 02:04:17
-                                                                                [Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1]  7%|▋         | 4/60 [3:50:16<65:09:41, 4188.96s/trial, best loss: 0.008441838186220952][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1][Stage 4:>    (0 + 1) / 1][Stage 5:>    (0 + 0) / 1][Stage 6:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0.1
-  hidden_dim	  12
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 144, out of max.: 147
-Branch filler done in: 11.808298110961914
-Dataprep done in: 11.94715166091919
-Training done in: 131.20619368553162
-  Model done learning in 53 epochs
-  With cost condition: 2.485598681772581e-09, vs epsilon: 1e-08 
-  With loss: 1.4457E-02
-Passed in: 00:02:23
-                                                                                  8%|▊         | 5/60 [3:52:44<41:43:50, 2731.46s/trial, best loss: 0.008441838186220952][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1][Stage 5:>    (0 + 1) / 1][Stage 6:>    (0 + 0) / 1][Stage 7:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0.1
-  hidden_dim	  50
-  learning_rate	  0.00031622776601683794
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 116, out of max.: 118
-Branch filler done in: 10.505030155181885
-Dataprep done in: 10.636620283126831
-Training done in: 1726.6569471359253
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 0.0006499204821018094, vs epsilon: 1e-08 
-Training done in: 1728.4347097873688
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 0.000296450794734366, vs epsilon: 1e-08 
-Training done in: 1725.1804213523865
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 0.00039926935433456294, vs epsilon: 1e-08 
-Training done in: 1731.732943058014
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 2.817294166733415e-06, vs epsilon: 1e-08 
-Failed in: 01:55:22
-                                                                                [Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1] 10%|█         | 6/60 [5:48:12<62:22:26, 4158.26s/trial, best loss: 0.008441838186220952][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1][Stage 6:>    (0 + 1) / 1][Stage 7:>    (0 + 0) / 1][Stage 8:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 58, out of max.: 59
-Branch filler done in: 4.838706970214844
-Dataprep done in: 4.974855661392212
-Training done in: 171.0708351135254
-  Model done learning in 50 epochs
-  With cost condition: 2.473659705284403e-10, vs epsilon: 1e-08 
-  With loss: 8.4382E-03
-Passed in: 00:02:56
-                                                                                [Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1] 12%|█▏        | 7/60 [5:51:13<42:04:37, 2858.06s/trial, best loss: 0.008438200662773525][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1][Stage 7:>    (0 + 1) / 1][Stage 8:>    (0 + 0) / 1][Stage 9:>    (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 58, out of max.: 59
-Branch filler done in: 4.831411600112915
-Dataprep done in: 4.968573331832886
-Training done in: 194.35836696624756
-  Model done learning in 50 epochs
-  With cost condition: 1.9153781353737053e-11, vs epsilon: 1e-08 
-  With loss: 9.1305E-03
-Passed in: 00:03:19
-                                                                                 13%|█▎        | 8/60 [5:54:36<29:04:29, 2012.88s/trial, best loss: 0.008438200662773525][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1][Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 0) / 1][Stage 10:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 65, out of max.: 65
-Branch filler done in: 4.086405992507935
-Dataprep done in: 4.21998405456543
-Training done in: 207.68265771865845
-  Model done learning in 50 epochs
-  With cost condition: 1.4580533418033772e-10, vs epsilon: 1e-08 
-  With loss: 1.4431E-02
-Passed in: 00:03:31
-[Stage 8:>    (0 + 1) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1]                                                                                 15%|█▌        | 9/60 [5:58:13<20:33:48, 1451.53s/trial, best loss: 0.008438200662773525][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1][Stage 9:>    (0 + 1) / 1][Stage 10:>   (0 + 0) / 1][Stage 11:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0.1
-  hidden_dim	  50
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 58, out of max.: 59
-Branch filler done in: 4.848072290420532
-Dataprep done in: 4.980830907821655
-Training done in: 147.86775183677673
-  Model done learning in 50 epochs
-  With cost condition: 5.840998901606658e-10, vs epsilon: 1e-08 
-  With loss: 1.7918E-02
-Passed in: 00:02:32
-                                                                                 17%|█▋        | 10/60 [6:00:50<14:36:36, 1051.93s/trial, best loss: 0.008438200662773525][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1][Stage 10:>   (0 + 1) / 1][Stage 11:>   (0 + 0) / 1][Stage 12:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  0.001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 144, out of max.: 147
-Branch filler done in: 11.806925296783447
-Dataprep done in: 11.939529180526733
-Training done in: 1550.275509595871
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 0.0002727131649916442, vs epsilon: 1e-08 
-Training done in: 1538.2763633728027
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 9.668528459841503e-05, vs epsilon: 1e-08 
-Training done in: 1551.0280663967133
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 6.476536833028727e-05, vs epsilon: 1e-08 
-Training done in: 126.48058485984802
-  Model done learning in 56 epochs
-  With cost condition: 4.1898952247639614e-09, vs epsilon: 1e-08 
-  With loss: 2.6777E-02
-Passed in: 01:19:38
-                                                                                 18%|█▊        | 11/60 [7:20:33<29:51:35, 2193.78s/trial, best loss: 0.008438200662773525][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1][Stage 11:>   (0 + 1) / 1][Stage 12:>   (0 + 0) / 1][Stage 13:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0.1
-  hidden_dim	  6
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 83, out of max.: 84
-Branch filler done in: 7.048694133758545
-Dataprep done in: 7.180658578872681
-Training done in: 1414.449108839035
-  Model done learning in 899 epochs
-  With cost condition: 5.9619880291427395e-09, vs epsilon: 1e-08 
-  With loss: 2.4021E-02
-Passed in: 00:23:41
-                                                                                 20%|██        | 12/60 [7:44:20<26:08:17, 1960.36s/trial, best loss: 0.008438200662773525][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1][Stage 12:>   (0 + 1) / 1][Stage 13:>   (0 + 0) / 1][Stage 14:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  1e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 116, out of max.: 118
-Branch filler done in: 10.409156799316406
-Dataprep done in: 10.54679560661316
-Training done in: 272.57507061958313
-  Model done learning in 86 epochs
-  With cost condition: 8.220687582638335e-09, vs epsilon: 1e-08 
-  With loss: 1.1499E-02
-Passed in: 00:04:43
-                                                                                 22%|██▏       | 13/60 [7:49:08<18:58:50, 1453.83s/trial, best loss: 0.008438200662773525][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1][Stage 13:>   (0 + 1) / 1][Stage 14:>   (0 + 0) / 1][Stage 15:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  0.00031622776601683794
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 83, out of max.: 84
-Branch filler done in: 7.052349805831909
-Dataprep done in: 7.188927412033081
-Training done in: 1935.897524356842
-  Model done learning in 800 epochs
-  With cost condition: 2.755981482473104e-09, vs epsilon: 1e-08 
-  With loss: 2.1926E-02
-Passed in: 00:32:23
-                                                                                 23%|██▎       | 14/60 [8:21:36<20:29:01, 1603.09s/trial, best loss: 0.008438200662773525][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1][Stage 14:>   (0 + 1) / 1][Stage 15:>   (0 + 0) / 1][Stage 16:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 83, out of max.: 84
-Branch filler done in: 7.047943353652954
-Dataprep done in: 7.184815168380737
-Training done in: 287.6800374984741
-  Model done learning in 54 epochs
-  With cost condition: 1.994147421768484e-09, vs epsilon: 1e-08 
-  With loss: 1.8275E-02
-Passed in: 00:04:54
-                                                                                 25%|██▌       | 15/60 [8:26:35<15:07:34, 1210.09s/trial, best loss: 0.008438200662773525][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1][Stage 15:>   (0 + 1) / 1][Stage 16:>   (0 + 0) / 1][Stage 17:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  std
-  svm_gamma 	  auto
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 191, out of max.: 197
-Branch filler done in: 14.21095895767212
-Dataprep done in: 14.345888137817383
-Training done in: 128.50608134269714
-  Model done learning in 57 epochs
-  With cost condition: 2.455471313079232e-09, vs epsilon: 1e-08 
-  With loss: 2.7144E-02
-Passed in: 00:02:22
-                                                                                 27%|██▋       | 16/60 [8:29:03<10:52:59, 890.45s/trial, best loss: 0.008438200662773525] [Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1][Stage 16:>   (0 + 1) / 1][Stage 17:>   (0 + 0) / 1][Stage 18:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0
-  hidden_dim	  20
-  learning_rate	  0.001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 83, out of max.: 84
-Branch filler done in: 7.0241782665252686
-Dataprep done in: 7.155426502227783
-Training done in: 1159.6350798606873
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 0.00044652343351590763, vs epsilon: 1e-08 
-Training done in: 1160.0852341651917
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 6.296963123386243e-05, vs epsilon: 1e-08 
-Training done in: 1160.8781061172485
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 9.480404055895482e-05, vs epsilon: 1e-08 
-Training done in: 1164.819356918335
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 2.8433365111433495e-05, vs epsilon: 1e-08 
-Failed in: 01:17:32
-                                                                                [Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1] 28%|██▊       | 17/60 [9:46:41<24:10:00, 2023.26s/trial, best loss: 0.008438200662773525][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1][Stage 17:>   (0 + 1) / 1][Stage 18:>   (0 + 0) / 1][Stage 19:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0.1
-  hidden_dim	  20
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 116, out of max.: 118
-Branch filler done in: 10.441756963729858
-Dataprep done in: 10.574671745300293
-Training done in: 448.8100175857544
-  Model done learning in 159 epochs
-  With cost condition: 4.276017073484377e-09, vs epsilon: 1e-08 
-  With loss: 1.5838E-02
-Passed in: 00:07:39
-                                                                                [Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1] 30%|███       | 18/60 [9:54:26<18:08:24, 1554.87s/trial, best loss: 0.008438200662773525][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1][Stage 18:>   (0 + 1) / 1][Stage 19:>   (0 + 0) / 1][Stage 20:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  300.0
-  dropout   	  0.1
-  hidden_dim	  20
-  learning_rate	  0.00031622776601683794
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 191, out of max.: 197
-Branch filler done in: 14.213793754577637
-Dataprep done in: 14.349003076553345
-Training done in: 1586.905212879181
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 1.0722910596322499e-05, vs epsilon: 1e-08 
-Training done in: 1590.187138557434
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 1.0220912410428758e-05, vs epsilon: 1e-08 
-Training done in: 1597.691537618637
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 3.246355495522672e-08, vs epsilon: 1e-08 
-Training done in: 1588.6607205867767
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 9.345452320586205e-07, vs epsilon: 1e-08 
-Failed in: 01:46:18
-                                                                                [Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1] 32%|███▏      | 19/60 [11:40:49<34:13:28, 3005.08s/trial, best loss: 0.008438200662773525][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1][Stage 19:>   (0 + 1) / 1][Stage 20:>   (0 + 0) / 1][Stage 21:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0.1
-  hidden_dim	  12
-  learning_rate	  0.00031622776601683794
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 58, out of max.: 59
-Branch filler done in: 4.854370832443237
-Dataprep done in: 4.986231565475464
-Training done in: 1410.6810524463654
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 6.490649340601389e-05, vs epsilon: 1e-08 
-Training done in: 134.1704978942871
-  Model done learning in 75 epochs
-  With cost condition: 1.027535765579325e-12, vs epsilon: 1e-08 
-  With loss: 1.0014E-02
-Passed in: 00:25:49
-                                                                                [Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1] 33%|███▎      | 20/60 [12:06:44<28:33:03, 2569.59s/trial, best loss: 0.008438200662773525][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1][Stage 20:>   (0 + 1) / 1][Stage 21:>   (0 + 0) / 1][Stage 22:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 65, out of max.: 65
-Branch filler done in: 4.103537082672119
-Dataprep done in: 4.23766565322876
-Training done in: 169.99004578590393
-  Model done learning in 50 epochs
-  With cost condition: 6.010256140660638e-09, vs epsilon: 1e-08 
-  With loss: 4.8021E-02
-Passed in: 00:02:54
-                                                                                 35%|███▌      | 21/60 [12:09:43<20:03:50, 1852.07s/trial, best loss: 0.008438200662773525][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1][Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 0) / 1][Stage 23:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  1e-06
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 73, out of max.: 73
-Branch filler done in: 6.565860748291016
-Dataprep done in: 6.704874515533447
-Training done in: 226.77310609817505
-  Model done learning in 50 epochs
-  With cost condition: 4.867531280099601e-09, vs epsilon: 1e-08 
-  With loss: 1.9599E-02
-Passed in: 00:03:53
-[Stage 21:>   (0 + 1) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1]                                                                                 37%|███▋      | 22/60 [12:13:41<14:26:14, 1367.74s/trial, best loss: 0.008438200662773525][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1][Stage 22:>   (0 + 1) / 1][Stage 23:>   (0 + 0) / 1][Stage 24:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0.1
-  hidden_dim	  100
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 65, out of max.: 65
-Branch filler done in: 4.105663299560547
-Dataprep done in: 4.2410569190979
-Training done in: 218.61803936958313
-  Model done learning in 50 epochs
-  With cost condition: 9.914670096298028e-11, vs epsilon: 1e-08 
-  With loss: 8.4094E-03
-Passed in: 00:03:42
-                                                                                [Stage 23:>   (0 + 1) / 1][Stage 24:>   (0 + 0) / 1][Stage 25:>   (0 + 0) / 1] 38%|███▊      | 23/60 [12:17:29<10:32:34, 1025.80s/trial, best loss: 0.008409408635975371]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 23 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1][Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1][Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1][Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1][Stage 24:>   (0 + 1) / 1][Stage 25:>   (0 + 0) / 1][Stage 26:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  12
-  learning_rate	  1e-06
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 73, out of max.: 73
-Branch filler done in: 6.570832252502441
-Dataprep done in: 6.70777702331543
-Training done in: 241.1808681488037
-  Model done learning in 88 epochs
-  With cost condition: 1.0906916277383598e-10, vs epsilon: 1e-08 
-  With loss: 2.2129E-02
-Passed in: 00:04:07
-                                                                                [Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1] 40%|████      | 24/60 [12:21:53<7:58:12, 797.02s/trial, best loss: 0.008409408635975371]  [Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1][Stage 25:>   (0 + 1) / 1][Stage 26:>   (0 + 0) / 1][Stage 27:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 73, out of max.: 73
-Branch filler done in: 6.586865663528442
-Dataprep done in: 6.720430612564087
-Training done in: 163.4349820613861
-  Model done learning in 50 epochs
-  With cost condition: 2.957590922754614e-11, vs epsilon: 1e-08 
-  With loss: 3.0092E-03
-Passed in: 00:02:50
-                                                                                [Stage 26:>   (0 + 1) / 1][Stage 27:>   (0 + 0) / 1][Stage 28:>   (0 + 0) / 1] 42%|████▏     | 25/60 [12:24:48<5:56:05, 610.45s/trial, best loss: 0.0030092055181890963]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 26 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1][Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1][Stage 27:>   (0 + 1) / 1][Stage 28:>   (0 + 0) / 1][Stage 29:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0.1
-  hidden_dim	  12
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 65, out of max.: 65
-Branch filler done in: 4.097489595413208
-Dataprep done in: 4.232748031616211
-Training done in: 165.0547230243683
-  Model done learning in 50 epochs
-  With cost condition: 6.098683097827263e-10, vs epsilon: 1e-08 
-  With loss: 7.0566E-03
-Passed in: 00:02:49
-                                                                                 43%|████▎     | 26/60 [12:27:51<4:33:17, 482.27s/trial, best loss: 0.0030092055181890963][Stage 28:>   (0 + 1) / 1][Stage 29:>   (0 + 0) / 1][Stage 30:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 28 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 29:>   (0 + 1) / 1][Stage 30:>   (0 + 0) / 1][Stage 31:>   (0 + 0) / 1][Stage 29:>   (0 + 1) / 1][Stage 30:>   (0 + 0) / 1][Stage 31:>   (0 + 0) / 1][Stage 29:>   (0 + 1) / 1][Stage 30:>   (0 + 0) / 1][Stage 31:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0
-  hidden_dim	  6
-  learning_rate	  1e-06
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.3
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 73, out of max.: 73
-Branch filler done in: 6.580352067947388
-Dataprep done in: 6.7146313190460205
-Training done in: 136.3161323070526
-  Model done learning in 50 epochs
-  With cost condition: 1.372398048914364e-09, vs epsilon: 1e-08 
-  With loss: 9.6769E-03
-Passed in: 00:02:23
-                                                                                 45%|████▌     | 27/60 [12:30:29<3:31:46, 385.05s/trial, best loss: 0.0030092055181890963][Stage 30:>   (0 + 1) / 1][Stage 31:>   (0 + 0) / 1][Stage 32:>   (0 + 0) / 1][Stage 30:>   (0 + 1) / 1][Stage 31:>   (0 + 0) / 1][Stage 32:>   (0 + 0) / 1][Stage 30:>   (0 + 1) / 1][Stage 31:>   (0 + 0) / 1][Stage 32:>   (0 + 0) / 1][Stage 30:>   (0 + 1) / 1][Stage 31:>   (0 + 0) / 1][Stage 32:>   (0 + 0) / 1][Stage 30:>   (0 + 1) / 1][Stage 31:>   (0 + 0) / 1][Stage 32:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0.1
-  hidden_dim	  100
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.1
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 65, out of max.: 65
-Branch filler done in: 4.093606233596802
-Dataprep done in: 4.231212139129639
-Training done in: 238.25050401687622
-  Model done learning in 89 epochs
-  With cost condition: 4.259399938598352e-09, vs epsilon: 1e-08 
-  With loss: 1.4019E-02
-Passed in: 00:04:02
-                                                                                 47%|████▋     | 28/60 [12:34:37<3:03:18, 343.71s/trial, best loss: 0.0030092055181890963][Stage 31:>   (0 + 1) / 1][Stage 32:>   (0 + 0) / 1][Stage 33:>   (0 + 0) / 1][Stage 31:>   (0 + 1) / 1][Stage 32:>   (0 + 0) / 1][Stage 33:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 73, out of max.: 73
-Branch filler done in: 6.584200620651245
-Dataprep done in: 6.720093727111816
-Training done in: 92.33964204788208
-  Model done learning in 50 epochs
-  With cost condition: 3.1858131898309546e-09, vs epsilon: 1e-08 
-  With loss: 3.9218E-03
-Passed in: 00:01:39
-                                                                                 48%|████▊     | 29/60 [12:36:21<2:20:26, 271.84s/trial, best loss: 0.0030092055181890963][Stage 32:>   (0 + 1) / 1][Stage 33:>   (0 + 0) / 1][Stage 34:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 32 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 33:>   (0 + 1) / 1][Stage 34:>   (0 + 0) / 1][Stage 35:>   (0 + 0) / 1][Stage 33:>   (0 + 1) / 1][Stage 34:>   (0 + 0) / 1][Stage 35:>   (0 + 0) / 1][Stage 33:>   (0 + 1) / 1][Stage 34:>   (0 + 0) / 1][Stage 35:>   (0 + 0) / 1][Stage 33:>   (0 + 1) / 1][Stage 34:>   (0 + 0) / 1][Stage 35:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0
-  hidden_dim	  100
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 58, out of max.: 59
-Branch filler done in: 4.848429918289185
-Dataprep done in: 4.980787038803101
-Training done in: 215.00550413131714
-  Model done learning in 50 epochs
-  With cost condition: 7.739124698623842e-11, vs epsilon: 1e-08 
-  With loss: 7.0185E-03
-Passed in: 00:03:40
-[Stage 33:>   (0 + 1) / 1][Stage 34:>   (0 + 1) / 1][Stage 35:>   (0 + 0) / 1]                                                                                [Stage 34:>   (0 + 1) / 1][Stage 35:>   (0 + 0) / 1][Stage 36:>   (0 + 0) / 1] 50%|█████     | 30/60 [12:40:16<2:10:26, 260.87s/trial, best loss: 0.0030092055181890963][Stage 34:>   (0 + 1) / 1][Stage 35:>   (0 + 0) / 1][Stage 36:>   (0 + 0) / 1][Stage 34:>   (0 + 1) / 1][Stage 35:>   (0 + 0) / 1][Stage 36:>   (0 + 0) / 1][Stage 34:>   (0 + 1) / 1][Stage 35:>   (0 + 0) / 1][Stage 36:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0
-  hidden_dim	  50
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  2
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 65, out of max.: 65
-Branch filler done in: 4.094447135925293
-Dataprep done in: 4.2325592041015625
-Training done in: 196.56537437438965
-  Model done learning in 50 epochs
-  With cost condition: 8.494271252225828e-12, vs epsilon: 1e-08 
-  With loss: 1.1368E-02
-Passed in: 00:03:20
-                                                                                [Stage 35:>   (0 + 1) / 1][Stage 36:>   (0 + 0) / 1][Stage 37:>   (0 + 0) / 1] 52%|█████▏    | 31/60 [12:43:42<1:58:09, 244.48s/trial, best loss: 0.0030092055181890963][Stage 35:>   (0 + 1) / 1][Stage 36:>   (0 + 0) / 1][Stage 37:>   (0 + 0) / 1][Stage 35:>   (0 + 1) / 1][Stage 36:>   (0 + 0) / 1][Stage 37:>   (0 + 0) / 1][Stage 35:>   (0 + 1) / 1][Stage 36:>   (0 + 0) / 1][Stage 37:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0.1
-  hidden_dim	  20
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  std
-  svm_gamma 	  scale
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 58, out of max.: 59
-Branch filler done in: 4.859120845794678
-Dataprep done in: 4.9963884353637695
-Training done in: 182.2586109638214
-  Model done learning in 55 epochs
-  With cost condition: 4.6269346026873577e-10, vs epsilon: 1e-08 
-  With loss: 5.6292E-03
-Passed in: 00:03:07
-                                                                                [Stage 36:>   (0 + 1) / 1][Stage 37:>   (0 + 0) / 1][Stage 38:>   (0 + 0) / 1] 53%|█████▎    | 32/60 [12:46:54<1:46:46, 228.80s/trial, best loss: 0.0030092055181890963][Stage 36:>   (0 + 1) / 1][Stage 37:>   (0 + 0) / 1][Stage 38:>   (0 + 0) / 1][Stage 36:>   (0 + 1) / 1][Stage 37:>   (0 + 0) / 1][Stage 38:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 73, out of max.: 73
-Branch filler done in: 6.581690073013306
-Dataprep done in: 6.714057683944702
-Training done in: 157.31733775138855
-  Model done learning in 53 epochs
-  With cost condition: 2.9663634821612524e-09, vs epsilon: 1e-08 
-  With loss: 3.1604E-03
-Passed in: 00:02:44
-                                                                                [Stage 37:>   (0 + 1) / 1][Stage 38:>   (0 + 0) / 1][Stage 39:>   (0 + 0) / 1] 55%|█████▌    | 33/60 [12:49:44<1:34:54, 210.92s/trial, best loss: 0.0030092055181890963]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 37 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 38:>   (0 + 1) / 1][Stage 39:>   (0 + 0) / 1][Stage 40:>   (0 + 0) / 1][Stage 38:>   (0 + 1) / 1][Stage 39:>   (0 + 0) / 1][Stage 40:>   (0 + 0) / 1][Stage 38:>   (0 + 1) / 1][Stage 39:>   (0 + 0) / 1][Stage 40:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 65, out of max.: 65
-Branch filler done in: 4.087155342102051
-Dataprep done in: 4.221340179443359
-Training done in: 164.5616099834442
-  Model done learning in 50 epochs
-  With cost condition: 6.125145803111513e-10, vs epsilon: 1e-08 
-  With loss: 3.9291E-03
-Passed in: 00:02:48
-                                                                                 57%|█████▋    | 34/60 [12:52:47<1:27:48, 202.62s/trial, best loss: 0.0030092055181890963][Stage 39:>   (0 + 1) / 1][Stage 40:>   (0 + 0) / 1][Stage 41:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 39 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 40:>   (0 + 1) / 1][Stage 41:>   (0 + 0) / 1][Stage 42:>   (0 + 0) / 1][Stage 40:>   (0 + 1) / 1][Stage 41:>   (0 + 0) / 1][Stage 42:>   (0 + 0) / 1][Stage 40:>   (0 + 1) / 1][Stage 41:>   (0 + 0) / 1][Stage 42:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 73, out of max.: 73
-Branch filler done in: 6.574876308441162
-Dataprep done in: 6.70869255065918
-Training done in: 166.5277247428894
-  Model done learning in 50 epochs
-  With cost condition: 3.554516636119214e-09, vs epsilon: 1e-08 
-  With loss: 1.5081E-02
-Passed in: 00:02:53
-                                                                                 58%|█████▊    | 35/60 [12:55:55<1:22:37, 198.30s/trial, best loss: 0.0030092055181890963][Stage 41:>   (0 + 1) / 1][Stage 42:>   (0 + 0) / 1][Stage 43:>   (0 + 0) / 1][Stage 41:>   (0 + 1) / 1][Stage 42:>   (0 + 0) / 1][Stage 43:>   (0 + 0) / 1][Stage 41:>   (0 + 1) / 1][Stage 42:>   (0 + 0) / 1][Stage 43:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 65, out of max.: 65
-Branch filler done in: 4.095410346984863
-Dataprep done in: 4.2320616245269775
-Training done in: 117.62267899513245
-  Model done learning in 50 epochs
-  With cost condition: 1.2194247623485835e-11, vs epsilon: 1e-08 
-  With loss: 9.1178E-04
-Passed in: 00:02:01
-                                                                                [Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1] 60%|██████    | 36/60 [12:58:02<1:10:46, 176.96s/trial, best loss: 0.0009117807527459824][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1][Stage 42:>   (0 + 1) / 1][Stage 43:>   (0 + 0) / 1][Stage 44:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 73, out of max.: 73
-Branch filler done in: 6.586748838424683
-Dataprep done in: 6.7212817668914795
-Training done in: 1461.1741116046906
-  Algorithm failed: not done learning in max = 1000 epochs
-  With cost condition: 5.602037274862052e-08, vs epsilon: 1e-08 
-Training done in: 1281.0408391952515
-  Model done learning in 876 epochs
-  With cost condition: 7.410228844388439e-09, vs epsilon: 1e-08 
-  With loss: 6.4322E-03
-Passed in: 00:45:48
-                                                                                 62%|██████▏   | 37/60 [13:43:56<6:04:10, 950.01s/trial, best loss: 0.0009117807527459824][Stage 43:>   (0 + 1) / 1][Stage 44:>   (0 + 0) / 1][Stage 45:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 43 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 44:>   (0 + 1) / 1][Stage 45:>   (0 + 0) / 1][Stage 46:>   (0 + 0) / 1][Stage 44:>   (0 + 1) / 1][Stage 45:>   (0 + 0) / 1][Stage 46:>   (0 + 0) / 1][Stage 44:>   (0 + 1) / 1][Stage 45:>   (0 + 0) / 1][Stage 46:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  3.162277660168379e-06
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.05
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 83, out of max.: 84
-Branch filler done in: 7.050602436065674
-Dataprep done in: 7.18225622177124
-Training done in: 144.5855007171631
-  Model done learning in 79 epochs
-  With cost condition: 3.9748852768181466e-09, vs epsilon: 1e-08 
-  With loss: 4.9827E-03
-Passed in: 00:02:31
-                                                                                 63%|██████▎   | 38/60 [13:46:42<4:22:07, 714.87s/trial, best loss: 0.0009117807527459824][Stage 45:>   (0 + 1) / 1][Stage 46:>   (0 + 0) / 1][Stage 47:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 45 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1][Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1][Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1][Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1][Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1][Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1][Stage 46:>   (0 + 1) / 1][Stage 47:>   (0 + 0) / 1][Stage 48:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0.1
-  hidden_dim	  50
-  learning_rate	  1e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 73, out of max.: 73
-Branch filler done in: 6.59258770942688
-Dataprep done in: 6.725739002227783
-Training done in: 394.2164237499237
-  Model done learning in 180 epochs
-  With cost condition: 2.7672434154749527e-09, vs epsilon: 1e-08 
-  With loss: 6.6510E-03
-Passed in: 00:06:40
-                                                                                 65%|██████▌   | 39/60 [13:53:38<3:38:46, 625.05s/trial, best loss: 0.0009117807527459824][Stage 47:>   (0 + 1) / 1][Stage 48:>   (0 + 0) / 1][Stage 49:>   (0 + 0) / 1][Stage 47:>   (0 + 1) / 1][Stage 48:>   (0 + 0) / 1][Stage 49:>   (0 + 0) / 1][Stage 47:>   (0 + 1) / 1][Stage 48:>   (0 + 0) / 1][Stage 49:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0.1
-  hidden_dim	  6
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 83, out of max.: 84
-Branch filler done in: 7.058157205581665
-Dataprep done in: 7.189939498901367
-Training done in: 146.4543867111206
-  Model done learning in 50 epochs
-  With cost condition: 8.228379012326975e-10, vs epsilon: 1e-08 
-  With loss: 4.8864E-03
-Passed in: 00:02:33
-                                                                                [Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1] 67%|██████▋   | 40/60 [13:56:17<2:41:45, 485.29s/trial, best loss: 0.0009117807527459824][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1][Stage 48:>   (0 + 1) / 1][Stage 49:>   (0 + 0) / 1][Stage 50:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  800.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  0.001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 73, out of max.: 73
-Branch filler done in: 6.559552192687988
-Dataprep done in: 6.692089319229126
-Training done in: 2048.34369969368
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 0.00015456898877497957, vs epsilon: 1e-08 
-Training done in: 2044.8495872020721
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 7.972612006023389e-05, vs epsilon: 1e-08 
-Training done in: 2034.1259622573853
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 0.000316615511185735, vs epsilon: 1e-08 
-Training done in: 2045.6804163455963
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 0.0002375877256626892, vs epsilon: 1e-08 
-Failed in: 02:16:19
-                                                                                 68%|██████▊   | 41/60 [16:12:41<14:45:04, 2794.97s/trial, best loss: 0.0009117807527459824][Stage 49:>   (0 + 1) / 1][Stage 50:>   (0 + 0) / 1][Stage 51:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 49 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 50:>   (0 + 1) / 1][Stage 51:>   (0 + 0) / 1][Stage 52:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 50 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 51:>   (0 + 1) / 1][Stage 52:>   (0 + 0) / 1][Stage 53:>   (0 + 0) / 1][Stage 51:>   (0 + 1) / 1][Stage 52:>   (0 + 0) / 1][Stage 53:>   (0 + 0) / 1][Stage 51:>   (0 + 1) / 1][Stage 52:>   (0 + 0) / 1][Stage 53:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  700.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  0.0001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  last
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.5
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 83, out of max.: 84
-Branch filler done in: 7.05332350730896
-Dataprep done in: 7.18533182144165
-Training done in: 147.8830463886261
-  Model done learning in 50 epochs
-  With cost condition: 6.352774320565075e-10, vs epsilon: 1e-08 
-  With loss: 6.3370E-03
-Passed in: 00:02:35
-                                                                                 70%|███████   | 42/60 [16:15:40<10:03:04, 2010.24s/trial, best loss: 0.0009117807527459824][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1][Stage 52:>   (0 + 1) / 1][Stage 53:>   (0 + 0) / 1][Stage 54:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0.1
-  hidden_dim	  50
-  learning_rate	  0.001
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 58, out of max.: 59
-Branch filler done in: 4.859150648117065
-Dataprep done in: 4.991516590118408
-Training done in: 1776.4979939460754
-  Algorithm failed: not done learning in max = 700 epochs
-  With cost condition: 0.00016448685843802076, vs epsilon: 1e-08 
-Training done in: 547.0790827274323
-  Model done learning in 215 epochs
-  With cost condition: 8.290468556837441e-12, vs epsilon: 1e-08 
-  With loss: 2.1781E-02
-Passed in: 00:38:48
-                                                                                 72%|███████▏  | 43/60 [16:54:34<9:57:01, 2107.17s/trial, best loss: 0.0009117807527459824] [Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1][Stage 53:>   (0 + 1) / 1][Stage 54:>   (0 + 0) / 1][Stage 55:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  0.00031622776601683794
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 65, out of max.: 65
-Branch filler done in: 4.103788614273071
-Dataprep done in: 4.238659858703613
-Training done in: 1858.3129572868347
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 0.0001834647944688454, vs epsilon: 1e-08 
-Training done in: 190.45121598243713
-  Model done learning in 81 epochs
-  With cost condition: 6.3667743564501345e-09, vs epsilon: 1e-08 
-  With loss: 2.8822E-02
-Passed in: 00:34:13
-                                                                                [Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 0) / 1][Stage 56:>   (0 + 0) / 1] 73%|███████▎  | 44/60 [17:28:52<9:17:58, 2092.43s/trial, best loss: 0.0009117807527459824]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 54:>   (0 + 1) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1]                                                                                trial task 54 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1][Stage 55:>   (0 + 1) / 1][Stage 56:>   (0 + 0) / 1][Stage 57:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  400.0
-  dropout   	  0.1
-  hidden_dim	  20
-  learning_rate	  0.00031622776601683794
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 144, out of max.: 147
-Branch filler done in: 11.811041593551636
-Dataprep done in: 11.942849159240723
-Training done in: 1834.1225471496582
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 2.3005939943301793e-07, vs epsilon: 1e-08 
-Training done in: 1840.1296932697296
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 0.00017081163438920796, vs epsilon: 1e-08 
-Training done in: 1833.9136946201324
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 8.540323518150162e-05, vs epsilon: 1e-08 
-Training done in: 1861.4217257499695
-  Algorithm failed: not done learning in max = 800 epochs
-  With cost condition: 0.00039999213597973144, vs epsilon: 1e-08 
-Failed in: 02:03:01
-                                                                                [Stage 56:>   (0 + 1) / 1][Stage 57:>   (0 + 0) / 1][Stage 58:>   (0 + 0) / 1] 75%|███████▌  | 45/60 [19:32:08<15:20:54, 3683.62s/trial, best loss: 0.0009117807527459824][Stage 56:>   (0 + 1) / 1][Stage 57:>   (0 + 0) / 1][Stage 58:>   (0 + 0) / 1][Stage 56:>   (0 + 1) / 1][Stage 57:>   (0 + 0) / 1][Stage 58:>   (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  1000.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 58, out of max.: 59
-Branch filler done in: 4.8707215785980225
-Dataprep done in: 5.004670143127441
-Training done in: 118.93230748176575
-  Model done learning in 50 epochs
-  With cost condition: 4.122460552623697e-10, vs epsilon: 1e-08 
-  With loss: 6.7571E-03
-Passed in: 00:02:04
-                                                                                 77%|███████▋  | 46/60 [19:34:16<10:10:37, 2616.97s/trial, best loss: 0.0009117807527459824][Stage 57:>   (0 + 1) / 1][Stage 58:>   (0 + 0) / 1][Stage 59:>   (0 + 0) / 1]Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-                                                                                trial task 57 failed, exception is [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list.
- Traceback (most recent call last):
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/spark.py", line 468, in run_task_on_executor
-    params, ctrl=None, attach_attachments=False
-  File "/project/alice/users/wesselr/venvs/gpu_venv_py37_cuda/lib/python3.7/site-packages/hyperopt/base.py", line 892, in evaluate
-    rval = self.fn(pyll_rval)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 343, in run_training
-    train_data, val_data, batch_size, input_variables
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 535, in data_prep_branch_filler
-    train_data, batch_size=batch_size, n_features=len(input_variables)
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/data_manipulation.py", line 155, in branch_filler
-    index_pos = temp_dataset2[0].index(jet)
-ValueError: [[0.11330503123694616, 140.36013528242285, 0.061342252029611084], [0.04727163413081562, 131.75659659782872, 0.07742342601761934], [0.03222816100365591, 121.5632063096368, 0.4049269321146241], [0.023805142907940533, 72.33904900375786, 0.42599053103472007], [0.004669722521212589, 41.525918972492356, 0.39224933563574105]] is not in list
-
-[Stage 58:>                 (0 + 1) / 1][Stage 59:>                 (0 + 0) / 1][Stage 58:>                 (0 + 1) / 1][Stage 59:>                 (0 + 0) / 1][Stage 58:>                 (0 + 1) / 1][Stage 59:>                 (0 + 0) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  500.0
-  dropout   	  0.1
-  hidden_dim	  9
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  auto
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 116, out of max.: 118
-Branch filler done in: 10.51943564414978
-Dataprep done in: 10.656644821166992
-Training done in: 117.23638200759888
-  Model done learning in 50 epochs
-  With cost condition: 6.033829342016586e-09, vs epsilon: 1e-08 
-  With loss: 1.0507E-02
-Passed in: 00:02:07
-                                                                                [Stage 59:>                                                         (0 + 1) / 1] 78%|███████▊  | 47/60 [19:36:39<6:46:12, 1874.82s/trial, best loss: 0.0009117807527459824] [Stage 59:>                                                         (0 + 1) / 1][Stage 59:>                                                         (0 + 1) / 1]
-Device: cpu
-
-Hyper Parameters:
-  batch_size	  900.0
-  dropout   	  0.1
-  hidden_dim	  50
-  learning_rate	  3.1622776601683795e-05
-  min_epochs	  50
-  num_layers	  1
-  output_dim	  1
-  pooling   	  mean
-  scaler_id 	  minmax
-  svm_gamma 	  scale
-  svm_nu    	  0.2
-  variables 	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-Nr. of train batches: 65, out of max.: 65
-Branch filler done in: 4.114171743392944
-Dataprep done in: 4.2475457191467285
-Training done in: 132.62403464317322
-  Model done learning in 50 epochs
-  With cost condition: 4.1727261146450534e-11, vs epsilon: 1e-08 
-  With loss: 9.2161E-03
-Passed in: 00:02:16
-                                                                                 80%|████████  | 48/60 [19:39:01<4:30:56, 1354.72s/trial, best loss: 0.0009117807527459824] 80%|████████  | 48/60 [19:39:01<4:54:45, 1473.77s/trial, best loss: 0.0009117807527459824]Total Trials: 60: 48 succeeded, 12 failed, 0 cancelled.
-
-
-Best Hyper Parameters:
-
-Model 0 from trial 35:
-  batch_size  	  900.0
-  dropout     	  0.1
-  hidden_dim  	  9
-  learning_rate	  0.0001
-  min_epochs  	  50
-  num_layers  	  1
-  output_dim  	  1
-  pooling     	  mean
-  scaler_id   	  minmax
-  svm_gamma   	  scale
-  svm_nu      	  0.2
-  variables   	  ('sigJetRecur_dr12', 'sigJetRecur_jetpt', 'sigJetRecur_z')
-with loss: 		0.0009117807527459824
-with final cost:	0.0009117807527459824
-
-Hypertuning completed on dataset:
-	samples/SDTiny_jewelNR_120_simple-1.root
-Stored results in:
-	storing_results/trials_test_10219836.p
-Plotting complete, stored results at:
-	output/cost_condition_10219836/
-	output/violin_plots_10219836/
-
-Completed run in: 70764.06 seconds
-	on job: 10219836

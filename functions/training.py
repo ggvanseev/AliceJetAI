@@ -162,7 +162,9 @@ def training_algorithm(
     track_cost = []
     track_cost_condition = []
     track_roc_auc = []
-    track_cost2 = [] # TODO remove later, after evaluation -> expected to not change much
+    track_cost2 = (
+        []
+    )  # TODO remove later, after evaluation -> expected to not change much
     track_cost_condition2 = []
     track_roc_auc2 = []
 
@@ -172,14 +174,15 @@ def training_algorithm(
         k < min_epochs_patience or cost_condition_passed_flag == False
     ) and k < training_params["max_epochs"]:
         k += 1
-        
 
         # Copy ai-models to test for next alpha
         svm_model_next = copy(svm_model)
         lstm_model_next = copy(lstm_model)
 
         # shuffle jets in batches each epoch
-        x_loader, track_jets_dev_data = shuffle_batches(x_loader, track_jets_dev_data, device)
+        x_loader, track_jets_dev_data = shuffle_batches(
+            x_loader, track_jets_dev_data, device
+        )
 
         # keep previous cost result stored
         cost_prev = copy(cost)
@@ -192,7 +195,7 @@ def training_algorithm(
         alphas = alphas / np.sum(alphas)  # NOTE: equation 14, sum alphas = 1
 
         a_idx = svm_model_next.support_
-        
+
         # calculate ROC curves and their AUC values
         if roc_data is not None:
             # get h_bar states
@@ -249,7 +252,7 @@ def training_algorithm(
         # track cost and cost_condition
         track_cost.append(cost)
         track_cost_condition.append(cost_condition)
-        
+
         # calculate ROC curves and their AUC values
         if roc_data is not None:
             # get h_bar states
@@ -318,7 +321,18 @@ def training_algorithm(
     # print_out += f"\n  With cost condition: {abs((cost - cost_prev) / cost_prev)}, vs epsilon: {training_params['epsilon']} "
     print_out += f"\n  With cost condition: {cost_condition}, vs epsilon: {training_params['epsilon']} "
 
-    return lstm_model, svm_model, track_cost, track_cost_condition, track_roc_auc, track_cost2, track_cost_condition2, track_roc_auc2, passed, print_out
+    return (
+        lstm_model,
+        svm_model,
+        track_cost,
+        track_cost_condition,
+        track_roc_auc,
+        track_cost2,
+        track_cost_condition2,
+        track_roc_auc2,
+        passed,
+        print_out,
+    )
 
 
 class TRAINING:
@@ -418,24 +432,26 @@ class TRAINING:
         train_loader, val_loader = self.data_prep_scaling(
             train_data, val_data, scaler, batch_size
         )
-        
+
         # prepare roc data, now to: (roc loader, input dim, jet tracks)
         if roc_data is not None:
             # extract y_true
-            y_true = [d['y_true'] for d in roc_data]
-            
+            y_true = [d["y_true"] for d in roc_data]
+
             # i.o. jets/objects with input variables and awkward frame
-            try: 
+            try:
                 # reformat data to go into lstm
-                roc_data = format_ak_to_list([{ key: d[key] for key in input_variables } for d in roc_data])
-                roc_data = [x for x in roc_data if len(x[0]) > 0] # remove empty stuff
+                roc_data = format_ak_to_list(
+                    [{key: d[key] for key in input_variables} for d in roc_data]
+                )
+                roc_data = [x for x in roc_data if len(x[0]) > 0]  # remove empty stuff
             except:
                 roc_data = [d["data"] for d in roc_data]
-                
+
             # build a single branch from all test data
             roc_data, batch_size_roc, track_jets_data_roc, _ = single_branch(roc_data)
             input_dim_roc = len(roc_data[0])
-            
+
             # data scaling
             roc_data_loader = lstm_data_prep(
                 data=roc_data,
@@ -444,7 +460,6 @@ class TRAINING:
             )
 
             roc_data = roc_data_loader, input_dim_roc, track_jets_data_roc, y_true
-
 
         # set model parameters
         model_params = {
@@ -537,8 +552,8 @@ class TRAINING:
 
                 if train_success:
                     n_attempt = max_attempts
-            
-            if n_attempt%2 == 0:
+
+            if n_attempt % 2 == 0:
                 eps = eps * 10
                 training_params["epsilon"] = eps
 
@@ -557,8 +572,8 @@ class TRAINING:
         # save plot data
         cost_data = dict(
             {
-                "cost": track_cost[1:], 
-                "cost_condition": track_cost_condition[1:], 
+                "cost": track_cost[1:],
+                "cost_condition": track_cost_condition[1:],
                 "roc_auc": track_roc_auc,
                 "cost2": track_cost2,
                 "cost_condition2": track_cost_condition2,
@@ -722,7 +737,7 @@ class REGULAR_TRAINING(TRAINING):
             succes = True
         else:
             succes = False
-        
+
         print_out += f"\n  {'Passed' if succes else 'Failed'} consistency check with {diff_percentage_anomalies*100:.2f}% anomaly difference"
 
         return diff_percentage_anomalies, succes, print_out
@@ -747,24 +762,29 @@ class REGULAR_TRAINING(TRAINING):
             val_data = format_ak_to_list(val_data)
 
         bf_out_txt = ""
-        
-        #TODO check if this works
+
+        # TODO check if this works
         bf_success = False
-        while(bf_success == False):
+        while bf_success == False:
             try:
-                train_data, track_jets_train_data, max_n_train_batches, _ = branch_filler(
-                train_data, batch_size=batch_size
-                )
-                bf_success=True
+                (
+                    train_data,
+                    track_jets_train_data,
+                    max_n_train_batches,
+                    _,
+                ) = branch_filler(train_data, batch_size=batch_size)
+                bf_success = True
             except (ValueError, TypeError) as e:
                 print(str(e))
                 batch_size = batch_size - 10
-                print(f"Branch Filler failed -> lowering batch-size to {batch_size}, to try to circumvent the issue")
-        
+                print(
+                    f"Branch Filler failed -> lowering batch-size to {batch_size}, to try to circumvent the issue"
+                )
+
         bf_out_txt += f"\nNr. of train batches: {int(len(train_data) / batch_size)}, out of max.: {max_n_train_batches}"
-        
+
         bf_val_success = False
-        while(bf_val_success == False):
+        while bf_val_success == False:
             try:
                 val_data, track_jets_val_data, max_n_val_batches, _ = branch_filler(
                     val_data, batch_size=batch_size
@@ -774,7 +794,9 @@ class REGULAR_TRAINING(TRAINING):
             except (ValueError, TypeError) as e:
                 print(str(e))
                 batch_size = batch_size - 10
-                print(f"Branch Filler Validation failed -> lowering batch-size to {batch_size}, to try to circumvent the issue")
+                print(
+                    f"Branch Filler Validation failed -> lowering batch-size to {batch_size}, to try to circumvent the issue"
+                )
         return (
             train_data,
             val_data,
@@ -823,7 +845,6 @@ def run_full_training(
             "ERROR: Regular training requires validation data which has not been provided.\nPlease provide this or switch training type."
         )
         return -1
-        
 
     # set trials or sparktrials
     if multicore_flag:
@@ -836,15 +857,15 @@ def run_full_training(
 
     # create training object
     training = TRAINING_TYPE()
-    
+
     # set device for training
-    device = (
-        torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-    )
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
     # print statement to check multicore & device used in training
-    print(f"Running {max_evals} evaluations, {f'on {cores} cores,' if multicore_flag else ''} with device{device}\n")
-    
+    print(
+        f"Running {max_evals} evaluations, {f'on {cores} cores,' if multicore_flag else ''} with device{device}\n"
+    )
+
     # hyper tuning and evaluation
     try:
         best = fmin(
@@ -865,7 +886,6 @@ def run_full_training(
     except AllTrialsFailed as e:
         print("All trials failed for this run and settings")
         return -1
-        
 
     # saving spark_trials as dictionaries
     # source https://stackoverflow.com/questions/63599879/can-we-save-the-result-of-the-hyperopt-trials-with-sparktrials

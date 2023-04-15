@@ -1,9 +1,13 @@
+"""
+Load a dataset and test a few things to see what is in it.
+"""
+
 import uproot
 import awkward as ak
 import matplotlib.pyplot as plt
 
 # specify path to filename
-file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
+# file_name = "samples/SDTiny_jewelNR_120_simple-1.root"
 file_name = "samples/JetToyHIResultSoftDropTiny_zc01.root"
 # print(os.getcwd()) # used to check your working directory
 
@@ -26,7 +30,7 @@ plt.xlabel("$R_g$")
 plt.show()
 
 plt.figure()
-plt.hist(ak.flatten(ak.flatten(branches["sigJetRecur_dr12"])),bins=60)
+plt.hist(ak.flatten(ak.flatten(branches["sigJetRecur_dr12"])), bins=60)
 plt.title("All Splittings")
 plt.ylabel("Count")
 plt.xlabel("$R_g$")

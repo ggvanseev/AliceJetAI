@@ -1,3 +1,7 @@
+"""
+Functions used in conjunction with the LSTM model.
+"""
+
 import torch
 
 
@@ -37,7 +41,7 @@ def calc_lstm_results(
     # make sure theta is only generetad once.
     theta = None
     theta_gradients = None
-    
+
     # set correct device to LSTM model
     if device != lstm_model.set_device:
         print(f"LSTM model device set to: {device}")
@@ -48,18 +52,16 @@ def calc_lstm_results(
         jet_track_local = track_jets_data[i]
         i += 1
 
-        # x_batch as input for lstm, pytorch says shape = [sequence_length, batch_size, n_features]
-        # x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         x_batch = x_batch.view([len(x_batch), -1, input_dim]).to(device)
         y_batch = y_batch.to(device)
-        
-        ### Train step
-        # set model to train
-        # lstm_model.train()  # TODO should this be off so the backward() call in the forward pass does not update the weights?
 
         # Makes predictions
         h_bar, theta, theta_gradients = lstm_model(
-            x_batch, jet_track_local, pooling=pooling, theta=theta, theta_gradients=theta_gradients
+            x_batch,
+            jet_track_local,
+            pooling=pooling,
+            theta=theta,
+            theta_gradients=theta_gradients,
         )
 
         # h_bar_list.append(h_bar) # TODO, h_bar is not of fixed length! solution now: append all to list, then vstack the list to get 2 axis structure

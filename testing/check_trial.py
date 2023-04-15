@@ -1,3 +1,7 @@
+"""
+Load trial from a specific job and test a few things to see what is in it.
+"""
+
 import torch
 from functions.data_loader import load_trials
 from functions.data_manipulation import trials_df_and_minimum
@@ -9,7 +13,9 @@ trial_nr = 11
 # load trials from job
 trials = load_trials(job_id, remove_unwanted=False)
 if not trials:
-    print(f"No succesful trial for job: {job_id}. Try to complete a new training with same settings.")
+    print(
+        f"No succesful trial for job: {job_id}. Try to complete a new training with same settings."
+    )
 print("Loading trials complete")
 
 # set trial

@@ -6,75 +6,10 @@ import torch
 from plotting.cost_condition import cost_condition_plots
 
 # select file monickers to be analysed e.g. ../trials_test_{monicker}.p
-job_ids = [
-    # "22_07_18_1327",
-    # "22_07_18_1334",
-    # "22_07_18_1340",
-    # "22_07_18_1345",
-    # "22_07_18_1348",
-    # "22_07_18_1357",
-    # "22_07_18_1404",
-    # "22_07_18_1410",
-    # "22_07_18_1414",
-    # "22_07_18_1417",
-    # "22_07_18_1424",
-    # "22_07_18_1432",
-    # "22_07_18_1435",
-    # "22_07_18_1440",
-    # "22_07_18_1445",
-    # "22_07_18_1452",
-    # "22_07_18_1502",
-    # "22_07_18_1508",
-    # "22_07_18_1514",
-    # "22_07_18_1520",
-    # "22_08_09_1909",
-    # "22_08_09_1934",
-    # "22_08_09_1939",
-    # "22_08_09_1941",
-    # "22_08_11_1520",
-    # "22_08_12_1302",
-    # "22_08_12_1306",
-    # "22_08_12_1311",
-    # "22_08_12_1313",
-    "22_09_05_1618",
-    "22_09_06_1613",
-    "10993304",
-    "10993305",
-    "11120653",
-    "11120654",
-    "11120655",
-    "11316966",
-    "11316967",
-    "11461549",
-    "11461550",
-    "11474168",
-    "11474169",
-    "11478120",
-    "11478121",
-    "11487531", 
-    "11503919", 
-    "11503920",
-    "11487532", 
-    "11503917", 
-    "11503918",
-    "11852650",
-    "11852651",
-    # "11852652",
-    # "11852653",
-    "11857497",
-    "11857498",
-]
-# job_ids = [
-#     "11474168", # reg mean - lowest cost - trial 9"
-#     "11474168",  # reg mean - best regtraining - trial 5
-#     "11461550", # reg last - best regtraining - trial 7
-#     "11478121", # last_reversed - highest auc best regtraining - trial 1
-#     '11120653', # hp training mean - highest auc total - trial 11     
-# ]
-# job_ids = ["22_09_06_1613"]
+job_ids = ["11857498", "2023_04_15"]  # example
 
 # select "test" or "train"
-trial_type = "test" # TODO what is this even?
+trial_type = "test"
 
 # load trials results from file and
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -86,4 +21,3 @@ trials_test_list = [
 # create cost condition plots from trials and jobs
 for job_id, trials in zip(job_ids, trials_test_list):
     cost_condition_plots(trials, job_id)
-# test ?

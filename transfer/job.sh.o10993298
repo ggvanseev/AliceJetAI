@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "analysis/hyper_training.py", line 131, in <module>
-    jets_recur, jets, file_name_mixed_sample = mix_quark_gluon_samples(file_name, jet_branches=[na.jetpt, na.jet_M, na.parton_match_id], g_percentage=g_percentage, kt_cut=kt_cut, dr_cut=dr_cut)
-NameError: name 'dr_cut' is not defined

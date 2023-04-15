@@ -1,3 +1,8 @@
+"""
+Functions for the optimization with orthogonality constraints algorithm,
+which was used in the paper by Tolga Ergen.
+"""
+
 import torch
 
 from functions.data_manipulation import get_full_pytorch_weight
@@ -31,8 +36,6 @@ def kappa(alphas, a_idx, h_list):
         out = 0  # use for trackking summation
         n_alphas = len(a_idx)
 
-        # alphas_matrix = np.outer(alphas, alphas).T  # removed since to much memmory consumption
-
         for i in range(n_alphas):
             # out += 0.5 * np.dot(alphas_matrix[i], h_matrix[i])
             out += 0.5 * np.dot(alphas[i] * alphas, h_matrix[i])
@@ -53,7 +56,6 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
 
     proof: https://math.stackexchange.com/questions/1377764/derivative-of-vector-and-vector-transpose-product
     """
-    # alphas_sum = np.sum(alphas) # TODO this is now always 1 -> normalized!
 
     # check device type, and adjust alphas_tensor
     if h_bar_list.device.type == "cpu":
@@ -61,18 +63,10 @@ def calc_g(gradient_hi, h_bar_list, alphas, a_idx):
     else:
         alphas_tensor = torch.tensor(alphas).type(torch.FloatTensor).cuda()
 
-    d_kappa = alphas_tensor @ h_bar_list[a_idx] # * alphas_sum
-    
+    d_kappa = alphas_tensor @ h_bar_list[a_idx]  # * alphas_sum
+
     # seems this one is correct after all...
-    out = np.mean(alphas)*(d_kappa * gradient_hi.T).T
-
-    # out = 0.5 * (d_kappa * gradient_hi + d_kappa * gradient_hi.T)
-
-    # a = 0
-    # for i, idx1 in enumerate(a_idx):
-    #     for j, idx2 in enumerate(a_idx):
-    #         #a += 0.5 * alphas[i] * alphas[j] * (gradient_hi.T * h_bar_list[idx2] + h_bar_list[idx1].T * gradient_hi)
-    #         a += 0.5 * alphas[i] * alphas[j] * (h_bar_list[idx2] + h_bar_list[idx1].T) * gradient_hi
+    out = np.mean(alphas) * (d_kappa * gradient_hi.T).T
 
     return out
 
@@ -120,13 +114,6 @@ def updating_theta(
 
             # derivative of function e.g. F = (25) from Tolga
             g = calc_g(gradient_weight, h_bar_list, alphas, a_idx)
-
-            # Deviation from Tolga, normalize to number of h_bar_list TODO
-            # g = g / (len(h_bar_list) * 1e-3)
-            # normalize g to sum of g?
-            # g = g / torch.sum(g)
-            # remove nan
-            # g[g != g] = 0
 
             a = g @ weight.T - weight @ g.T
             i = torch.eye(weight.shape[0], device=device)

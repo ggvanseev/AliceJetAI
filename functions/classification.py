@@ -1,3 +1,7 @@
+"""
+Classes used for classification of samples.
+"""
+
 import awkward as ak
 import torch
 import numpy as np
@@ -53,7 +57,9 @@ class LSTM_OCSVM_CLASSIFIER:
 
         try:
             # TODO use only a single branch for classification? -> test if this works adequately for larger datasets
-            data_in_branches, batch_size, track_jets_data, jets_index = single_branch(data)
+            data_in_branches, batch_size, track_jets_data, jets_index = single_branch(
+                data
+            )
             # data_in_branches, track_jets_data, _, jets_index = branch_filler(
             #     data, batch_size=self.batch_size
             # )
@@ -100,8 +106,9 @@ class LSTM_OCSVM_CLASSIFIER:
 
 class CLASSIFICATION_CHECK:
     """
-        Dummy jets with value nine, to exclude ai-models than don't look at the content of the jets.
+    Dummy jets with value nine, to exclude ai-models than don't look at the content of the jets.
     """
+
     def __init__(self) -> None:
         pass
 
@@ -129,7 +136,7 @@ class CLASSIFICATION_CHECK:
                 lstm=lstm_model,
                 batch_size=batch_size,
                 scaler=scaler,
-                pooling=pooling
+                pooling=pooling,
             )
 
             _, anomaly_tracker[i], _, _ = classifier.anomaly_classification(
@@ -175,7 +182,7 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
 
         # get hyper parameters
         batch_size = int(trials[i]["result"]["hyper_parameters"]["batch_size"])
-        pooling = trials[i]['result']['hyper_parameters']['pooling']
+        pooling = trials[i]["result"]["hyper_parameters"]["pooling"]
         if "variables" in trials[i]["result"]["hyper_parameters"]:
             input_variables = list(trials[i]["result"]["hyper_parameters"]["variables"])
             data = jets[input_variables]
@@ -184,7 +191,11 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
             data = jets
 
         classifier = LSTM_OCSVM_CLASSIFIER(
-            oc_svm=ocsvm_model, lstm=lstm_model, batch_size=batch_size, scaler=scaler, pooling=pooling
+            oc_svm=ocsvm_model,
+            lstm=lstm_model,
+            batch_size=batch_size,
+            scaler=scaler,
+            pooling=pooling,
         )
 
         (
@@ -220,4 +231,8 @@ def get_anomalies(jets, job_id, trials, file_name, jet_info=""):
     # txt_file.write(out_txt)
     # txt_file.close()
 
-    return h_bar_list_all, jets_index_tracker, classification_tracker  # , test_txt# TODO testing
+    return (
+        h_bar_list_all,
+        jets_index_tracker,
+        classification_tracker,
+    )  # , test_txt# TODO testing

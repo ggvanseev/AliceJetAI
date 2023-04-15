@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/project/alice/users/wesselr/code/AliceJetAI/analysis/hyper_training.py", line 11, in <module>
-    from functions.training import run_full_training, HYPER_TRAINING
-  File "/project/alice/users/wesselr/code/AliceJetAI/functions/training.py", line 58, in <module>
-    import numpy as np
-ModuleNotFoundError: No module named 'numpy'

@@ -1,3 +1,7 @@
+"""
+As get_anomalies.py but made for the digits dataset.
+"""
+
 import os
 import sys
 import numpy as np
@@ -5,7 +9,7 @@ import torch
 from functions.classification import get_anomalies, CLASSIFICATION_CHECK
 from testing_functions import load_digits_data
 
-from  testing.plotting_test import *
+from testing.plotting_test import *
 
 
 job_ids = [
@@ -51,7 +55,7 @@ for job_id in job_ids:
         f"storing_results/trials_test_{job_id}.p", map_location=device
     )
 
-    trials = trials_test_list["_trials"] # TODO new!
+    trials = trials_test_list["_trials"]  # TODO new!
     # trials = {i: {"result": j} for i, j in trials_test_list.items()}  # TODO for old results
 
     # from run excluded files:
@@ -77,16 +81,16 @@ for job_id in job_ids:
 
     trials_h_bars = dict()
     trials_classifications = dict()
-    trials_ocsvms = [trials[i]['result']['model']['ocsvm'] for i in range(len(trials))]
+    trials_ocsvms = [trials[i]["result"]["model"]["ocsvm"] for i in range(len(trials))]
 
     # uncomment if save print out, also see below
-    #orig_stdout = sys.stdout
-    #f = open(out_dir+'/print_out.txt', 'w')
-    #sys.stdout = f
+    # orig_stdout = sys.stdout
+    # f = open(out_dir+'/print_out.txt', 'w')
+    # sys.stdout = f
 
     for i in range(2):
         if i == 0:
-            jets = test_dict["0"][:360] # test dict 0 is 363 entries total
+            jets = test_dict["0"][:360]  # test dict 0 is 363 entries total
             type_jets = "0 Digits"
         elif i == 1:
             jets = test_dict["9"][:40]
@@ -97,20 +101,25 @@ for job_id in job_ids:
         else:
             jets = test_dict["7"][:700]
             type_jets = "7 Digits"
-        
+
         out_txt = f"Anomalies for data of type: {type_jets}"
         print(out_txt)
-        trials_h_bars[type_jets], _, trials_classifications[type_jets] = get_anomalies(jets, job_id, trials, file_name, jet_info=type_jets)
-        
-        print("\n")
-        
+        trials_h_bars[type_jets], _, trials_classifications[type_jets] = get_anomalies(
+            jets, job_id, trials, file_name, jet_info=type_jets
+        )
 
-    normal_vs_anomaly_2D_all(trials_h_bars, trials_classifications, trials_ocsvms, out_dir, job_id)
-    
-    collect_aucs = ROC_curve_digits(test_dict["0"][:360], test_dict["9"][:40], trials, job_id)
+        print("\n")
+
+    normal_vs_anomaly_2D_all(
+        trials_h_bars, trials_classifications, trials_ocsvms, out_dir, job_id
+    )
+
+    collect_aucs = ROC_curve_digits(
+        test_dict["0"][:360], test_dict["9"][:40], trials, job_id
+    )
     all_aucs[job_id] = collect_aucs
 
 
 print(f"All AUC values for these jobs:\n{all_aucs}")
-#sys.stdout = orig_stdout
-#f.close()
+# sys.stdout = orig_stdout
+# f.close()

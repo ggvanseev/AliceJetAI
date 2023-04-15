@@ -1,3 +1,7 @@
+"""
+Functions used in the validation of the current run.
+"""
+
 import torch
 import numpy as np
 from functions.data_manipulation import h_bar_list_to_numpy
