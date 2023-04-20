@@ -18,8 +18,10 @@ Test sample datasets have been included in `samples/`:
 - pendigits
 
 ## Installation
-Make sure the correct versions of Python packages are installed, most importantly Pytorch.
-Check `requirements.txt` file for these. Additionally, refer to `setup.py` and run `pip install -e .` from the terminal to install packages.
+Make sure the correct versions of Python packages are installed! 
+Most importantly Pytorch, which should be downloaded manually from https://pytorch.org, version 1.10.2 (make sure to get CUDA version if you plan on running on a GPU). But only do this after creating your preferred environment.
+Check `requirements.txt` file for these, could try `pip install -r requirements.txt` but this does not always work on all packages. Additionally, refer to `setup.py` and run `pip install -e .` from the terminal to install packages.
+Alternatively, when using conda: `conda env create --name <your env name> -f environment.yml` creates a conda env with all required packages.
 
 ## How to use?
 *. With any training session, cost and cost condition plots are generated, use these to judge training performance. These can also be created with `analysis/make_cost_condition_plots.py`. Output of plotting is found in `output/`.
