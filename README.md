@@ -6,7 +6,7 @@ ML tools are used to gain insight into the modification of parton showers of QGP
 ## Data
 Jet data is obtained using JetToyHI from Marta Verweij: https://github.com/mverwe/JetToyHI.
 For this project we have used the branch 'strong2020' and modified versions of the script `runSoftDrop.cc`. These are 'runSoftDropSkinny.cc' which removes most parts that are not required from the `runSoftDrop.cc` script. It includes Particle ID values required to separate quark and gluon jets, to be used for quark-gluon jet discrimination tests. Mixtures of quark and gluon jets can be made during any training (regular or hyper), or by running `analysis/mix_quark_gluon_samples.py`.
-The second script is `runSoftDropTiny.cc`, similar to `runSoftDropSkinny.cc` but omitted the Particle ID part. This script can be used on Jewel datasets (Jewel data does not have particle IDs so 'runSoftDropSkinny.cc' will give errors), for which we have used the HEPMC data from bhofman.
+The second script is `runSoftDropTiny.cc`, similar to `runSoftDropSkinny.cc` but omitted the Particle ID part. This script can be used on Jewel datasets (Jewel data does not have particle IDs so `runSoftDropSkinny.cc` will give errors), for which we have used the HEPMC data from bhofman.
 Scripts could (should?) be included with this repository (or JetToyHI) at a later point (I currently don't have access to them) and are currently found in `/project/alice/users/wesselr/.../Gijs/JetToyHI/` (not 100% sure about this exact location). 
 Alternatively, create modified versions of `runSoftDrop.cc` storing Particle ID data of jet initiators, using CA, and including: `sigJetRecur_jetpt`, `sigJetRecur_z`, and `sigJetRecur_dr12`. Ask bhofman for help in using HEPMC files with JetToyHI.
 
