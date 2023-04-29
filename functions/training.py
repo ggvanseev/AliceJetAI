@@ -136,11 +136,11 @@ def training_algorithm(
             - Save output text
     """
 
-    ### TRACK TIME ### TODO
+    # track time
     time_track = time.time()
 
     # Set initial cost
-    # TODO set alphas to 1 or 0 so cost_next - cost will be large
+    # set alphas to 1 or 0 so cost_next - cost will be large
     cost = 1e10
     cost_condition_passed_flag = (
         False  # flag to check if cost condition has been satisfied
@@ -162,9 +162,7 @@ def training_algorithm(
     track_cost = []
     track_cost_condition = []
     track_roc_auc = []
-    track_cost2 = (
-        []
-    )  # TODO remove later, after evaluation -> expected to not change much
+    track_cost2 = []
     track_cost_condition2 = []
     track_roc_auc2 = []
 
@@ -307,7 +305,7 @@ def training_algorithm(
             svm_model = copy(svm_model_next)
 
     # add print statements
-    ### TRACK TIME ### TODO
+    # track time
     dt = time.time() - time_track
     print_out += f"\nTraining done in: {dt}"
 
